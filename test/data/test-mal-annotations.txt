@@ -1,0 +1,61 @@
+::line 1 ::s ജനസംഖ്യ ൩,൩൩,൮൭,൬൭൭
+::span 0-7 ::type MAIN ::surf ജനസംഖ്യ
+::span 8-19 ::type NUMBER ::surf ൩,൩൩,൮൭,൬൭൭
+::line 2 ::s 2011ലെ കണക്കനുസരിച്ച് ഏകദേശം കേരളത്തിൽ ലഭ്യമായ ഭൂഗർഭജലം 6696 ഘനലക്ഷം മീറ്ററാണ്. വാർഷിക ഭൂഗർഭജല ലഭ്യത 6070 ഘനമീറ്ററാണ്. 3070 ഘനമീറ്റർ ഭൂഗർഭജലം കൃഷിയ്ക്ക് ലഭ്യമാണ്.
+::span 0-4 ::type NUMBER ::surf 2011
+::span 4-6 ::type MAIN ::surf ലെ
+::span 7-21 ::type MAIN ::surf കണക്കനുസരിച്ച്
+::span 22-28 ::type MAIN ::surf ഏകദേശം
+::span 29-38 ::type MAIN ::surf കേരളത്തിൽ
+::span 39-46 ::type MAIN ::surf ലഭ്യമായ
+::span 47-55 ::type MAIN ::surf ഭൂഗർഭജലം
+::span 56-60 ::type NUMBER ::surf 6696
+::span 61-68 ::type MAIN ::surf ഘനലക്ഷം
+::span 69-78 ::type MAIN ::surf മീറ്ററാണ്
+::span 78-79 ::type PUNCT-E ::surf .
+::span 80-86 ::type MAIN ::surf വാർഷിക
+::span 87-94 ::type MAIN ::surf ഭൂഗർഭജല
+::span 95-100 ::type MAIN ::surf ലഭ്യത
+::span 101-105 ::type NUMBER ::surf 6070
+::span 106-117 ::type MAIN ::surf ഘനമീറ്ററാണ്
+::span 117-118 ::type PUNCT-E ::surf .
+::span 119-123 ::type NUMBER ::surf 3070
+::span 124-132 ::type MAIN ::surf ഘനമീറ്റർ
+::span 133-141 ::type MAIN ::surf ഭൂഗർഭജലം
+::span 142-152 ::type MAIN ::surf കൃഷിയ്ക്ക്
+::span 153-161 ::type MAIN ::surf ലഭ്യമാണ്
+::span 161-162 ::type PUNCT-E ::surf .
+::line 3 ::s കൂടുതൽ ഭൂഗർഭജല വിനിയോഗം കാസർഗോഡും (77ശതമാനം) കുറവ് വയനാടും (18ശതമാനം) ആണ്.
+::span 0-6 ::type MAIN ::surf കൂടുതൽ
+::span 7-14 ::type MAIN ::surf ഭൂഗർഭജല
+::span 15-23 ::type MAIN ::surf വിനിയോഗം
+::span 24-33 ::type MAIN ::surf കാസർഗോഡും
+::span 34-35 ::type PUNCT ::surf (
+::span 35-37 ::type NUMBER ::surf 77
+::span 37-43 ::type MAIN ::surf ശതമാനം
+::span 43-44 ::type PUNCT ::surf )
+::span 45-50 ::type MAIN ::surf കുറവ്
+::span 51-58 ::type MAIN ::surf വയനാടും
+::span 59-60 ::type PUNCT ::surf (
+::span 60-62 ::type NUMBER ::surf 18
+::span 62-68 ::type MAIN ::surf ശതമാനം
+::span 68-69 ::type PUNCT ::surf )
+::span 70-73 ::type MAIN ::surf ആണ്
+::span 73-74 ::type PUNCT-E ::surf .
+::line 4 ::s ജാതി-മത-വർഗവീക്ഷണം,
+::span 0-4 ::type MAIN ::surf ജാതി
+::span 4-5 ::type DASH ::surf -
+::span 5-7 ::type MAIN ::surf മത
+::span 7-8 ::type DASH ::surf -
+::span 8-18 ::type MAIN ::surf വർഗവീക്ഷണം
+::span 18-19 ::type PUNCT-E ::surf ,
+::line 5 ::s 1800-കളുടെ
+::span 0-4 ::type NUMBER ::surf 1800
+::span 4-5 ::type DASH ::surf -
+::span 5-10 ::type MAIN ::surf കളുടെ
+::line 6 ::s പ്രസ്. ജോൺ എഫ്. കെന്നഡി.
+::span 0-6 ::type ABBREV ::abbrev-type pre-name-title ::surf പ്രസ്.
+::span 7-10 ::type MAIN ::surf ജോൺ
+::span 11-15 ::type ABBREV ::abbrev-type name-initial ::surf എഫ്.
+::span 16-23 ::type MAIN ::surf കെന്നഡി
+::span 23-24 ::type PUNCT-E ::surf .

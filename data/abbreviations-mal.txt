@@ -1,0 +1,14 @@
+# Malayalam abbreviations
+
+::abbrev ഡോ. ::exp ഡോക്ടർ ::lcode mal ::type pre-name-title ::comment Dr.
+::abbrev പ്രസ്. ::exp പ്രസിഡന്റ് ::lcode mal ::type pre-name-title ::comment Pres.
+::abbrevപ്രൊഫ. ::exp പ്രൊഫസർ ::lcode mal ::type pre-name-title ::comment Prof.
+
+::abbrev എ. ::lcode mal ::type name-initial ::comment A.
+::abbrev ബി. ::lcode mal ::type name-initial ::comment B.
+::abbrev സി. ::lcode mal ::type name-initial ::comment C.
+::abbrev ഡി. ::lcode mal ::type name-initial ::comment D.
+::abbrev ഇ. ::lcode mal ::type name-initial ::comment E.
+::abbrev എഫ്. ::lcode mal ::type name-initial ::comment F.
+::abbrev ഡബ്ല്യു. ::lcode mal ::type name-initial ::comment W.
+

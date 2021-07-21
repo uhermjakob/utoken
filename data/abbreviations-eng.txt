@@ -1,0 +1,415 @@
+# English abbreviations
+
+::abbrev Jan. ::exp January ::lcode eng ::type month-of-the-year
+::abbrev Feb. ::exp February ::lcode eng ::type month-of-the-year
+::abbrev Febr. ::exp February ::lcode eng ::type month-of-the-year
+::abbrev Mar. ::exp March ::lcode eng ::type month-of-the-year
+::abbrev Apr. ::exp April ::lcode eng ::type month-of-the-year
+::abbrev Jun. ::exp June ::lcode eng ::type month-of-the-year
+::abbrev Jul. ::exp July ::lcode eng ::type month-of-the-year
+::abbrev Aug. ::exp August ::lcode eng ::type month-of-the-year
+::abbrev Sep. ::exp September ::lcode eng ::type month-of-the-year
+::abbrev Sept. ::exp September ::lcode eng ::type month-of-the-year
+::abbrev Oct. ::exp October ::lcode eng ::type month-of-the-year
+::abbrev Nov. ::exp November ::lcode eng ::type month-of-the-year
+::abbrev Dec. ::exp December ::lcode eng ::type month-of-the-year
+
+::abbrev Amb. ::exp Ambassador ::lcode eng ::type pre-name-title
+::abbrev Br. ::exp Brother ::lcode eng ::type pre-name-title
+::abbrev Dr. ::exp Doctor ::lcode eng ::type pre-name-title
+::abbrev Eng. ::exp Engineer ::lcode eng ::type pre-name-title
+::abbrev Fr. ::exp Father ::lcode eng ::type pre-name-title
+::abbrev Gov. ::exp Governor ::lcode eng ::type pre-name-title
+::abbrev Hon. ::exp Honorable ::lcode eng ::type pre-name-title
+::abbrev Ing. ::exp Ingenieur; Ingeniero ::lcode eng ::type pre-name-title
+::abbrev Ir. ::exp Ingenieur ::lcode eng ::type pre-name-title
+::abbrev Jr. ::exp Junior ::lcode eng ::type pre-name-title
+::abbrev Messrs. ::exp Messieurs ::lcode eng ::type pre-name-title
+::abbrev Mr. ::exp Mister ::lcode eng ::type pre-name-title
+::abbrev Mrs. ::exp Misses ::lcode eng ::type pre-name-title
+::abbrev Ms. ::lcode eng ::type pre-name-title
+::abbrev Pres. ::exp President ::lcode eng ::type pre-name-title
+::abbrev Prof. ::exp Professor ::lcode eng ::type pre-name-title
+::abbrev Rep. ::exp Representative ::lcode eng ::type pre-name-title
+::abbrev Rev. ::exp Reverend ::lcode eng ::type pre-name-title
+::abbrev Sen. ::exp Senator ::lcode eng ::type pre-name-title
+::abbrev Sr. ::exp Senior ::lcode eng ::type pre-name-title
+::abbrev St. ::exp Saint ::lcode eng ::type pre-name-title
+::abbrev Spt. ::exp Superintendent ::lcode eng ::type pre-name-title
+::abbrev Sup. ::exp Superintendent ::lcode eng ::type pre-name-title
+::abbrev Supt. ::exp Superintendent ::lcode eng ::type pre-name-title
+
+::abbrev Adm. ::exp Admiral ::lcode eng ::type military-rank
+::abbrev Brig. ::exp Brigadier ::lcode eng ::type military-rank
+::abbrev Brig.Gen. ::exp Brigadier General ::lcode eng ::type military-rank
+::abbrev Brig.-Gen. ::exp Brigadier General ::lcode eng ::type military-rank
+::abbrev Capt. ::exp Captain ::lcode eng ::type military-rank
+::abbrev Cpt. ::exp Captain ::lcode eng ::type military-rank
+::abbrev Col. ::exp Colonel ::lcode eng ::type military-rank
+::abbrev Gen. ::exp General ::lcode eng ::type military-rank
+::abbrev Lt. ::exp Lieutenant ::lcode eng ::type military-rank
+::abbrev Lt.Gen. ::exp Lieutenant General ::lcode eng ::type military-rank
+::abbrev Lt.-Gen. ::exp Lieutenant General ::lcode eng ::type military-rank
+::abbrev Maj. ::exp Major ::lcode eng ::type military-rank
+::abbrev Maj.Gen. ::exp Major General ::lcode eng ::type military-rank
+::abbrev Maj.-Gen. ::exp Major General ::lcode eng ::type military-rank
+::abbrev Sgt. ::exp Sergeant ::lcode eng ::type military-rank
+::abbrev PV1 ::exp Private ::lcode eng ::type military-rank
+::abbrev PV2 ::exp Private Second Class ::lcode eng ::type military-rank
+::abbrev 1SG ::exp First Sergeant ::lcode eng ::type military-rank
+
+::abbrev Ret. ::exp Retired ::lcode eng ::type general
+
+::abbrev Co. ::exp Company ::lcode eng ::type company-type
+::abbrev Corp. ::exp Corporation ::lcode eng ::type company-type
+::abbrev Inc. ::exp Incorporated ::lcode eng ::type company-type
+::abbrev LLC ::exp Limited Liability Company ::lcode eng ::type company-type
+::abbrev Ltd. ::exp Limited ::lcode eng ::type company-type
+::abbrev N.V. ::exp Naamloze vennootschap ::lcode eng ::type company-type
+::abbrev S.p.A. ::exp Società per Azioni ::lcode eng ::type company-type
+
+::abbrev A.D. ::exp anno Domini ::lcode eng ::type general
+::abbrev a.m. ::exp ante meridiem ::lcode eng ::type general
+::abbrev al. ::exp alii ::lcode eng ::type general
+::abbrev B.C. ::exp before Christ ::lcode eng ::type general
+::abbrev B.S. ::exp bullshit ::lcode eng ::type general
+::abbrev etc. ::exp et cetera; and other things ::lcode eng ::type general
+::abbrev cf. ::exp confer; compare ::lcode eng ::type general
+::abbrev ed. ::exp editor ::lcode eng ::type general
+::abbrev e.g. ::exp exempli gratia; for example ::lcode eng ::type general
+::abbrev et al. ::exp et alii; et aliae; and others ::lcode eng ::type general
+::abbrev i.e. ::exp id est; that is ::lcode eng ::type general
+::abbrev misc. ::exp miscellaneous ::lcode eng ::type general
+::abbrev Mt. ::exp Mount ::lcode eng ::type general
+::abbrev p.m. ::exp post meridiem ::lcode eng ::type general
+::abbrev p.s. ::exp post scriptum ::lcode eng ::type general
+::abbrev S.E. ::exp standard error ::lcode eng ::type general
+::abbrev vs. ::exp versus ::lcode eng ::type general
+
+::abbrev B.P. ::exp blood pressure ::lcode eng ::type medical
+::abbrev flu ::exp influenza ::lcode eng ::type medical
+::abbrev s.c. ::exp subcutaneous ::lcode eng ::type medical
+::abbrev s.d. ::exp stable disease ::lcode eng ::type medical
+
+::abbrev dna ::exp deoxyribonucleic acid ::lcode eng ::type biomedical
+::abbrev DNA ::exp deoxyribonucleic acid ::lcode eng ::type biomedical
+::abbrev pvc ::exp polyvinyl chloride ::lcode eng ::type biomedical
+::abbrev rna ::exp ribonucleic acid ::lcode eng ::type biomedical
+::abbrev RNA ::exp ribonucleic acid ::lcode eng ::type biomedical
+::abbrev Ser ::exp serine ::lcode eng ::type biomedical
+::abbrev tg ::exp transgenic ::lcode eng ::type biomedical
+::abbrev Tg ::exp transgenic ::lcode eng ::type biomedical
+::abbrev wt ::exp wild-type ::lcode eng ::type biomedical
+::abbrev WT ::exp wild-type ::lcode eng ::type biomedical
+
+::abbrev TNT ::exp trinitrotoluene ::lcode eng ::type substance
+
+::abbrev art. ::exp article ::lcode eng ::type corpus-component
+::abbrev arts. ::exp articles ::lcode eng ::type corpus-component
+::abbrev chap. ::exp chapter ::lcode eng ::type corpus-component
+::abbrev chaps. ::exp chapters ::lcode eng ::type corpus-component
+::abbrev fig. ::exp figure ::lcode eng ::type corpus-component
+::abbrev Fig. ::exp figure ::lcode eng ::type corpus-component
+::abbrev op. ::exp opus ::lcode eng ::type corpus-component
+::abbrev p. ::exp page ::lcode eng ::type corpus-component
+::abbrev para. ::exp paragraph ::lcode eng ::type corpus-component
+::abbrev paras. ::exp paragraphs ::lcode eng ::type corpus-component
+::abbrev pp. ::exp pages ::lcode eng ::type corpus-component
+::abbrev # No. ::exp number ::lcode eng ::type corpus-component
+::abbrev Nos. ::exp numbers ::lcode eng ::type corpus-component
+::abbrev sect. ::exp section ::lcode eng ::type corpus-component
+::abbrev sects. ::exp sections ::lcode eng ::type corpus-component
+::abbrev vol. ::exp volume ::lcode eng ::type corpus-component
+::abbrev vols. ::exp volumes ::lcode eng ::type corpus-component
+
+::abbrev Ala. ::exp Alabama ::lcode eng ::type US-state
+::abbrev Ariz. ::exp Arizona ::lcode eng ::type US-state
+::abbrev Ark. ::exp Arkansas ::lcode eng ::type US-state
+::abbrev Calif. ::exp California ::lcode eng ::type US-state
+::abbrev Colo. ::exp Colorado ::lcode eng ::type US-state
+::abbrev Conn. ::exp Connecticut ::lcode eng ::type US-state
+::abbrev D.C. ::exp District of Columbia ::lcode eng ::type US-state
+::abbrev Del. ::exp Delaware ::lcode eng ::type US-state
+::abbrev Fla. ::exp Florida ::lcode eng ::type US-state
+::abbrev Ga. ::exp Georgia ::lcode eng ::type US-state
+::abbrev Ill. ::exp Illinois ::lcode eng ::type US-state
+::abbrev Ind. ::exp Indiana ::lcode eng ::type US-state
+::abbrev Kans. ::exp Kansas ::lcode eng ::type US-state
+::abbrev Ky. ::exp Kentucky ::lcode eng ::type US-state
+::abbrev La. ::exp Louisiana ::lcode eng ::type US-state
+::abbrev Mass. ::exp Massachusetts ::lcode eng ::type US-state
+::abbrev Md. ::exp Maryland ::lcode eng ::type US-state
+::abbrev Mich. ::exp Michigan ::lcode eng ::type US-state
+::abbrev Minn. ::exp Minnesota ::lcode eng ::type US-state
+::abbrev Miss. ::exp Mississippi ::lcode eng ::type US-state
+::abbrev Mo. ::exp Missouri ::lcode eng ::type US-state
+::abbrev Mont. ::exp Montana ::lcode eng ::type US-state
+::abbrev Nebr. ::exp Nebraska ::lcode eng ::type US-state
+::abbrev Nev. ::exp Nevada ::lcode eng ::type US-state
+::abbrev N.C. ::exp North Carolina ::lcode eng ::type US-state
+::abbrev N.D. ::exp North Dakota ::lcode eng ::type US-state
+::abbrev N.H. ::exp New Hampshire ::lcode eng ::type US-state
+::abbrev N.J. ::exp New Jersey ::lcode eng ::type US-state
+::abbrev N.M. ::exp New Mexico ::lcode eng ::type US-state
+::abbrev N.Y. ::exp New York ::lcode eng ::type US-state
+::abbrev Okla. ::exp Oklahoma ::lcode eng ::type US-state
+::abbrev Ore. ::exp Oregon ::lcode eng ::type US-state
+::abbrev Pa. ::exp Pennsylvania ::lcode eng ::type US-state
+::abbrev P.R. ::exp Puerto Rico ::lcode eng ::type US-state
+::abbrev R.I. ::exp Rhode Island ::lcode eng ::type US-state
+::abbrev S.C. ::exp South Carolina ::lcode eng ::type US-state
+::abbrev S.D. ::exp South Dakota ::lcode eng ::type US-state
+::abbrev Tenn. ::exp Tennessee ::lcode eng ::type US-state
+::abbrev Tex. ::exp Texas ::lcode eng ::type US-state
+::abbrev Va. ::exp Virginia ::lcode eng ::type US-state
+::abbrev V.I. ::exp Virgin Islands ::lcode eng ::type US-state
+::abbrev Vt. ::exp Vermont ::lcode eng ::type US-state
+::abbrev Wash. ::exp Washington ::lcode eng ::type US-state
+::abbrev W.Va. ::exp West Virginia ::lcode eng ::type US-state
+::abbrev Wis. ::exp Wisconsin ::lcode eng ::type US-state
+::abbrev Wyo. ::exp Wyoming ::lcode eng ::type US-state
+
+::abbrev CA ::exp California ::lcode eng ::type US-state-code
+::abbrev DC ::exp District of Columbia ::lcode eng ::type US-state-code
+::abbrev GA ::exp Georgia ::lcode eng ::type US-state-code
+::abbrev NY ::exp New York ::lcode eng ::type US-state-code
+::abbrev TX ::exp Texas ::lcode eng ::type US-state-code
+
+::abbrev ISI ::exp Information Sciences Institute ::lcode eng ::type educational-organization
+::abbrev MIT ::exp Massachusetts Institute of Technology ::lcode eng ::type educational-organization
+::abbrev UCLA ::exp University of California, Los Angeles ::lcode eng ::type educational-organization
+::abbrev USC ::exp University of Southern California ::lcode eng ::type educational-organization
+
+::abbrev USMC ::exp United States Marine Corps ::lcode eng ::type military-organization
+
+::abbrev ASEAN ::exp Association of Southeast Asian Nations ::lcode eng ::type international-organization
+::abbrev EU ::exp European Union ::lcode eng ::type international-organization
+::abbrev GCC ::exp Golf Cooperation Council ::lcode eng ::type international-organization
+::abbrev IAEA ::exp International Atomic Energy Agency ::lcode eng ::type international-organization
+::abbrev NATO ::exp North Atlantic Treaty Organization ::lcode eng ::type international-organization
+::abbrev OSCE ::exp Organization for Security and Cooperation in Europe ::lcode eng ::type international-organization
+::abbrev U.N. ::exp United Nations ::lcode eng ::type international-organization
+::abbrev UN ::exp United Nations ::lcode eng ::type international-organization
+::abbrev UNDCP ::exp United Nations Drug Control Program ::lcode eng ::type international-organization
+::abbrev UNODC ::exp United Nations Office for Drugs and Crime ::lcode eng ::type international-organization
+::abbrev WHO ::exp World Health Organization ::lcode eng ::type international-organization
+::abbrev WTO ::exp World Trade Organization ::lcode eng ::type international-organization
+
+::abbrev ABC ::exp American Broadcasting Corporation ::lcode eng ::type media-organization
+::abbrev ABC ::exp Australian Broadcasting Corporation ::lcode eng ::type media-organization
+::abbrev CCTV ::exp China Central Television ::lcode eng ::type media-organization
+::abbrev NYT ::exp New York Times ::lcode eng ::type media-organization
+::abbrev WSJ ::exp Wall Street Journal ::lcode eng ::type media-organization
+
+::abbrev CFE ::exp Conventional Forces in Europe ::lcode eng ::type treaty
+::abbrev NAFTA ::exp North American Free Trade Agreement ::lcode eng ::type treaty
+::abbrev NPT ::exp Non-Proliferation Treaty ::lcode eng ::type treaty
+
+::abbrev BNP ::exp British National Party ::lcode eng ::type political-party
+::abbrev GOP ::exp Republic Party; Grand Old Party ::lcode eng ::type political-party ::country US
+::abbrev PKK ::exp Kurdistan Workers' Party ::lcode eng ::type political-party
+
+::abbrev JI ::exp Jemaah Islamiyah ::lcode eng ::type terrorist organization
+
+::abbrev ESA ::exp European Space Agency ::lcode eng ::type government-organiztion
+::abbrev NASA ::exp National Aeronautics and Space Administration ::lcode eng ::type government-organiztion
+::abbrev USPS ::exp United States Postal Service ::lcode eng ::type government-organiztion
+
+::abbrev ADL ::exp Anti-Defamation League ::lcode eng ::type organization
+::abbrev NCRI ::exp National Council of Resistance of Iran ::lcode eng ::type organization
+::abbrev OWS ::exp Occupy Wall Street ::lcode eng ::type organization
+
+::abbrev AF ::exp Afghanistan ::lcode eng ::type country-code
+::abbrev AL ::exp Albania ::lcode eng ::type country-code
+::abbrev AT ::exp Austria ::lcode eng ::type country-code
+::abbrev AU ::exp Australia ::lcode eng ::type country-code
+::abbrev BA ::exp Bosnia and Herzegovina ::lcode eng ::type country-code
+::abbrev BD ::exp Bangladesh ::lcode eng ::type country-code
+::abbrev BE ::exp Belgium ::lcode eng ::type country-code
+::abbrev BG ::exp Bulgaria ::lcode eng ::type country-code
+::abbrev BR ::exp Brazil ::lcode eng ::type country-code
+::abbrev CA ::exp Canada ::lcode eng ::type country-code
+::abbrev CG ::exp Republic of Congo ::lcode eng ::type country-code
+::abbrev CH ::exp Switzerland ::lcode eng ::type country-code
+::abbrev CN ::exp China ::lcode eng ::type country-code
+::abbrev CR ::exp Costa Rica ::lcode eng ::type country-code
+::abbrev CU ::exp Cuba ::lcode eng ::type country-code
+::abbrev CV ::exp Cape Verde ::lcode eng ::type country-code
+::abbrev DE ::exp Germany ::lcode eng ::type country-code
+::abbrev DK ::exp Denmark ::lcode eng ::type country-code
+::abbrev DZ ::exp Algeria ::lcode eng ::type country-code
+::abbrev EE ::exp Estonia ::lcode eng ::type country-code
+::abbrev EG ::exp Egypt ::lcode eng ::type country-code
+::abbrev ES ::exp Spain ::lcode eng ::type country-code
+::abbrev FR ::exp France ::lcode eng ::type country-code
+::abbrev GB ::exp Great Britain ::lcode eng ::type country-code
+::abbrev GB ::exp United Kingdom ::lcode eng ::type country-code
+::abbrev GE ::exp Georgia ::lcode eng ::type country-code
+::abbrev GH ::exp Ghana ::lcode eng ::type country-code
+::abbrev HK ::exp Hong Kong ::lcode eng ::type country-code
+::abbrev HN ::exp Honduras ::lcode eng ::type country-code
+::abbrev HR ::exp Croatia ::lcode eng ::type country-code
+::abbrev ID ::exp Indonesia ::lcode eng ::type country-code
+::abbrev IN ::exp India ::lcode eng ::type country-code
+::abbrev IQ ::exp Iraq ::lcode eng ::type country-code
+::abbrev IR ::exp Iran ::lcode eng ::type country-code
+::abbrev IR ::exp Islamic Republic of Iran ::lcode eng ::type country-code
+::abbrev IL ::exp Israel ::lcode eng ::type country-code
+::abbrev IT ::exp Italy ::lcode eng ::type country-code
+::abbrev JO ::exp Jordan ::lcode eng ::type country-code
+::abbrev JP ::exp Japan ::lcode eng ::type country-code
+::abbrev KE ::exp Kenya ::lcode eng ::type country-code
+::abbrev KG ::exp Kyrgyzstan ::lcode eng ::type country-code
+::abbrev KH ::exp Cambodia ::lcode eng ::type country-code
+::abbrev KP ::exp Democratic People's Republic of Korea ::lcode eng ::type country-code
+::abbrev KP ::exp North Korea ::lcode eng ::type country-code
+::abbrev KR ::exp Republic of Korea ::lcode eng ::type country-code
+::abbrev KR ::exp South Korea ::lcode eng ::type country-code
+::abbrev KZ ::exp Kazakhstan ::lcode eng ::type country-code
+::abbrev LA ::exp Laos ::lcode eng ::type country-code
+::abbrev LA ::exp Lao People's Democratic Republic ::lcode eng ::type country-code
+::abbrev LY ::exp Libya ::lcode eng ::type country-code
+::abbrev LY ::exp Libyan Arab Jamahiriya ::lcode eng ::type country-code
+::abbrev MA ::exp Morocco ::lcode eng ::type country-code
+::abbrev MC ::exp Monaco ::lcode eng ::type country-code
+::abbrev MK ::exp North Macedonia ::lcode eng ::type country-code
+::abbrev MK ::exp Former Yugoslav Republic of Macedonia ::lcode eng ::type country-code
+::abbrev MM ::exp Myanmar ::lcode eng ::type country-code
+::abbrev MR ::exp Mauritania ::lcode eng ::type country-code
+::abbrev MX ::exp Mexico ::lcode eng ::type country-code
+::abbrev MY ::exp Malaysia ::lcode eng ::type country-code
+::abbrev NI ::exp Nicaragua ::lcode eng ::type country-code
+::abbrev NL ::exp Netherlands ::lcode eng ::type country-code
+::abbrev PA ::exp Panama ::lcode eng ::type country-code
+::abbrev PE ::exp Peru ::lcode eng ::type country-code
+::abbrev PH ::exp Philippines ::lcode eng ::type country-code
+::abbrev PK ::exp Pakistan ::lcode eng ::type country-code
+::abbrev PS ::exp Palestine ::lcode eng ::type country-code
+::abbrev PS ::exp Palestinian Territory ::lcode eng ::type country-code
+::abbrev RO ::exp Romania ::lcode eng ::type country-code
+::abbrev RU ::exp Russia ::lcode eng ::type country-code
+::abbrev RU ::exp Russian Federation ::lcode eng ::type country-code
+::abbrev QA ::exp Qatar ::lcode eng ::type country-code
+::abbrev SA ::exp Saudi Arabia ::lcode eng ::type country-code
+::abbrev SE ::exp Sweden ::lcode eng ::type country-code
+::abbrev SG ::exp Singapore ::lcode eng ::type country-code
+::abbrev SK ::exp Slovakia ::lcode eng ::type country-code
+::abbrev SY ::exp Syria; Syrian Arab Republic ::lcode eng ::type country-code
+::abbrev TH ::exp Thailand ::lcode eng ::type country-code
+::abbrev TJ ::exp Tajikistan ::lcode eng ::type country-code
+::abbrev TM ::exp Turkmenistan ::lcode eng ::type country-code
+::abbrev TN ::exp Tunisia ::lcode eng ::type country-code
+::abbrev TW ::exp Taiwan ::lcode eng ::type country-code
+::abbrev TZ ::exp Tanzania ::lcode eng ::type country-code
+::abbrev UA ::exp Ukraine ::lcode eng ::type country-code
+::abbrev UK ::exp United Kingdom; Great Britain; Britain ::lcode eng ::type country-code
+::abbrev US ::exp United States; United States of America ::lcode eng ::type country-code
+::abbrev UZ ::exp Uzbekistan ::lcode eng ::type country-code
+::abbrev VN ::exp Vietnam; Viet Nam ::lcode eng ::type country-code
+::abbrev YE ::exp Yemen ::lcode eng ::type country-code
+::abbrev ZA ::exp South Africa ::lcode eng ::type country-code
+::abbrev ZW ::exp Zimbabwe ::lcode eng ::type country-code
+
+::abbrev UAE ::exp United Arab Emirates ::lcode eng ::type country
+::abbrev U.K. ::exp United Kingdom ::lcode eng ::type country
+::abbrev U.S. ::exp United States ::lcode eng ::type US-state
+::abbrev U.S.A. ::exp United States of America ::lcode eng ::type US-state
+::abbrev USA ::exp United States of America; United States ::lcode eng ::type country
+
+::abbrev NZD ::exp New Zealand dollar ::lcode eng ::type currency
+::abbrev RMB ::exp renminbi ::lcode eng ::type currency
+::abbrev USD ::exp United States dollar ::lcode eng ::type currency
+
+::abbrev LA ::exp Los Angeles ::lcode eng ::type city
+
+::abbrev ISS ::exp International Space Station ::lcode eng ::type object
+
+::abbrev WWI ::exp World War I ::lcode eng ::type event
+::abbrev WWII ::exp World War II ::lcode eng ::type event
+
+::abbrev A&E ::exp accident and emergency department ::lcode eng ::type general
+::abbrev AAM ::exp air-to-air missile ::lcode eng ::type general
+::abbrev AC ::exp air conditioning ::lcode eng ::type general
+::abbrev AC ::exp alternating current ::lcode eng ::type general
+::abbrev ATM ::exp automated teller machine ::lcode eng ::type general
+::abbrev B&B ::exp bed and breakfast ::lcode eng ::type general
+::abbrev CEO ::exp chief executive officer ::lcode eng ::type general
+::abbrev CCTV ::exp closed-circuit television ::lcode eng ::type general
+::abbrev CEO ::exp chief executive officer ::lcode eng ::type general
+::abbrev CFO ::exp chief financial officer ::lcode eng ::type general
+::abbrev CPU ::exp central processing unit ::lcode eng ::type general
+::abbrev CS ::exp computer science ::lcode eng ::type general
+::abbrev DD ::exp dear daughter ::lcode eng ::type general
+::abbrev DDoS ::exp distributed denial of service ::lcode eng ::type general
+::abbrev DH ::exp dear husband ::lcode eng ::type general
+::abbrev DS ::exp dear son ::lcode eng ::type general
+::abbrev DW ::exp dear wife ::lcode eng ::type general
+::abbrev EMT ::exp epithelial-mesenchymal transition ::lcode eng ::type general
+::abbrev ICBM ::exp intercontinental ballistic missile ::lcode eng ::type general
+::abbrev IED ::exp improvised explosive device ::lcode eng ::type general
+::abbrev IP ::exp intellectual property ::lcode eng ::type general
+::abbrev IP ::exp internet protocol ::lcode eng ::type general
+::abbrev IT ::exp internet protocol ::lcode eng ::type general
+::abbrev IT ::exp intellectual property ::lcode eng ::type general
+::abbrev MM ::exp multiple myeloma ::lcode eng ::type general
+::abbrev MP ::exp member of parliament ::lcode eng ::type general ::country UK
+::abbrev MP ::exp military police ::lcode eng ::type general
+::abbrev NGO ::exp non-governmental organization ::lcode eng ::type general
+::abbrev OP ::exp original poster ::lcode eng ::type general
+::abbrev PC ::exp personal computer ::lcode eng ::type general
+::abbrev PC ::exp politically correct ::lcode eng ::type general
+::abbrev POW ::exp prisoner of war ::lcode eng ::type general
+::abbrev Q&A ::exp question and answer ::lcode eng ::type general
+::abbrev R&B ::exp rythm and blues ::lcode eng ::type general
+::abbrev R&D ::exp research and development ::lcode eng ::type general
+::abbrev RPG ::exp rocket-propelled grenade ::lcode eng ::type general
+::abbrev S&L ::exp savings and loan ::lcode eng ::type general
+::abbrev WMD ::exp weapons of mass destruction ::lcode eng ::type general
+
+::abbrev cm ::exp centimeter ::lcode eng ::type unit-of-measurement
+::abbrev fl.oz. ::exp fluid ounce ::lcode eng ::type unit-of-measurement
+::abbrev fl. oz. ::exp fluid ounce ::lcode eng ::type unit-of-measurement
+::abbrev fl oz ::exp fluid ounce ::lcode eng ::type unit-of-measurement
+::abbrev g ::exp gram ::lcode eng ::type unit-of-measurement
+::abbrev h ::exp hour ::lcode eng ::type unit-of-measurement
+::abbrev hrs ::exp hour ::lcode eng ::type unit-of-measurement
+::abbrev kg ::exp kilogram ::lcode eng ::type unit-of-measurement
+::abbrev km ::exp kilometer ::lcode eng ::type unit-of-measurement
+::abbrev lb ::exp pound ::lcode eng ::type unit-of-measurement
+::abbrev lb. ::exp pound ::lcode eng ::type unit-of-measurement
+::abbrev lbs ::exp pounds ::lcode eng ::type unit-of-measurement
+::abbrev lbs. ::exp pounds ::lcode eng ::type unit-of-measurement
+::abbrev M ::exp molar ::lcode eng ::type unit-of-measurement
+::abbrev mg ::exp milligram ::lcode eng ::type unit-of-measurement
+::abbrev min ::exp minute ::lcode eng ::type unit-of-measurement
+::abbrev ml ::exp milliliter ::lcode eng ::type unit-of-measurement
+::abbrev mm ::exp millimeter ::lcode eng ::type unit-of-measurement
+::abbrev mph ::exp miles per hour ::lcode eng ::type unit-of-measurement
+::abbrev µm ::exp micrometer ::lcode eng ::type unit-of-measurement
+::abbrev µM ::exp micromolar ::lcode eng ::type unit-of-measurement
+::abbrev ng ::exp nanogram ::lcode eng ::type unit-of-measurement
+::abbrev nM ::exp nanomolar ::lcode eng ::type unit-of-measurement
+::abbrev yr. ::exp year ::lcode eng ::type unit-of-measurement
+::abbrev yrs. ::exp years ::lcode eng ::type unit-of-measurement
+
+::abbrev d. ::exp day ::lcode eng ::type unit-of-measurement
+::abbrev g. ::exp gram ::lcode eng ::type unit-of-measurement
+::abbrev m. ::exp meter ::lcode eng ::type unit-of-measurement
+
+::abbrev ad ::exp advertisement ::lcode eng ::type general
+::abbrev asap ::exp as soon as possible ::lcode eng ::type general
+::abbrev bd ::exp bluray disc ::lcode eng ::type general
+::abbrev bro ::exp brother ::lcode eng ::type general
+::abbrev cd ::exp compact disc ::lcode eng ::type general
+::abbrev dvd ::exp digital versatile disc ::lcode eng ::type general
+::abbrev exec ::exp executive ::lcode eng ::type general
+::abbrev execs ::exp executives ::lcode eng ::type general
+::abbrev lib ::exp liberal ::lcode eng ::type general
+::abbrev lol ::exp laughing out loud ::lcode eng ::type general
+::abbrev mag ::exp magazine ::lcode eng ::type general
+::abbrev math ::exp mathematics ::lcode eng ::type general
+::abbrev maths ::exp mathematics ::lcode eng ::type general
+::abbrev pic ::exp picture ::lcode eng ::type general
+::abbrev sis ::exp sister ::lcode eng ::type general
+::abbrev TV ::exp television ::lcode eng ::type general
+
