@@ -23,11 +23,12 @@ from utoken import util
 log.basicConfig(level=log.INFO)
 
 __version__ = '0.0.1'
-last_mod_date = 'July 19, 2021'
+last_mod_date = 'July 21, 2021'
 
 
 class VertexMap:
-    """Maps character positions from current to original offsets after insertions/deletions"""
+    """Maps character positions from current (after insertions/deletions) to original offsets.
+    Typical deletions are for many control characters."""
     def __init__(self, s: str):
         self.size = len(s)
         self.char_map_to_orig_start_char = {}
@@ -37,6 +38,7 @@ class VertexMap:
             self.char_map_to_orig_end_char[i+1] = i+1
 
     def delete_char(self, position, n_characters) -> None:
+        """Update VertexMap for deletion of n_characters starting at position."""
         old_len = self.size
         new_len = old_len - n_characters
         for i in range(position, new_len):
@@ -58,6 +60,8 @@ class VertexMap:
 
 
 class SimpleSpan:
+    """Span from start vertex to end vertex, e.g. 0-1 for first characters.
+    Soft version of span can include additional spaces etc. around a token."""
     def __init__(self, hard_from: int, hard_to: int,
                  soft_from: Optional[int] = None, soft_to: Optional[int] = None,
                  vm: Optional[VertexMap] = None):
@@ -77,6 +81,7 @@ class SimpleSpan:
 
 
 class ComplexSpan:
+    """A complex span is a list of (non-contiguous) spans, e.g. (3-6, 10-13) for the 'cut off' in 'He cut it off.'"""
     def __init__(self, spans: [SimpleSpan]):
         self.spans = spans
 
@@ -91,6 +96,7 @@ class ComplexSpan:
 
 
 class Token:
+    """A token is most typically a word, number, or punctuation, but can be a multi-word phrase or part of a word."""
     def __init__(self, surf: str, snt_id: str, creator: str, span: ComplexSpan):
         self.surf = surf
         self.snt_id = snt_id
@@ -104,6 +110,7 @@ class Token:
 
 class Chart:
     def __init__(self, s: str, snt_id: str):
+        """A chart is set of spanned tokens."""
         self.orig_s = s     # original sentence
         self.s0 = s         # original sentence without undecodable bytes (only UTF-8 conform characters)
         self.s = s          # current sentence, typically without deletable control characters
@@ -209,6 +216,11 @@ class Tokenizer:
     def build_rec_result(token_surf: str, s: str, start_position: int, offset: int,
                          token_type: str, line_number: int, chart: Optional[Chart],
                          lang_code: str, ht: dict, this_function):
+        """Once a heuristic has identified a particular token span and type,
+        this method computes all offsets, creates a new token, and recursively
+        calls the calling functions on the string preceding and following the new token.
+        The function not only returns the tokenization of the input string, but also the token,
+        so that the calling function can assign any further token slot values."""
         offset2 = offset + start_position
         offset3 = offset2 + len(token_surf)
         pre = s[:start_position]
@@ -225,6 +237,7 @@ class Tokenizer:
 
     def normalize_characters(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                              line_number: Optional[int] = None, offset: int = 0) -> str:
+        """This tokenizer step deletes non-decodable bytes and most control characters."""
         this_function = self.normalize_characters
         # this_function_name = this_function.__qualname__
         # log.info(f'{this_function_name} l.{line_number}.{offset}: {s}')
@@ -275,6 +288,7 @@ class Tokenizer:
 
     def tokenize_urls(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                       line_number: Optional[int] = None, offset: int = 0) -> str:
+        """This tokenization step splits off URL tokens such as https://www.amazon.com"""
         this_function = self.tokenize_urls
         # this_function_name = this_function.__qualname__
         # log.info(f'{this_function_name} l.{line_number}.{offset}: {s}')
@@ -324,6 +338,7 @@ class Tokenizer:
 
     def tokenize_numbers(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                          line_number: Optional[int] = None, offset: int = 0) -> str:
+        """This tokenization step splits off numbers such as 12,345,678.90"""
         this_function = self.tokenize_numbers
         # this_function_name = this_function.__qualname__
         # log.info(f'{this_function_name} l.{line_number}.{offset}: {s}')
@@ -363,6 +378,7 @@ class Tokenizer:
 
     def tokenize_abbreviations(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                                line_number: Optional[int] = None, offset: int = 0) -> str:
+        """This tokenization step splits off abbreviations ending in a period, searching right to left."""
         this_function = self.tokenize_abbreviations
         # this_function_name = this_function.__qualname__
         # log.info(f'{this_function_name} l.{line_number}.{offset}: {s}')
@@ -410,6 +426,7 @@ class Tokenizer:
 
     def tokenize_mt_punctuation(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                                 line_number: Optional[int] = None, offset: int = 0) -> str:
+        """This tokenization step currently splits of dashes in certain contexts."""
         this_function = self.tokenize_mt_punctuation
         # this_function_name = this_function.__qualname__
         # log.info(f'{this_function_name} l.{line_number}.{offset}: {s}')
@@ -440,21 +457,25 @@ class Tokenizer:
 
     def tokenize_punctuation(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                              line_number: Optional[int] = None, offset: int = 0) -> str:
+        """This tokenization step splits off regular punctuation."""
         this_function = self.tokenize_punctuation
         # this_function_name = this_function.__qualname__
         # log.info(f'{this_function_name} l.{line_number}.{offset}: {s}')
 
-        # always separate: parentheses, brackets, dandas, currency signs
+        # Some punctuation should always be split off by itself regardless of context:
+        # parentheses, brackets, dandas, currency signs.
         m = re.match(r'(.*)(["(){}\[\]〈〉\u3008-\u3011\u3014-\u301B।॥%£€¥₹]|\$+)(.*)$', s)
         if m:
             punct_type = 'PUNCT'
         else:
-            # separate from beginning
+            # Some punctuation should be split off from the beginning of a token
+            # (with a space or sentence-start to the left of the punctuation).
             m = re.match(r'(|.*\s)([\'])(.*)$', s)
             if m:
                 punct_type = "PUNCT-S"
             else:
-                # separate from end
+                # Some punctuation should be split off from the end of a token
+                # (with a space or sentence-end to the right of the punctuation.
                 m = re.match(r'(.*)([\'.?!,;:])(\s.*|)$', s)
                 if m:
                     punct_type = "PUNCT-E"
@@ -474,11 +495,12 @@ class Tokenizer:
 
     def tokenize_main(self, s: str, chart: Chart, ht: dict, lang_code: str = '', line_number: Optional[int] = None,
                       offset: int = 0) -> str:
+        """This is the final tokenization step that tokenizes the remaining string by spaces."""
         this_function = self.tokenize_main
         # this_function_name = this_function.__qualname__
         # log.info(f'{this_function_name} l.{line_number}.{offset}: {s}')
         next_tokenization_function = self.next_tokenization_step[this_function]
-        if next_tokenization_function:
+        if next_tokenization_function:  # Should actually never apply.
             s = next_tokenization_function(s, chart, ht, lang_code, line_number, offset)
         else:
             tokens = []
@@ -508,6 +530,7 @@ class Tokenizer:
                         annotation_file: Optional[TextIO] = None) -> str:
         self.lv = 0  # line_char_type_vector
         # Each bit in this vector is to capture character type info, e.g. char_is_arabic
+        # Build a bit-vector for the whole line, as the bitwise 'or' of all character bit-vectors.
         for char in s:
             char_type_vector = self.char_type_vector_dict.get(char, 0)
             if char_type_vector:
@@ -515,11 +538,13 @@ class Tokenizer:
                 # So we will easily know whether e.g. a line contains a digit.
                 # If not, some digit-specific tokenization steps can be skipped to improve run-time.
                 self.lv = self.lv | char_type_vector
+        # Initialize chart.
         chart = Chart(s, str(line_number)) if self.chart_p else None
+        # Call the first tokenization step function, which then recursively call all other tokenization step functions.
         first_tokenization_step_function = self.tokenization_step_functions[0]
         s = first_tokenization_step_function(s, chart, ht, lang_code, line_number)
         if chart:
-            log.info(chart.print_short())
+            log.info(chart.print_short())  # Temporary. Will print short version of chart to STDERR.
             if annotation_file:
                 chart.print_to_file(annotation_file)
         return s.strip()

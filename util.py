@@ -14,12 +14,13 @@ last_mod_date = 'July 19, 2021'
 
 
 class AbbreviationEntry:
+    """Annotated abbreviation"""
     def __init__(self, abbrev: str, exp: Optional[List[str]], abbrev_type: Optional[str] = None,
                  lcode: Optional[str] = None, country: Optional[str] = None, comment: Optional[str] = None):
-        self.abbreviation = abbrev
-        self.expansion = exp
-        self.type = abbrev_type
-        self.lcode = lcode
+        self.abbreviation = abbrev      # e.g. Gen.
+        self.expansion = exp            # e.g. General
+        self.type = abbrev_type         # e.g. pre-name-title
+        self.lcode = lcode              # language code, e.g. eng
         self.country = country
         self.comment = comment
 
@@ -122,7 +123,7 @@ def increment_dict_count(ht: dict, key: str, increment=1) -> int:
 
 
 def join_tokens(tokens: List[str]):
-    '''Join non-empty tokens'''
+    '''Join tokens with space, ignoring empty tokens'''
     return ' '.join([token for token in tokens if token != ''])
 
 
