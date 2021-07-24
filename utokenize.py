@@ -161,6 +161,7 @@ class Tokenizer:
         # Ordered list of tokenization steps
         self.tokenization_step_functions = [self.normalize_characters,
                                             self.tokenize_urls,
+                                            self.tokenize_emails,
                                             self.tokenize_mt_punctuation,
                                             self.tokenize_numbers,
                                             self.tokenize_abbreviations,
@@ -180,6 +181,8 @@ class Tokenizer:
         self.char_is_non_standard_space = bit_vector
         bit_vector = bit_vector << 1
         self.char_is_surrogate = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_ampersand = bit_vector
         self.range_init_char_type_vector_dict()
         self.chart_p = False
         self.first_token_is_line_id_p = False
@@ -212,6 +215,9 @@ class Tokenizer:
             char = chr(code_point)
             self.char_type_vector_dict[char] \
                 = self.char_type_vector_dict.get(char, 0) | self.char_is_non_standard_space
+        # Ampersand
+        self.char_type_vector_dict['@'] \
+            = self.char_type_vector_dict.get('@', 0) | self.char_is_ampersand
 
     @staticmethod
     def build_rec_result(token_surf: str, s: str, start_position: int, offset: int,
@@ -332,6 +338,43 @@ class Tokenizer:
                                                                 'URL', line_id, chart, lang_code, ht,
                                                                 this_function)
                 return tokenization
+        next_tokenization_function = self.next_tokenization_step[this_function]
+        if next_tokenization_function:
+            s = next_tokenization_function(s, chart, ht, lang_code, line_id, offset)
+        return s
+
+    def tokenize_emails(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+                        line_id: Optional[str] = None, offset: int = 0) -> str:
+        """This tokenization step splits off email-address tokens such as ChunkyLover53@aol.com"""
+        this_function = self.tokenize_emails
+        this_function_name = this_function.__qualname__
+        if self.lv & self.char_is_ampersand:
+            pre1 = ''
+            s1 = s
+            while 1:
+                m = re.match(r'(.*?)([a-z][-_.a-z0-9]*[a-z0-9]@[a-z][-_.a-z0-9]*[a-z0-9]\.(?:[a-z]{2,}))(.*)$',
+                             s1, flags=re.IGNORECASE)
+                if m:
+                    pre = m.group(1)
+                    token_surf = m.group(2)
+                    post = m.group(3)
+                    start_position1 = len(pre)
+                    left_context = s1[max(0, start_position1 - 4):start_position1]
+                    left_context_class = ''.join([('a' if c.isalpha() else 'm' if ud.category(c) == 'Mc'
+                                                   else 'd' if c.isdigit() else '-')
+                                                  for c in left_context])
+                    if (re.match(r'.*(d|am*)$', left_context_class)     # bad left context
+                       or (len(post) and post[0].isalnum())):           # bad right context
+                        pre1 += pre + token_surf                        # no valid email-address after all
+                        s1 = post                                       # look further in post string
+                    else:
+                        start_position = len(pre1) + start_position1
+                        tokenization, new_token = self.build_rec_result(token_surf, s, start_position, offset,
+                                                                        'EMAIL-ADDRESS', line_id, chart, lang_code,
+                                                                        ht, this_function)
+                        return tokenization
+                else:
+                    break
         next_tokenization_function = self.next_tokenization_step[this_function]
         if next_tokenization_function:
             s = next_tokenization_function(s, chart, ht, lang_code, line_id, offset)
