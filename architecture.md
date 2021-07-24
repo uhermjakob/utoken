@@ -4,6 +4,13 @@
 *utoken* has an ordered list of tokenization steps, each of which deals with a particular aspect of tokenization.
 Starting with the first tokenization step, the tokenization steps try to find a token to be split off. If successful, the tokenization step calls itself on the string to the left of the token and to the string on the right of the token, and then combines the results with the token it found before. When a tokenization step does not find a token, it calls the next tokenization step on the same string.
 
+#### Example
+* Number heuristic is applied to sentence: *The 25,000 vaccine doses were stored at -20°C.*
+* Number heuristic identifies *25,000* as a number and recursively calls itself for (1) *The* and (2) *vaccine doses were stored at -20°C.* 
+* Number heuristic does now find any more numbers in *The* and therefore calls the next heuristic step on *The* .
+* Number heuristic, when applied to *vaccine doses were stored at -20°C.*, identifies *-20* as a number and recursively calls itself on (1) *vaccine doses were stored at* and (2) *°C.*
+* Number heuristic does not find any more numbers in (1) and (2) above, and therefore calls the next tokeniztion step on (1) and (2).
+
 ## Bit Vectors
 In a *utoken* bit vector, every bit stands for a certain property of a sequence of characters, including in particular a single character.
 Examples for such properties for a character potentially include 
