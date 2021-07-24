@@ -42,6 +42,13 @@
 ::span 68-69 ::type PUNCT ::surf )
 ::span 70-73 ::type MAIN ::surf ആണ്
 ::span 73-74 ::type PUNCT-E ::surf .
+::line Snt3 ::s ജാതി-മത-വർഗവീക്ഷണം,
+::span 0-4 ::type MAIN ::surf ജാതി
+::span 4-5 ::type DASH ::surf -
+::span 5-7 ::type MAIN ::surf മത
+::span 7-8 ::type DASH ::surf -
+::span 8-18 ::type MAIN ::surf വർഗവീക്ഷണം
+::span 18-19 ::type PUNCT-E ::surf ,
 ::line Dat1 ::s 1800-കളുടെ
 ::span 0-4 ::type NUMBER ::surf 1800
 ::span 4-5 ::type DASH ::surf -
