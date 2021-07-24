@@ -2,7 +2,7 @@
 
 ::abbrev ഡോ. ::exp ഡോക്ടർ ::lcode mal ::type pre-name-title ::comment Dr.
 ::abbrev പ്രസ്. ::exp പ്രസിഡന്റ് ::lcode mal ::type pre-name-title ::comment Pres.
-::abbrevപ്രൊഫ. ::exp പ്രൊഫസർ ::lcode mal ::type pre-name-title ::comment Prof.
+::abbrev പ്രൊഫ. ::exp പ്രൊഫസർ ::lcode mal ::type pre-name-title ::comment Prof.
 
 ::abbrev എ. ::lcode mal ::type name-initial ::comment A.
 ::abbrev ബി. ::lcode mal ::type name-initial ::comment B.
