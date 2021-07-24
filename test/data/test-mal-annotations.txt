@@ -1,7 +1,7 @@
-::line 1 ::s ജനസംഖ്യ ൩,൩൩,൮൭,൬൭൭
+::line Num1 ::s ജനസംഖ്യ ൩,൩൩,൮൭,൬൭൭
 ::span 0-7 ::type MAIN ::surf ജനസംഖ്യ
 ::span 8-19 ::type NUMBER ::surf ൩,൩൩,൮൭,൬൭൭
-::line 2 ::s 2011ലെ കണക്കനുസരിച്ച് ഏകദേശം കേരളത്തിൽ ലഭ്യമായ ഭൂഗർഭജലം 6696 ഘനലക്ഷം മീറ്ററാണ്. വാർഷിക ഭൂഗർഭജല ലഭ്യത 6070 ഘനമീറ്ററാണ്. 3070 ഘനമീറ്റർ ഭൂഗർഭജലം കൃഷിയ്ക്ക് ലഭ്യമാണ്.
+::line Snt1 ::s 2011ലെ കണക്കനുസരിച്ച് ഏകദേശം കേരളത്തിൽ ലഭ്യമായ ഭൂഗർഭജലം 6696 ഘനലക്ഷം മീറ്ററാണ്. വാർഷിക ഭൂഗർഭജല ലഭ്യത 6070 ഘനമീറ്ററാണ്. 3070 ഘനമീറ്റർ ഭൂഗർഭജലം കൃഷിയ്ക്ക് ലഭ്യമാണ്.
 ::span 0-4 ::type NUMBER ::surf 2011
 ::span 4-6 ::type MAIN ::surf ലെ
 ::span 7-21 ::type MAIN ::surf കണക്കനുസരിച്ച്
@@ -25,7 +25,7 @@
 ::span 142-152 ::type MAIN ::surf കൃഷിയ്ക്ക്
 ::span 153-161 ::type MAIN ::surf ലഭ്യമാണ്
 ::span 161-162 ::type PUNCT-E ::surf .
-::line 3 ::s കൂടുതൽ ഭൂഗർഭജല വിനിയോഗം കാസർഗോഡും (77ശതമാനം) കുറവ് വയനാടും (18ശതമാനം) ആണ്.
+::line Snt2 ::s കൂടുതൽ ഭൂഗർഭജല വിനിയോഗം കാസർഗോഡും (77ശതമാനം) കുറവ് വയനാടും (18ശതമാനം) ആണ്.
 ::span 0-6 ::type MAIN ::surf കൂടുതൽ
 ::span 7-14 ::type MAIN ::surf ഭൂഗർഭജല
 ::span 15-23 ::type MAIN ::surf വിനിയോഗം
@@ -42,18 +42,11 @@
 ::span 68-69 ::type PUNCT ::surf )
 ::span 70-73 ::type MAIN ::surf ആണ്
 ::span 73-74 ::type PUNCT-E ::surf .
-::line 4 ::s ജാതി-മത-വർഗവീക്ഷണം,
-::span 0-4 ::type MAIN ::surf ജാതി
-::span 4-5 ::type DASH ::surf -
-::span 5-7 ::type MAIN ::surf മത
-::span 7-8 ::type DASH ::surf -
-::span 8-18 ::type MAIN ::surf വർഗവീക്ഷണം
-::span 18-19 ::type PUNCT-E ::surf ,
-::line 5 ::s 1800-കളുടെ
+::line Dat1 ::s 1800-കളുടെ
 ::span 0-4 ::type NUMBER ::surf 1800
 ::span 4-5 ::type DASH ::surf -
 ::span 5-10 ::type MAIN ::surf കളുടെ
-::line 6 ::s പ്രസ്. ജോൺ എഫ്. കെന്നഡി.
+::line Abb1 ::s പ്രസ്. ജോൺ എഫ്. കെന്നഡി.
 ::span 0-6 ::type ABBREV ::abbrev-type pre-name-title ::surf പ്രസ്.
 ::span 7-10 ::type MAIN ::surf ജോൺ
 ::span 11-15 ::type ABBREV ::abbrev-type name-initial ::surf എഫ്.
