@@ -15,6 +15,7 @@ import logging as log
 # import os
 # from pathlib import Path
 import re
+# import regex
 import sys
 from typing import Match, Optional, TextIO
 import unicodedata as ud
@@ -109,19 +110,19 @@ class Token:
 
 
 class CharClass:
-    """Maps of a character string to string of character classes such as 'd' for 'digit'
-    Example: ജനസംഖ്യ ൩,൩൩,൮൭,൬൭൭ -> aaaAaAa d,dd,dd,ddd
+    """Maps of a character string to string of character classes such as 'L' for 'letter' and 'd' for 'digit'
+    Example: ജനസംഖ്യ ൩,൩൩,൮൭,൬൭൭ -> LLLMLML d,dd,dd,ddd
     Purpose: support character-class-based regular expression matching"""
     def __init__(self, s: str, build_new: bool = False):
         self.s = s
         if build_new:
-            self.cc1 = ''.join([('a' if c.isalpha()
-                                 else 'A' if ud.category(c) == 'Mc'
-                                 else 'A' if ud.category(c) == 'Mn'
+            self.cc1 = ''.join([('L' if c.isalpha()
+                                 else 'M' if ud.category(c) == 'Mc'
+                                 else 'M' if ud.category(c) == 'Mn'
                                  else 'd' if c.isdigit()
                                  else c)
                                 for c in s])
-            # log.info(f'Point A: {s}\nPoint B: {self.cc1}')
+            # log.info(f'CharClass\nPoint A: {s}\nPoint B: {self.cc1}')
         else:
             self.cc1 = None
 
@@ -383,8 +384,8 @@ class Tokenizer:
         this_function = self.tokenize_emails
         # this_function_name = this_function.__qualname__
         if self.lv & self.char_is_ampersand:
-            m = re.match(r'(.*?)(?<![.aAd])(aA*(?:aA*|[-_.d])*(?:aA*|d)'
-                         r'@aA*(?:aA*|[-_.d])*(?:aA*|d)\.(?:[a-z]{2,}))(?!=[.aAd])(.*)$',
+            m = re.match(r'(.*?)(?<![.LMd])(LM*(?:LM*|[-_.d])*(?:LM*|d)'
+                         r'@LM*(?:LM*|[-_.d])*(?:LM*|d)\.(?:L{2,}))(?!=[.LMd])(.*)$',  # Eventually: L{2,} -> [a-z]{2,}
                          cc.cc1)
             if m:
                 start_position, token_surf = self.build_start_and_surf_from_match(s, m)
@@ -474,7 +475,7 @@ class Tokenizer:
         this_function = self.tokenize_mt_punctuation
         # this_function_name = this_function.__qualname__
         # log.info(f'{this_function_name} l.{line_id}.{offset}: {s}')
-        m = re.match(r'(.*?(?:aA*aA*|d))([-−–—]+)(?!=[.aAd])((?:aA*aA*|d).*)$',
+        m = re.match(r'(.*?(?:LM*LM*|d))([-−–—]+)(?!=[.LMd])((?:LM*LM*|d).*)$',
                      cc.cc1)
         if m:
             start_position, token_surf = self.build_start_and_surf_from_match(s, m)
