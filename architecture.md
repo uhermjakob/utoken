@@ -11,6 +11,9 @@ Starting with the first tokenization step, the tokenization steps try to find a 
 * Number heuristic, when applied to *vaccine doses were stored at -20°C.*, identifies *-20* as a number and recursively calls itself on (1) *vaccine doses were stored at* and (2) *°C.*
 * Number heuristic does not find any more numbers in (1) and (2) above, and therefore calls the next tokeniztion step on (1) and (2).
 
+## CharClass
+CharClass is a (hopefully temporary) work-around due to the lack of python module regex that enables character classes such as \p{L} (to match all Unicode letters) and \p{Mc} (to match all Unicode spacing combining marks).
+
 ## Bit Vectors
 In a *utoken* bit vector, every bit stands for a certain property of a sequence of characters, including in particular a single character.
 Examples for such properties for a character potentially include 
