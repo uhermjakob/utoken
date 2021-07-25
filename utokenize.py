@@ -109,15 +109,19 @@ class Token:
 
 
 class CharClass:
-    """Maps of a character string to string of character classes such as 'd' for 'digit'"""
+    """Maps of a character string to string of character classes such as 'd' for 'digit'
+    Example: ജനസംഖ്യ ൩,൩൩,൮൭,൬൭൭ -> aaaAaAa d,dd,dd,ddd
+    Purpose: support character-class-based regular expression matching"""
     def __init__(self, s: str, build_new: bool = False):
         self.s = s
         if build_new:
             self.cc1 = ''.join([('a' if c.isalpha()
                                  else 'A' if ud.category(c) == 'Mc'
+                                 else 'A' if ud.category(c) == 'Mn'
                                  else 'd' if c.isdigit()
                                  else c)
                                 for c in s])
+            # log.info(f'Point A: {s}\nPoint B: {self.cc1}')
         else:
             self.cc1 = None
 
