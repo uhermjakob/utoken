@@ -16,7 +16,7 @@ import logging as log
 # from pathlib import Path
 import re
 import sys
-from typing import Optional, TextIO
+from typing import Match, Optional, TextIO
 import unicodedata as ud
 from utoken import util
 
@@ -106,6 +106,26 @@ class Token:
 
     def print_short(self) -> str:
         return f'{self.span.print_hard_span()}:{self.creator} {self.surf}'
+
+
+class CharClass:
+    """Maps of a character string to string of character classes such as 'd' for 'digit'"""
+    def __init__(self, s: str, build_new: bool = False):
+        self.s = s
+        if build_new:
+            self.cc1 = ''.join([('a' if c.isalpha()
+                                 else 'A' if ud.category(c) == 'Mc'
+                                 else 'd' if c.isdigit()
+                                 else c)
+                                for c in s])
+        else:
+            self.cc1 = None
+
+    def sub(self, from_position: int, to_position: int):
+        """Creates a sub-CharClass for a sub-span"""
+        sub_cc = CharClass(self.s[from_position:to_position])
+        sub_cc.cc1 = self.cc1[from_position:to_position]
+        return sub_cc
 
 
 class Chart:
@@ -220,29 +240,39 @@ class Tokenizer:
             = self.char_type_vector_dict.get('@', 0) | self.char_is_ampersand
 
     @staticmethod
+    def build_start_and_surf_from_match(s: str, m: Match[str]) -> [int, str]:
+        pre_class = m.group(1)
+        token_class = m.group(2)
+        start_position = len(pre_class)
+        end_position = start_position + len(token_class)
+        token_surf = s[start_position:end_position]
+        return start_position, token_surf
+
+    @staticmethod
     def build_rec_result(token_surf: str, s: str, start_position: int, offset: int,
-                         token_type: str, line_id: str, chart: Optional[Chart],
-                         lang_code: str, ht: dict, this_function):
+                         token_type: str, line_id: str, cc: CharClass, chart: Optional[Chart],
+                         lang_code: str, ht: dict, this_function) -> [str, Token]:
         """Once a heuristic has identified a particular token span and type,
         this method computes all offsets, creates a new token, and recursively
         calls the calling functions on the string preceding and following the new token.
         The function not only returns the tokenization of the input string, but also the token,
         so that the calling function can assign any further token slot values."""
+        end_position = start_position + len(token_surf)
         offset2 = offset + start_position
-        offset3 = offset2 + len(token_surf)
+        offset3 = offset + end_position
         pre = s[:start_position]
-        post = s[start_position + len(token_surf):]
+        post = s[end_position:]
         if chart:
             new_token = Token(token_surf, line_id, token_type,
                               ComplexSpan([SimpleSpan(offset2, offset3, vm=chart.vertex_map)]))
             chart.register_token(new_token)
         else:
             new_token = None
-        pre_tokenization = this_function(pre, chart, ht, lang_code, line_id, offset)
-        post_tokenization = this_function(post, chart, ht, lang_code, line_id, offset3)
+        pre_tokenization = this_function(pre, cc.sub(0, start_position), chart, ht, lang_code, line_id, offset)
+        post_tokenization = this_function(post, cc.sub(end_position, len(s)), chart, ht, lang_code, line_id, offset3)
         return util.join_tokens([pre_tokenization, token_surf, post_tokenization]), new_token
 
-    def normalize_characters(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+    def normalize_characters(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                              line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenizer step deletes non-decodable bytes and most control characters."""
         this_function = self.normalize_characters
@@ -290,10 +320,10 @@ class Tokenizer:
         # log.info(f'Normalized line: {s}')
         next_tokenization_function = self.next_tokenization_step[this_function]
         if next_tokenization_function:
-            s = next_tokenization_function(s, chart, ht, lang_code, line_id, offset)
+            s = next_tokenization_function(s, cc, chart, ht, lang_code, line_id, offset)
         return s
 
-    def tokenize_urls(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+    def tokenize_urls(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                       line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off URL tokens such as https://www.amazon.com"""
         this_function = self.tokenize_urls
@@ -335,92 +365,58 @@ class Tokenizer:
                 # build result
                 token_surf = anchor + post[0:index]
                 tokenization, new_token = self.build_rec_result(token_surf, s, len(pre), offset,
-                                                                'URL', line_id, chart, lang_code, ht,
+                                                                'URL', line_id, cc, chart, lang_code, ht,
                                                                 this_function)
                 return tokenization
         next_tokenization_function = self.next_tokenization_step[this_function]
         if next_tokenization_function:
-            s = next_tokenization_function(s, chart, ht, lang_code, line_id, offset)
+            s = next_tokenization_function(s, cc, chart, ht, lang_code, line_id, offset)
         return s
 
-    def tokenize_emails(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+    def tokenize_emails(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                         line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off email-address tokens such as ChunkyLover53@aol.com"""
         this_function = self.tokenize_emails
-        this_function_name = this_function.__qualname__
+        # this_function_name = this_function.__qualname__
         if self.lv & self.char_is_ampersand:
-            pre1 = ''
-            s1 = s
-            while 1:
-                m = re.match(r'(.*?)([a-z][-_.a-z0-9]*[a-z0-9]@[a-z][-_.a-z0-9]*[a-z0-9]\.(?:[a-z]{2,}))(.*)$',
-                             s1, flags=re.IGNORECASE)
-                if m:
-                    pre = m.group(1)
-                    token_surf = m.group(2)
-                    post = m.group(3)
-                    start_position1 = len(pre)
-                    left_context = s1[max(0, start_position1 - 4):start_position1]
-                    left_context_class = ''.join([('a' if c.isalpha() else 'm' if ud.category(c) == 'Mc'
-                                                   else 'd' if c.isdigit() else '-')
-                                                  for c in left_context])
-                    if (re.match(r'.*(d|am*)$', left_context_class)     # bad left context
-                       or (len(post) and post[0].isalnum())):           # bad right context
-                        pre1 += pre + token_surf                        # no valid email-address after all
-                        s1 = post                                       # look further in post string
-                    else:
-                        start_position = len(pre1) + start_position1
-                        tokenization, new_token = self.build_rec_result(token_surf, s, start_position, offset,
-                                                                        'EMAIL-ADDRESS', line_id, chart, lang_code,
-                                                                        ht, this_function)
-                        return tokenization
-                else:
-                    break
+            m = re.match(r'(.*?)(?<![.aAd])(aA*(?:aA*|[-_.d])*(?:aA*|d)'
+                         r'@aA*(?:aA*|[-_.d])*(?:aA*|d)\.(?:[a-z]{2,}))(?!=[.aAd])(.*)$',
+                         cc.cc1)
+            if m:
+                start_position, token_surf = self.build_start_and_surf_from_match(s, m)
+                tokenization, new_token = self.build_rec_result(token_surf, s, start_position, offset,
+                                                                'EMAIL-ADDRESS', line_id, cc, chart, lang_code,
+                                                                ht, this_function)
+                return tokenization
         next_tokenization_function = self.next_tokenization_step[this_function]
         if next_tokenization_function:
-            s = next_tokenization_function(s, chart, ht, lang_code, line_id, offset)
+            s = next_tokenization_function(s, cc, chart, ht, lang_code, line_id, offset)
         return s
 
-    def tokenize_numbers(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+    def tokenize_numbers(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                          line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off numbers such as 12,345,678.90"""
         this_function = self.tokenize_numbers
         # this_function_name = this_function.__qualname__
         # log.info(f'{this_function_name} l.{line_id}.{offset}: {s}')
-        for start_position in range(0, len(s)):
-            char = s[start_position]
-            if char.isdigit():
-                minus_position = start_position  # i.e. no minus (or plus) sign
-                prev_char = s[start_position-1] if start_position > 1 else ' '
-                if prev_char in '-−–+':
-                    minus_position = start_position-1
-                    prev_char = s[minus_position-1] if minus_position > 1 else ' '
-                if prev_char in ' ;/([{*%$£€¥₹':
-                    right_context = s[start_position+1:min(start_position + 21, len(s))]
-                    right_context_class = ''.join([('d' if c.isdigit()
-                                                    else c if (c in '.,')
-                                                    else '-')
-                                                   for c in right_context])
-                    m = re.match(r'(d{0,2}(?:,ddd)+(?:\.d+)?|'     # Western style. e.g. 12,345,678.90
-                                 r'd?(?:,dd)*,ddd(?:\.d+)?|'       # Indian style, e.g. 1,23,45,678.90
-                                 r'd*(?:\.d+)?)'                   # plain, e.g. 12345678.90
-                                 r'(.{0,3})', right_context_class)
-                    if m:
-                        m1 = m.group(1)
-                        m2 = m.group(2)
-                        m2_class = ''.join([('d' if c.isdigit() else c if (c in ' .,') else '-') for c in m2])
-                        if not (re.match(r'[.,]?d', m2_class)):
-                            token_surf = s[minus_position:start_position + 1 + len(m1)]
-                            # log.info(f'-- {start_position} ({token_surf})')
-                            tokenization, new_token = self.build_rec_result(token_surf, s, start_position, offset,
-                                                                            'NUMBER', line_id, chart, lang_code,
-                                                                            ht, this_function)
-                            return tokenization
+        m = re.match(r'(.*?)(?<![-−–+.d])'
+                     r'((?:[-−–+])?'                    # plus/minus sign
+                     r'(?:d{1,3}(?:,ddd)+(?:\.d+)?|'    # Western style, e.g. 12,345,678.90
+                     r'd{1,2}(?:,dd)*,ddd(?:\.d+)?|'    # Indian style, e.g. 1,23,45,678.90
+                     r'd+(?:\.d+)?))'                   # plain, e.g. 12345678.90
+                     r'(?!=[.,]d)(.*)', cc.cc1)
+        if m:
+            start_position, token_surf = self.build_start_and_surf_from_match(s, m)
+            tokenization, new_token = self.build_rec_result(token_surf, s, start_position, offset,
+                                                            'NUMBER', line_id, cc, chart, lang_code,
+                                                            ht, this_function)
+            return tokenization
         next_tokenization_function = self.next_tokenization_step[this_function]
         if next_tokenization_function:
-            s = next_tokenization_function(s, chart, ht, lang_code, line_id, offset)
+            s = next_tokenization_function(s, cc, chart, ht, lang_code, line_id, offset)
         return s
 
-    def tokenize_abbreviations(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+    def tokenize_abbreviations(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                                line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off abbreviations ending in a period, searching right to left."""
         this_function = self.tokenize_abbreviations
@@ -443,7 +439,7 @@ class Tokenizer:
                         abbrev_entry = abbrev_entries[0]
                         abbrev_type = abbrev_entry.type
                         tokenization, new_token = self.build_rec_result(abbrev_cand, s, start_position, offset,
-                                                                        'ABBREV', line_id, chart, lang_code, ht,
+                                                                        'ABBREV', line_id, cc, chart, lang_code, ht,
                                                                         this_function)
                         if new_token:
                             new_token.abbrev_type = abbrev_type
@@ -461,45 +457,33 @@ class Tokenizer:
                 if re.match(r'\s?(?:u\.\s?)*ull', right_context_class):
                     token_surf = s[start_position:start_position+2]
                     tokenization, new_token = self.build_rec_result(token_surf, s, start_position, offset, 'ABBREV-I',
-                                                                    line_id, chart, lang_code, ht, this_function)
+                                                                    line_id, cc, chart, lang_code, ht, this_function)
                     return tokenization
         next_tokenization_function = self.next_tokenization_step[this_function]
         if next_tokenization_function:
-            s = next_tokenization_function(s, chart, ht, lang_code, line_id, offset)
+            s = next_tokenization_function(s, cc, chart, ht, lang_code, line_id, offset)
         return s
 
-    def tokenize_mt_punctuation(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+    def tokenize_mt_punctuation(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                                 line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step currently splits of dashes in certain contexts."""
         this_function = self.tokenize_mt_punctuation
         # this_function_name = this_function.__qualname__
         # log.info(f'{this_function_name} l.{line_id}.{offset}: {s}')
-        for start_position in range(0, len(s)):
-            char = s[start_position]
-            if char in '-−–—':  # hyphen-minus, minus, ndash, mdash
-                end_position = start_position+1
-                while end_position < len(s) and s[end_position] in '-−–—':
-                    end_position += 1
-                left_context = s[max(0, start_position-4):start_position]
-                right_context = s[end_position:min(end_position+4, len(s))]
-                left_context_class = ''.join([('a' if c.isalpha() else 'm' if ud.category(c) == 'Mc'
-                                               else 'd' if c.isdigit() else '-')
-                                              for c in left_context])
-                right_context_class = ''.join([('a' if c.isalpha() else 'm' if ud.category(c) == 'Mc'
-                                                else 'd' if c.isdigit() else '-')
-                                               for c in right_context])
-                if re.match(r'.*(?:am*am*|d)$', left_context_class) and re.match(r'(?:am*am*|d)', right_context_class):
-                    token_surf = s[start_position:end_position]
-                    tokenization, new_token = self.build_rec_result(token_surf, s, start_position, offset,
-                                                                    'DASH', line_id, chart, lang_code,
-                                                                    ht, this_function)
-                    return tokenization
+        m = re.match(r'(.*?(?:aA*aA*|d))([-−–—]+)(?!=[.aAd])((?:aA*aA*|d).*)$',
+                     cc.cc1)
+        if m:
+            start_position, token_surf = self.build_start_and_surf_from_match(s, m)
+            tokenization, new_token = self.build_rec_result(token_surf, s, start_position, offset,
+                                                            'DASH', line_id, cc, chart, lang_code,
+                                                            ht, this_function)
+            return tokenization
         next_tokenization_function = self.next_tokenization_step[this_function]
         if next_tokenization_function:
-            s = next_tokenization_function(s, chart, ht, lang_code, line_id, offset)
+            s = next_tokenization_function(s, cc, chart, ht, lang_code, line_id, offset)
         return s
 
-    def tokenize_punctuation(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+    def tokenize_punctuation(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                              line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off regular punctuation."""
         this_function = self.tokenize_punctuation
@@ -528,24 +512,24 @@ class Tokenizer:
         if m:
             pre, token_surf, post = m.group(1), m.group(2), m.group(3)
             tokenization, new_token = self.build_rec_result(token_surf, s, len(pre), offset,
-                                                            punct_type, line_id, chart, lang_code, ht,
+                                                            punct_type, line_id, cc, chart, lang_code, ht,
                                                             this_function)
             return tokenization
         else:
             next_tokenization_function = self.next_tokenization_step[this_function]
             if next_tokenization_function:
-                s = next_tokenization_function(s, chart, ht, lang_code, line_id, offset)
+                s = next_tokenization_function(s, cc, chart, ht, lang_code, line_id, offset)
             return s
 
-    def tokenize_main(self, s: str, chart: Chart, ht: dict, lang_code: str = '', line_id: Optional[str] = None,
-                      offset: int = 0) -> str:
+    def tokenize_main(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
+                      line_id: Optional[str] = None, offset: int = 0) -> str:
         """This is the final tokenization step that tokenizes the remaining string by spaces."""
         this_function = self.tokenize_main
         # this_function_name = this_function.__qualname__
         # log.info(f'{this_function_name} l.{line_id}.{offset}: {s}')
         next_tokenization_function = self.next_tokenization_step[this_function]
         if next_tokenization_function:  # Should actually never apply.
-            s = next_tokenization_function(s, chart, ht, lang_code, line_id, offset)
+            s = next_tokenization_function(s, cc, chart, ht, lang_code, line_id, offset)
         else:
             tokens = []
             index = 0
@@ -584,9 +568,10 @@ class Tokenizer:
                 self.lv = self.lv | char_type_vector
         # Initialize chart.
         chart = Chart(s, line_id) if self.chart_p else None
+        cc = CharClass(s, True)
         # Call the first tokenization step function, which then recursively call all other tokenization step functions.
         first_tokenization_step_function = self.tokenization_step_functions[0]
-        s = first_tokenization_step_function(s, chart, ht, lang_code, line_id)
+        s = first_tokenization_step_function(s, cc, chart, ht, lang_code, line_id)
         if chart:
             log.info(chart.print_short())  # Temporary. Will print short version of chart to STDERR.
             if annotation_file:

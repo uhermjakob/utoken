@@ -1,28 +1,31 @@
-::line 1 ::s J.Leno, his peace-loving wife, Dr. Seuss et al. bought the car on July 15, 2021, on https://www.amazon.com for $15,000.
+::line Snt1 ::s J.Leno (info@lenosgarage.com), his peace-loving wife, Dr. Seuss et al. bought the car on July 15, 2021, on https://www.amazon.com for $15,000.
 ::span 0-2 ::type ABBREV-I ::surf J.
 ::span 2-6 ::type MAIN ::surf Leno
-::span 6-7 ::type PUNCT-E ::surf ,
-::span 8-11 ::type MAIN ::surf his
-::span 12-17 ::type MAIN ::surf peace
-::span 17-18 ::type DASH ::surf -
-::span 18-24 ::type MAIN ::surf loving
-::span 25-29 ::type MAIN ::surf wife
+::span 7-8 ::type PUNCT ::surf (
+::span 8-28 ::type EMAIL-ADDRESS ::surf info@lenosgarage.com
+::span 28-29 ::type PUNCT ::surf )
 ::span 29-30 ::type PUNCT-E ::surf ,
-::span 31-34 ::type ABBREV ::abbrev-type pre-name-title ::surf Dr.
-::span 35-40 ::type MAIN ::surf Seuss
-::span 41-47 ::type ABBREV ::surf et al.
-::span 48-54 ::type MAIN ::surf bought
-::span 55-58 ::type MAIN ::surf the
-::span 59-62 ::type MAIN ::surf car
-::span 63-65 ::type MAIN ::surf on
-::span 66-70 ::type MAIN ::surf July
-::span 71-73 ::type NUMBER ::surf 15
-::span 73-74 ::type PUNCT-E ::surf ,
-::span 75-79 ::type NUMBER ::surf 2021
-::span 79-80 ::type PUNCT-E ::surf ,
-::span 81-83 ::type MAIN ::surf on
-::span 84-106 ::type URL ::surf https://www.amazon.com
-::span 107-110 ::type MAIN ::surf for
-::span 111-112 ::type PUNCT ::surf $
-::span 112-118 ::type NUMBER ::surf 15,000
-::span 118-119 ::type PUNCT-E ::surf .
+::span 31-34 ::type MAIN ::surf his
+::span 35-40 ::type MAIN ::surf peace
+::span 40-41 ::type DASH ::surf -
+::span 41-47 ::type MAIN ::surf loving
+::span 48-52 ::type MAIN ::surf wife
+::span 52-53 ::type PUNCT-E ::surf ,
+::span 54-57 ::type ABBREV ::abbrev-type pre-name-title ::surf Dr.
+::span 58-63 ::type MAIN ::surf Seuss
+::span 64-70 ::type ABBREV ::surf et al.
+::span 71-77 ::type MAIN ::surf bought
+::span 78-81 ::type MAIN ::surf the
+::span 82-85 ::type MAIN ::surf car
+::span 86-88 ::type MAIN ::surf on
+::span 89-93 ::type MAIN ::surf July
+::span 94-96 ::type NUMBER ::surf 15
+::span 96-97 ::type PUNCT-E ::surf ,
+::span 98-102 ::type NUMBER ::surf 2021
+::span 102-103 ::type PUNCT-E ::surf ,
+::span 104-106 ::type MAIN ::surf on
+::span 107-129 ::type URL ::surf https://www.amazon.com
+::span 130-133 ::type MAIN ::surf for
+::span 134-135 ::type PUNCT ::surf $
+::span 135-141 ::type NUMBER ::surf 15,000
+::span 141-142 ::type PUNCT-E ::surf .
