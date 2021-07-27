@@ -24,7 +24,7 @@ from utoken import util
 log.basicConfig(level=log.INFO)
 
 __version__ = '0.0.1'
-last_mod_date = 'July 23, 2021'
+last_mod_date = 'July 26, 2021'
 
 
 class VertexMap:
@@ -98,8 +98,9 @@ class ComplexSpan:
 
 class Token:
     """A token is most typically a word, number, or punctuation, but can be a multi-word phrase or part of a word."""
-    def __init__(self, surf: str, snt_id: str, creator: str, span: ComplexSpan):
+    def __init__(self, surf: str, snt_id: str, creator: str, span: ComplexSpan, orig_surf: Optional[str] = None):
         self.surf = surf
+        self.orig_surf = surf if orig_surf is None else orig_surf
         self.snt_id = snt_id
         self.span = span
         self.creator = creator or "TOKEN"
@@ -188,6 +189,7 @@ class Tokenizer:
                                             self.tokenize_urls,
                                             self.tokenize_emails,
                                             self.tokenize_mt_punctuation,
+                                            self.tokenize_english_contractions,
                                             self.tokenize_numbers,
                                             self.tokenize_abbreviations,
                                             self.tokenize_punctuation,
@@ -421,6 +423,65 @@ class Tokenizer:
             s = next_tokenization_function(s, cc, chart, ht, lang_code, line_id, offset)
         return s
 
+    def tokenize_english_contractions(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
+                                      line_id: Optional[str] = None, offset: int = 0) -> str:
+        """This tokenization step handles English contractions, e.g. (don't -> do not; won't -> will not;
+        John's -> John 's; he'd -> he 'd"""
+        this_function = self.tokenize_english_contractions
+        # this_function_name = this_function.__qualname__
+        next_tokenization_function = self.next_tokenization_step[this_function]
+        # Tokenize contracted negation, e.g. "can't", "cannot", "couldn't"
+        m = re.match(r'(.*?)\b(ai|are|ca|can|could|did|do|does|had|has|have|is|sha|should|was|were|wo|would)'
+                     r'(n[o\'’]t)\b(.*)', s, flags=re.IGNORECASE)
+        if m:
+            pre, orig_token_surf1, orig_token_surf2, post = m.group(1), m.group(2), m.group(3), m.group(4)
+            # Expand contracted first part, e.g. "wo" (as in "won't") to "will"
+            t1 = orig_token_surf1.lower()
+            token_surf1 = 'is' if t1 == 'ai' else 'can' if t1 == 'ca' else 'shall' if t1 == 'sha' \
+                else 'will' if t1 == 'wo' else orig_token_surf1
+            # adjust capitalization
+            if token_surf1 is not orig_token_surf1:
+                if (len(orig_token_surf1) >= 1) and orig_token_surf1[0].isupper():
+                    if (len(orig_token_surf1) >= 2) and orig_token_surf1[1].isupper():
+                        token_surf1 = token_surf1.upper()
+                    else:
+                        token_surf1 = token_surf1.capitalize()
+            token_surf2 = re.sub("’", "'", orig_token_surf2)  # normalize apostrophe
+            start_position = len(pre)
+            middle_position = start_position + len(orig_token_surf1)
+            end_position = middle_position + len(token_surf2)
+            offset2, offset3, offset4 = offset + start_position, offset + middle_position, offset + end_position
+            if chart:
+                new_token1 = Token(token_surf1, line_id, 'DECONTRACTION1',
+                                   ComplexSpan([SimpleSpan(offset2, offset3, vm=chart.vertex_map)]),
+                                   orig_surf=orig_token_surf1)
+                new_token2 = Token(token_surf2, line_id, 'DECONTRACTION2',
+                                   ComplexSpan([SimpleSpan(offset3, offset4, vm=chart.vertex_map)]),
+                                   orig_surf=orig_token_surf2)
+                chart.register_token(new_token1)
+                chart.register_token(new_token2)
+            pre_tokenization = this_function(pre, cc.sub(0, start_position), chart, ht, lang_code, line_id, offset)
+            post_tokenization = this_function(post, cc.sub(end_position, len(s)), chart, ht, lang_code, line_id,
+                                              offset4)
+            return util.join_tokens([pre_tokenization, token_surf1, token_surf2, post_tokenization])
+        # Tokenize other contractions such as:
+        #   (1) "John's mother", "He's hungry.", "He'll come.", "We're here.", "You've got to be kidding."
+        #   (2) "He'd rather die.", "They'd been informed." but not "cont'd"
+        #   (3) "I'm done." but not "Ma'm"
+        m = re.match(r'(.*?[a-z])([\'’](?:ll|re|s|ve))\b(.*)', s, flags=re.IGNORECASE) \
+            or re.match(r'(.*?[aeiouy])([\'’]d)\b(.*)', s, flags=re.IGNORECASE) \
+            or re.match(r'(.*?\bI)([\'’]m)\b(.*)', s, flags=re.IGNORECASE)
+        if m:
+            start_position, token_surf = self.build_start_and_surf_from_match(s, m)
+            token_surf = re.sub("’", "'", token_surf)  # normalize apostrophe
+            tokenization, new_token = self.build_rec_result(token_surf, s, start_position, offset,
+                                                            'DECONTRACTION', line_id, cc, chart, lang_code,
+                                                            ht, this_function)
+            return tokenization
+        if next_tokenization_function:
+            s = next_tokenization_function(s, cc, chart, ht, lang_code, line_id, offset)
+        return s
+
     def tokenize_abbreviations(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                                line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off abbreviations ending in a period, searching right to left."""
@@ -436,8 +497,10 @@ class Tokenizer:
                     start_position += 1
                     if not s[start_position].isalpha():
                         continue  # first character must be a letter
-                    if (start_position > 0) and s[start_position-1].isalpha():
-                        continue
+                    if start_position > 0:
+                        prev_char = s[start_position-1]
+                        if prev_char.isalpha() or (prev_char in "'’"):
+                            continue
                     abbrev_cand = s[start_position:i+1]
                     abbrev_entries = self.abbreviation_dict.abbrev_dict.get(abbrev_cand, None)
                     if abbrev_entries:
@@ -474,9 +537,8 @@ class Tokenizer:
         """This tokenization step currently splits of dashes in certain contexts."""
         this_function = self.tokenize_mt_punctuation
         # this_function_name = this_function.__qualname__
-        # log.info(f'{this_function_name} l.{line_id}.{offset}: {s}')
-        m = re.match(r'(.*?(?:LM*LM*|d))([-−–—]+)(?!=[.LMd])((?:LM*LM*|d).*)$',
-                     cc.cc1)
+        # log.info(f'{this_function_name} l.{line_id}.{offset}: {s} -- {cc.cc1}')
+        m = re.match(r'(.*?(?:LM*LM*|d|[!?’]))([-−–]+)(LM*LM*|d)', cc.cc1)
         if m:
             start_position, token_surf = self.build_start_and_surf_from_match(s, m)
             tokenization, new_token = self.build_rec_result(token_surf, s, start_position, offset,
@@ -497,19 +559,19 @@ class Tokenizer:
 
         # Some punctuation should always be split off by itself regardless of context:
         # parentheses, brackets, dandas, currency signs.
-        m = re.match(r'(.*)(["(){}\[\]〈〉\u3008-\u3011\u3014-\u301B।॥%£€¥₹]|\$+)(.*)$', s)
+        m = re.match(r'(.*?)(["“”(){}\[\]〈〉\u3008-\u3011\u3014-\u301B।॥%£€¥₹]|—+|…+|\.{2,}|\$+)(.*)$', s)
         if m:
             punct_type = 'PUNCT'
         else:
             # Some punctuation should be split off from the beginning of a token
             # (with a space or sentence-start to the left of the punctuation).
-            m = re.match(r'(|.*\s)([\'])(.*)$', s)
+            m = re.match(r'(|.*\s)([\'‘])(.*)$', s)
             if m:
                 punct_type = "PUNCT-S"
             else:
                 # Some punctuation should be split off from the end of a token
                 # (with a space or sentence-end to the right of the punctuation.
-                m = re.match(r'(.*)([\'.?!,;:])(\s.*|)$', s)
+                m = re.match(r'(.*)([\'’.?!,;:])(\s.*|)$', s)
                 if m:
                     punct_type = "PUNCT-E"
                 else:
