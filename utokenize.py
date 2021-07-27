@@ -213,6 +213,8 @@ class Tokenizer:
         self.range_init_char_type_vector_dict()
         self.chart_p = False
         self.first_token_is_line_id_p = False
+        self.verbose = False
+        self.n_lines_tokenized = 0
         self.abbreviation_dict = util.AbbreviationDict()
         self.abbreviation_dict.load_abbreviations('data/abbreviations-eng.txt')
         self.abbreviation_dict.load_abbreviations('data/abbreviations-mal.txt')
@@ -434,7 +436,7 @@ class Tokenizer:
         m = re.match(r'(.*?)\b(ai|are|ca|can|could|did|do|does|had|has|have|is|sha|should|was|were|wo|would)'
                      r'(n[o\'’]t)\b(.*)', s, flags=re.IGNORECASE)
         if m:
-            pre, orig_token_surf1, orig_token_surf2, post = m.group(1), m.group(2), m.group(3), m.group(4)
+            pre, orig_token_surf1, token_surf2, post = m.group(1), m.group(2), m.group(3), m.group(4)
             # Expand contracted first part, e.g. "wo" (as in "won't") to "will"
             t1 = orig_token_surf1.lower()
             token_surf1 = 'is' if t1 == 'ai' else 'can' if t1 == 'ca' else 'shall' if t1 == 'sha' \
@@ -446,7 +448,6 @@ class Tokenizer:
                         token_surf1 = token_surf1.upper()
                     else:
                         token_surf1 = token_surf1.capitalize()
-            token_surf2 = re.sub("’", "'", orig_token_surf2)  # normalize apostrophe
             start_position = len(pre)
             middle_position = start_position + len(orig_token_surf1)
             end_position = middle_position + len(token_surf2)
@@ -456,8 +457,7 @@ class Tokenizer:
                                    ComplexSpan([SimpleSpan(offset2, offset3, vm=chart.vertex_map)]),
                                    orig_surf=orig_token_surf1)
                 new_token2 = Token(token_surf2, line_id, 'DECONTRACTION2',
-                                   ComplexSpan([SimpleSpan(offset3, offset4, vm=chart.vertex_map)]),
-                                   orig_surf=orig_token_surf2)
+                                   ComplexSpan([SimpleSpan(offset3, offset4, vm=chart.vertex_map)]))
                 chart.register_token(new_token1)
                 chart.register_token(new_token2)
             pre_tokenization = this_function(pre, cc.sub(0, start_position), chart, ht, lang_code, line_id, offset)
@@ -473,7 +473,6 @@ class Tokenizer:
             or re.match(r'(.*?\bI)([\'’]m)\b(.*)', s, flags=re.IGNORECASE)
         if m:
             start_position, token_surf = self.build_start_and_surf_from_match(s, m)
-            token_surf = re.sub("’", "'", token_surf)  # normalize apostrophe
             tokenization, new_token = self.build_rec_result(token_surf, s, start_position, offset,
                                                             'DECONTRACTION', line_id, cc, chart, lang_code,
                                                             ht, this_function)
@@ -642,8 +641,12 @@ class Tokenizer:
         # Call the first tokenization step function, which then recursively call all other tokenization step functions.
         first_tokenization_step_function = self.tokenization_step_functions[0]
         s = first_tokenization_step_function(s, cc, chart, ht, lang_code, line_id)
+        self.n_lines_tokenized += 1
         if chart:
-            log.info(chart.print_short())  # Temporary. Will print short version of chart to STDERR.
+            if self.verbose:
+                log.info(chart.print_short())  # Will print short version of chart to STDERR.
+            elif (log.INFO >= log.root.level) and (self.n_lines_tokenized % 1000 == 0):
+                sys.stderr.write('+' if self.n_lines_tokenized % 10000 == 0 else '.')
             if annotation_file:
                 chart.print_to_file(annotation_file)
         return s.strip()
@@ -692,6 +695,7 @@ def main(argv):
     tok = Tokenizer()
     tok.chart_p = bool(args.annotation) or bool(args.chart)
     tok.first_token_is_line_id_p = bool(args.first_token_is_line_id)
+    tok.verbose = args.verbose
 
     # Open any input or output files. Make sure utf-8 encoding is properly set (in older Python3 versions).
     if args.input is sys.stdin and not re.search('utf-8', sys.stdin.encoding, re.IGNORECASE):
@@ -704,30 +708,29 @@ def main(argv):
     ht = {}
     start_time = datetime.datetime.now()
     if args.verbose:
-        log.info(f'Start: {start_time}')
-        log.info('Script tokenize.py')
+        log_info = f'Start: {start_time}  Script: tokenize.py'
         if args.input is not sys.stdin:
-            log.info(f'Input: {args.input.name}')
+            log_info += f'  Input: {args.input.name}'
         if args.output is not sys.stdout:
-            log.info(f'Output: {args.output.name}')
+            log_info += f'  Output: {args.output.name}'
         if args.annotation:
-            log.info(f'Annotation: {args.annotation.name}')
+            log_info += f'  Annotation: {args.annotation.name}'
         if tok.chart_p:
-            log.info(f'Chart to be built: {tok.chart_p}')
+            log_info += f'  Chart to be built: {tok.chart_p}'
         if lang_code:
-            log.info(f'ISO 639-3 language code: {lang_code}')
+            log_info += f'  ISO 639-3 language code: {lang_code}'
+        log.info(log_info)
     tok.tokenize_lines(ht, input_file=args.input, output_file=args.output, annotation_file=args.annotation,
                        lang_code=lang_code)
+    if (log.INFO >= log.root.level) and (tok.n_lines_tokenized >= 1000):
+        sys.stderr.write('\n')
     # Log some change stats.
     if args.verbose:
         number_of_lines = ht.get('NUMBER-OF-LINES', 0)
         lines = 'line' if number_of_lines == 1 else 'lines'
-        log_info = f"Processed {str(number_of_lines)} {lines}"
-        log.info(log_info)
         end_time = datetime.datetime.now()
-        log.info(f'End: {end_time}')
         elapsed_time = end_time - start_time
-        log.info(f'Time: {elapsed_time}')
+        log.info(f'End: {end_time}  Elapsed time: {elapsed_time}  Processed {str(number_of_lines)} {lines}')
 
 
 if __name__ == "__main__":
