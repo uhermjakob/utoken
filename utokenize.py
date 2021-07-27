@@ -24,7 +24,7 @@ from utoken import util
 log.basicConfig(level=log.INFO)
 
 __version__ = '0.0.1'
-last_mod_date = 'July 26, 2021'
+last_mod_date = 'July 27, 2021'
 
 
 class VertexMap:
@@ -559,19 +559,22 @@ class Tokenizer:
 
         # Some punctuation should always be split off by itself regardless of context:
         # parentheses, brackets, dandas, currency signs.
-        m = re.match(r'(.*?)(["“”(){}\[\]〈〉\u3008-\u3011\u3014-\u301B।॥%£€¥₹]|—+|…+|\.{2,}|\$+)(.*)$', s)
+        m = re.match(r'(.*?)'
+                     r'(["“”„‟(){}«»\[\]〈〉（）［］【】「」《》。，、։።፣፤፥፦፧፨፠\u3008-\u3011\u3014-\u301B।॥%‰‱٪¢£€¥₹฿©®]|'
+                     r'—+|…+|\.{2,}|\$+)'
+                     r'(.*)$', s)
         if m:
             punct_type = 'PUNCT'
         else:
             # Some punctuation should be split off from the beginning of a token
             # (with a space or sentence-start to the left of the punctuation).
-            m = re.match(r'(|.*\s)([\'‘])(.*)$', s)
+            m = re.match(r'(|.*\s)([\'‘¡¿])(.*)$', s)
             if m:
                 punct_type = "PUNCT-S"
             else:
                 # Some punctuation should be split off from the end of a token
                 # (with a space or sentence-end to the right of the punctuation.
-                m = re.match(r'(.*)([\'’.?!,;:])(\s.*|)$', s)
+                m = re.match(r'(.*)([\'’.?!‼⁇⁈⁉‽؟،,;؛！;？；:：])(\s.*|)$', s)
                 if m:
                     punct_type = "PUNCT-E"
                 else:
