@@ -249,23 +249,13 @@ class Tokenizer:
             = self.char_type_vector_dict.get('@', 0) | self.char_is_ampersand
 
     @staticmethod
-    def build_start_and_surf_from_match(s: str, m: Match[str]) -> [int, str]:
-        pre_class = m.group(1)
-        token_class = m.group(2)
-        start_position = len(pre_class)
-        end_position = start_position + len(token_class)
-        token_surf = s[start_position:end_position]
-        return start_position, token_surf
-
-    @staticmethod
-    def build_rec_result(token_surf: str, s: str, start_position: int, offset: int,
-                         token_type: str, line_id: str, cc: CharClass, chart: Optional[Chart],
-                         lang_code: str, ht: dict, this_function) -> [str, Token]:
-        """Once a heuristic has identified a particular token span and type,
+    def rec_tok(token_surf: str, s: str, start_position: int, offset: int,
+                token_type: str, line_id: str, cc: CharClass, chart: Optional[Chart],
+                lang_code: str, ht: dict, calling_function, **token_kwargs) -> [str, Token]:
+        """Recursive tokenization step using a token-surf and start-position.
+        Once a heuristic has identified a particular token span and type,
         this method computes all offsets, creates a new token, and recursively
-        calls the calling functions on the string preceding and following the new token.
-        The function not only returns the tokenization of the input string, but also the token,
-        so that the calling function can assign any further token slot values."""
+        calls the calling function on the string preceding and following the new token."""
         end_position = start_position + len(token_surf)
         offset2 = offset + start_position
         offset3 = offset + end_position
@@ -274,17 +264,31 @@ class Tokenizer:
         if chart:
             new_token = Token(token_surf, line_id, token_type,
                               ComplexSpan([SimpleSpan(offset2, offset3, vm=chart.vertex_map)]))
+            for key, value in token_kwargs.items():
+                setattr(new_token, key, value)
             chart.register_token(new_token)
-        else:
-            new_token = None
-        pre_tokenization = this_function(pre, cc.sub(0, start_position), chart, ht, lang_code, line_id, offset)
-        post_tokenization = this_function(post, cc.sub(end_position, len(s)), chart, ht, lang_code, line_id, offset3)
-        return util.join_tokens([pre_tokenization, token_surf, post_tokenization]), new_token
+        pre_tokenization = calling_function(pre, cc.sub(0, start_position), chart, ht, lang_code, line_id, offset)
+        post_tokenization = calling_function(post, cc.sub(end_position, len(s)), chart, ht, lang_code, line_id, offset3)
+        return util.join_tokens([pre_tokenization, token_surf, post_tokenization])
 
-    def next_tok_step(self, current_tok_function:
-                      Optional[Callable[[str, CharClass, Chart, dict, str, Optional[str], int], str]],
-                      s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
-                      line_id: Optional[str] = None, offset: int = 0) -> str:
+    def rec_tok_m3(self, m3: Match[str], s: str, offset: int,
+                   token_type: str, line_id: str, cc: CharClass, chart: Optional[Chart],
+                   lang_code: str, ht: dict, calling_function, **token_kwargs) -> [str, Token]:
+        """Recursive tokenization step using Match object.
+        Converts a match for pre-token, token, and post-token to token-surf and start-position, then call rec_tok."""
+        pre_token = m3.group(1)
+        token = m3.group(2)
+        # post_token = m3.group(3)
+        start_position = len(pre_token)
+        end_position = start_position + len(token)
+        token_surf = s[start_position:end_position]
+        return self.rec_tok(token_surf, s, start_position, offset, token_type, line_id, cc, chart,
+                            lang_code, ht, calling_function, **token_kwargs)
+
+    def next_tok(self, current_tok_function:
+                 Optional[Callable[[str, CharClass, Chart, dict, str, Optional[str], int], str]],
+                 s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
+                 line_id: Optional[str] = None, offset: int = 0) -> str:
         """Function identifies and calls the next tokenization step."""
         next_tokenization_function: Callable[[str, CharClass, Chart, dict, str, Optional[str], int], str] \
             = self.next_tok_step_dict[current_tok_function] if current_tok_function \
@@ -334,7 +338,7 @@ class Tokenizer:
                         s = s.replace(char, ' ')
             if chart:
                 s = chart.s
-        return self.next_tok_step(this_function, s, cc, chart, ht, lang_code, line_id, offset)
+        return self.next_tok(this_function, s, cc, chart, ht, lang_code, line_id, offset)
 
     def tokenize_urls(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                       line_id: Optional[str] = None, offset: int = 0) -> str:
@@ -375,45 +379,34 @@ class Tokenizer:
                         break
                 # build result
                 token_surf = anchor + post[0:index]
-                tokenization, new_token = self.build_rec_result(token_surf, s, len(pre), offset,
-                                                                'URL', line_id, cc, chart, lang_code, ht,
-                                                                this_function)
-                return tokenization
-        return self.next_tok_step(this_function, s, cc, chart, ht, lang_code, line_id, offset)
+                start_position = len(pre)
+                return self.rec_tok(token_surf, s, start_position, offset, 'URL',
+                                    line_id, cc, chart, lang_code, ht, this_function)
+        return self.next_tok(this_function, s, cc, chart, ht, lang_code, line_id, offset)
 
     def tokenize_emails(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                         line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off email-address tokens such as ChunkyLover53@aol.com"""
         this_function = self.tokenize_emails
         if self.lv & self.char_is_ampersand:
-            m = re.match(r'(.*?)(?<![.LMd])(LM*(?:LM*|[-_.d])*(?:LM*|d)'
-                         r'@LM*(?:LM*|[-_.d])*(?:LM*|d)\.L{2,})(?!=[.LMd])(.*)$',  # Eventually: L{2,} -> [a-z]{2,}
-                         cc.cc1)
-            if m:
-                start_position, token_surf = self.build_start_and_surf_from_match(s, m)
-                tokenization, new_token = self.build_rec_result(token_surf, s, start_position, offset,
-                                                                'EMAIL-ADDRESS', line_id, cc, chart, lang_code,
-                                                                ht, this_function)
-                return tokenization
-        return self.next_tok_step(this_function, s, cc, chart, ht, lang_code, line_id, offset)
+            if m3 := re.match(r'(.*?)(?<![.LMd])(LM*(?:LM*|[-_.d])*(?:LM*|d)@'
+                              r'LM*(?:LM*|[-_.d])*(?:LM*|d)\.L{2,})(?!=[.LMd])(.*)$',  # Eventually: L{2,} -> [a-z]{2,}
+                              cc.cc1):
+                return self.rec_tok_m3(m3, s, offset, 'EMAIL-ADDRESS', line_id, cc, chart, lang_code, ht, this_function)
+        return self.next_tok(this_function, s, cc, chart, ht, lang_code, line_id, offset)
 
     def tokenize_numbers(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                          line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off numbers such as 12,345,678.90"""
         this_function = self.tokenize_numbers
-        m = re.match(r'(.*?)(?<![-−–+.d])'
-                     r'([-−–+]?'                        # plus/minus sign
-                     r'(?:d{1,3}(?:,ddd)+(?:\.d+)?|'    # Western style, e.g. 12,345,678.90
-                     r'd{1,2}(?:,dd)*,ddd(?:\.d+)?|'    # Indian style, e.g. 1,23,45,678.90
-                     r'd+(?:\.d+)?))'                   # plain, e.g. 12345678.90
-                     r'(?!=[.,]d)(.*)', cc.cc1)
-        if m:
-            start_position, token_surf = self.build_start_and_surf_from_match(s, m)
-            tokenization, new_token = self.build_rec_result(token_surf, s, start_position, offset,
-                                                            'NUMBER', line_id, cc, chart, lang_code,
-                                                            ht, this_function)
-            return tokenization
-        return self.next_tok_step(this_function, s, cc, chart, ht, lang_code, line_id, offset)
+        if m3 := re.match(r'(.*?)(?<![-−–+.d])'
+                          r'([-−–+]?'                        # plus/minus sign
+                          r'(?:d{1,3}(?:,ddd)+(?:\.d+)?|'    # Western style, e.g. 12,345,678.90
+                          r'd{1,2}(?:,dd)*,ddd(?:\.d+)?|'    # Indian style, e.g. 1,23,45,678.90
+                          r'd+(?:\.d+)?))'                   # plain, e.g. 12345678.90
+                          r'(?!=[.,]d)(.*)', cc.cc1):
+            return self.rec_tok_m3(m3, s, offset, 'NUMBER', line_id, cc, chart, lang_code, ht, this_function)
+        return self.next_tok(this_function, s, cc, chart, ht, lang_code, line_id, offset)
 
     def tokenize_english_contractions(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                                       line_id: Optional[str] = None, offset: int = 0) -> str:
@@ -456,16 +449,11 @@ class Tokenizer:
         #   (1) "John's mother", "He's hungry.", "He'll come.", "We're here.", "You've got to be kidding."
         #   (2) "He'd rather die.", "They'd been informed." but not "cont'd"
         #   (3) "I'm done." but not "Ma'm"
-        m = re.match(r'(.*?[a-z])([\'’](?:ll|re|s|ve))\b(.*)', s, flags=re.IGNORECASE) \
-            or re.match(r'(.*?[aeiouy])([\'’]d)\b(.*)', s, flags=re.IGNORECASE) \
-            or re.match(r'(.*?\bI)([\'’]m)\b(.*)', s, flags=re.IGNORECASE)
-        if m:
-            start_position, token_surf = self.build_start_and_surf_from_match(s, m)
-            tokenization, new_token = self.build_rec_result(token_surf, s, start_position, offset,
-                                                            'DECONTRACTION', line_id, cc, chart, lang_code,
-                                                            ht, this_function)
-            return tokenization
-        return self.next_tok_step(this_function, s, cc, chart, ht, lang_code, line_id, offset)
+        if m3 := re.match(r'(.*?[a-z])([\'’](?:ll|re|s|ve))\b(.*)', s, flags=re.IGNORECASE) \
+                or re.match(r'(.*?[aeiouy])([\'’]d)\b(.*)', s, flags=re.IGNORECASE) \
+                or re.match(r'(.*?\bI)([\'’]m)\b(.*)', s, flags=re.IGNORECASE):
+            return self.rec_tok_m3(m3, s, offset, 'DECONTRACTION', line_id, cc, chart, lang_code, ht, this_function)
+        return self.next_tok(this_function, s, cc, chart, ht, lang_code, line_id, offset)
 
     def tokenize_abbreviations(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                                line_id: Optional[str] = None, offset: int = 0) -> str:
@@ -484,16 +472,10 @@ class Tokenizer:
                         if prev_char.isalpha() or (prev_char in "'’"):
                             continue
                     abbrev_cand = s[start_position:i+1]
-                    abbrev_entries = self.abbreviation_dict.abbrev_dict.get(abbrev_cand, None)
-                    if abbrev_entries:
-                        abbrev_entry = abbrev_entries[0]
-                        abbrev_type = abbrev_entry.type
-                        tokenization, new_token = self.build_rec_result(abbrev_cand, s, start_position, offset,
-                                                                        'ABBREV', line_id, cc, chart, lang_code, ht,
-                                                                        this_function)
-                        if new_token:
-                            new_token.abbrev_type = abbrev_type
-                        return tokenization
+                    if abbrev_entries := self.abbreviation_dict.abbrev_dict.get(abbrev_cand, None):
+                        return self.rec_tok(abbrev_cand, s, start_position, offset, 'ABBREV',
+                                            line_id, cc, chart, lang_code, ht, this_function,
+                                            abbrev_type=abbrev_entries[0].type)
         for start_position in range(0, len(s)-1):
             char = s[start_position]
             if char.isalpha() and char.isupper() and (s[start_position+1] == '.') \
@@ -506,23 +488,17 @@ class Tokenizer:
                                                for c in right_context])
                 if re.match(r'\s?(?:u\.\s?)*ull', right_context_class):
                     token_surf = s[start_position:start_position+2]
-                    tokenization, new_token = self.build_rec_result(token_surf, s, start_position, offset, 'ABBREV-I',
-                                                                    line_id, cc, chart, lang_code, ht, this_function)
-                    return tokenization
-        return self.next_tok_step(this_function, s, cc, chart, ht, lang_code, line_id, offset)
+                    return self.rec_tok(token_surf, s, start_position, offset, 'ABBREV-I',
+                                        line_id, cc, chart, lang_code, ht, this_function)
+        return self.next_tok(this_function, s, cc, chart, ht, lang_code, line_id, offset)
 
     def tokenize_mt_punctuation(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                                 line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step currently splits of dashes in certain contexts."""
         this_function = self.tokenize_mt_punctuation
-        m = re.match(r'(.*?(?:LM*LM*|d|[!?’]))([-−–]+)(LM*LM*|d)', cc.cc1)
-        if m:
-            start_position, token_surf = self.build_start_and_surf_from_match(s, m)
-            tokenization, new_token = self.build_rec_result(token_surf, s, start_position, offset,
-                                                            'DASH', line_id, cc, chart, lang_code,
-                                                            ht, this_function)
-            return tokenization
-        return self.next_tok_step(this_function, s, cc, chart, ht, lang_code, line_id, offset)
+        if m3 := re.match(r'(.*?(?:LM*LM*|d|[!?’]))([-−–]+)(LM*LM*|d)', cc.cc1):
+            return self.rec_tok_m3(m3, s, offset, 'DASH', line_id, cc, chart, lang_code, ht, this_function)
+        return self.next_tok(this_function, s, cc, chart, ht, lang_code, line_id, offset)
 
     def tokenize_punctuation(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                              line_id: Optional[str] = None, offset: int = 0) -> str:
@@ -530,33 +506,20 @@ class Tokenizer:
         this_function = self.tokenize_punctuation
         # Some punctuation should always be split off by itself regardless of context:
         # parentheses, brackets, dandas, currency signs.
-        m = re.match(r'(.*?)'
-                     r'(["“”„‟(){}«»\[\]〈〉（）［］【】「」《》。，、։።፣፤፥፦፧፨፠\u3008-\u3011\u3014-\u301B।॥%‰‱٪¢£€¥₹฿©®]|'
-                     r'—+|…+|\.{2,}|\$+)'
-                     r'(.*)$', s)
-        if m:
-            punct_type = 'PUNCT'
-        else:
-            # Some punctuation should be split off from the beginning of a token
-            # (with a space or sentence-start to the left of the punctuation).
-            m = re.match(r'(|.*\s)([\'‘¡¿])(.*)$', s)
-            if m:
-                punct_type = "PUNCT-S"
-            else:
-                # Some punctuation should be split off from the end of a token
-                # (with a space or sentence-end to the right of the punctuation.
-                m = re.match(r'(.*)([\'’.?!‼⁇⁈⁉‽؟،,;؛！;？；:：])(\s.*|)$', s)
-                if m:
-                    punct_type = "PUNCT-E"
-                else:
-                    punct_type = ''
-        if m:
-            pre, token_surf, post = m.group(1), m.group(2), m.group(3)
-            tokenization, new_token = self.build_rec_result(token_surf, s, len(pre), offset,
-                                                            punct_type, line_id, cc, chart, lang_code, ht,
-                                                            this_function)
-            return tokenization
-        return self.next_tok_step(this_function, s, cc, chart, ht, lang_code, line_id, offset)
+        if m3 := re.match(r'(.*?)'
+                          r'(["“”„‟(){}«»\[\]〈〉（）［］【】「」《》。，、։።፣፤፥፦፧፨፠\u3008-\u3011\u3014-\u301B।॥%‰‱٪¢£€¥₹฿©®]|'
+                          r'—+|…+|\.{2,}|\$+)'
+                          r'(.*)$', s):
+            return self.rec_tok_m3(m3, s, offset, 'PUNCT', line_id, cc, chart, lang_code, ht, this_function)
+        # Some punctuation should be split off from the beginning of a token
+        # (with a space or sentence-start to the left of the punctuation).
+        if m3 := re.match(r'(|.*\s)([\'‘¡¿])(.*)$', s):
+            return self.rec_tok_m3(m3, s, offset, 'PUNCT-S', line_id, cc, chart, lang_code, ht, this_function)
+        # Some punctuation should be split off from the end of a token
+        # (with a space or sentence-end to the right of the punctuation.
+        if m3 := re.match(r'(.*)([\'’.?!‼⁇⁈⁉‽؟،,;؛！;？；:：])(\s.*|)$', s):
+            return self.rec_tok_m3(m3, s, offset, 'PUNCT-E', line_id, cc, chart, lang_code, ht, this_function)
+        return self.next_tok(this_function, s, cc, chart, ht, lang_code, line_id, offset)
 
     @staticmethod
     def tokenize_main(s: str, _cc: CharClass, chart: Chart, _ht: dict, _lang_code: str = '',
@@ -599,7 +562,7 @@ class Tokenizer:
         chart = Chart(s, line_id) if self.chart_p else None
         cc = CharClass(s, True)
         # Call the first tokenization step function, which then recursively call all other tokenization step functions.
-        s = self.next_tok_step(None, s, cc, chart, ht, lang_code, line_id)
+        s = self.next_tok(None, s, cc, chart, ht, lang_code, line_id)
         self.n_lines_tokenized += 1
         if chart:
             if self.verbose:
