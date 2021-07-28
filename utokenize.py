@@ -17,14 +17,14 @@ import logging as log
 import re
 # import regex
 import sys
-from typing import Match, Optional, TextIO
+from typing import Callable, Match, Optional, TextIO
 import unicodedata as ud
 from utoken import util
 
 log.basicConfig(level=log.INFO)
 
-__version__ = '0.0.1'
-last_mod_date = 'July 27, 2021'
+__version__ = '0.0.2'
+last_mod_date = 'July 28, 2021'
 
 
 class VertexMap:
@@ -185,19 +185,19 @@ class Chart:
 class Tokenizer:
     def __init__(self):
         # Ordered list of tokenization steps
-        self.tokenization_step_functions = [self.normalize_characters,
-                                            self.tokenize_urls,
-                                            self.tokenize_emails,
-                                            self.tokenize_mt_punctuation,
-                                            self.tokenize_english_contractions,
-                                            self.tokenize_numbers,
-                                            self.tokenize_abbreviations,
-                                            self.tokenize_punctuation,
-                                            self.tokenize_main]
-        self.next_tokenization_step = {}
-        for i in range(0, len(self.tokenization_step_functions)-1):
-            self.next_tokenization_step[self.tokenization_step_functions[i]] = self.tokenization_step_functions[i+1]
-        self.next_tokenization_step[self.tokenization_step_functions[-1]] = None
+        self.tok_step_functions = [self.normalize_characters,
+                                   self.tokenize_urls,
+                                   self.tokenize_emails,
+                                   self.tokenize_mt_punctuation,
+                                   self.tokenize_english_contractions,
+                                   self.tokenize_numbers,
+                                   self.tokenize_abbreviations,
+                                   self.tokenize_punctuation,
+                                   self.tokenize_main]
+        self.next_tok_step_dict = {}
+        for i in range(0, len(self.tok_step_functions) - 1):
+            self.next_tok_step_dict[self.tok_step_functions[i]] = self.tok_step_functions[i + 1]
+        self.next_tok_step_dict[self.tok_step_functions[-1]] = None
         self.char_type_vector_dict = {}
         # Initialize elementary bit vectors (integers each with a different bit set) will be used in bitwise operations.
         # To be expanded.
@@ -281,13 +281,22 @@ class Tokenizer:
         post_tokenization = this_function(post, cc.sub(end_position, len(s)), chart, ht, lang_code, line_id, offset3)
         return util.join_tokens([pre_tokenization, token_surf, post_tokenization]), new_token
 
+    def next_tok_step(self, current_tok_function:
+                      Optional[Callable[[str, CharClass, Chart, dict, str, Optional[str], int], str]],
+                      s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
+                      line_id: Optional[str] = None, offset: int = 0) -> str:
+        """Function identifies and calls the next tokenization step."""
+        next_tokenization_function: Callable[[str, CharClass, Chart, dict, str, Optional[str], int], str] \
+            = self.next_tok_step_dict[current_tok_function] if current_tok_function \
+            else self.tok_step_functions[0]  # first tokenization step
+        if next_tokenization_function:
+            s = next_tokenization_function(s, cc, chart, ht, lang_code, line_id, offset)
+        return s
+
     def normalize_characters(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                              line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenizer step deletes non-decodable bytes and most control characters."""
         this_function = self.normalize_characters
-        # this_function_name = this_function.__qualname__
-        # log.info(f'{this_function_name} l.{line_id}.{offset}: {s}')
-
         # delete non-decodable bytes (surrogates)
         if self.lv & self.char_is_surrogate:
             deleted_chars = ''
@@ -325,19 +334,12 @@ class Tokenizer:
                         s = s.replace(char, ' ')
             if chart:
                 s = chart.s
-
-        # log.info(f'Normalized line: {s}')
-        next_tokenization_function = self.next_tokenization_step[this_function]
-        if next_tokenization_function:
-            s = next_tokenization_function(s, cc, chart, ht, lang_code, line_id, offset)
-        return s
+        return self.next_tok_step(this_function, s, cc, chart, ht, lang_code, line_id, offset)
 
     def tokenize_urls(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                       line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off URL tokens such as https://www.amazon.com"""
         this_function = self.tokenize_urls
-        # this_function_name = this_function.__qualname__
-        # log.info(f'{this_function_name} l.{line_str}.{offset}: {s}')
         if ('http' in s) or ('ftp' in s):
             m = re.match(r'(.*)(?<![a-z])((?:https?|ftp)://)(.*)$', s, flags=re.IGNORECASE)
             if m:
@@ -377,19 +379,15 @@ class Tokenizer:
                                                                 'URL', line_id, cc, chart, lang_code, ht,
                                                                 this_function)
                 return tokenization
-        next_tokenization_function = self.next_tokenization_step[this_function]
-        if next_tokenization_function:
-            s = next_tokenization_function(s, cc, chart, ht, lang_code, line_id, offset)
-        return s
+        return self.next_tok_step(this_function, s, cc, chart, ht, lang_code, line_id, offset)
 
     def tokenize_emails(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                         line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off email-address tokens such as ChunkyLover53@aol.com"""
         this_function = self.tokenize_emails
-        # this_function_name = this_function.__qualname__
         if self.lv & self.char_is_ampersand:
             m = re.match(r'(.*?)(?<![.LMd])(LM*(?:LM*|[-_.d])*(?:LM*|d)'
-                         r'@LM*(?:LM*|[-_.d])*(?:LM*|d)\.(?:L{2,}))(?!=[.LMd])(.*)$',  # Eventually: L{2,} -> [a-z]{2,}
+                         r'@LM*(?:LM*|[-_.d])*(?:LM*|d)\.L{2,})(?!=[.LMd])(.*)$',  # Eventually: L{2,} -> [a-z]{2,}
                          cc.cc1)
             if m:
                 start_position, token_surf = self.build_start_and_surf_from_match(s, m)
@@ -397,19 +395,14 @@ class Tokenizer:
                                                                 'EMAIL-ADDRESS', line_id, cc, chart, lang_code,
                                                                 ht, this_function)
                 return tokenization
-        next_tokenization_function = self.next_tokenization_step[this_function]
-        if next_tokenization_function:
-            s = next_tokenization_function(s, cc, chart, ht, lang_code, line_id, offset)
-        return s
+        return self.next_tok_step(this_function, s, cc, chart, ht, lang_code, line_id, offset)
 
     def tokenize_numbers(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                          line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off numbers such as 12,345,678.90"""
         this_function = self.tokenize_numbers
-        # this_function_name = this_function.__qualname__
-        # log.info(f'{this_function_name} l.{line_id}.{offset}: {s}')
         m = re.match(r'(.*?)(?<![-−–+.d])'
-                     r'((?:[-−–+])?'                    # plus/minus sign
+                     r'([-−–+]?'                        # plus/minus sign
                      r'(?:d{1,3}(?:,ddd)+(?:\.d+)?|'    # Western style, e.g. 12,345,678.90
                      r'd{1,2}(?:,dd)*,ddd(?:\.d+)?|'    # Indian style, e.g. 1,23,45,678.90
                      r'd+(?:\.d+)?))'                   # plain, e.g. 12345678.90
@@ -420,18 +413,13 @@ class Tokenizer:
                                                             'NUMBER', line_id, cc, chart, lang_code,
                                                             ht, this_function)
             return tokenization
-        next_tokenization_function = self.next_tokenization_step[this_function]
-        if next_tokenization_function:
-            s = next_tokenization_function(s, cc, chart, ht, lang_code, line_id, offset)
-        return s
+        return self.next_tok_step(this_function, s, cc, chart, ht, lang_code, line_id, offset)
 
     def tokenize_english_contractions(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                                       line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step handles English contractions, e.g. (don't -> do not; won't -> will not;
         John's -> John 's; he'd -> he 'd"""
         this_function = self.tokenize_english_contractions
-        # this_function_name = this_function.__qualname__
-        next_tokenization_function = self.next_tokenization_step[this_function]
         # Tokenize contracted negation, e.g. "can't", "cannot", "couldn't"
         m = re.match(r'(.*?)\b(ai|are|ca|can|could|did|do|does|had|has|have|is|sha|should|was|were|wo|would)'
                      r'(n[o\'’]t)\b(.*)', s, flags=re.IGNORECASE)
@@ -477,17 +465,12 @@ class Tokenizer:
                                                             'DECONTRACTION', line_id, cc, chart, lang_code,
                                                             ht, this_function)
             return tokenization
-        if next_tokenization_function:
-            s = next_tokenization_function(s, cc, chart, ht, lang_code, line_id, offset)
-        return s
+        return self.next_tok_step(this_function, s, cc, chart, ht, lang_code, line_id, offset)
 
     def tokenize_abbreviations(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                                line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off abbreviations ending in a period, searching right to left."""
         this_function = self.tokenize_abbreviations
-        # this_function_name = this_function.__qualname__
-        # log.info(f'{this_function_name} l.{line_id}.{offset}: {s}')
-
         for i in range(len(s)-1, -1, -1):
             char = s[i]
             if char == '.':
@@ -526,17 +509,12 @@ class Tokenizer:
                     tokenization, new_token = self.build_rec_result(token_surf, s, start_position, offset, 'ABBREV-I',
                                                                     line_id, cc, chart, lang_code, ht, this_function)
                     return tokenization
-        next_tokenization_function = self.next_tokenization_step[this_function]
-        if next_tokenization_function:
-            s = next_tokenization_function(s, cc, chart, ht, lang_code, line_id, offset)
-        return s
+        return self.next_tok_step(this_function, s, cc, chart, ht, lang_code, line_id, offset)
 
     def tokenize_mt_punctuation(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                                 line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step currently splits of dashes in certain contexts."""
         this_function = self.tokenize_mt_punctuation
-        # this_function_name = this_function.__qualname__
-        # log.info(f'{this_function_name} l.{line_id}.{offset}: {s} -- {cc.cc1}')
         m = re.match(r'(.*?(?:LM*LM*|d|[!?’]))([-−–]+)(LM*LM*|d)', cc.cc1)
         if m:
             start_position, token_surf = self.build_start_and_surf_from_match(s, m)
@@ -544,18 +522,12 @@ class Tokenizer:
                                                             'DASH', line_id, cc, chart, lang_code,
                                                             ht, this_function)
             return tokenization
-        next_tokenization_function = self.next_tokenization_step[this_function]
-        if next_tokenization_function:
-            s = next_tokenization_function(s, cc, chart, ht, lang_code, line_id, offset)
-        return s
+        return self.next_tok_step(this_function, s, cc, chart, ht, lang_code, line_id, offset)
 
     def tokenize_punctuation(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
                              line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off regular punctuation."""
         this_function = self.tokenize_punctuation
-        # this_function_name = this_function.__qualname__
-        # log.info(f'{this_function_name} l.{line_id}.{offset}: {s}')
-
         # Some punctuation should always be split off by itself regardless of context:
         # parentheses, brackets, dandas, currency signs.
         m = re.match(r'(.*?)'
@@ -584,44 +556,32 @@ class Tokenizer:
                                                             punct_type, line_id, cc, chart, lang_code, ht,
                                                             this_function)
             return tokenization
-        else:
-            next_tokenization_function = self.next_tokenization_step[this_function]
-            if next_tokenization_function:
-                s = next_tokenization_function(s, cc, chart, ht, lang_code, line_id, offset)
-            return s
+        return self.next_tok_step(this_function, s, cc, chart, ht, lang_code, line_id, offset)
 
-    def tokenize_main(self, s: str, cc: CharClass, chart: Chart, ht: dict, lang_code: str = '',
+    @staticmethod
+    def tokenize_main(s: str, _cc: CharClass, chart: Chart, _ht: dict, _lang_code: str = '',
                       line_id: Optional[str] = None, offset: int = 0) -> str:
         """This is the final tokenization step that tokenizes the remaining string by spaces."""
-        this_function = self.tokenize_main
-        # this_function_name = this_function.__qualname__
-        # log.info(f'{this_function_name} l.{line_id}.{offset}: {s}')
-        next_tokenization_function = self.next_tokenization_step[this_function]
-        if next_tokenization_function:  # Should actually never apply.
-            s = next_tokenization_function(s, cc, chart, ht, lang_code, line_id, offset)
-        else:
-            tokens = []
-            index = 0
-            start_index = None
-            len_s = len(s)
-            while index <= len_s:
-                char = s[index] if index < len_s else ' '
-                if char.isspace():
-                    if start_index is not None:
-                        token_surf = s[start_index:index]
-                        tokens.append(token_surf)
-                        if chart:
-                            new_token = Token(token_surf, str(line_id), 'MAIN',
-                                              ComplexSpan([SimpleSpan(offset+start_index, offset+index,
-                                                                      vm=chart.vertex_map)]))
-                            chart.register_token(new_token)
-                        # log.info(f'MAIN {line_id}:{start_index}-{index} {token_surf}')
-                        start_index = None
-                elif start_index is None:
-                    start_index = index
-                index += 1
-            s = util.join_tokens(tokens)
-        return s
+        tokens = []
+        index = 0
+        start_index = None
+        len_s = len(s)
+        while index <= len_s:
+            char = s[index] if index < len_s else ' '
+            if char.isspace():
+                if start_index is not None:
+                    token_surf = s[start_index:index]
+                    tokens.append(token_surf)
+                    if chart:
+                        new_token = Token(token_surf, str(line_id), 'MAIN',
+                                          ComplexSpan([SimpleSpan(offset+start_index, offset+index,
+                                                                  vm=chart.vertex_map)]))
+                        chart.register_token(new_token)
+                    start_index = None
+            elif start_index is None:
+                start_index = index
+            index += 1
+        return util.join_tokens(tokens)
 
     def tokenize_string(self, s: str, ht: dict, lang_code: str = '', line_id: Optional[str] = None,
                         annotation_file: Optional[TextIO] = None) -> str:
@@ -639,8 +599,7 @@ class Tokenizer:
         chart = Chart(s, line_id) if self.chart_p else None
         cc = CharClass(s, True)
         # Call the first tokenization step function, which then recursively call all other tokenization step functions.
-        first_tokenization_step_function = self.tokenization_step_functions[0]
-        s = first_tokenization_step_function(s, cc, chart, ht, lang_code, line_id)
+        s = self.next_tok_step(None, s, cc, chart, ht, lang_code, line_id)
         self.n_lines_tokenized += 1
         if chart:
             if self.verbose:
