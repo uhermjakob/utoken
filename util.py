@@ -25,13 +25,13 @@ class AbbreviationEntry:
         self.comment = comment
 
 
-class AbbreviationDict:
+class ResourceDict:
     def __init__(self):
         self.abbrev_dict = {}
         self.reverse_abbrev_dict = {}
         self.max_abbrev_length = 0
 
-    def load_abbreviations(self, filename: str) -> None:
+    def load_resource(self, filename: str) -> None:
         with open(filename) as f_in:
             line_number = 0
             n_warnings = 0

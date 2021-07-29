@@ -24,7 +24,7 @@ from utoken import util
 log.basicConfig(level=log.INFO)
 
 __version__ = '0.0.2'
-last_mod_date = 'July 28, 2021'
+last_mod_date = 'July 29, 2021'
 
 
 class VertexMap:
@@ -191,9 +191,9 @@ class Tokenizer:
         self.first_token_is_line_id_p = False
         self.verbose = False
         self.n_lines_tokenized = 0
-        self.abbreviation_dict = util.AbbreviationDict()
-        self.abbreviation_dict.load_abbreviations('data/abbreviations-eng.txt')
-        self.abbreviation_dict.load_abbreviations('data/abbreviations-mal.txt')
+        self.tok_dict = util.ResourceDict()
+        self.tok_dict.load_resource('data/tok-resource-eng.txt')
+        self.tok_dict.load_resource('data/tok-resource-mal.txt')
 
     def range_init_char_type_vector_dict(self) -> None:
         # Deletable control characters,
@@ -366,7 +366,7 @@ class Tokenizer:
                              r'(\pL\pM*(?:\pL\pM*|\d|[-_.])*(?:\pL\pM*|\d)'
                              r'@'
                              r'\pL\pM*(?:\pL\pM*|\d|[-_.])*(?:\pL\pM*|\d)\.[a-z]{2,})'
-                             r'(?!=\pL|\pM|\d|[.])'
+                             r'(?!\pL|\pM|\d|[.])'
                              r'(.*)$', flags=regex.IGNORECASE)
 
     def tokenize_emails(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
@@ -384,7 +384,7 @@ class Tokenizer:
                               r'(?:\d{1,3}(?:,\d\d\d)+(?:\.\d+)?|'    # Western style, e.g. 12,345,678.90
                               r'\d{1,2}(?:,\d\d)*,\d\d\d(?:\.\d+)?|'  # Indian style, e.g. 1,23,45,678.90
                               r'\d+(?:\.\d+)?))'                      # plain, e.g. 12345678.90
-                              r'(?!=[.,]\d)'                          # negative lookahead
+                              r'(?![.,]\d)'                           # negative lookahead
                               r'(.*)')
 
     def tokenize_numbers(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
@@ -401,6 +401,8 @@ class Tokenizer:
     re_eng_suf_1_contraction = re.compile(r'(.*?[a-z])([\'’](?:ll|re|s|ve))\b(.*)', flags=re.IGNORECASE)
     re_eng_suf_d_contraction = re.compile(r'(.*?[aeiouy])([\'’]d)\b(.*)', flags=re.IGNORECASE)
     re_eng_suf_m_contraction = re.compile(r'(.*?\bI)([\'’]m)\b(.*)', flags=re.IGNORECASE)
+    re_eng_preserve_token = regex.compile(r'(.*?)(?<!\pL\pM*|\d)([\'’](?:ll|re|s|ve|d|m))(?!\pL|\pM|\d)(.*)',
+                                          flags=regex.IGNORECASE)
 
     def tokenize_english_contractions(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                                       line_id: Optional[str] = None, offset: int = 0) -> str:
@@ -444,6 +446,8 @@ class Tokenizer:
                 or self.re_eng_suf_d_contraction.match(s) \
                 or self.re_eng_suf_m_contraction.match(s):
             return self.rec_tok_m3(m3, s, offset, 'DECONTRACTION', line_id, chart, lang_code, ht, this_function)
+        if m3 := self.re_eng_preserve_token.match(s):
+            return self.rec_tok_m3(m3, s, offset, 'PRESERVE', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_right_context_of_initial_letter = regex.compile(r'\s?(?:\p{Lu}\.\s?)*\p{Lu}\p{Ll}{2}')
@@ -455,7 +459,7 @@ class Tokenizer:
         for i in range(len(s)-1, -1, -1):
             char = s[i]
             if char == '.':
-                start_position = max(0, i - self.abbreviation_dict.max_abbrev_length) - 1
+                start_position = max(0, i - self.tok_dict.max_abbrev_length) - 1
                 while start_position+1 < i:
                     start_position += 1
                     if not s[start_position].isalpha():
@@ -465,7 +469,7 @@ class Tokenizer:
                         if prev_char.isalpha() or (prev_char in "'’"):
                             continue
                     abbrev_cand = s[start_position:i+1]
-                    if abbrev_entries := self.abbreviation_dict.abbrev_dict.get(abbrev_cand, None):
+                    if abbrev_entries := self.tok_dict.abbrev_dict.get(abbrev_cand, None):
                         return self.rec_tok(abbrev_cand, s, start_position, offset, 'ABBREV',
                                             line_id, chart, lang_code, ht, this_function,
                                             abbrev_type=abbrev_entries[0].type)
@@ -493,8 +497,8 @@ class Tokenizer:
                           r'(["“”„‟(){}«»\[\]〈〉（）［］【】「」《》。，、։።፣፤፥፦፧፨፠\u3008-\u3011\u3014-\u301B।॥%‰‱٪¢£€¥₹฿©®]|'
                           r'—+|…+|\.{2,}|\$+)'
                           r'(.*)$')
-    re_punct_s = re.compile(r'(|.*\s)([\'‘¡¿])(.*)$')  # break off punctuation at the beginning of a token
-    re_punct_e = re.compile(r'(.*)([\'’.?!‼⁇⁈⁉‽؟،,;؛！;？；:：])(\s.*|)$')  # break off punctuation at the end of a token
+    re_punct_s = re.compile(r'(|.*?\s)(\'+|‘+|[¡¿])(.*)$')  # break off punctuation at the beginning of a token
+    re_punct_e = re.compile(r'(.*?)(\'+|’+|[.?!‼⁇⁈⁉‽؟،,;؛！;？；:：])(\s.*|)$')  # break off punct. at the end of a token
 
     def tokenize_punctuation(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                              line_id: Optional[str] = None, offset: int = 0) -> str:
@@ -640,13 +644,14 @@ def main(argv):
     if (log.INFO >= log.root.level) and (tok.n_lines_tokenized >= 1000):
         sys.stderr.write('\n')
     # Log some change stats.
+    end_time = datetime.datetime.now()
+    elapsed_time = end_time - start_time
     if args.verbose:
         number_of_lines = ht.get('NUMBER-OF-LINES', 0)
         lines = 'line' if number_of_lines == 1 else 'lines'
-        end_time = datetime.datetime.now()
-        elapsed_time = end_time - start_time
         log.info(f'End: {end_time}  Elapsed time: {elapsed_time}  Processed {str(number_of_lines)} {lines}')
-
+    elif elapsed_time.seconds >= 10:
+        log.info(f'Elapsed time: {elapsed_time.seconds} seconds')
 
 if __name__ == "__main__":
     main(sys.argv[1:])
