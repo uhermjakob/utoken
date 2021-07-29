@@ -316,12 +316,14 @@ class Tokenizer:
                 s = chart.s
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
+    re_url_anchor = re.compile(r'(.*)(?<![a-z])((?:https?|ftp)://)(.*)$', flags=re.IGNORECASE)
+
     def tokenize_urls(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                       line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off URL tokens such as https://www.amazon.com"""
         this_function = self.tokenize_urls
         if ('http' in s) or ('ftp' in s):
-            if m := re.match(r'(.*)(?<![a-z])((?:https?|ftp)://)(.*)$', s, flags=re.IGNORECASE):
+            if m := self.re_url_anchor.match(s):
                 pre = m.group(1)
                 anchor = m.group(2)
                 post = m.group(3)
@@ -359,36 +361,46 @@ class Tokenizer:
                                     line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
+    re_email = regex.compile(r'(.*?)'
+                             r'(?<!\pL\pM*|\d|[.])'
+                             r'(\pL\pM*(?:\pL\pM*|\d|[-_.])*(?:\pL\pM*|\d)'
+                             r'@'
+                             r'\pL\pM*(?:\pL\pM*|\d|[-_.])*(?:\pL\pM*|\d)\.[a-z]{2,})'
+                             r'(?!=\pL|\pM|\d|[.])'
+                             r'(.*)$', flags=regex.IGNORECASE)
+
     def tokenize_emails(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                         line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off email-address tokens such as ChunkyLover53@aol.com"""
         this_function = self.tokenize_emails
         if self.lv & self.char_is_ampersand:
-            if m3 := regex.match(r'(.*?)'
-                                 r'(?<!\pL\pM*|\d|[.])'
-                                 r'(\pL\pM*(?:\pL\pM*|\d|[-_.])*(?:\pL\pM*|\d)'
-                                 r'@'
-                                 r'\pL\pM*(?:\pL\pM*|\d|[-_.])*(?:\pL\pM*|\d)\.[a-z]{2,})'
-                                 r'(?!=\pL|\pM|\d|[.])'
-                                 r'(.*)$',
-                                 s, flags=regex.IGNORECASE):
+            if m3 := self.re_email.match(s):
                 return self.rec_tok_m3(m3, s, offset, 'EMAIL-ADDRESS', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
+
+    re_number = regex.compile(r'(.*?)'
+                              r'(?<![-−–+.]|\d)'                      # negative lookbehind
+                              r'([-−–+]?'                             # plus/minus sign
+                              r'(?:\d{1,3}(?:,\d\d\d)+(?:\.\d+)?|'    # Western style, e.g. 12,345,678.90
+                              r'\d{1,2}(?:,\d\d)*,\d\d\d(?:\.\d+)?|'  # Indian style, e.g. 1,23,45,678.90
+                              r'\d+(?:\.\d+)?))'                      # plain, e.g. 12345678.90
+                              r'(?!=[.,]\d)'                          # negative lookahead
+                              r'(.*)')
 
     def tokenize_numbers(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                          line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off numbers such as 12,345,678.90"""
         this_function = self.tokenize_numbers
-        if m3 := regex.match(r'(.*?)'
-                             r'(?<![-−–+.]|\d)'                      # negative lookbehind
-                             r'([-−–+]?'                             # plus/minus sign
-                             r'(?:\d{1,3}(?:,\d\d\d)+(?:\.\d+)?|'    # Western style, e.g. 12,345,678.90
-                             r'\d{1,2}(?:,\d\d)*,\d\d\d(?:\.\d+)?|'  # Indian style, e.g. 1,23,45,678.90
-                             r'\d+(?:\.\d+)?))'                      # plain, e.g. 12345678.90
-                             r'(?!=[.,]\d)'                          # negative lookahead
-                             r'(.*)', s):
+        if m3 := self.re_number.match(s):
             return self.rec_tok_m3(m3, s, offset, 'NUMBER', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
+
+    re_eng_neg_contraction = \
+        re.compile(r'(.*?)\b(ai|are|ca|can|could|did|do|does|had|has|have|is|sha|should|was|were|wo|would)'
+                   r'(n[o\'’]t)\b(.*)', flags=re.IGNORECASE)
+    re_eng_suf_1_contraction = re.compile(r'(.*?[a-z])([\'’](?:ll|re|s|ve))\b(.*)', flags=re.IGNORECASE)
+    re_eng_suf_d_contraction = re.compile(r'(.*?[aeiouy])([\'’]d)\b(.*)', flags=re.IGNORECASE)
+    re_eng_suf_m_contraction = re.compile(r'(.*?\bI)([\'’]m)\b(.*)', flags=re.IGNORECASE)
 
     def tokenize_english_contractions(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                                       line_id: Optional[str] = None, offset: int = 0) -> str:
@@ -396,8 +408,7 @@ class Tokenizer:
         John's -> John 's; he'd -> he 'd"""
         this_function = self.tokenize_english_contractions
         # Tokenize contracted negation, e.g. "can't", "cannot", "couldn't"
-        if m := re.match(r'(.*?)\b(ai|are|ca|can|could|did|do|does|had|has|have|is|sha|should|was|were|wo|would)'
-                         r'(n[o\'’]t)\b(.*)', s, flags=re.IGNORECASE):
+        if m := self.re_eng_neg_contraction.match(s):
             pre, orig_token_surf1, token_surf2, post = m.group(1), m.group(2), m.group(3), m.group(4)
             # Expand contracted first part, e.g. "wo" (as in "won't") to "will"
             t1 = orig_token_surf1.lower()
@@ -429,11 +440,13 @@ class Tokenizer:
         #   (1) "John's mother", "He's hungry.", "He'll come.", "We're here.", "You've got to be kidding."
         #   (2) "He'd rather die.", "They'd been informed." but not "cont'd"
         #   (3) "I'm done." but not "Ma'm"
-        if m3 := re.match(r'(.*?[a-z])([\'’](?:ll|re|s|ve))\b(.*)', s, flags=re.IGNORECASE) \
-                or re.match(r'(.*?[aeiouy])([\'’]d)\b(.*)', s, flags=re.IGNORECASE) \
-                or re.match(r'(.*?\bI)([\'’]m)\b(.*)', s, flags=re.IGNORECASE):
+        if m3 := self.re_eng_suf_1_contraction.match(s) \
+                or self.re_eng_suf_d_contraction.match(s) \
+                or self.re_eng_suf_m_contraction.match(s):
             return self.rec_tok_m3(m3, s, offset, 'DECONTRACTION', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
+
+    re_right_context_of_initial_letter = regex.compile(r'\s?(?:\p{Lu}\.\s?)*\p{Lu}\p{Ll}{2}')
 
     def tokenize_abbreviations(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                                line_id: Optional[str] = None, offset: int = 0) -> str:
@@ -460,25 +473,28 @@ class Tokenizer:
             char = s[start_position]
             if char.isalpha() and char.isupper() and (s[start_position+1] == '.') \
                and ((start_position == 0) or not s[start_position - 1].isalpha()):
-                right_context = s[start_position+2:min(start_position+22, len(s))]
-                right_context_class = ''.join([('u' if c.isupper()
-                                                else 'l' if c.islower()
-                                                else c if (c in ' .')
-                                                else '-')
-                                               for c in right_context])
-                if re.match(r'\s?(?:u\.\s?)*ull', right_context_class):
+                if self.re_right_context_of_initial_letter.match(s[start_position+2:]):
                     token_surf = s[start_position:start_position+2]
                     return self.rec_tok(token_surf, s, start_position, offset, 'ABBREV-I',
                                         line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
+    re_mt_punct = regex.compile(r'(.*?(?:\pL\pM*\pL\pM*|\d|[!?’]))([-−–]+)(\pL\pM*\pL\pM*|\d)')
+
     def tokenize_mt_punctuation(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                                 line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step currently splits of dashes in certain contexts."""
         this_function = self.tokenize_mt_punctuation
-        if m3 := regex.match(r'(.*?(?:\pL\pM*\pL\pM*|\d|[!?’]))([-−–]+)(\pL\pM*\pL\pM*|\d)', s):
+        if m3 := self.re_mt_punct.match(s):
             return self.rec_tok_m3(m3, s, offset, 'DASH', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
+
+    re_punct = re.compile(r'(.*?)'  # break off punctuation anywhere
+                          r'(["“”„‟(){}«»\[\]〈〉（）［］【】「」《》。，、։።፣፤፥፦፧፨፠\u3008-\u3011\u3014-\u301B।॥%‰‱٪¢£€¥₹฿©®]|'
+                          r'—+|…+|\.{2,}|\$+)'
+                          r'(.*)$')
+    re_punct_s = re.compile(r'(|.*\s)([\'‘¡¿])(.*)$')  # break off punctuation at the beginning of a token
+    re_punct_e = re.compile(r'(.*)([\'’.?!‼⁇⁈⁉‽؟،,;؛！;？；:：])(\s.*|)$')  # break off punctuation at the end of a token
 
     def tokenize_punctuation(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                              line_id: Optional[str] = None, offset: int = 0) -> str:
@@ -486,18 +502,15 @@ class Tokenizer:
         this_function = self.tokenize_punctuation
         # Some punctuation should always be split off by itself regardless of context:
         # parentheses, brackets, dandas, currency signs.
-        if m3 := re.match(r'(.*?)'
-                          r'(["“”„‟(){}«»\[\]〈〉（）［］【】「」《》。，、։።፣፤፥፦፧፨፠\u3008-\u3011\u3014-\u301B।॥%‰‱٪¢£€¥₹฿©®]|'
-                          r'—+|…+|\.{2,}|\$+)'
-                          r'(.*)$', s):
+        if m3 := self.re_punct.match(s):
             return self.rec_tok_m3(m3, s, offset, 'PUNCT', line_id, chart, lang_code, ht, this_function)
         # Some punctuation should be split off from the beginning of a token
         # (with a space or sentence-start to the left of the punctuation).
-        if m3 := re.match(r'(|.*\s)([\'‘¡¿])(.*)$', s):
+        if m3 := self.re_punct_s.match(s):
             return self.rec_tok_m3(m3, s, offset, 'PUNCT-S', line_id, chart, lang_code, ht, this_function)
         # Some punctuation should be split off from the end of a token
         # (with a space or sentence-end to the right of the punctuation.
-        if m3 := re.match(r'(.*)([\'’.?!‼⁇⁈⁉‽؟،,;؛！;？；:：])(\s.*|)$', s):
+        if m3 := self.re_punct_e.match(s):
             return self.rec_tok_m3(m3, s, offset, 'PUNCT-E', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
@@ -528,6 +541,7 @@ class Tokenizer:
 
     def tokenize_string(self, s: str, ht: dict, lang_code: str = '', line_id: Optional[str] = None,
                         annotation_file: Optional[TextIO] = None) -> str:
+        regex.DEFAULT_VERSION = regex.VERSION1
         self.lv = 0  # line_char_type_vector
         # Each bit in this vector is to capture character type info, e.g. char_is_arabic
         # Build a bit-vector for the whole line, as the bitwise 'or' of all character bit-vectors.
@@ -551,6 +565,8 @@ class Tokenizer:
                 chart.print_to_file(annotation_file)
         return s.strip()
 
+    re_id_snt = re.compile(r'(\S+)(\s+)(\S|\S.*\S)\s*$')
+
     def tokenize_lines(self, ht: dict, input_file: TextIO, output_file: TextIO, annotation_file: Optional[TextIO],
                        lang_code=''):
         """Apply normalization/cleaning to a file (or STDIN/STDOUT)."""
@@ -559,7 +575,7 @@ class Tokenizer:
             line_number += 1
             ht['NUMBER-OF-LINES'] = line_number
             if self.first_token_is_line_id_p:
-                if m := re.match(r'(\S+)(\s+)(\S|\S.*\S)\s*$', line):
+                if m := self.re_id_snt.match(line):
                     line_id = m.group(1)
                     line_id_sep = m.group(2)
                     core_line = m.group(3)
