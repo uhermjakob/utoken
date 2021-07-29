@@ -7,7 +7,7 @@ Written by Ulf Hermjakob, USC/ISI
 import logging as log
 import re
 import sys
-from typing import List, Optional
+from typing import Dict, List, Optional
 
 __version__ = '0.0.1'
 last_mod_date = 'July 19, 2021'
@@ -41,32 +41,42 @@ class ResourceDict:
                 if re.match(r'^\uFEFF?\s*(?:#.*)?$', line):  # ignore empty or comment line
                     continue
                 # Check whether cost file line is well-formed. Following call will output specific warnings.
-                valid = double_colon_del_list_validation(line, line_number, filename,
-                                                         valid_slots=['abbrev', 'exp', 'type', 'lcode', 'country',
-                                                                      'comment'],
-                                                         required_slots=['abbrev'])
+                valid = double_colon_del_list_validation(line, str(line_number), filename,
+                                                         valid_slots=['abbrev', 'case-sensitive', 'comment',
+                                                                      'contraction', 'country',
+                                                                      'exp', 'lcode', 'preserve', 'repair',
+                                                                      'target', 'type'],
+                                                         required_slot_dict={'abbrev': [],
+                                                                             'contraction': ['target'],
+                                                                             'preserve': [],
+                                                                             'repair': ['target']})
                 if not valid:
                     n_warnings += 1
                     continue
-                abbreviation = slot_value_in_double_colon_del_list(line, 'abbrev')
-                expansion_s = slot_value_in_double_colon_del_list(line, 'exp')
-                if expansion_s:
-                    expansions = re.split(r';\s*', expansion_s)
+                if m1 := re.match(r"::(\S+)", line):
+                    head_slot = m1.group(1)
                 else:
-                    expansions = None
-                abbrev_type = slot_value_in_double_colon_del_list(line, 'type')
-                abbreviation_entry = AbbreviationEntry(abbreviation, exp=expansions, abbrev_type=abbrev_type)
-                abbreviation_entry_list = self.abbrev_dict.get(abbreviation, [])
-                abbreviation_entry_list.append(abbreviation_entry)
-                self.abbrev_dict[abbreviation] = abbreviation_entry_list
-                if expansions:
-                    for expansion in expansions:
-                        rev_abbreviation_list: List[AbbreviationEntry] = self.reverse_abbrev_dict.get(expansion, [])
-                        rev_abbreviation_list.append(abbreviation_entry)
-                        self.reverse_abbrev_dict[expansion] = rev_abbreviation_list
-                if len(abbreviation) > self.max_abbrev_length:
-                    self.max_abbrev_length = len(abbreviation)
-                n_entries += 1
+                    continue
+                if head_slot == 'abbrev':
+                    abbreviation = slot_value_in_double_colon_del_list(line, 'abbrev')
+                    expansion_s = slot_value_in_double_colon_del_list(line, 'exp')
+                    if expansion_s:
+                        expansions = re.split(r';\s*', expansion_s)
+                    else:
+                        expansions = None
+                    abbrev_type = slot_value_in_double_colon_del_list(line, 'type')
+                    abbreviation_entry = AbbreviationEntry(abbreviation, exp=expansions, abbrev_type=abbrev_type)
+                    abbreviation_entry_list = self.abbrev_dict.get(abbreviation, [])
+                    abbreviation_entry_list.append(abbreviation_entry)
+                    self.abbrev_dict[abbreviation] = abbreviation_entry_list
+                    if expansions:
+                        for expansion in expansions:
+                            rev_abbreviation_list: List[AbbreviationEntry] = self.reverse_abbrev_dict.get(expansion, [])
+                            rev_abbreviation_list.append(abbreviation_entry)
+                            self.reverse_abbrev_dict[expansion] = rev_abbreviation_list
+                    if len(abbreviation) > self.max_abbrev_length:
+                        self.max_abbrev_length = len(abbreviation)
+                    n_entries += 1
             log.info(f'Loaded {n_entries} entries from {line_number} lines in {filename}')
 
 
@@ -77,42 +87,50 @@ def slot_value_in_double_colon_del_list(line: str, slot: str, default: Optional[
     return m.group(1).strip() if m else default
 
 
-def double_colon_del_list_validation(s: str, line_number: int, filename: str,
-                                     valid_slots: List[str], required_slots: List[str] = None) -> bool:
+def double_colon_del_list_validation(s: str, line_id: str, filename: str,
+                                     valid_slots: List[str], required_slot_dict: Dict[str, List[str]]) -> bool:
     """Check whether a string (typically line in data file) is a well-formed double-colon expression"""
     valid = True
     prev_slots = []
-    slots = re.findall(r'::([a-z]\S*)', s, re.IGNORECASE)
+    if slots := re.findall(r'::([a-z]\S*)', s, re.IGNORECASE):
+        head_slot = slots[0]
+        if (required_slots := required_slot_dict.get(head_slot, None)) is None:
+            valid = False
+            log.warning(f'found invalid head-slot ::{head_slot} in line {line_id} in {filename}')
+            required_slots = []
+    else:
+        log.warning(f'found no slots in line {line_id} in {filename}')
+        return False
     # Check for duplicates and unexpected slots
     for slot in slots:
         if slot in valid_slots:
             if slot in prev_slots:
                 valid = False
-                log.warning(f'found duplicate slot ::{slot} in line {line_number} in {filename}')
+                log.warning(f'found duplicate slot ::{slot} in line {line_id} in {filename}')
             else:
                 prev_slots.append(slot)
         else:
             valid = False
-            log.warning(f'found unexpected slot ::{slot} in line {line_number} in {filename}')
+            log.warning(f'found unexpected slot ::{slot} in line {line_id} in {filename}')
     # Check for missing required slots
     if required_slots:
         for slot in required_slots:
             if slot not in prev_slots:
                 valid = False
-                log.warning(f'missing required slot ::{slot} in line {line_number} in {filename}')
+                log.warning(f'missing required slot ::{slot} in line {line_id} in {filename}')
     # Check for ::slot syntax problems
     m = re.match(r'.*?(\S+::[a-z]\S*)', s)
     if m:
         valid = False
         value = m.group(1)
         if re.match(r'.*:::', value):
-            log.warning(f"suspected spurious colon in '{value}' in line {line_number} in {filename}")
+            log.warning(f"suspected spurious colon in '{value}' in line {line_id} in {filename}")
         else:
-            log.warning(f"# Warning: suspected missing space in '{value}' in line {line_number} in {filename}")
+            log.warning(f"# Warning: suspected missing space in '{value}' in line {line_id} in {filename}")
     m = re.match(r'(?:.*\s)?(:[a-z]\S*)', s)
     if m:
         valid = False
-        log.warning(f"suspected missing colon in '{m.group(1)}' in line {line_number} in {filename}")
+        log.warning(f"suspected missing colon in '{m.group(1)}' in line {line_id} in {filename}")
     return valid
 
 
@@ -123,7 +141,7 @@ def increment_dict_count(ht: dict, key: str, increment=1) -> int:
 
 
 def join_tokens(tokens: List[str]):
-    '''Join tokens with space, ignoring empty tokens'''
+    """Join tokens with space, ignoring empty tokens"""
     return ' '.join([token for token in tokens if token != ''])
 
 
