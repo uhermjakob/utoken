@@ -1,5 +1,39 @@
-# English abbreviations
+# English contractions
+::contraction ain't ::target is n't ::lcode eng
+::contraction aren't ::target are n't ::lcode eng
+::contraction can't ::target can n't ::lcode eng
+::contraction cannot ::target can not ::lcode eng
+::contraction couldn't ::target could n't ::lcode eng
+::contraction didn't ::target did n't ::lcode eng
+::contraction don't ::target do not ::lcode eng
+::contraction doesn't ::target does n't ::lcode eng
+::contraction hadn't ::target had n't ::lcode eng
+::contraction hasn't ::target has n't ::lcode eng
+::contraction haven't ::target have n't ::lcode eng
+::contraction isn't ::target is n't ::lcode eng
+::contraction mustn't ::target must n't ::lcode eng
+::contraction shan't ::target shall n't ::lcode eng
+::contraction shouldn't ::target should n't ::lcode eng
+::contraction wasn't ::target was n't ::lcode eng
+::contraction weren't ::target were n't ::lcode eng
+::contraction won't ::target will n't ::lcode eng
+::contraction wouldn't ::target would n't ::lcode eng
+::contraction I'm ::target I 'm ::lcode eng
 
+# English repairs (e.g. to undo damage by previous tokenizer)
+::repair ai n't ::target is n't ::lcode eng
+::repair ca n't ::target can n't ::lcode eng
+::repair sha n't ::target shall n't ::lcode eng
+::repair wo n't ::target will n't ::lcode eng
+
+# English tokens to be preserved (e.g. from punctuation stripping)
+::preserve 'll ::lcode eng
+::preserve 'm ::lcode eng
+::preserve 're ::lcode eng
+::preserve 's ::lcode eng
+::preserve 've ::lcode eng
+
+# English abbreviations
 ::abbrev Jan. ::exp January ::lcode eng ::type month-of-the-year
 ::abbrev Feb. ::exp February ::lcode eng ::type month-of-the-year
 ::abbrev Febr. ::exp February ::lcode eng ::type month-of-the-year
@@ -115,8 +149,8 @@
 ::abbrev para. ::exp paragraph ::lcode eng ::type corpus-component
 ::abbrev paras. ::exp paragraphs ::lcode eng ::type corpus-component
 ::abbrev pp. ::exp pages ::lcode eng ::type corpus-component
-::abbrev # No. ::exp number ::lcode eng ::type corpus-component
-::abbrev Nos. ::exp numbers ::lcode eng ::type corpus-component
+::abbrev # No. ::exp number ::lcode eng ::type corpus-component ::case-sensitive True
+::abbrev Nos. ::exp numbers ::lcode eng ::type corpus-component ::case-sensitive True
 ::abbrev sect. ::exp section ::lcode eng ::type corpus-component
 ::abbrev sects. ::exp sections ::lcode eng ::type corpus-component
 ::abbrev vol. ::exp volume ::lcode eng ::type corpus-component
@@ -209,7 +243,7 @@
 ::abbrev GOP ::exp Republic Party; Grand Old Party ::lcode eng ::type political-party ::country US
 ::abbrev PKK ::exp Kurdistan Workers' Party ::lcode eng ::type political-party
 
-::abbrev JI ::exp Jemaah Islamiyah ::lcode eng ::type terrorist organization
+::abbrev JI ::exp Jemaah Islamiyah ::lcode eng ::type terrorist-organization
 
 ::abbrev ESA ::exp European Space Agency ::lcode eng ::type government-organiztion
 ::abbrev NASA ::exp National Aeronautics and Space Administration ::lcode eng ::type government-organiztion
@@ -379,16 +413,16 @@
 ::abbrev lb. ::exp pound ::lcode eng ::type unit-of-measurement
 ::abbrev lbs ::exp pounds ::lcode eng ::type unit-of-measurement
 ::abbrev lbs. ::exp pounds ::lcode eng ::type unit-of-measurement
-::abbrev M ::exp molar ::lcode eng ::type unit-of-measurement
+::abbrev M ::exp molar ::lcode eng ::type unit-of-measurement ::case-sensitive True
 ::abbrev mg ::exp milligram ::lcode eng ::type unit-of-measurement
 ::abbrev min ::exp minute ::lcode eng ::type unit-of-measurement
 ::abbrev ml ::exp milliliter ::lcode eng ::type unit-of-measurement
 ::abbrev mm ::exp millimeter ::lcode eng ::type unit-of-measurement
 ::abbrev mph ::exp miles per hour ::lcode eng ::type unit-of-measurement
-::abbrev µm ::exp micrometer ::lcode eng ::type unit-of-measurement
-::abbrev µM ::exp micromolar ::lcode eng ::type unit-of-measurement
+::abbrev µm ::exp micrometer ::lcode eng ::type unit-of-measurement ::case-sensitive True
+::abbrev µM ::exp micromolar ::lcode eng ::type unit-of-measurement ::case-sensitive True
 ::abbrev ng ::exp nanogram ::lcode eng ::type unit-of-measurement
-::abbrev nM ::exp nanomolar ::lcode eng ::type unit-of-measurement
+::abbrev nM ::exp nanomolar ::lcode eng ::type unit-of-measurement ::case-sensitive True
 ::abbrev yr. ::exp year ::lcode eng ::type unit-of-measurement
 ::abbrev yrs. ::exp years ::lcode eng ::type unit-of-measurement
 
@@ -400,8 +434,8 @@
 ::abbrev asap ::exp as soon as possible ::lcode eng ::type general
 ::abbrev bd ::exp bluray disc ::lcode eng ::type general
 ::abbrev bro ::exp brother ::lcode eng ::type general
-::abbrev cd ::exp compact disc ::lcode eng ::type general
-::abbrev dvd ::exp digital versatile disc ::lcode eng ::type general
+::abbrev CD ::exp compact disc ::lcode eng ::type general
+::abbrev DVD ::exp digital versatile disc ::lcode eng ::type general
 ::abbrev exec ::exp executive ::lcode eng ::type general
 ::abbrev execs ::exp executives ::lcode eng ::type general
 ::abbrev lib ::exp liberal ::lcode eng ::type general
