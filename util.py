@@ -73,63 +73,67 @@ class ResourceDict:
             self.reverse_resource_dict[rev_anchor] = rev_resource_list
 
     def load_resource(self, filename: str) -> None:
-        with open(filename) as f_in:
-            line_number = 0
-            n_warnings = 0
-            n_entries = 0
-            for line in f_in:
-                line_number += 1
-                if re.match(r'^\uFEFF?\s*(?:#.*)?$', line):  # ignore empty or comment line
-                    continue
-                # Check whether cost file line is well-formed. Following call will output specific warnings.
-                valid = double_colon_del_list_validation(line, str(line_number), filename,
-                                                         valid_slots=['abbrev', 'case-sensitive', 'comment',
-                                                                      'contraction', 'country', 'exp',
-                                                                      'group', 'lcode', 'preserve', 'punct-split',
-                                                                      'repair', 'sem-class', 'side', 'target'],
-                                                         required_slot_dict={'abbrev': [],
-                                                                             'contraction': ['target'],
-                                                                             'preserve': [],
-                                                                             'punct-split': ['side'],
-                                                                             'repair': ['target']})
-                if not valid:
-                    n_warnings += 1
-                    continue
-                if m1 := re.match(r"::(\S+)", line):
-                    head_slot = m1.group(1)
-                else:
-                    continue
-                s = slot_value_in_double_colon_del_list(line, head_slot)
-                if len(s) > self.max_s_length:
-                    self.max_s_length = len(s)
-                resource_entry = None
-                sem_class = slot_value_in_double_colon_del_list(line, 'sem-class')
-                if head_slot == 'abbrev':
-                    expansion_s = slot_value_in_double_colon_del_list(line, 'exp')
-                    expansions = re.split(r';\s*', expansion_s) if expansion_s else []
-                    resource_entry = AbbreviationEntry(s, expansions=expansions, sem_class=sem_class)
-                    self.register_resource_entry_in_reverse_resource_dict(resource_entry, expansions)
-                elif head_slot == 'contraction':
-                    target = slot_value_in_double_colon_del_list(line, 'target')
-                    resource_entry = ContractionEntry(s, target, sem_class=sem_class)
-                    self.register_resource_entry_in_reverse_resource_dict(resource_entry, [target])
-                elif head_slot == 'preserve':
-                    resource_entry = PreserveEntry(s, sem_class=sem_class)
-                elif head_slot == 'punct-split':
-                    side = slot_value_in_double_colon_del_list(line, 'side')
-                    group = slot_value_in_double_colon_del_list(line, 'group')
-                    resource_entry = PunctSplitEntry(s, side, group=bool(group), sem_class=sem_class)
-                elif head_slot == 'repair':
-                    target = slot_value_in_double_colon_del_list(line, 'target')
-                    resource_entry = RepairEntry(s, target, sem_class=sem_class)
-                    self.register_resource_entry_in_reverse_resource_dict(resource_entry, [target])
-                if resource_entry:
-                    abbreviation_entry_list = self.resource_dict.get(s, [])
-                    abbreviation_entry_list.append(resource_entry)
-                    self.resource_dict[s] = abbreviation_entry_list
-                    n_entries += 1
-            log.info(f'Loaded {n_entries} entries from {line_number} lines in {filename}')
-
+        try:
+            with open(filename) as f_in:
+                line_number = 0
+                n_warnings = 0
+                n_entries = 0
+                for line in f_in:
+                    line_number += 1
+                    if re.match(r'^\uFEFF?\s*(?:#.*)?$', line):  # ignore empty or comment line
+                        continue
+                    # Check whether cost file line is well-formed. Following call will output specific warnings.
+                    valid = double_colon_del_list_validation(line, str(line_number), filename,
+                                                             valid_slots=['abbrev', 'case-sensitive', 'comment',
+                                                                          'contraction', 'country', 'exp',
+                                                                          'group', 'lcode', 'preserve', 'punct-split',
+                                                                          'repair', 'sem-class', 'side', 'target'],
+                                                             required_slot_dict={'abbrev': [],
+                                                                                 'contraction': ['target'],
+                                                                                 'preserve': [],
+                                                                                 'punct-split': ['side'],
+                                                                                 'repair': ['target']})
+                    if not valid:
+                        n_warnings += 1
+                        continue
+                    if m1 := re.match(r"::(\S+)", line):
+                        head_slot = m1.group(1)
+                    else:
+                        continue
+                    s = slot_value_in_double_colon_del_list(line, head_slot)
+                    if len(s) > self.max_s_length:
+                        self.max_s_length = len(s)
+                    resource_entry = None
+                    sem_class = slot_value_in_double_colon_del_list(line, 'sem-class')
+                    if head_slot == 'abbrev':
+                        expansion_s = slot_value_in_double_colon_del_list(line, 'exp')
+                        expansions = re.split(r';\s*', expansion_s) if expansion_s else []
+                        resource_entry = AbbreviationEntry(s, expansions=expansions, sem_class=sem_class)
+                        self.register_resource_entry_in_reverse_resource_dict(resource_entry, expansions)
+                    elif head_slot == 'contraction':
+                        target = slot_value_in_double_colon_del_list(line, 'target')
+                        resource_entry = ContractionEntry(s, target, sem_class=sem_class)
+                        self.register_resource_entry_in_reverse_resource_dict(resource_entry, [target])
+                    elif head_slot == 'preserve':
+                        resource_entry = PreserveEntry(s, sem_class=sem_class)
+                    elif head_slot == 'punct-split':
+                        side = slot_value_in_double_colon_del_list(line, 'side')
+                        group = slot_value_in_double_colon_del_list(line, 'group')
+                        resource_entry = PunctSplitEntry(s, side, group=bool(group), sem_class=sem_class)
+                    elif head_slot == 'repair':
+                        target = slot_value_in_double_colon_del_list(line, 'target')
+                        resource_entry = RepairEntry(s, target, sem_class=sem_class)
+                        self.register_resource_entry_in_reverse_resource_dict(resource_entry, [target])
+                    if resource_entry:
+                        abbreviation_entry_list = self.resource_dict.get(s, [])
+                        abbreviation_entry_list.append(resource_entry)
+                        self.resource_dict[s] = abbreviation_entry_list
+                        n_entries += 1
+                log.info(f'Loaded {n_entries} entries from {line_number} lines in {filename}')
+        except IOError:
+            log.warning(f'Could not open resource file {filename}')
+        except:
+            log.warning(f'Error loading resource file {filename}')
 
 def slot_value_in_double_colon_del_list(line: str, slot: str, default: Optional[str] = None) -> str:
     """For a given slot, e.g. 'cost', get its value from a line such as '::s1 of course ::s2 ::cost 0.3' -> 0.3

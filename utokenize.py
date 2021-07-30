@@ -159,7 +159,7 @@ class Chart:
 
 
 class Tokenizer:
-    def __init__(self):
+    def __init__(self, lang_code: Optional[str] = None):
         # Ordered list of tokenization steps
         self.tok_step_functions = [self.normalize_characters,
                                    self.tokenize_urls,
@@ -190,11 +190,15 @@ class Tokenizer:
         self.chart_p = False
         self.first_token_is_line_id_p = False
         self.verbose = False
+        self.lang_code = lang_code
         self.n_lines_tokenized = 0
         self.tok_dict = util.ResourceDict()
-        self.tok_dict.load_resource('data/tok-resource.txt')
-        self.tok_dict.load_resource('data/tok-resource-eng.txt')
-        self.tok_dict.load_resource('data/tok-resource-mal.txt')
+        if lang_code:
+            self.tok_dict.load_resource(f'data/tok-resource-{lang_code}.txt')
+        self.tok_dict.load_resource('data/tok-resource.txt')  # language-independent tok-resource
+        for lcode in ('eng', 'deu', 'mal'):
+            if lcode is not lang_code:
+                self.tok_dict.load_resource(f'data/tok-resource-{lcode}.txt')
 
     def range_init_char_type_vector_dict(self) -> None:
         # Deletable control characters,
@@ -229,7 +233,7 @@ class Tokenizer:
     def rec_tok(token_surf: str, s: str, start_position: int, offset: int,
                 token_type: str, line_id: str, chart: Optional[Chart],
                 lang_code: str, ht: dict, calling_function, **token_kwargs) -> [str, Token]:
-        """Recursive tokenization step using a token-surf and start-position.
+        """Recursive tokenization step (same method, applied to remaining string) using token-surf and start-position.
         Once a heuristic has identified a particular token span and type,
         this method computes all offsets, creates a new token, and recursively
         calls the calling function on the string preceding and following the new token."""
@@ -616,7 +620,7 @@ def main(argv):
                         version=f'%(prog)s {__version__} last modified: {last_mod_date}')
     args = parser.parse_args(argv)
     lang_code = args.lc
-    tok = Tokenizer()
+    tok = Tokenizer(lang_code=lang_code)
     tok.chart_p = bool(args.annotation) or bool(args.chart)
     tok.first_token_is_line_id_p = bool(args.first_token_is_line_id)
     tok.verbose = args.verbose
@@ -657,6 +661,7 @@ def main(argv):
         log.info(f'End: {end_time}  Elapsed time: {elapsed_time}  Processed {str(number_of_lines)} {lines}')
     elif elapsed_time.seconds >= 10:
         log.info(f'Elapsed time: {elapsed_time.seconds} seconds for {number_of_lines:,} {lines}')
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])
