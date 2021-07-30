@@ -192,6 +192,7 @@ class Tokenizer:
         self.verbose = False
         self.n_lines_tokenized = 0
         self.tok_dict = util.ResourceDict()
+        self.tok_dict.load_resource('data/tok-resource.txt')
         self.tok_dict.load_resource('data/tok-resource-eng.txt')
         self.tok_dict.load_resource('data/tok-resource-mal.txt')
 
@@ -471,10 +472,12 @@ class Tokenizer:
                         if prev_char.isalpha() or (prev_char in "'’"):
                             continue
                     abbrev_cand = s[start_position:i+1]
-                    if abbrev_entries := self.tok_dict.resource_dict.get(abbrev_cand, None):
+                    if (resource_entries := self.tok_dict.resource_dict.get(abbrev_cand, None)) \
+                        and (abbrev_entries := (resource_entry for resource_entry in resource_entries
+                                                if isinstance(resource_entry, util.AbbreviationEntry))):
                         return self.rec_tok(abbrev_cand, s, start_position, offset, 'ABBREV',
                                             line_id, chart, lang_code, ht, this_function,
-                                            sem_class=abbrev_entries[0].sem_class)
+                                            sem_class=next(abbrev_entries).sem_class)
         for start_position in range(0, len(s)-1):
             char = s[start_position]
             if char.isalpha() and char.isupper() and (s[start_position+1] == '.') \
