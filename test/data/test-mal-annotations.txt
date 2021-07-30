@@ -54,8 +54,8 @@
 ::span 4-5 ::type DASH ::surf -
 ::span 5-10 ::type MAIN ::surf കളുടെ
 ::line Abb1 ::s പ്രസ്. ജോൺ എഫ്. കെന്നഡി.
-::span 0-6 ::type ABBREV ::abbrev-type pre-name-title ::surf പ്രസ്.
+::span 0-6 ::type ABBREV ::sem-class pre-name-title ::surf പ്രസ്.
 ::span 7-10 ::type MAIN ::surf ജോൺ
-::span 11-15 ::type ABBREV ::abbrev-type name-initial ::surf എഫ്.
+::span 11-15 ::type ABBREV ::sem-class name-initial ::surf എഫ്.
 ::span 16-23 ::type MAIN ::surf കെന്നഡി
 ::span 23-24 ::type PUNCT-E ::surf .

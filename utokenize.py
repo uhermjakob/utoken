@@ -104,7 +104,7 @@ class Token:
         self.snt_id = snt_id
         self.span = span
         self.creator = creator or "TOKEN"
-        self.abbrev_type = None
+        self.sem_class = None
 
     def print_short(self) -> str:
         return f'{self.span.print_hard_span()}:{self.creator} {self.surf}'
@@ -153,8 +153,8 @@ class Chart:
         annotation_file.write(f'::line {self.snt_id} ::s {self.s0}\n')
         for token in self.tokens:
             annotation_file.write(f'::span {token.span.print_hard_span()} ::type {token.creator} ')
-            if token.abbrev_type and token.abbrev_type != 'general':
-                annotation_file.write(f'::abbrev-type {token.abbrev_type} ')
+            if token.sem_class and token.sem_class != 'general':
+                annotation_file.write(f'::sem-class {token.sem_class} ')
             annotation_file.write(f'::surf {token.surf}\n')
 
 
@@ -250,14 +250,16 @@ class Tokenizer:
     def rec_tok_m3(self, m3: Match[str], s: str, offset: int,
                    token_type: str, line_id: str, chart: Optional[Chart],
                    lang_code: str, ht: dict, calling_function, **token_kwargs) -> [str, Token]:
-        """Recursive tokenization step using Match object.
-        Converts a match for pre-token, token, and post-token to token-surf and start-position, then call rec_tok."""
+        """Recursive tokenization step (same method, applied to remaining string) using Match object.
+        The name 'm3' refers to the three groups it expects in the match object:
+        (1) pre-token (2) token and (3) post-token.
+        Method computes token-surf and start-position, then calls rec_tok."""
         pre_token = m3.group(1)
         token = m3.group(2)
         # post_token = m3.group(3)
         start_position = len(pre_token)
         end_position = start_position + len(token)
-        token_surf = s[start_position:end_position]
+        token_surf = s[start_position:end_position]  # in case that the regex match operates on a mapped string
         return self.rec_tok(token_surf, s, start_position, offset, token_type, line_id, chart,
                             lang_code, ht, calling_function, **token_kwargs)
 
@@ -265,7 +267,7 @@ class Tokenizer:
                  Optional[Callable[[str, Chart, dict, str, Optional[str], int], str]],
                  s: str, chart: Chart, ht: dict, lang_code: str = '',
                  line_id: Optional[str] = None, offset: int = 0) -> str:
-        """Function identifies and calls the next tokenization step."""
+        """Method identifies and calls the next tokenization step (same string, different method)."""
         next_tokenization_function: Callable[[str, Chart, dict, str, Optional[str], int], str] \
             = self.next_tok_step_dict[current_tok_function] if current_tok_function \
             else self.tok_step_functions[0]  # first tokenization step
@@ -459,7 +461,7 @@ class Tokenizer:
         for i in range(len(s)-1, -1, -1):
             char = s[i]
             if char == '.':
-                start_position = max(0, i - self.tok_dict.max_abbrev_length) - 1
+                start_position = max(0, i - self.tok_dict.max_s_length) - 1
                 while start_position+1 < i:
                     start_position += 1
                     if not s[start_position].isalpha():
@@ -469,10 +471,10 @@ class Tokenizer:
                         if prev_char.isalpha() or (prev_char in "'’"):
                             continue
                     abbrev_cand = s[start_position:i+1]
-                    if abbrev_entries := self.tok_dict.abbrev_dict.get(abbrev_cand, None):
+                    if abbrev_entries := self.tok_dict.resource_dict.get(abbrev_cand, None):
                         return self.rec_tok(abbrev_cand, s, start_position, offset, 'ABBREV',
                                             line_id, chart, lang_code, ht, this_function,
-                                            abbrev_type=abbrev_entries[0].type)
+                                            sem_class=abbrev_entries[0].sem_class)
         for start_position in range(0, len(s)-1):
             char = s[start_position]
             if char.isalpha() and char.isupper() and (s[start_position+1] == '.') \
@@ -646,12 +648,12 @@ def main(argv):
     # Log some change stats.
     end_time = datetime.datetime.now()
     elapsed_time = end_time - start_time
+    number_of_lines = ht.get('NUMBER-OF-LINES', 0)
+    lines = 'line' if number_of_lines == 1 else 'lines'
     if args.verbose:
-        number_of_lines = ht.get('NUMBER-OF-LINES', 0)
-        lines = 'line' if number_of_lines == 1 else 'lines'
         log.info(f'End: {end_time}  Elapsed time: {elapsed_time}  Processed {str(number_of_lines)} {lines}')
     elif elapsed_time.seconds >= 10:
-        log.info(f'Elapsed time: {elapsed_time.seconds} seconds')
+        log.info(f'Elapsed time: {elapsed_time.seconds} seconds for {number_of_lines:,} {lines}')
 
 if __name__ == "__main__":
     main(sys.argv[1:])

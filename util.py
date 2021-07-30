@@ -13,23 +13,30 @@ __version__ = '0.0.1'
 last_mod_date = 'July 19, 2021'
 
 
-class AbbreviationEntry:
-    """Annotated abbreviation"""
-    def __init__(self, abbrev: str, exp: Optional[List[str]], abbrev_type: Optional[str] = None,
-                 lcode: Optional[str] = None, country: Optional[str] = None, comment: Optional[str] = None):
-        self.abbreviation = abbrev      # e.g. Gen.
-        self.expansion = exp            # e.g. General
-        self.type = abbrev_type         # e.g. pre-name-title
+class ResourceEntry:
+    """Annotated entries for abbreviations, contractions, repairs etc."""
+    def __init__(self, s: str,
+                 sem_class: Optional[str] = None, lcode: Optional[str] = None,
+                 country: Optional[str] = None, comment: Optional[str] = None):
+        self.s = s                      # e.g. Gen.
         self.lcode = lcode              # language code, e.g. eng
-        self.country = country
+        self.country = country          # country, e.g. Canada
+        self.sem_class = sem_class      # e.g. pre-name-title
         self.comment = comment
+
+
+class AbbreviationEntry(ResourceEntry):
+    def __init__(self, abbrev: str, expansion: Optional[List[str]], sem_class: Optional[str] = None,
+                 lcode: Optional[str] = None, country: Optional[str] = None, comment: Optional[str] = None):
+        super().__init__(abbrev, sem_class=sem_class, lcode=lcode, country=country, comment=comment)
+        self.expansion = expansion      # e.g. General
 
 
 class ResourceDict:
     def __init__(self):
-        self.abbrev_dict = {}
-        self.reverse_abbrev_dict = {}
-        self.max_abbrev_length = 0
+        self.resource_dict = {}
+        self.reverse_resource_dict = {}
+        self.max_s_length = 0
 
     def load_resource(self, filename: str) -> None:
         with open(filename) as f_in:
@@ -45,7 +52,7 @@ class ResourceDict:
                                                          valid_slots=['abbrev', 'case-sensitive', 'comment',
                                                                       'contraction', 'country',
                                                                       'exp', 'lcode', 'preserve', 'repair',
-                                                                      'target', 'type'],
+                                                                      'sem-class', 'target'],
                                                          required_slot_dict={'abbrev': [],
                                                                              'contraction': ['target'],
                                                                              'preserve': [],
@@ -64,18 +71,18 @@ class ResourceDict:
                         expansions = re.split(r';\s*', expansion_s)
                     else:
                         expansions = None
-                    abbrev_type = slot_value_in_double_colon_del_list(line, 'type')
-                    abbreviation_entry = AbbreviationEntry(abbreviation, exp=expansions, abbrev_type=abbrev_type)
-                    abbreviation_entry_list = self.abbrev_dict.get(abbreviation, [])
+                    sem_class = slot_value_in_double_colon_del_list(line, 'sem-class')
+                    abbreviation_entry = AbbreviationEntry(abbreviation, expansion=expansions, sem_class=sem_class)
+                    abbreviation_entry_list = self.resource_dict.get(abbreviation, [])
                     abbreviation_entry_list.append(abbreviation_entry)
-                    self.abbrev_dict[abbreviation] = abbreviation_entry_list
+                    self.resource_dict[abbreviation] = abbreviation_entry_list
                     if expansions:
                         for expansion in expansions:
-                            rev_abbreviation_list: List[AbbreviationEntry] = self.reverse_abbrev_dict.get(expansion, [])
+                            rev_abbreviation_list: List[ResourceEntry] = self.reverse_resource_dict.get(expansion, [])
                             rev_abbreviation_list.append(abbreviation_entry)
-                            self.reverse_abbrev_dict[expansion] = rev_abbreviation_list
-                    if len(abbreviation) > self.max_abbrev_length:
-                        self.max_abbrev_length = len(abbreviation)
+                            self.reverse_resource_dict[expansion] = rev_abbreviation_list
+                    if len(abbreviation) > self.max_s_length:
+                        self.max_s_length = len(abbreviation)
                     n_entries += 1
             log.info(f'Loaded {n_entries} entries from {line_number} lines in {filename}')
 

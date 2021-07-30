@@ -11,7 +11,7 @@
 ::span 41-47 ::type MAIN ::surf loving
 ::span 48-52 ::type MAIN ::surf wife
 ::span 52-53 ::type PUNCT-E ::surf ,
-::span 54-57 ::type ABBREV ::abbrev-type pre-name-title ::surf Dr.
+::span 54-57 ::type ABBREV ::sem-class pre-name-title ::surf Dr.
 ::span 58-63 ::type MAIN ::surf Seuss
 ::span 64-70 ::type ABBREV ::surf et al.
 ::span 71-77 ::type MAIN ::surf bought

@@ -1,12 +1,12 @@
 # Location names to be preserved (e.g. from punctuation stripping)
-::preserve 's‑Gravenhage ::type city ::country Netherlands
-::preserve 's-Hertogenbosch ::type city ::country Netherlands
-::preserve L'Anse aux Meadows ::type location ::country Canada
+::preserve 's‑Gravenhage ::sem-class city ::country Netherlands
+::preserve 's-Hertogenbosch ::sem-class city ::country Netherlands
+::preserve L'Anse aux Meadows ::sem-class location ::country Canada
 
 # Organization names to be preserved
-::preserve 'Ndrangheta ::type criminal-organization ::country Italy
+::preserve 'Ndrangheta ::sem-class criminal-organization ::country Italy
 
 # Person names to be preserved
-::preserve D'Alessio ::type person
-::preserve D'Artagnan ::type person
+::preserve D'Alessio ::sem-class person
+::preserve D'Artagnan ::sem-class person
 
