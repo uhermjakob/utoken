@@ -10,3 +10,100 @@
 ::preserve D'Alessio ::sem-class person
 ::preserve D'Artagnan ::sem-class person
 
+# split off punctuation anywhere
+::punct-split " ::side both
+::punct-split “ ::side both
+::punct-split ” ::side both
+::punct-split „ ::side both
+::punct-split ‟ ::side both
+::punct-split ( ::side both
+::punct-split ) ::side both
+::punct-split { ::side both
+::punct-split } ::side both
+::punct-split « ::side both
+::punct-split » ::side both
+::punct-split [ ::side both
+::punct-split ] ::side both
+::punct-split 〈 ::side both
+::punct-split 〉 ::side both
+::punct-split （ ::side both
+::punct-split ） ::side both
+::punct-split ［ ::side both
+::punct-split ］ ::side both
+::punct-split 【 ::side both
+::punct-split 】 ::side both
+::punct-split 「 ::side both
+::punct-split 」 ::side both
+::punct-split 《 ::side both
+::punct-split 》 ::side both
+::punct-split 『 ::side both
+::punct-split 』 ::side both
+::punct-split 【 ::side both
+::punct-split 】 ::side both
+::punct-split 〔 ::side both
+::punct-split 〕 ::side both
+::punct-split 〖 ::side both
+::punct-split 〗 ::side both
+::punct-split 〘 ::side both
+::punct-split 〙 ::side both
+::punct-split 〚 ::side both
+::punct-split 〛 ::side both
+::punct-split 。 ::side both
+::punct-split ， ::side both
+::punct-split 、 ::side both
+::punct-split ։ ::side both
+::punct-split ። ::side both
+::punct-split ፣ ::side both
+::punct-split ፤ ::side both
+::punct-split ፥ ::side both
+::punct-split ፦ ::side both
+::punct-split ፧ ::side both
+::punct-split ፨ ::side both
+::punct-split ፠ ::side both
+::punct-split । ::side both
+::punct-split ॥ ::side both
+::punct-split % ::side both
+::punct-split ‰ ::side both
+::punct-split ‱ ::side both
+::punct-split ٪ ::side both
+::punct-split ¢ ::side both
+::punct-split £ ::side both
+::punct-split € ::side both
+::punct-split ¥ ::side both
+::punct-split ₹ ::side both
+::punct-split ฿ ::side both
+::punct-split © ::side both
+::punct-split ® ::side both
+::punct-split $ ::side both ::group True
+::punct-split — ::side both ::group True
+::punct-split … ::side both ::group True
+::punct-split .. ::side both ::group True
+
+# split off punctuation from start of token
+::punct-split ' ::side start ::group True
+::punct-split ‘ ::side start ::group True
+::punct-split ¡ ::side start ::group True
+::punct-split ¿ ::side start ::group True
+
+# split off punctuation from end of token
+::punct-split ' ::side end ::group True
+::punct-split ’ ::side end ::group True
+::punct-split . ::side end
+::punct-split ? ::side end ::group True
+::punct-split ! ::side end ::group True
+::punct-split ‼ ::side end
+::punct-split ⁇ ::side end
+::punct-split ⁈ ::side end
+::punct-split ⁉ ::side end
+::punct-split ‽ ::side end
+::punct-split ؟ ::side end
+::punct-split ، ::side end
+::punct-split , ::side end
+::punct-split ; ::side end
+::punct-split ؛ ::side end
+::punct-split ！ ::side end
+::punct-split ; ::side end
+::punct-split ？ ::side end
+::punct-split ； ::side end
+::punct-split : ::side end
+::punct-split ： ::side end
