@@ -26,10 +26,38 @@ class ResourceEntry:
 
 
 class AbbreviationEntry(ResourceEntry):
-    def __init__(self, abbrev: str, expansion: Optional[List[str]], sem_class: Optional[str] = None,
+    def __init__(self, abbrev: str, expansions: Optional[List[str]], sem_class: Optional[str] = None,
                  lcode: Optional[str] = None, country: Optional[str] = None, comment: Optional[str] = None):
         super().__init__(abbrev, sem_class=sem_class, lcode=lcode, country=country, comment=comment)
-        self.expansion = expansion      # e.g. General
+        self.expansions = expansions      # e.g. [General]
+
+
+class RepairEntry(ResourceEntry):
+    def __init__(self, bad_s: str, good_s: str, sem_class: Optional[str] = None,
+                 lcode: Optional[str] = None, country: Optional[str] = None, comment: Optional[str] = None):
+        super().__init__(bad_s, sem_class=sem_class, lcode=lcode, country=country, comment=comment)
+        self.target = good_s      # repaired, e.g. "ca n't" is repaired as "can n't"
+
+
+class ContractionEntry(ResourceEntry):
+    def __init__(self, contraction: str, decontraction: str, sem_class: Optional[str] = None,
+                 lcode: Optional[str] = None, country: Optional[str] = None, comment: Optional[str] = None):
+        super().__init__(contraction, sem_class=sem_class, lcode=lcode, country=country, comment=comment)
+        self.target = decontraction      # e.g. "won't" is decontracted to "will n't"
+
+
+class PreserveEntry(ResourceEntry):
+    def __init__(self, s: str, sem_class: Optional[str] = None,
+                 lcode: Optional[str] = None, country: Optional[str] = None, comment: Optional[str] = None):
+        super().__init__(s, sem_class=sem_class, lcode=lcode, country=country, comment=comment)
+
+
+class PunctSplitEntry(ResourceEntry):
+    def __init__(self, s: str, side: str, group: Optional[bool], sem_class: Optional[str] = None,
+                 lcode: Optional[str] = None, country: Optional[str] = None, comment: Optional[str] = None):
+        super().__init__(s, sem_class=sem_class, lcode=lcode, country=country, comment=comment)
+        self.side = side
+        self.group = group if group else False
 
 
 class ResourceDict:
@@ -37,6 +65,12 @@ class ResourceDict:
         self.resource_dict = {}
         self.reverse_resource_dict = {}
         self.max_s_length = 0
+
+    def register_resource_entry_in_reverse_resource_dict(self, resource_entry: ResourceEntry, rev_anchors: List[str]):
+        for rev_anchor in rev_anchors:
+            rev_resource_list: List[ResourceEntry] = self.reverse_resource_dict.get(rev_anchor, [])
+            rev_resource_list.append(resource_entry)
+            self.reverse_resource_dict[rev_anchor] = rev_resource_list
 
     def load_resource(self, filename: str) -> None:
         with open(filename) as f_in:
@@ -50,12 +84,13 @@ class ResourceDict:
                 # Check whether cost file line is well-formed. Following call will output specific warnings.
                 valid = double_colon_del_list_validation(line, str(line_number), filename,
                                                          valid_slots=['abbrev', 'case-sensitive', 'comment',
-                                                                      'contraction', 'country',
-                                                                      'exp', 'lcode', 'preserve', 'repair',
-                                                                      'sem-class', 'target'],
+                                                                      'contraction', 'country', 'exp',
+                                                                      'group', 'lcode', 'preserve', 'punct-split',
+                                                                      'repair', 'sem-class', 'side', 'target'],
                                                          required_slot_dict={'abbrev': [],
                                                                              'contraction': ['target'],
                                                                              'preserve': [],
+                                                                             'punct-split': ['side'],
                                                                              'repair': ['target']})
                 if not valid:
                     n_warnings += 1
@@ -64,25 +99,34 @@ class ResourceDict:
                     head_slot = m1.group(1)
                 else:
                     continue
+                s = slot_value_in_double_colon_del_list(line, head_slot)
+                if len(s) > self.max_s_length:
+                    self.max_s_length = len(s)
+                resource_entry = None
+                sem_class = slot_value_in_double_colon_del_list(line, 'sem-class')
                 if head_slot == 'abbrev':
-                    abbreviation = slot_value_in_double_colon_del_list(line, 'abbrev')
                     expansion_s = slot_value_in_double_colon_del_list(line, 'exp')
-                    if expansion_s:
-                        expansions = re.split(r';\s*', expansion_s)
-                    else:
-                        expansions = None
-                    sem_class = slot_value_in_double_colon_del_list(line, 'sem-class')
-                    abbreviation_entry = AbbreviationEntry(abbreviation, expansion=expansions, sem_class=sem_class)
-                    abbreviation_entry_list = self.resource_dict.get(abbreviation, [])
-                    abbreviation_entry_list.append(abbreviation_entry)
-                    self.resource_dict[abbreviation] = abbreviation_entry_list
-                    if expansions:
-                        for expansion in expansions:
-                            rev_abbreviation_list: List[ResourceEntry] = self.reverse_resource_dict.get(expansion, [])
-                            rev_abbreviation_list.append(abbreviation_entry)
-                            self.reverse_resource_dict[expansion] = rev_abbreviation_list
-                    if len(abbreviation) > self.max_s_length:
-                        self.max_s_length = len(abbreviation)
+                    expansions = re.split(r';\s*', expansion_s) if expansion_s else []
+                    resource_entry = AbbreviationEntry(s, expansions=expansions, sem_class=sem_class)
+                    self.register_resource_entry_in_reverse_resource_dict(resource_entry, expansions)
+                elif head_slot == 'contraction':
+                    target = slot_value_in_double_colon_del_list(line, 'target')
+                    resource_entry = ContractionEntry(s, target, sem_class=sem_class)
+                    self.register_resource_entry_in_reverse_resource_dict(resource_entry, [target])
+                elif head_slot == 'preserve':
+                    resource_entry = PreserveEntry(s, sem_class=sem_class)
+                elif head_slot == 'punct-split':
+                    side = slot_value_in_double_colon_del_list(line, 'side')
+                    group = slot_value_in_double_colon_del_list(line, 'group')
+                    resource_entry = PunctSplitEntry(s, side, group=bool(group), sem_class=sem_class)
+                elif head_slot == 'repair':
+                    target = slot_value_in_double_colon_del_list(line, 'target')
+                    resource_entry = RepairEntry(s, target, sem_class=sem_class)
+                    self.register_resource_entry_in_reverse_resource_dict(resource_entry, [target])
+                if resource_entry:
+                    abbreviation_entry_list = self.resource_dict.get(s, [])
+                    abbreviation_entry_list.append(resource_entry)
+                    self.resource_dict[s] = abbreviation_entry_list
                     n_entries += 1
             log.info(f'Loaded {n_entries} entries from {line_number} lines in {filename}')
 
