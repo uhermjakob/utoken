@@ -11,7 +11,7 @@ import sys
 from typing import Dict, List, Optional, Pattern
 
 __version__ = '0.0.2'
-last_mod_date = 'July 30, 2021'
+last_mod_date = 'July 31, 2021'
 
 
 class ResourceEntry:
@@ -87,16 +87,18 @@ class ResourceDict:
     def expand_resource_lines(orig_line: str) -> List[str]:
         lines = [orig_line]
         apostrophe = "'"
-        for line in lines:
+        n_lines = len(lines)
+        for line in lines[0:n_lines]:
             if apostrophe in line:
                 repl_chars = "’‘"
                 if "::punct-split" in orig_line:
                     continue
-                elif m5 := regex.match(r'(::\S+\s+)(\S|\S.*?\S)(\s+::target\s+)(\S|\S.*?\S)(\s+::\S.*|\s*)$', orig_line):
+                elif m5 := regex.match(r'(::\S+\s+)(\S|\S.*?\S)(\s+::target\s+)(\S|\S.*?\S)(\s+::\S.*|\s*)$',
+                                       orig_line):
                     if apostrophe in m5.group(2):
                         for repl_char in repl_chars:
                             new_line = f'{m5.group(1)}{regex.sub(apostrophe, repl_char, m5.group(2))}{m5.group(3)}' \
-                                       f'{regex.sub(apostrophe, repl_char, m5.group(2))}{m5.group(5)}'
+                                       f'{regex.sub(apostrophe, repl_char, m5.group(4))}{m5.group(5)}'
                             # log.info(f'Expanded line {new_line}')
                             lines.append(new_line)
                 elif m3 := regex.match(r'(::\S+\s+)(\S|\S.*?\S)(\s+::\S.*|\s*)$', orig_line):
@@ -117,7 +119,14 @@ class ResourceDict:
                 n_expanded_lines = 0
                 for orig_line in f_in:
                     line_number += 1
-                    lines = self.expand_resource_lines(orig_line)
+                    line_without_comment = orig_line
+                    if '#' in orig_line:
+                        if orig_line.startswith('#'):
+                            continue
+                        if (m1 := re.match(r"(.*::\S+(?:\s+\S+)?)(.*)$", orig_line)) \
+                            and (m2 := re.match(r"(.*?)\s+#.*", m1.group(2))):
+                            line_without_comment = m1.group(1) + m2.group(1)
+                    lines = self.expand_resource_lines(line_without_comment)
                     n_expanded_lines += len(lines) - 1
                     for line in lines:
                         if re.match(r'^\uFEFF?\s*(?:#.*)?$', line):  # ignore empty or comment line
