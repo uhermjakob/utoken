@@ -324,45 +324,20 @@ class Tokenizer:
         self.current_s = s
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    re_url_anchor = re.compile(r'(.*)(?<![a-z])((?:https?|ftp)://)(.*)$', flags=re.IGNORECASE)
+    re_url = regex.compile(r'(.*)'
+                           r'(?<![\p{Latin}&&\p{Letter}])'  # negative lookbehind: no Latin+ letters please
+                           r"((?:https?|ftp)://"
+                           r"(\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+]|\((?:\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+])\))+"
+                           r"(?:\p{L}\p{M}*|\d|[/]))"
+                           r'(.*)$',
+                           flags=re.IGNORECASE)
 
     def tokenize_urls(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                       line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off URL tokens such as https://www.amazon.com"""
         this_function = self.tokenize_urls
-        if ('http' in s) or ('ftp' in s):
-            if m := self.re_url_anchor.match(s):
-                pre, anchor, post = m.group(1, 2, 3)
-                index = 0
-                len_post = len(post)
-                internal_url_punctuation = "#%&'()*+,-./:;=?@_`~"
-                final_url_punctuation = "/"
-                # include alphanumeric and certain punctuation characters
-                while index < len_post:
-                    char = post[index]
-                    if char.isalnum():
-                        index += 1
-                    elif char in internal_url_punctuation:
-                        index += 1
-                    else:
-                        break
-                # exclude certain punctuation characters at the end
-                while index > 0:
-                    char = post[index-1]
-                    if char == ')':
-                        if '(' in post[0:index-1]:
-                            break
-                        else:
-                            index -= 1
-                    elif (char in internal_url_punctuation) and (char not in final_url_punctuation):
-                        index -= 1
-                    else:
-                        break
-                # build result
-                token_surf = anchor + post[0:index]
-                start_position = len(pre)
-                return self.rec_tok(token_surf, s, start_position, offset, 'URL',
-                                    line_id, chart, lang_code, ht, this_function)
+        if m3 := self.re_url.match(s):
+            return self.rec_tok_m3(m3, s, offset, 'URL', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_email = regex.compile(r'(.*?)'
