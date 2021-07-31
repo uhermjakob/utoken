@@ -24,7 +24,7 @@ from utoken import util
 log.basicConfig(level=log.INFO)
 
 __version__ = '0.0.2'
-last_mod_date = 'July 30, 2021'
+last_mod_date = 'July 31, 2021'
 
 
 class VertexMap:
@@ -261,9 +261,7 @@ class Tokenizer:
         The name 'm3' refers to the three groups it expects in the match object:
         (1) pre-token (2) token and (3) post-token.
         Method computes token-surf and start-position, then calls rec_tok."""
-        pre_token = m3.group(1)
-        token = m3.group(2)
-        # post_token = m3.group(3)
+        pre_token, token, post_token = m3.group(1, 2, 3)
         start_position = len(pre_token)
         end_position = start_position + len(token)
         token_surf = s[start_position:end_position]  # in case that the regex match operates on a mapped string
@@ -334,9 +332,7 @@ class Tokenizer:
         this_function = self.tokenize_urls
         if ('http' in s) or ('ftp' in s):
             if m := self.re_url_anchor.match(s):
-                pre = m.group(1)
-                anchor = m.group(2)
-                post = m.group(3)
+                pre, anchor, post = m.group(1, 2, 3)
                 index = 0
                 len_post = len(post)
                 internal_url_punctuation = "#%&'()*+,-./:;=?@_`~"
@@ -417,7 +413,7 @@ class Tokenizer:
         this_function = self.tokenize_english_contractions
         # Tokenize contracted negation, e.g. "can't", "cannot", "couldn't"
         if m := self.re_eng_neg_contraction.match(s):
-            pre, orig_token_surf1, token_surf2, post = m.group(1), m.group(2), m.group(3), m.group(4)
+            pre, orig_token_surf1, token_surf2, post = m.group(1, 2, 3, 4)
             # Expand contracted first part, e.g. "wo" (as in "won't") to "will"
             t1 = orig_token_surf1.lower()
             token_surf1 = 'is' if t1 == 'ai' else 'can' if t1 == 'ca' else 'shall' if t1 == 'sha' \
@@ -622,9 +618,7 @@ class Tokenizer:
             ht['NUMBER-OF-LINES'] = line_number
             if self.first_token_is_line_id_p:
                 if m := self.re_id_snt.match(line):
-                    line_id = m.group(1)
-                    line_id_sep = m.group(2)
-                    core_line = m.group(3)
+                    line_id, line_id_sep, core_line = m.group(1, 2, 3)
                     output_file.write(line_id + line_id_sep
                                       + self.tokenize_string(core_line, ht, lang_code=lang_code,
                                                              line_id=line_id, annotation_file=annotation_file)
