@@ -6,23 +6,32 @@ Written by Ulf Hermjakob, USC/ISI
 # -*- encoding: utf-8 -*-
 import logging as log
 import re
+import regex
 import sys
-from typing import Dict, List, Optional
+from typing import Dict, List, Optional, Pattern
 
-__version__ = '0.0.1'
-last_mod_date = 'July 19, 2021'
+__version__ = '0.0.2'
+last_mod_date = 'July 30, 2021'
 
 
 class ResourceEntry:
     """Annotated entries for abbreviations, contractions, repairs etc."""
     def __init__(self, s: str,
                  sem_class: Optional[str] = None, lcode: Optional[str] = None,
-                 country: Optional[str] = None, comment: Optional[str] = None):
+                 country: Optional[str] = None, comment: Optional[str] = None,
+                 left_context: Optional[Pattern[str]] = None, left_context_not: Optional[Pattern[str]] = None,
+                 right_context: Optional[Pattern[str]] = None, right_context_not: Optional[Pattern[str]] = None,
+                 case_sensitive: bool = False):
         self.s = s                      # e.g. Gen.
         self.lcode = lcode              # language code, e.g. eng
         self.country = country          # country, e.g. Canada
         self.sem_class = sem_class      # e.g. pre-name-title
+        self.case_sensitive = case_sensitive
         self.comment = comment
+        self.left_context: Optional[Pattern[str]] = left_context
+        self.left_context_not: Optional[Pattern[str]] = left_context_not
+        self.right_context: Optional[Pattern[str]] = right_context
+        self.right_context_not: Optional[Pattern[str]] = right_context_not
 
 
 class AbbreviationEntry(ResourceEntry):
@@ -62,9 +71,11 @@ class PunctSplitEntry(ResourceEntry):
 
 class ResourceDict:
     def __init__(self):
-        self.resource_dict = {}
-        self.reverse_resource_dict = {}
-        self.max_s_length = 0
+        """Dictionary of ResourceEntries. All dictionary keys are lower case."""
+        self.resource_dict: Dict[str, List[ResourceEntry]] = {}          # primary dict
+        self.reverse_resource_dict: Dict[str, List[ResourceEntry]] = {}  # reverse index
+        self.prefix_dict: Dict[str, bool] = {}              # prefixes of headwords to more efficiently stop search
+        self.max_s_length: int = 0
 
     def register_resource_entry_in_reverse_resource_dict(self, resource_entry: ResourceEntry, rev_anchors: List[str]):
         for rev_anchor in rev_anchors:
@@ -72,68 +83,135 @@ class ResourceDict:
             rev_resource_list.append(resource_entry)
             self.reverse_resource_dict[rev_anchor] = rev_resource_list
 
+    @staticmethod
+    def expand_resource_lines(orig_line: str) -> List[str]:
+        lines = [orig_line]
+        apostrophe = "'"
+        for line in lines:
+            if apostrophe in line:
+                repl_chars = "’‘"
+                if "::punct-split" in orig_line:
+                    continue
+                elif m5 := regex.match(r'(::\S+\s+)(\S|\S.*?\S)(\s+::target\s+)(\S|\S.*?\S)(\s+::\S.*|\s*)$', orig_line):
+                    if apostrophe in m5.group(2):
+                        for repl_char in repl_chars:
+                            new_line = f'{m5.group(1)}{regex.sub(apostrophe, repl_char, m5.group(2))}{m5.group(3)}' \
+                                       f'{regex.sub(apostrophe, repl_char, m5.group(2))}{m5.group(5)}'
+                            # log.info(f'Expanded line {new_line}')
+                            lines.append(new_line)
+                elif m3 := regex.match(r'(::\S+\s+)(\S|\S.*?\S)(\s+::\S.*|\s*)$', orig_line):
+                    if apostrophe in m3.group(2):
+                        for repl_char in repl_chars:
+                            new_line = f'{m3.group(1)}{regex.sub(apostrophe, repl_char, m3.group(2))}{m3.group(3)}'
+                            # log.info(f'Expanded line {new_line}')
+                            lines.append(new_line)
+        return lines
+
     def load_resource(self, filename: str) -> None:
+        """Loads abbreviations, contractions etc. Example input file: data/tok-resource-eng.txt"""
         try:
             with open(filename) as f_in:
                 line_number = 0
                 n_warnings = 0
                 n_entries = 0
-                for line in f_in:
+                n_expanded_lines = 0
+                for orig_line in f_in:
                     line_number += 1
-                    if re.match(r'^\uFEFF?\s*(?:#.*)?$', line):  # ignore empty or comment line
-                        continue
-                    # Check whether cost file line is well-formed. Following call will output specific warnings.
-                    valid = double_colon_del_list_validation(line, str(line_number), filename,
-                                                             valid_slots=['abbrev', 'case-sensitive', 'comment',
-                                                                          'contraction', 'country', 'exp',
-                                                                          'group', 'lcode', 'preserve', 'punct-split',
-                                                                          'repair', 'sem-class', 'side', 'target'],
-                                                             required_slot_dict={'abbrev': [],
-                                                                                 'contraction': ['target'],
-                                                                                 'preserve': [],
-                                                                                 'punct-split': ['side'],
-                                                                                 'repair': ['target']})
-                    if not valid:
-                        n_warnings += 1
-                        continue
-                    if m1 := re.match(r"::(\S+)", line):
-                        head_slot = m1.group(1)
-                    else:
-                        continue
-                    s = slot_value_in_double_colon_del_list(line, head_slot)
-                    if len(s) > self.max_s_length:
-                        self.max_s_length = len(s)
-                    resource_entry = None
-                    sem_class = slot_value_in_double_colon_del_list(line, 'sem-class')
-                    if head_slot == 'abbrev':
-                        expansion_s = slot_value_in_double_colon_del_list(line, 'exp')
-                        expansions = re.split(r';\s*', expansion_s) if expansion_s else []
-                        resource_entry = AbbreviationEntry(s, expansions=expansions, sem_class=sem_class)
-                        self.register_resource_entry_in_reverse_resource_dict(resource_entry, expansions)
-                    elif head_slot == 'contraction':
-                        target = slot_value_in_double_colon_del_list(line, 'target')
-                        resource_entry = ContractionEntry(s, target, sem_class=sem_class)
-                        self.register_resource_entry_in_reverse_resource_dict(resource_entry, [target])
-                    elif head_slot == 'preserve':
-                        resource_entry = PreserveEntry(s, sem_class=sem_class)
-                    elif head_slot == 'punct-split':
-                        side = slot_value_in_double_colon_del_list(line, 'side')
-                        group = slot_value_in_double_colon_del_list(line, 'group')
-                        resource_entry = PunctSplitEntry(s, side, group=bool(group), sem_class=sem_class)
-                    elif head_slot == 'repair':
-                        target = slot_value_in_double_colon_del_list(line, 'target')
-                        resource_entry = RepairEntry(s, target, sem_class=sem_class)
-                        self.register_resource_entry_in_reverse_resource_dict(resource_entry, [target])
-                    if resource_entry:
-                        abbreviation_entry_list = self.resource_dict.get(s, [])
-                        abbreviation_entry_list.append(resource_entry)
-                        self.resource_dict[s] = abbreviation_entry_list
-                        n_entries += 1
-                log.info(f'Loaded {n_entries} entries from {line_number} lines in {filename}')
-        except IOError:
+                    lines = self.expand_resource_lines(orig_line)
+                    n_expanded_lines += len(lines) - 1
+                    for line in lines:
+                        if re.match(r'^\uFEFF?\s*(?:#.*)?$', line):  # ignore empty or comment line
+                            continue
+                        # Check whether cost file line is well-formed. Following call will output specific warnings.
+                        valid = double_colon_del_list_validation(line, str(line_number), filename,
+                                                                 valid_slots=['abbrev', 'case-sensitive', 'comment',
+                                                                              'contraction', 'country', 'exp',
+                                                                              'group', 'lcode',
+                                                                              'left-context', 'left-context-not',
+                                                                              'preserve', 'punct-split', 'repair',
+                                                                              'right-context', 'right-context-not',
+                                                                              'sem-class', 'side', 'target'],
+                                                                 required_slot_dict={'abbrev': [],
+                                                                                     'contraction': ['target'],
+                                                                                     'preserve': [],
+                                                                                     'punct-split': ['side'],
+                                                                                     'repair': ['target']})
+                        if not valid:
+                            n_warnings += 1
+                            continue
+                        if m1 := re.match(r"::(\S+)", line):
+                            head_slot = m1.group(1)
+                        else:
+                            continue
+                        s = slot_value_in_double_colon_del_list(line, head_slot)
+                        resource_entry = None
+                        if head_slot == 'abbrev':
+                            expansion_s = slot_value_in_double_colon_del_list(line, 'exp')
+                            expansions = re.split(r';\s*', expansion_s) if expansion_s else []
+                            resource_entry = AbbreviationEntry(s, expansions=expansions)
+                            self.register_resource_entry_in_reverse_resource_dict(resource_entry, expansions)
+                        elif head_slot == 'contraction':
+                            target = slot_value_in_double_colon_del_list(line, 'target')
+                            resource_entry = ContractionEntry(s, target)
+                            self.register_resource_entry_in_reverse_resource_dict(resource_entry, [target])
+                        elif head_slot == 'preserve':
+                            resource_entry = PreserveEntry(s)
+                        elif head_slot == 'punct-split':
+                            side = slot_value_in_double_colon_del_list(line, 'side')
+                            group = slot_value_in_double_colon_del_list(line, 'group')
+                            resource_entry = PunctSplitEntry(s, side, group=bool(group))
+                        elif head_slot == 'repair':
+                            target = slot_value_in_double_colon_del_list(line, 'target')
+                            resource_entry = RepairEntry(s, target)
+                            self.register_resource_entry_in_reverse_resource_dict(resource_entry, [target])
+                        if resource_entry:  # register resource_entry with lowercase key
+                            if len(s) > self.max_s_length:
+                                self.max_s_length = len(s)
+                            lc_s = s.lower()
+                            for prefix_length in range(1, len(lc_s)+1):
+                                self.prefix_dict[lc_s[:prefix_length]] = True
+                            if sem_class := slot_value_in_double_colon_del_list(line, 'sem-class'):
+                                resource_entry.sem_class = sem_class
+                            if slot_value_in_double_colon_del_list(line, 'case-sensitive'):
+                                resource_entry.case_sensitive = True
+                                # log.info(f'Case-sensitive({s}) is True')
+                            if left_context_s := slot_value_in_double_colon_del_list(line, 'left-context'):
+                                try:
+                                    resource_entry.left_context = regex.compile(eval('r".*' + left_context_s + '$"'))
+                                    # log.info(f'Left-context({s}) {left_context_s} {resource_entry.left_context}')
+                                except regex.error:
+                                    log.warning(f'Regex compile error in l.{line_number} for {s} ::left-context '
+                                                f'{left_context_s}')
+                            if left_context_not_s := slot_value_in_double_colon_del_list(line, 'left-context-not'):
+                                try:
+                                    resource_entry.left_context_not = \
+                                        regex.compile(eval('r".*(?<!' + left_context_not_s + ')$"'))
+                                except regex.error:
+                                    log.warning(f'Regex compile error in l.{line_number} for {s} ::left-context-not '
+                                                f'{left_context_not_s}')
+                            if right_context_s := slot_value_in_double_colon_del_list(line, 'right-context'):
+                                try:
+                                    resource_entry.right_context = regex.compile(eval('r"' + right_context_s + '"'))
+                                    # log.info(f'Right-context({s}) {right_context_s} {resource_entry.right_context}')
+                                except regex.error:
+                                    log.warning(f'Regex compile error in l.{line_number} for {s} ::right-context '
+                                                f'{right_context_s}')
+                            if right_context_not_s := slot_value_in_double_colon_del_list(line, 'right-context-not'):
+                                try:
+                                    resource_entry.right_context_not = \
+                                        regex.compile(eval('r"(?!' + right_context_s + ')"'))
+                                except regex.error:
+                                    log.warning(f'Regex compile error in l.{line_number} for {s} ::right-context-not '
+                                                f'{right_context_not_s}')
+                            abbreviation_entry_list = self.resource_dict.get(lc_s, [])
+                            abbreviation_entry_list.append(resource_entry)
+                            self.resource_dict[lc_s] = abbreviation_entry_list
+                            n_entries += 1
+                expanded_clause = f' (plus {n_expanded_lines} expanded lines)' if n_expanded_lines else ''
+                log.info(f'Loaded {n_entries} entries from {line_number} lines{expanded_clause} in {filename}')
+        except OSError:
             log.warning(f'Could not open resource file {filename}')
-        except:
-            log.warning(f'Error loading resource file {filename}')
+
 
 def slot_value_in_double_colon_del_list(line: str, slot: str, default: Optional[str] = None) -> str:
     """For a given slot, e.g. 'cost', get its value from a line such as '::s1 of course ::s2 ::cost 0.3' -> 0.3

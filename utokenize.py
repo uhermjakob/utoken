@@ -17,14 +17,14 @@ import logging as log
 import re
 import regex
 import sys
-from typing import Callable, Match, Optional, TextIO
+from typing import Callable, Match, Optional, TextIO, Type
 # import unicodedata as ud
 from utoken import util
 
 log.basicConfig(level=log.INFO)
 
 __version__ = '0.0.2'
-last_mod_date = 'July 29, 2021'
+last_mod_date = 'July 30, 2021'
 
 
 class VertexMap:
@@ -193,6 +193,8 @@ class Tokenizer:
         self.lang_code = lang_code
         self.n_lines_tokenized = 0
         self.tok_dict = util.ResourceDict()
+        self.current_orig_s = None
+        self.current_s = None
         if lang_code:
             self.tok_dict.load_resource(f'data/tok-resource-{lang_code}.txt')
         self.tok_dict.load_resource('data/tok-resource.txt')  # language-independent tok-resource
@@ -321,6 +323,7 @@ class Tokenizer:
                         s = s.replace(char, ' ')
             if chart:
                 s = chart.s
+        self.current_s = s
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_url_anchor = re.compile(r'(.*)(?<![a-z])((?:https?|ftp)://)(.*)$', flags=re.IGNORECASE)
@@ -342,10 +345,8 @@ class Tokenizer:
                 while index < len_post:
                     char = post[index]
                     if char.isalnum():
-                        # log.info(f'URL char[{index}]: {char} is alphanumeric')
                         index += 1
                     elif char in internal_url_punctuation:
-                        # log.info(f'URL char[{index}]: {char} is internal URL punct')
                         index += 1
                     else:
                         break
@@ -405,9 +406,7 @@ class Tokenizer:
     re_eng_neg_contraction = \
         re.compile(r'(.*?)\b(ai|are|ca|can|could|did|do|does|had|has|have|is|sha|should|was|were|wo|would)'
                    r'(n[o\'’]t)\b(.*)', flags=re.IGNORECASE)
-    re_eng_suf_1_contraction = re.compile(r'(.*?[a-z])([\'’](?:ll|re|s|ve))\b(.*)', flags=re.IGNORECASE)
-    re_eng_suf_d_contraction = re.compile(r'(.*?[aeiouy])([\'’]d)\b(.*)', flags=re.IGNORECASE)
-    re_eng_suf_m_contraction = re.compile(r'(.*?\bI)([\'’]m)\b(.*)', flags=re.IGNORECASE)
+    re_eng_suf_contraction = re.compile(r'(.*?[a-z])([\'’](?:d|em|ll|m|re|s|ve))\b(.*)', flags=re.IGNORECASE)
     re_eng_preserve_token = regex.compile(r'(.*?)(?<!\pL\pM*|\d)([\'’](?:ll|re|s|ve|d|m))(?!\pL|\pM|\d)(.*)',
                                           flags=regex.IGNORECASE)
 
@@ -447,17 +446,46 @@ class Tokenizer:
             return util.join_tokens([pre_tokenization, token_surf1, token_surf2, post_tokenization])
         # Tokenize other contractions such as:
         #   (1) "John's mother", "He's hungry.", "He'll come.", "We're here.", "You've got to be kidding."
-        #   (2) "He'd rather die.", "They'd been informed." but not "cont'd"
-        #   (3) "I'm done." but not "Ma'm"
-        if m3 := self.re_eng_suf_1_contraction.match(s) \
-                or self.re_eng_suf_d_contraction.match(s) \
-                or self.re_eng_suf_m_contraction.match(s):
+        #   (2) "He'd rather die.", "They'd been informed.", "It'd be like war.",  but not "cont'd", "EFF'd up people"
+        #   (3) "I'm done.", "I don't like'm.", "Get'em."
+        if m3 := self.re_eng_suf_contraction.match(s):
             return self.rec_tok_m3(m3, s, offset, 'DECONTRACTION', line_id, chart, lang_code, ht, this_function)
         if m3 := self.re_eng_preserve_token.match(s):
             return self.rec_tok_m3(m3, s, offset, 'PRESERVE', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_right_context_of_initial_letter = regex.compile(r'\s?(?:\p{Lu}\.\s?)*\p{Lu}\p{Ll}{2}')
+
+    def resource_entry_fulfills_conditions(self, resource_entry: util.ResourceEntry,
+                                           required_resource_entry_type: Type[util.ResourceEntry],
+                                           token_surf: str, _s: str, start_position: int, end_position: int,
+                                           offset: int) -> bool:
+        """This method checks whether a resource-entry is of the proper type fulfills any conditions associated with it,
+        including case-sensitive and positive and/or negative contexts to the left and/or right."""
+        if not isinstance(resource_entry, required_resource_entry_type):
+            log.info(f'resource-entry({token_surf}) is not {required_resource_entry_type}')
+            return False
+        if resource_entry.case_sensitive:
+            if resource_entry.s != token_surf:
+                # log.info(f'resource-entry({token_surf}) no match case of {resource_entry.s}')
+                return False
+        if re_l := resource_entry.left_context:
+            if not re_l.match(left_context_s := self.current_s[:offset+start_position]):
+                # log.info(f'resource-entry({token_surf}) no match left-context {re_l} with "{left_context_s}"')
+                return False
+        if re_l_n := resource_entry.left_context_not:
+            if not re_l_n.match(left_context_s := self.current_s[:offset+start_position]):
+                # log.info(f'resource-entry({token_surf}) no match left-context-neg {re_l_n} with "{left_context_s}"')
+                return False
+        if re_r := resource_entry.right_context:
+            if not re_r.match(right_context_s := self.current_s[offset+end_position:]):
+                # log.info(f'resource-entry({token_surf}) no match right-context {re_r} with "{right_context_s}"')
+                return False
+        if re_r_n := resource_entry.right_context_not:
+            if not re_r.match(right_context_s := self.current_s[offset+end_position:]):
+                # log.info(f'resource-entry({token_surf}) no match right-context-not {re_r_n} with "{right_context_s}"')
+                return False
+        return True
 
     def tokenize_abbreviations(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                                line_id: Optional[str] = None, offset: int = 0) -> str:
@@ -475,13 +503,16 @@ class Tokenizer:
                         prev_char = s[start_position-1]
                         if prev_char.isalpha() or (prev_char in "'’"):
                             continue
-                    abbrev_cand = s[start_position:i+1]
-                    if (resource_entries := self.tok_dict.resource_dict.get(abbrev_cand, None)) \
-                        and (abbrev_entries := (resource_entry for resource_entry in resource_entries
-                                                if isinstance(resource_entry, util.AbbreviationEntry))):
-                        return self.rec_tok(abbrev_cand, s, start_position, offset, 'ABBREV',
-                                            line_id, chart, lang_code, ht, this_function,
-                                            sem_class=next(abbrev_entries).sem_class)
+                    abbrev_candidate = s[start_position:i + 1]
+                    end_position = start_position + len(abbrev_candidate)
+                    # log.info(f'abbrev_candidate: {abbrev_candidate}')
+                    for resource_entry in self.tok_dict.resource_dict.get(abbrev_candidate.lower(), []):
+                        if self.resource_entry_fulfills_conditions(resource_entry, util.AbbreviationEntry,
+                                                                   abbrev_candidate, s, start_position, end_position,
+                                                                   offset):
+                            return self.rec_tok(abbrev_candidate, s, start_position, offset, 'ABBREV',
+                                                line_id, chart, lang_code, ht, this_function,
+                                                sem_class=resource_entry.sem_class)
         for start_position in range(0, len(s)-1):
             char = s[start_position]
             if char.isalpha() and char.isupper() and (s[start_position+1] == '.') \
@@ -555,6 +586,8 @@ class Tokenizer:
     def tokenize_string(self, s: str, ht: dict, lang_code: str = '', line_id: Optional[str] = None,
                         annotation_file: Optional[TextIO] = None) -> str:
         regex.DEFAULT_VERSION = regex.VERSION1
+        self.current_orig_s = s
+        self.current_s = s
         self.lv = 0  # line_char_type_vector
         # Each bit in this vector is to capture character type info, e.g. char_is_arabic
         # Build a bit-vector for the whole line, as the bitwise 'or' of all character bit-vectors.

@@ -27,11 +27,19 @@
 ::repair wo n't ::target will n't ::lcode eng
 
 # English tokens to be preserved (e.g. from punctuation stripping)
+::preserve 'd ::lcode eng
+::preserve 'em ::lcode eng
+::preserve 're ::lcode eng
 ::preserve 'll ::lcode eng
 ::preserve 'm ::lcode eng
 ::preserve 're ::lcode eng
 ::preserve 's ::lcode eng
 ::preserve 've ::lcode eng
+::preserve d' ::lcode eng
+::preserve l' ::lcode eng
+::preserve n' ::lcode eng
+::preserve n't ::lcode eng
+::preserve s' ::lcode eng
 
 # English abbreviations
 ::abbrev Jan. ::exp January ::lcode eng ::sem-class month-of-the-year
@@ -52,23 +60,23 @@
 ::abbrev Br. ::exp Brother ::lcode eng ::sem-class pre-name-title
 ::abbrev Dr. ::exp Doctor ::lcode eng ::sem-class pre-name-title
 ::abbrev Eng. ::exp Engineer ::lcode eng ::sem-class pre-name-title
-::abbrev Fr. ::exp Father ::lcode eng ::sem-class pre-name-title
-::abbrev Gov. ::exp Governor ::lcode eng ::sem-class pre-name-title
-::abbrev Hon. ::exp Honorable ::lcode eng ::sem-class pre-name-title
+::abbrev Fr. ::exp Father ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
+::abbrev Gov. ::exp Governor ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
+::abbrev Hon. ::exp Honorable ::lcode eng ::sem-class pre-name-title ::case-sensitive True
 ::abbrev Ing. ::exp Ingenieur; Ingeniero ::lcode eng ::sem-class pre-name-title
-::abbrev Ir. ::exp Ingenieur ::lcode eng ::sem-class pre-name-title
-::abbrev Jr. ::exp Junior ::lcode eng ::sem-class pre-name-title
+::abbrev Ir. ::exp Ingenieur ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
+::abbrev Jr. ::exp Junior ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev Messrs. ::exp Messieurs ::lcode eng ::sem-class pre-name-title
-::abbrev Mr. ::exp Mister ::lcode eng ::sem-class pre-name-title
+::abbrev Mr. ::exp Mister ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev Mrs. ::exp Misses ::lcode eng ::sem-class pre-name-title
-::abbrev Ms. ::lcode eng ::sem-class pre-name-title
+::abbrev Ms. ::lcode eng ::sem-class pre-name-title ::case-sensitive True ::left-context-not [.]
 ::abbrev Pres. ::exp President ::lcode eng ::sem-class pre-name-title
 ::abbrev Prof. ::exp Professor ::lcode eng ::sem-class pre-name-title
-::abbrev Rep. ::exp Representative ::lcode eng ::sem-class pre-name-title
+::abbrev Rep. ::exp Representative ::lcode eng ::sem-class pre-name-title ::case-sensitive True
 ::abbrev Rev. ::exp Reverend ::lcode eng ::sem-class pre-name-title
 ::abbrev Sen. ::exp Senator ::lcode eng ::sem-class pre-name-title
-::abbrev Sr. ::exp Senior ::lcode eng ::sem-class pre-name-title
-::abbrev St. ::exp Saint ::lcode eng ::sem-class pre-name-title
+::abbrev Sr. ::exp Senior ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
+::abbrev St. ::exp Saint ::lcode eng ::sem-class pre-name-title ::case-sensitive True ::left-context-not 1  # 1st
 ::abbrev Spt. ::exp Superintendent ::lcode eng ::sem-class pre-name-title
 ::abbrev Sup. ::exp Superintendent ::lcode eng ::sem-class pre-name-title
 ::abbrev Supt. ::exp Superintendent ::lcode eng ::sem-class pre-name-title
@@ -94,7 +102,7 @@
 
 ::abbrev Ret. ::exp Retired ::lcode eng ::sem-class general
 
-::abbrev Co. ::exp Company ::lcode eng ::sem-class company-type
+::abbrev Co. ::exp Company ::lcode eng ::sem-class company-type ::left-context \s
 ::abbrev Corp. ::exp Corporation ::lcode eng ::sem-class company-type
 ::abbrev Inc. ::exp Incorporated ::lcode eng ::sem-class company-type
 ::abbrev LLC ::exp Limited Liability Company ::lcode eng ::sem-class company-type
@@ -114,7 +122,7 @@
 ::abbrev et al. ::exp et alii; et aliae; and others ::lcode eng ::sem-class general
 ::abbrev i.e. ::exp id est; that is ::lcode eng ::sem-class general
 ::abbrev misc. ::exp miscellaneous ::lcode eng ::sem-class general
-::abbrev Mt. ::exp Mount ::lcode eng ::sem-class general
+::abbrev Mt. ::exp Mount ::lcode eng ::sem-class general ::case-sensitive True
 ::abbrev p.m. ::exp post meridiem ::lcode eng ::sem-class general
 ::abbrev p.s. ::exp post scriptum ::lcode eng ::sem-class general
 ::abbrev S.E. ::exp standard error ::lcode eng ::sem-class general
@@ -122,7 +130,7 @@
 
 ::abbrev B.P. ::exp blood pressure ::lcode eng ::sem-class medical
 ::abbrev flu ::exp influenza ::lcode eng ::sem-class medical
-::abbrev s.c. ::exp subcutaneous ::lcode eng ::sem-class medical
+::abbrev s.c. ::exp subcutaneous ::lcode eng ::sem-class medical ::case-sensitive True
 ::abbrev s.d. ::exp stable disease ::lcode eng ::sem-class medical
 
 ::abbrev dna ::exp deoxyribonucleic acid ::lcode eng ::sem-class biomedical
@@ -144,13 +152,13 @@
 ::abbrev chaps. ::exp chapters ::lcode eng ::sem-class corpus-component
 ::abbrev fig. ::exp figure ::lcode eng ::sem-class corpus-component
 ::abbrev Fig. ::exp figure ::lcode eng ::sem-class corpus-component
-::abbrev op. ::exp opus ::lcode eng ::sem-class corpus-component
-::abbrev p. ::exp page ::lcode eng ::sem-class corpus-component
+::abbrev op. ::exp opus ::lcode eng ::sem-class corpus-component ::case-sensitive True ::left-context-not [.] ::right-context \s*\d
+::abbrev p. ::exp page ::lcode eng ::sem-class corpus-component ::case-sensitive True ::left-context-not [.] ::right-context \s*\d
 ::abbrev para. ::exp paragraph ::lcode eng ::sem-class corpus-component
 ::abbrev paras. ::exp paragraphs ::lcode eng ::sem-class corpus-component
-::abbrev pp. ::exp pages ::lcode eng ::sem-class corpus-component
-::abbrev # No. ::exp number ::lcode eng ::sem-class corpus-component ::case-sensitive True
-::abbrev Nos. ::exp numbers ::lcode eng ::sem-class corpus-component ::case-sensitive True
+::abbrev pp. ::exp pages ::lcode eng ::sem-class corpus-component ::case-sensitive True ::left-context-not [.] ::right-context \s*\d
+::abbrev No. ::exp number ::lcode eng ::sem-class corpus-component ::case-sensitive True ::right-context \s*\d
+::abbrev Nos. ::exp numbers ::lcode eng ::sem-class corpus-component ::case-sensitive True ::right-context \s*\d
 ::abbrev sect. ::exp section ::lcode eng ::sem-class corpus-component
 ::abbrev sects. ::exp sections ::lcode eng ::sem-class corpus-component
 ::abbrev vol. ::exp volume ::lcode eng ::sem-class corpus-component
@@ -158,7 +166,7 @@
 
 ::abbrev Ala. ::exp Alabama ::lcode eng ::sem-class US-state
 ::abbrev Ariz. ::exp Arizona ::lcode eng ::sem-class US-state
-::abbrev Ark. ::exp Arkansas ::lcode eng ::sem-class US-state
+::abbrev Ark. ::exp Arkansas ::lcode eng ::sem-class US-state ::case-sensitive True
 ::abbrev Calif. ::exp California ::lcode eng ::sem-class US-state
 ::abbrev Colo. ::exp Colorado ::lcode eng ::sem-class US-state
 ::abbrev Conn. ::exp Connecticut ::lcode eng ::sem-class US-state
@@ -166,17 +174,17 @@
 ::abbrev Del. ::exp Delaware ::lcode eng ::sem-class US-state
 ::abbrev Fla. ::exp Florida ::lcode eng ::sem-class US-state
 ::abbrev Ga. ::exp Georgia ::lcode eng ::sem-class US-state
-::abbrev Ill. ::exp Illinois ::lcode eng ::sem-class US-state
+::abbrev Ill. ::exp Illinois ::lcode eng ::sem-class US-state ::case-sensitive True
 ::abbrev Ind. ::exp Indiana ::lcode eng ::sem-class US-state
 ::abbrev Kans. ::exp Kansas ::lcode eng ::sem-class US-state
 ::abbrev Ky. ::exp Kentucky ::lcode eng ::sem-class US-state
-::abbrev La. ::exp Louisiana ::lcode eng ::sem-class US-state
+::abbrev La. ::exp Louisiana ::lcode eng ::sem-class US-state ::case-sensitive True
 ::abbrev Mass. ::exp Massachusetts ::lcode eng ::sem-class US-state
-::abbrev Md. ::exp Maryland ::lcode eng ::sem-class US-state
+::abbrev Md. ::exp Maryland ::lcode eng ::sem-class US-state ::case-sensitive True
 ::abbrev Mich. ::exp Michigan ::lcode eng ::sem-class US-state
 ::abbrev Minn. ::exp Minnesota ::lcode eng ::sem-class US-state
 ::abbrev Miss. ::exp Mississippi ::lcode eng ::sem-class US-state
-::abbrev Mo. ::exp Missouri ::lcode eng ::sem-class US-state
+::abbrev Mo. ::exp Missouri ::lcode eng ::sem-class US-state ::case-sensitive True
 ::abbrev Mont. ::exp Montana ::lcode eng ::sem-class US-state
 ::abbrev Nebr. ::exp Nebraska ::lcode eng ::sem-class US-state
 ::abbrev Nev. ::exp Nevada ::lcode eng ::sem-class US-state
@@ -188,17 +196,17 @@
 ::abbrev N.Y. ::exp New York ::lcode eng ::sem-class US-state
 ::abbrev Okla. ::exp Oklahoma ::lcode eng ::sem-class US-state
 ::abbrev Ore. ::exp Oregon ::lcode eng ::sem-class US-state
-::abbrev Pa. ::exp Pennsylvania ::lcode eng ::sem-class US-state
+::abbrev Pa. ::exp Pennsylvania ::lcode eng ::sem-class US-state ::case-sensitive True
 ::abbrev P.R. ::exp Puerto Rico ::lcode eng ::sem-class US-state
 ::abbrev R.I. ::exp Rhode Island ::lcode eng ::sem-class US-state
-::abbrev S.C. ::exp South Carolina ::lcode eng ::sem-class US-state
+::abbrev S.C. ::exp South Carolina ::lcode eng ::sem-class US-state ::case-sensitive True
 ::abbrev S.D. ::exp South Dakota ::lcode eng ::sem-class US-state
 ::abbrev Tenn. ::exp Tennessee ::lcode eng ::sem-class US-state
 ::abbrev Tex. ::exp Texas ::lcode eng ::sem-class US-state
-::abbrev Va. ::exp Virginia ::lcode eng ::sem-class US-state
+::abbrev Va. ::exp Virginia ::lcode eng ::sem-class US-state ::case-sensitive True
 ::abbrev V.I. ::exp Virgin Islands ::lcode eng ::sem-class US-state
 ::abbrev Vt. ::exp Vermont ::lcode eng ::sem-class US-state
-::abbrev Wash. ::exp Washington ::lcode eng ::sem-class US-state
+::abbrev Wash. ::exp Washington ::lcode eng ::sem-class US-state ::case-sensitive True
 ::abbrev W.Va. ::exp West Virginia ::lcode eng ::sem-class US-state
 ::abbrev Wis. ::exp Wisconsin ::lcode eng ::sem-class US-state
 ::abbrev Wyo. ::exp Wyoming ::lcode eng ::sem-class US-state
@@ -300,8 +308,7 @@
 ::abbrev KR ::exp Republic of Korea ::lcode eng ::sem-class country-code
 ::abbrev KR ::exp South Korea ::lcode eng ::sem-class country-code
 ::abbrev KZ ::exp Kazakhstan ::lcode eng ::sem-class country-code
-::abbrev LA ::exp Laos ::lcode eng ::sem-class country-code
-::abbrev LA ::exp Lao People's Democratic Republic ::lcode eng ::sem-class country-code
+::abbrev LA ::exp Laos ::lcode eng ::sem-class country-code ::case-sensitive True
 ::abbrev LY ::exp Libya ::lcode eng ::sem-class country-code
 ::abbrev LY ::exp Libyan Arab Jamahiriya ::lcode eng ::sem-class country-code
 ::abbrev MA ::exp Morocco ::lcode eng ::sem-class country-code
@@ -309,7 +316,7 @@
 ::abbrev MK ::exp North Macedonia ::lcode eng ::sem-class country-code
 ::abbrev MK ::exp Former Yugoslav Republic of Macedonia ::lcode eng ::sem-class country-code
 ::abbrev MM ::exp Myanmar ::lcode eng ::sem-class country-code
-::abbrev MR ::exp Mauritania ::lcode eng ::sem-class country-code
+::abbrev MR ::exp Mauritania ::lcode eng ::sem-class country-code ::case-sensitive True
 ::abbrev MX ::exp Mexico ::lcode eng ::sem-class country-code
 ::abbrev MY ::exp Malaysia ::lcode eng ::sem-class country-code
 ::abbrev NI ::exp Nicaragua ::lcode eng ::sem-class country-code
@@ -354,7 +361,7 @@
 ::abbrev RMB ::exp renminbi ::lcode eng ::sem-class currency
 ::abbrev USD ::exp United States dollar ::lcode eng ::sem-class currency
 
-::abbrev LA ::exp Los Angeles ::lcode eng ::sem-class city
+::abbrev LA ::exp Los Angeles ::lcode eng ::sem-class city ::case-sensitive True
 
 ::abbrev ISS ::exp International Space Station ::lcode eng ::sem-class object
 
@@ -401,11 +408,12 @@
 ::abbrev WMD ::exp weapons of mass destruction ::lcode eng ::sem-class general
 
 ::abbrev cm ::exp centimeter ::lcode eng ::sem-class unit-of-measurement
+::abbrev d. ::exp day ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
 ::abbrev fl.oz. ::exp fluid ounce ::lcode eng ::sem-class unit-of-measurement
 ::abbrev fl. oz. ::exp fluid ounce ::lcode eng ::sem-class unit-of-measurement
 ::abbrev fl oz ::exp fluid ounce ::lcode eng ::sem-class unit-of-measurement
-::abbrev g ::exp gram ::lcode eng ::sem-class unit-of-measurement
-::abbrev h ::exp hour ::lcode eng ::sem-class unit-of-measurement
+::abbrev g ::exp gram ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
+::abbrev h ::exp hour ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
 ::abbrev hrs ::exp hour ::lcode eng ::sem-class unit-of-measurement
 ::abbrev kg ::exp kilogram ::lcode eng ::sem-class unit-of-measurement
 ::abbrev km ::exp kilometer ::lcode eng ::sem-class unit-of-measurement
@@ -413,7 +421,8 @@
 ::abbrev lb. ::exp pound ::lcode eng ::sem-class unit-of-measurement
 ::abbrev lbs ::exp pounds ::lcode eng ::sem-class unit-of-measurement
 ::abbrev lbs. ::exp pounds ::lcode eng ::sem-class unit-of-measurement
-::abbrev M ::exp molar ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True
+::abbrev m ::exp meter ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
+::abbrev M ::exp molar ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
 ::abbrev mg ::exp milligram ::lcode eng ::sem-class unit-of-measurement
 ::abbrev min ::exp minute ::lcode eng ::sem-class unit-of-measurement
 ::abbrev ml ::exp milliliter ::lcode eng ::sem-class unit-of-measurement
@@ -425,10 +434,6 @@
 ::abbrev nM ::exp nanomolar ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True
 ::abbrev yr. ::exp year ::lcode eng ::sem-class unit-of-measurement
 ::abbrev yrs. ::exp years ::lcode eng ::sem-class unit-of-measurement
-
-::abbrev d. ::exp day ::lcode eng ::sem-class unit-of-measurement
-::abbrev g. ::exp gram ::lcode eng ::sem-class unit-of-measurement
-::abbrev m. ::exp meter ::lcode eng ::sem-class unit-of-measurement
 
 ::abbrev ad ::exp advertisement ::lcode eng ::sem-class general
 ::abbrev asap ::exp as soon as possible ::lcode eng ::sem-class general
@@ -447,3 +452,8 @@
 ::abbrev sis ::exp sister ::lcode eng ::sem-class general
 ::abbrev TV ::exp television ::lcode eng ::sem-class general
 
+::abbrev cont'd. ::exp continued ::lcode eng
+::abbrev eff'd ::exp fucked ::lcode eng
+::abbrev int'l ::exp international ::lcode eng
+::abbrev nat'l ::exp national ::lcode eng
+::abbrev ma'am ::exp madam ::lcode eng
