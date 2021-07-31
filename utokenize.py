@@ -324,19 +324,25 @@ class Tokenizer:
         self.current_s = s
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    re_url = regex.compile(r'(.*)'
-                           r'(?<![\p{Latin}&&\p{Letter}])'  # negative lookbehind: no Latin+ letters please
-                           r"((?:https?|ftp)://"
-                           r"(\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+]|\((?:\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+])\))+"
-                           r"(?:\p{L}\p{M}*|\d|[/]))"
-                           r'(.*)$',
-                           flags=re.IGNORECASE)
+    re_url1 = regex.compile(r'(.*?)'
+                            r"((?:https?|ftp)://"
+                            r"(\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+]|\((?:\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+])\))+"
+                            r"(?:\p{L}\p{M}*|\d|[/]))"
+                            r'(.*)$',
+                            flags=re.IGNORECASE)
+    re_url2 = regex.compile(r'(.*?)'
+                            r'(?<![\p{Latin}&&\p{Letter}]|\@)'  # negative lookbehind: no Latin+ letters, no @ please
+                            r"((?:www(?:\.(?:\p{L}\p{M}*|\d|[-_]))+\.(?:[a-z]{2,4}]))|"
+                            r"(?:(?:(?:\p{L}\p{M}*|\d|[-_])+\.)+(?:com|edu|gov|mil|org|ca|de|fr|jp|ro|ru|ua|uk)))"
+                            r'(?![\p{Latin}&&\p{Letter}])'      # negative lookahead: no Latin+ letters please
+                            r'(.*)$',
+                            flags=re.IGNORECASE)
 
     def tokenize_urls(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                       line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off URL tokens such as https://www.amazon.com"""
         this_function = self.tokenize_urls
-        if m3 := self.re_url.match(s):
+        if m3 := self.re_url1.match(s) or self.re_url2.match(s):
             return self.rec_tok_m3(m3, s, offset, 'URL', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
