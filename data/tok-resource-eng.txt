@@ -35,10 +35,13 @@
 ::preserve 're ::lcode eng
 ::preserve 's ::lcode eng
 ::preserve 've ::lcode eng
-::preserve d' ::lcode eng
 ::preserve l' ::lcode eng
-::preserve n' ::lcode eng
 ::preserve n't ::lcode eng
+# French
+::preserve c' ::lcode eng   # C'est la vie.
+::preserve d' ::lcode eng   # Coeur d'Alene
+::preserve n' ::lcode eng
+::preserve qu' ::lcode eng
 ::preserve s' ::lcode eng
 
 # English abbreviations
