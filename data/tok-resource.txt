@@ -11,6 +11,7 @@
 ::preserve D'Artagnan ::sem-class person
 
 # split off punctuation anywhere
+::punct-split &quot; ::side both ::group True
 ::punct-split " ::side both ::group True
 ::punct-split “ ::side both
 ::punct-split ” ::side both
