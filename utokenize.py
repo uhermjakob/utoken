@@ -165,7 +165,9 @@ class Tokenizer:
                                    self.tokenize_xmls,
                                    self.tokenize_urls,
                                    self.tokenize_emails,
+                                   self.tokenize_hashtags_and_handles,
                                    self.tokenize_mt_punctuation,
+                                   self.tokenize_according_to_resource_entries,
                                    self.tokenize_english_contractions,
                                    self.tokenize_numbers,
                                    self.tokenize_abbreviations,
@@ -187,6 +189,14 @@ class Tokenizer:
         self.char_is_surrogate = bit_vector
         bit_vector = bit_vector << 1
         self.char_is_ampersand = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_number_sign = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_at_sign = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_less_than_sign = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_left_square_bracket = bit_vector
         self.range_init_char_type_vector_dict()
         self.chart_p = False
         self.first_token_is_line_id_p = False
@@ -229,8 +239,20 @@ class Tokenizer:
             self.char_type_vector_dict[char] \
                 = self.char_type_vector_dict.get(char, 0) | self.char_is_non_standard_space
         # Ampersand
+        self.char_type_vector_dict['&'] \
+            = self.char_type_vector_dict.get('&', 0) | self.char_is_ampersand
+        # Number sign
+        self.char_type_vector_dict['#'] \
+            = self.char_type_vector_dict.get('#', 0) | self.char_is_number_sign
+        # At sign
         self.char_type_vector_dict['@'] \
-            = self.char_type_vector_dict.get('@', 0) | self.char_is_ampersand
+            = self.char_type_vector_dict.get('@', 0) | self.char_is_at_sign
+        # Less-than sign
+        self.char_type_vector_dict['<'] \
+            = self.char_type_vector_dict.get('<', 0) | self.char_is_less_than_sign
+        # At sign
+        self.char_type_vector_dict['['] \
+            = self.char_type_vector_dict.get('[', 0) | self.char_is_left_square_bracket
 
     @staticmethod
     def rec_tok(token_surf: str, s: str, start_position: int, offset: int,
@@ -325,23 +347,27 @@ class Tokenizer:
         self.current_s = s
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    re_xml1 = re.compile(r'(.*?)'
-                         r'(@?</?[a-z][-_:a-z0-9]*(?:\s+[a-z][-_:a-z0-9]*="[^"]*")*\s*/?>@?|'  # open tag
-                         r'<\$[-_a-z0-9]+\$>|'                                                 # close tag
-                         r'<!--.*?-->)'                                                        # comment tag
-                         r'(.*)$',
-                         flags=re.IGNORECASE)
-    re_xml2 = re.compile(r'(.*?)'
-                         r'(\[(?:QUOTE|URL)=[^ \t\n\[\]]+]|\[/?(?:QUOTE|IMG|INDENT|URL)])'
-                         r'(.*)$',
-                         flags=re.IGNORECASE)
+    re_xml = re.compile(r'(.*?)'
+                        r'(@?</?[a-z][-_:a-z0-9]*(?:\s+[a-z][-_:a-z0-9]*="[^"]*")*\s*/?>@?|'  # open tag
+                        r'<\$[-_a-z0-9]+\$>|'                                                 # close tag
+                        r'<!--.*?-->)'                                                        # comment tag
+                        r'(.*)$',
+                        flags=re.IGNORECASE)
+    re_BBCode = re.compile(r'(.*?)'
+                           r'(\[(?:QUOTE|URL)=[^ \t\n\[\]]+]|\[/?(?:QUOTE|IMG|INDENT|URL)])'
+                           r'(.*)$',
+                           flags=re.IGNORECASE)
 
     def tokenize_xmls(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                       line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off XML tokens such as <a href="URL">...</a>"""
         this_function = self.tokenize_xmls
-        if m3 := self.re_xml1.match(s) or self.re_xml2.match(s):
-            return self.rec_tok_m3(m3, s, offset, 'XML', line_id, chart, lang_code, ht, this_function)
+        if self.lv & self.char_is_less_than_sign:
+            if m3 := self.re_xml.match(s):
+                return self.rec_tok_m3(m3, s, offset, 'XML', line_id, chart, lang_code, ht, this_function)
+        if self.lv & self.char_is_left_square_bracket:
+            if m3 := self.re_BBCode.match(s):
+                return self.rec_tok_m3(m3, s, offset, 'BBCode', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_url1 = regex.compile(r'(.*?)'
@@ -378,9 +404,24 @@ class Tokenizer:
                         line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off email-address tokens such as ChunkyLover53@aol.com"""
         this_function = self.tokenize_emails
-        if self.lv & self.char_is_ampersand:
+        if self.lv & self.char_is_at_sign:
             if m3 := self.re_email.match(s):
                 return self.rec_tok_m3(m3, s, offset, 'EMAIL-ADDRESS', line_id, chart, lang_code, ht, this_function)
+        return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
+
+    re_hashtags_and_handles = regex.compile(r'(|.*?[ .,;()\[\]{}\'])'
+                                            r'([#@]\pL\pM*(?:\pL\pM*|\d|[_])*(?:\pL\pM*|\d))'
+                                            r'(?![.](?:\pL|\d))'
+                                            r'(.*)$', flags=regex.IGNORECASE)
+
+    def tokenize_hashtags_and_handles(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+                                      line_id: Optional[str] = None, offset: int = 0) -> str:
+        """This tokenization step splits off email-address tokens such as ChunkyLover53@aol.com"""
+        this_function = self.tokenize_hashtags_and_handles
+        if self.lv & (self.char_is_number_sign | self.char_is_at_sign):
+            if m3 := self.re_hashtags_and_handles.match(s):
+                token_type = "HASHTAG" if m3.group(2) == '#' else 'HANDLE'
+                return self.rec_tok_m3(m3, s, offset, token_type, line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_number = regex.compile(r'(.*?)'
@@ -483,6 +524,45 @@ class Tokenizer:
                 # log.info(f'resource-entry({token_surf}) no match right-context-not {re_r_n} with "{right_context_s}"')
                 return False
         return True
+
+    def tokenize_according_to_resource_entries(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+                                               line_id: Optional[str] = None, offset: int = 0) -> str:
+        """This tokenization step handles abbreviations, contractions and repairs according to data files
+        such as data/tok-resource-eng.txt."""
+        this_function = self.tokenize_according_to_resource_entries
+        log.info(f'tokenize_according_to_resource_entries')
+        for start_position in range(0, len(s)):
+            max_end_position = start_position
+            position = start_position+1
+            while position <= len(s) and self.tok_dict.prefix_dict.get(s[start_position:position].lower(), False):
+                max_end_position = position
+                position += 1
+            end_position = max_end_position
+            while end_position > start_position:
+                token_candidate = s[start_position:end_position]
+                for resource_entry in self.tok_dict.resource_dict.get(token_candidate.lower(), []):
+                    if (self.resource_entry_fulfills_conditions(resource_entry, util.ResourceEntry, token_candidate,
+                                                                s, start_position, end_position, offset)
+                        # general restriction: if token starts with a letter, it can't be preceded by a letter
+                        and (not (regex.match(r'\pL', token_candidate)
+                                  and (regex.match(r'.*\pL\pM*$', s[:start_position]))))
+                        # general restriction: if token ends in a letter, it can't be followed by a letter
+                        and (not (regex.match(r'.*\pL\pM*$', token_candidate)
+                                  and (regex.match(r'\pL', s[end_position:]))))):
+                        resource_surf = resource_entry.s
+                        sem_class = resource_entry.sem_class
+                        resource_entry_type_name = type(resource_entry).__name__
+                        clause = ''
+                        if sem_class:
+                            clause += f'; sem: {sem_class}'
+                        if resource_entry_type_name == 'PunctSplitEntry':
+                            side = resource_entry.side
+                            clause += f'; side: {side}'
+                        log.info(f'  TARE {token_candidate} ({start_position}-{end_position} '
+                                 f'matches {resource_surf} ({resource_entry_type_name}{clause})')
+                end_position -= 1
+            # HHERE
+        return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     def tokenize_abbreviations(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                                line_id: Optional[str] = None, offset: int = 0) -> str:
