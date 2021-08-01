@@ -162,6 +162,7 @@ class Tokenizer:
     def __init__(self, lang_code: Optional[str] = None):
         # Ordered list of tokenization steps
         self.tok_step_functions = [self.normalize_characters,
+                                   self.tokenize_xmls,
                                    self.tokenize_urls,
                                    self.tokenize_emails,
                                    self.tokenize_mt_punctuation,
@@ -324,19 +325,38 @@ class Tokenizer:
         self.current_s = s
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
+    re_xml1 = re.compile(r'(.*?)'
+                         r'(@?</?[a-z][-_:a-z0-9]*(?:\s+[a-z][-_:a-z0-9]*="[^"]*")*\s*/?>@?|'  # open tag
+                         r'<\$[-_a-z0-9]+\$>|'                                                 # close tag
+                         r'<!--.*?-->)'                                                        # comment tag
+                         r'(.*)$',
+                         flags=re.IGNORECASE)
+    re_xml2 = re.compile(r'(.*?)'
+                         r'(\[(?:QUOTE|URL)=[^ \t\n\[\]]+]|\[/?(?:QUOTE|IMG|INDENT|URL)])'
+                         r'(.*)$',
+                         flags=re.IGNORECASE)
+
+    def tokenize_xmls(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+                      line_id: Optional[str] = None, offset: int = 0) -> str:
+        """This tokenization step splits off XML tokens such as <a href="URL">...</a>"""
+        this_function = self.tokenize_xmls
+        if m3 := self.re_xml1.match(s) or self.re_xml2.match(s):
+            return self.rec_tok_m3(m3, s, offset, 'XML', line_id, chart, lang_code, ht, this_function)
+        return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
+
     re_url1 = regex.compile(r'(.*?)'
                             r"((?:https?|ftp)://"
                             r"(\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+]|\((?:\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+])\))+"
                             r"(?:\p{L}\p{M}*|\d|[/]))"
                             r'(.*)$',
-                            flags=re.IGNORECASE)
+                            flags=regex.IGNORECASE)
     re_url2 = regex.compile(r'(.*?)'
                             r'(?<![\p{Latin}&&\p{Letter}]|\@)'  # negative lookbehind: no Latin+ letters, no @ please
                             r"((?:www(?:\.(?:\p{L}\p{M}*|\d|[-_]))+\.(?:[a-z]{2,4}]))|"
                             r"(?:(?:(?:\p{L}\p{M}*|\d|[-_])+\.)+(?:com|edu|gov|mil|org|ca|de|fr|jp|ro|ru|ua|uk)))"
                             r'(?![\p{Latin}&&\p{Letter}])'      # negative lookahead: no Latin+ letters please
                             r'(.*)$',
-                            flags=re.IGNORECASE)
+                            flags=regex.IGNORECASE)
 
     def tokenize_urls(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                       line_id: Optional[str] = None, offset: int = 0) -> str:
