@@ -10,6 +10,7 @@ When using STDIN and/or STDOUT, if might be necessary, particularly for older ve
 import argparse
 from itertools import chain
 import datetime
+from enum import Enum
 import functools
 import logging as log
 # import os
@@ -24,7 +25,7 @@ from utoken import util
 log.basicConfig(level=log.INFO)
 
 __version__ = '0.0.2'
-last_mod_date = 'July 31, 2021'
+last_mod_date = 'August 2, 2021'
 
 
 class VertexMap:
@@ -156,6 +157,16 @@ class Chart:
             if token.sem_class and token.sem_class != 'general':
                 annotation_file.write(f'::sem-class {token.sem_class} ')
             annotation_file.write(f'::surf {token.surf}\n')
+
+
+class CharCat(Enum):
+    LETTER = 1
+    DIGIT = 2
+    OTHER = 3
+
+    @staticmethod
+    def cat(c: str):
+        return CharCat.LETTER if c.isalpha() else CharCat.DIGIT if c.isdigit() else CharCat.OTHER
 
 
 class Tokenizer:
@@ -531,7 +542,16 @@ class Tokenizer:
         such as data/tok-resource-eng.txt."""
         this_function = self.tokenize_according_to_resource_entries
         log.info(f'tokenize_according_to_resource_entries')
+
+        last_primary_char_cat = None  # 'primary': not counting modifying letters
         for start_position in range(0, len(s)):
+            c = s[start_position]
+            if regex.match(r'\pM', c):
+                continue
+            # general restriction: if token starts with a letter, it can't be preceded by a letter
+            current_char_cat = CharCat.cat(c)
+            if last_primary_char_cat == CharCat.LETTER and current_char_cat == last_primary_char_cat:
+                continue
             max_end_position = start_position
             position = start_position+1
             while position <= len(s) and self.tok_dict.prefix_dict.get(s[start_position:position].lower(), False):
@@ -540,28 +560,27 @@ class Tokenizer:
             end_position = max_end_position
             while end_position > start_position:
                 token_candidate = s[start_position:end_position]
-                for resource_entry in self.tok_dict.resource_dict.get(token_candidate.lower(), []):
-                    if (self.resource_entry_fulfills_conditions(resource_entry, util.ResourceEntry, token_candidate,
-                                                                s, start_position, end_position, offset)
-                        # general restriction: if token starts with a letter, it can't be preceded by a letter
-                        and (not (regex.match(r'\pL', token_candidate)
-                                  and (regex.match(r'.*\pL\pM*$', s[:start_position]))))
-                        # general restriction: if token ends in a letter, it can't be followed by a letter
-                        and (not (regex.match(r'.*\pL\pM*$', token_candidate)
-                                  and (regex.match(r'\pL', s[end_position:]))))):
-                        resource_surf = resource_entry.s
-                        sem_class = resource_entry.sem_class
-                        resource_entry_type_name = type(resource_entry).__name__
-                        clause = ''
-                        if sem_class:
-                            clause += f'; sem: {sem_class}'
-                        if resource_entry_type_name == 'PunctSplitEntry':
-                            side = resource_entry.side
-                            clause += f'; side: {side}'
-                        log.info(f'  TARE {token_candidate} ({start_position}-{end_position} '
-                                 f'matches {resource_surf} ({resource_entry_type_name}{clause})')
+                right_context = s[end_position:]
+                # general restriction: if token ends in a letter, it can't be followed by a letter
+                if (not(regex.match(r'.*\pL\pM*$', token_candidate) and regex.match(r'\pL', right_context))
+                        and not(regex.match(r'\pM', right_context))):  # token can't be followed by orphan modifier
+                    for resource_entry in self.tok_dict.resource_dict.get(token_candidate.lower(), []):
+                        if self.resource_entry_fulfills_conditions(resource_entry, util.ResourceEntry, token_candidate,
+                                                                   s, start_position, end_position, offset):
+                            resource_surf = resource_entry.s
+                            sem_class = resource_entry.sem_class
+                            resource_entry_type_name = type(resource_entry).__name__
+                            clause = ''
+                            if sem_class:
+                                clause += f'; sem: {sem_class}'
+                            if resource_entry_type_name == 'PunctSplitEntry':
+                                side = resource_entry.side
+                                clause += f'; side: {side}'
+                            log.info(f'  TARE {token_candidate} ({start_position}-{end_position} '
+                                     f'matches {resource_surf} ({resource_entry_type_name}{clause})')
                 end_position -= 1
             # HHERE
+            last_primary_char_cat = current_char_cat
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     def tokenize_abbreviations(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
