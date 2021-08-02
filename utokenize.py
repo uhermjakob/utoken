@@ -9,16 +9,18 @@ When using STDIN and/or STDOUT, if might be necessary, particularly for older ve
 # -*- encoding: utf-8 -*-
 import argparse
 from itertools import chain
+import cProfile
 import datetime
 from enum import Enum
 import functools
 import logging as log
 # import os
 # from pathlib import Path
+import pstats
 import re
 import regex
 import sys
-from typing import Callable, Match, Optional, TextIO, Type
+from typing import Callable, List, Match, Optional, TextIO, Type
 # import unicodedata as ud
 from utoken import util
 
@@ -217,6 +219,7 @@ class Tokenizer:
         self.tok_dict = util.ResourceDict()
         self.current_orig_s = None
         self.current_s = None
+        self.profile = None
         if lang_code:
             self.tok_dict.load_resource(f'data/tok-resource-{lang_code}.txt')
         self.tok_dict.load_resource('data/tok-resource.txt')  # language-independent tok-resource
@@ -266,27 +269,37 @@ class Tokenizer:
             = self.char_type_vector_dict.get('[', 0) | self.char_is_left_square_bracket
 
     @staticmethod
-    def rec_tok(token_surf: str, s: str, start_position: int, offset: int,
+    def rec_tok(token_surfs: List[str], start_positions: List[int], s: str, offset: int,
                 token_type: str, line_id: str, chart: Optional[Chart],
                 lang_code: str, ht: dict, calling_function, **token_kwargs) -> [str, Token]:
         """Recursive tokenization step (same method, applied to remaining string) using token-surf and start-position.
         Once a heuristic has identified a particular token span and type,
         this method computes all offsets, creates a new token, and recursively
-        calls the calling function on the string preceding and following the new token."""
-        end_position = start_position + len(token_surf)
-        offset2 = offset + start_position
-        offset3 = offset + end_position
-        pre = s[:start_position]
-        post = s[end_position:]
-        if chart:
-            new_token = Token(token_surf, line_id, token_type,
-                              ComplexSpan([SimpleSpan(offset2, offset3, vm=chart.vertex_map)]))
-            for key, value in token_kwargs.items():
-                setattr(new_token, key, value)
-            chart.register_token(new_token)
-        pre_tokenization = calling_function(pre, chart, ht, lang_code, line_id, offset)
-        post_tokenization = calling_function(post, chart, ht, lang_code, line_id, offset3)
-        return util.join_tokens([pre_tokenization, token_surf, post_tokenization])
+        calls the calling function on the string preceding and following the new token.
+        token_surfs/start_positions must not overlap and be in order"""
+        # log.info(f'rec_tok token_surfs: {token_surfs} start_positions: {start_positions} s: {s} offset: {offset}')
+        tokenizations = []
+        position = 0
+        for i in range(len(token_surfs)):
+            token_surf = token_surfs[i]
+            start_position = start_positions[i]
+            end_position = start_position + len(token_surf)
+            offset1 = offset + position
+            offset2 = offset + start_position
+            offset3 = offset + end_position
+            pre = s[position:start_position]
+            tokenizations.append(calling_function(pre, chart, ht, lang_code, line_id, offset1))
+            tokenizations.append(token_surf)
+            if chart:
+                new_token = Token(token_surf, line_id, token_type,
+                                  ComplexSpan([SimpleSpan(offset2, offset3, vm=chart.vertex_map)]))
+                for key, value in token_kwargs.items():
+                    setattr(new_token, key, value)
+                chart.register_token(new_token)
+            position = end_position
+        post = s[position:]
+        tokenizations.append(calling_function(post, chart, ht, lang_code, line_id, offset+position))
+        return util.join_tokens(tokenizations)
 
     def rec_tok_m3(self, m3: Match[str], s: str, offset: int,
                    token_type: str, line_id: str, chart: Optional[Chart],
@@ -299,7 +312,7 @@ class Tokenizer:
         start_position = len(pre_token)
         end_position = start_position + len(token)
         token_surf = s[start_position:end_position]  # in case that the regex match operates on a mapped string
-        return self.rec_tok(token_surf, s, start_position, offset, token_type, line_id, chart,
+        return self.rec_tok([token_surf], [start_position], s, offset, token_type, line_id, chart,
                             lang_code, ht, calling_function, **token_kwargs)
 
     def next_tok(self, current_tok_function:
@@ -390,7 +403,7 @@ class Tokenizer:
     re_url2 = regex.compile(r'(.*?)'
                             r'(?<![\p{Latin}&&\p{Letter}]|\@)'  # negative lookbehind: no Latin+ letters, no @ please
                             r"((?:www(?:\.(?:\p{L}\p{M}*|\d|[-_]))+\.(?:[a-z]{2,4}]))|"
-                            r"(?:(?:(?:\p{L}\p{M}*|\d|[-_])+\.)+(?:com|edu|gov|mil|org|ca|de|fr|jp|ro|ru|ua|uk)))"
+                            r"(?:(?:(?:\p{L}\p{M}*|\d|[-_])+\.)+(?:com|edu|gov|mil|org|ca|de|fr|jp|ro|ru|tv|ua|uk)))"
                             r'(?![\p{Latin}&&\p{Letter}])'      # negative lookahead: no Latin+ letters please
                             r'(.*)$',
                             flags=regex.IGNORECASE)
@@ -422,7 +435,7 @@ class Tokenizer:
 
     re_hashtags_and_handles = regex.compile(r'(|.*?[ .,;()\[\]{}\'])'
                                             r'([#@]\pL\pM*(?:\pL\pM*|\d|[_])*(?:\pL\pM*|\d))'
-                                            r'(?![.](?:\pL|\d))'
+                                            r'(?![.]?(?:\pL|\d))'
                                             r'(.*)$', flags=regex.IGNORECASE)
 
     def tokenize_hashtags_and_handles(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
@@ -431,7 +444,7 @@ class Tokenizer:
         this_function = self.tokenize_hashtags_and_handles
         if self.lv & (self.char_is_number_sign | self.char_is_at_sign):
             if m3 := self.re_hashtags_and_handles.match(s):
-                token_type = "HASHTAG" if m3.group(2) == '#' else 'HANDLE'
+                token_type = "HASHTAG" if m3.group(2)[0] == '#' else 'HANDLE'
                 return self.rec_tok_m3(m3, s, offset, token_type, line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
@@ -503,8 +516,6 @@ class Tokenizer:
             return self.rec_tok_m3(m3, s, offset, 'PRESERVE', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    re_right_context_of_initial_letter = regex.compile(r'\s?(?:\p{Lu}\.\s?)*\p{Lu}\p{Ll}{2}')
-
     def resource_entry_fulfills_conditions(self, resource_entry: util.ResourceEntry,
                                            required_resource_entry_type: Type[util.ResourceEntry],
                                            token_surf: str, _s: str, start_position: int, end_position: int,
@@ -536,17 +547,21 @@ class Tokenizer:
                 return False
         return True
 
+    re_starts_w_modifier = regex.compile(r'\pM')
+    re_starts_w_letter = regex.compile(r'\pL')
+    re_ends_in_letter = regex.compile(r'.*\pL\pM*$')       # including any modifiers
+
     def tokenize_according_to_resource_entries(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                                                line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step handles abbreviations, contractions and repairs according to data files
         such as data/tok-resource-eng.txt."""
         this_function = self.tokenize_according_to_resource_entries
-        log.info(f'tokenize_according_to_resource_entries')
 
+        # self.profile.enable()
         last_primary_char_cat = None  # 'primary': not counting modifying letters
         for start_position in range(0, len(s)):
             c = s[start_position]
-            if regex.match(r'\pM', c):
+            if self.re_starts_w_modifier.match(c):
                 continue
             # general restriction: if token starts with a letter, it can't be preceded by a letter
             current_char_cat = CharCat.cat(c)
@@ -562,60 +577,46 @@ class Tokenizer:
                 token_candidate = s[start_position:end_position]
                 right_context = s[end_position:]
                 # general restriction: if token ends in a letter, it can't be followed by a letter
-                if (not(regex.match(r'.*\pL\pM*$', token_candidate) and regex.match(r'\pL', right_context))
-                        and not(regex.match(r'\pM', right_context))):  # token can't be followed by orphan modifier
+                if (not(self.re_ends_in_letter.match(token_candidate) and self.re_starts_w_letter.match(right_context))
+                        and not(self.re_starts_w_modifier.match(right_context))):  # not followed by orphan modifier
                     for resource_entry in self.tok_dict.resource_dict.get(token_candidate.lower(), []):
                         if self.resource_entry_fulfills_conditions(resource_entry, util.ResourceEntry, token_candidate,
                                                                    s, start_position, end_position, offset):
-                            resource_surf = resource_entry.s
                             sem_class = resource_entry.sem_class
-                            resource_entry_type_name = type(resource_entry).__name__
+                            # resource_entry_type_name = type(resource_entry).__name__
                             clause = ''
                             if sem_class:
                                 clause += f'; sem: {sem_class}'
-                            if resource_entry_type_name == 'PunctSplitEntry':
+                            if isinstance(resource_entry, util.PunctSplitEntry):
                                 side = resource_entry.side
                                 clause += f'; side: {side}'
-                            log.info(f'  TARE {token_candidate} ({start_position}-{end_position} '
-                                     f'matches {resource_surf} ({resource_entry_type_name}{clause})')
+                            if isinstance(resource_entry, util.AbbreviationEntry):
+                                # self.profile.disable()
+                                return self.rec_tok([token_candidate], [start_position], s, offset, 'ABBREV',
+                                                    line_id, chart, lang_code, ht, this_function,
+                                                    sem_class=resource_entry.sem_class)
+                            # resource_surf = resource_entry.s
+                            # log.info(f'  TARE l.{line_id} {token_candidate} ({start_position}-{end_position} '
+                            #          f'matches {resource_surf} ({resource_entry_type_name}{clause})')
                 end_position -= 1
             # HHERE
             last_primary_char_cat = current_char_cat
+        # self.profile.disable()
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
+
+    re_right_context_of_initial_letter = regex.compile(r'\s?(?:\p{Lu}\.\s?)*\p{Lu}\p{Ll}{2}')
 
     def tokenize_abbreviations(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                                line_id: Optional[str] = None, offset: int = 0) -> str:
-        """This tokenization step splits off abbreviations ending in a period, searching right to left."""
+        """This tokenization step splits off initials, e.g. J.F.Kennedy -> J. F. Kennedy"""
         this_function = self.tokenize_abbreviations
-        for i in range(len(s)-1, -1, -1):
-            char = s[i]
-            if char == '.':
-                start_position = max(0, i - self.tok_dict.max_s_length) - 1
-                while start_position+1 < i:
-                    start_position += 1
-                    if not s[start_position].isalpha():
-                        continue  # first character must be a letter
-                    if start_position > 0:
-                        prev_char = s[start_position-1]
-                        if prev_char.isalpha() or (prev_char in "'’"):
-                            continue
-                    abbrev_candidate = s[start_position:i + 1]
-                    end_position = start_position + len(abbrev_candidate)
-                    # log.info(f'abbrev_candidate: {abbrev_candidate}')
-                    for resource_entry in self.tok_dict.resource_dict.get(abbrev_candidate.lower(), []):
-                        if self.resource_entry_fulfills_conditions(resource_entry, util.AbbreviationEntry,
-                                                                   abbrev_candidate, s, start_position, end_position,
-                                                                   offset):
-                            return self.rec_tok(abbrev_candidate, s, start_position, offset, 'ABBREV',
-                                                line_id, chart, lang_code, ht, this_function,
-                                                sem_class=resource_entry.sem_class)
         for start_position in range(0, len(s)-1):
             char = s[start_position]
             if char.isalpha() and char.isupper() and (s[start_position+1] == '.') \
                and ((start_position == 0) or not s[start_position - 1].isalpha()):
                 if self.re_right_context_of_initial_letter.match(s[start_position+2:]):
                     token_surf = s[start_position:start_position+2]
-                    return self.rec_tok(token_surf, s, start_position, offset, 'ABBREV-I',
+                    return self.rec_tok([token_surf], [start_position], s, offset, 'ABBREV-I',
                                         line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
@@ -739,18 +740,25 @@ def main(argv):
                         default=sys.stdout, metavar='OUTPUT-FILENAME', help='(default: STDOUT)')
     parser.add_argument('-a', '--annotation', type=argparse.FileType('w', encoding='utf-8', errors='ignore'),
                         default=None, metavar='ANNOTATION-FILENAME', help='(optional output)')
+    parser.add_argument('-p', '--profile', type=argparse.FileType('w', encoding='utf-8', errors='ignore'),
+                        default=None, metavar='cProfile-FILENAME', help='(optional output)')
     parser.add_argument('--lc', type=str, default='', metavar='LANGUAGE-CODE', help="ISO 639-3, e.g. 'fas' for Persian")
     parser.add_argument('-f', '--first_token_is_line_id', action='count', default=0, help='First token is line ID')
     parser.add_argument('-v', '--verbose', action='count', default=0, help='write change log etc. to STDERR')
     parser.add_argument('-c', '--chart', action='count', default=0, help='build chart, even without annotation output')
+    parser.add_argument('--mt', action='count', default=0, help='MT-stype output with @ added to certain punctuation')
     parser.add_argument('--version', action='version',
                         version=f'%(prog)s {__version__} last modified: {last_mod_date}')
     args = parser.parse_args(argv)
+    pr = cProfile.Profile()
     lang_code = args.lc
     tok = Tokenizer(lang_code=lang_code)
     tok.chart_p = bool(args.annotation) or bool(args.chart)
     tok.first_token_is_line_id_p = bool(args.first_token_is_line_id)
     tok.verbose = args.verbose
+    tok.profile = pr
+    # if args.profile:
+    #   pr.enable()
 
     # Open any input or output files. Make sure utf-8 encoding is properly set (in older Python3 versions).
     if args.input is sys.stdin and not re.search('utf-8', sys.stdin.encoding, re.IGNORECASE):
@@ -780,6 +788,10 @@ def main(argv):
     if (log.INFO >= log.root.level) and (tok.n_lines_tokenized >= 1000):
         sys.stderr.write('\n')
     # Log some change stats.
+    if args.profile:
+        pr.disable()
+        ps = pstats.Stats(pr, stream=args.profile).sort_stats(pstats.SortKey.TIME)
+        ps.print_stats()
     end_time = datetime.datetime.now()
     elapsed_time = end_time - start_time
     number_of_lines = ht.get('NUMBER-OF-LINES', 0)
