@@ -338,7 +338,7 @@
 ::abbrev SE ::exp Sweden ::lcode eng ::sem-class country-code
 ::abbrev SG ::exp Singapore ::lcode eng ::sem-class country-code
 ::abbrev SK ::exp Slovakia ::lcode eng ::sem-class country-code
-::abbrev SY ::exp Syria; Syrian Arab Republic ::lcode eng ::sem-class country-code
+::abbrev SY ::exp Syria ::lcode eng ::sem-class country-code
 ::abbrev TH ::exp Thailand ::lcode eng ::sem-class country-code
 ::abbrev TJ ::exp Tajikistan ::lcode eng ::sem-class country-code
 ::abbrev TM ::exp Turkmenistan ::lcode eng ::sem-class country-code
@@ -393,8 +393,7 @@
 ::abbrev IED ::exp improvised explosive device ::lcode eng ::sem-class general
 ::abbrev IP ::exp intellectual property ::lcode eng ::sem-class general
 ::abbrev IP ::exp internet protocol ::lcode eng ::sem-class general
-::abbrev IT ::exp internet protocol ::lcode eng ::sem-class general
-::abbrev IT ::exp intellectual property ::lcode eng ::sem-class general
+::abbrev IT ::exp information technology ::lcode eng ::sem-class general ::case-sensitive True
 ::abbrev MM ::exp multiple myeloma ::lcode eng ::sem-class general
 ::abbrev MP ::exp member of parliament ::lcode eng ::sem-class general ::country UK
 ::abbrev MP ::exp military police ::lcode eng ::sem-class general
