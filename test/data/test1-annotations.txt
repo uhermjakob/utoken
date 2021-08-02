@@ -58,8 +58,7 @@
 ::span 95-98 ::type MAIN ::surf Get
 ::span 98-101 ::type DECONTRACTION ::surf 'em
 ::span 101-102 ::type PUNCT-E ::surf .
-::span 103-108 ::type MAIN ::surf Ma'am
+::span 103-108 ::type ABBREV ::surf Ma'am
 ::span 108-109 ::type PUNCT-E ::surf ,
-::span 110-114 ::type MAIN ::surf cont
-::span 114-116 ::type DECONTRACTION ::surf 'd
+::span 110-116 ::type ABBREV ::surf cont'd
 ::span 116-117 ::type PUNCT-E ::surf .
