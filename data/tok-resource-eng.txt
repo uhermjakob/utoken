@@ -147,6 +147,8 @@
 ::abbrev wt ::exp wild-type ::lcode eng ::sem-class biomedical
 ::abbrev WT ::exp wild-type ::lcode eng ::sem-class biomedical
 
+::abbrev CO2 ::exp carbon dioxide ::lcode eng ::sem-class substance
+::abbrev H2O ::exp water ::lcode eng ::sem-class substance
 ::abbrev TNT ::exp trinitrotoluene ::lcode eng ::sem-class substance
 
 ::abbrev art. ::exp article ::lcode eng ::sem-class corpus-component
@@ -214,14 +216,14 @@
 ::abbrev Wis. ::exp Wisconsin ::lcode eng ::sem-class US-state
 ::abbrev Wyo. ::exp Wyoming ::lcode eng ::sem-class US-state
 
-::abbrev CA ::exp California ::lcode eng ::sem-class US-state-code
+::abbrev CA ::exp California ::lcode eng ::sem-class US-state-code ::case-sensitive True
 ::abbrev DC ::exp District of Columbia ::lcode eng ::sem-class US-state-code
 ::abbrev GA ::exp Georgia ::lcode eng ::sem-class US-state-code
 ::abbrev NY ::exp New York ::lcode eng ::sem-class US-state-code
 ::abbrev TX ::exp Texas ::lcode eng ::sem-class US-state-code
 
-::abbrev ISI ::exp Information Sciences Institute ::lcode eng ::sem-class educational-organization
-::abbrev MIT ::exp Massachusetts Institute of Technology ::lcode eng ::sem-class educational-organization
+::abbrev ISI ::exp Information Sciences Institute ::lcode eng ::sem-class educational-organization ::case-sensitive True
+::abbrev MIT ::exp Massachusetts Institute of Technology ::lcode eng ::sem-class educational-organization ::case-sensitive True
 ::abbrev UCLA ::exp University of California, Los Angeles ::lcode eng ::sem-class educational-organization
 ::abbrev USC ::exp University of Southern California ::lcode eng ::sem-class educational-organization
 
@@ -234,10 +236,10 @@
 ::abbrev NATO ::exp North Atlantic Treaty Organization ::lcode eng ::sem-class international-organization
 ::abbrev OSCE ::exp Organization for Security and Cooperation in Europe ::lcode eng ::sem-class international-organization
 ::abbrev U.N. ::exp United Nations ::lcode eng ::sem-class international-organization
-::abbrev UN ::exp United Nations ::lcode eng ::sem-class international-organization
+::abbrev UN ::exp United Nations ::lcode eng ::sem-class international-organization ::case-sensitive True
 ::abbrev UNDCP ::exp United Nations Drug Control Program ::lcode eng ::sem-class international-organization
 ::abbrev UNODC ::exp United Nations Office for Drugs and Crime ::lcode eng ::sem-class international-organization
-::abbrev WHO ::exp World Health Organization ::lcode eng ::sem-class international-organization
+::abbrev WHO ::exp World Health Organization ::lcode eng ::sem-class international-organization ::case-sensitive True
 ::abbrev WTO ::exp World Trade Organization ::lcode eng ::sem-class international-organization
 
 ::abbrev ABC ::exp American Broadcasting Corporation ::lcode eng ::sem-class media-organization
@@ -245,6 +247,8 @@
 ::abbrev CCTV ::exp China Central Television ::lcode eng ::sem-class media-organization
 ::abbrev NYT ::exp New York Times ::lcode eng ::sem-class media-organization
 ::abbrev WSJ ::exp Wall Street Journal ::lcode eng ::sem-class media-organization
+
+::abbrev AT&T ::lcode eng ::sem-class company
 
 ::abbrev CFE ::exp Conventional Forces in Europe ::lcode eng ::sem-class treaty
 ::abbrev NAFTA ::exp North American Free Trade Agreement ::lcode eng ::sem-class treaty
@@ -254,7 +258,7 @@
 ::abbrev GOP ::exp Republic Party; Grand Old Party ::lcode eng ::sem-class political-party ::country US
 ::abbrev PKK ::exp Kurdistan Workers' Party ::lcode eng ::sem-class political-party
 
-::abbrev JI ::exp Jemaah Islamiyah ::lcode eng ::sem-class terrorist-organization
+::abbrev JI ::exp Jemaah Islamiyah ::lcode eng ::sem-class terrorist-organization ::case-sensitive True
 
 ::abbrev ESA ::exp European Space Agency ::lcode eng ::sem-class government-organiztion
 ::abbrev NASA ::exp National Aeronautics and Space Administration ::lcode eng ::sem-class government-organiztion
@@ -264,95 +268,93 @@
 ::abbrev NCRI ::exp National Council of Resistance of Iran ::lcode eng ::sem-class organization
 ::abbrev OWS ::exp Occupy Wall Street ::lcode eng ::sem-class organization
 
-::abbrev AF ::exp Afghanistan ::lcode eng ::sem-class country-code
-::abbrev AL ::exp Albania ::lcode eng ::sem-class country-code
-::abbrev AT ::exp Austria ::lcode eng ::sem-class country-code
-::abbrev AU ::exp Australia ::lcode eng ::sem-class country-code
-::abbrev BA ::exp Bosnia and Herzegovina ::lcode eng ::sem-class country-code
-::abbrev BD ::exp Bangladesh ::lcode eng ::sem-class country-code
-::abbrev BE ::exp Belgium ::lcode eng ::sem-class country-code
-::abbrev BG ::exp Bulgaria ::lcode eng ::sem-class country-code
-::abbrev BR ::exp Brazil ::lcode eng ::sem-class country-code
-::abbrev CA ::exp Canada ::lcode eng ::sem-class country-code
-::abbrev CG ::exp Republic of Congo ::lcode eng ::sem-class country-code
-::abbrev CH ::exp Switzerland ::lcode eng ::sem-class country-code
-::abbrev CN ::exp China ::lcode eng ::sem-class country-code
-::abbrev CR ::exp Costa Rica ::lcode eng ::sem-class country-code
-::abbrev CU ::exp Cuba ::lcode eng ::sem-class country-code
-::abbrev CV ::exp Cape Verde ::lcode eng ::sem-class country-code
-::abbrev DE ::exp Germany ::lcode eng ::sem-class country-code
-::abbrev DK ::exp Denmark ::lcode eng ::sem-class country-code
-::abbrev DZ ::exp Algeria ::lcode eng ::sem-class country-code
-::abbrev EE ::exp Estonia ::lcode eng ::sem-class country-code
-::abbrev EG ::exp Egypt ::lcode eng ::sem-class country-code
-::abbrev ES ::exp Spain ::lcode eng ::sem-class country-code
-::abbrev FR ::exp France ::lcode eng ::sem-class country-code
-::abbrev GB ::exp Great Britain ::lcode eng ::sem-class country-code
-::abbrev GB ::exp United Kingdom ::lcode eng ::sem-class country-code
-::abbrev GE ::exp Georgia ::lcode eng ::sem-class country-code
-::abbrev GH ::exp Ghana ::lcode eng ::sem-class country-code
-::abbrev HK ::exp Hong Kong ::lcode eng ::sem-class country-code
-::abbrev HN ::exp Honduras ::lcode eng ::sem-class country-code
-::abbrev HR ::exp Croatia ::lcode eng ::sem-class country-code
-::abbrev ID ::exp Indonesia ::lcode eng ::sem-class country-code
-::abbrev IN ::exp India ::lcode eng ::sem-class country-code
-::abbrev IQ ::exp Iraq ::lcode eng ::sem-class country-code
-::abbrev IR ::exp Iran ::lcode eng ::sem-class country-code
-::abbrev IR ::exp Islamic Republic of Iran ::lcode eng ::sem-class country-code
-::abbrev IL ::exp Israel ::lcode eng ::sem-class country-code
-::abbrev IT ::exp Italy ::lcode eng ::sem-class country-code
-::abbrev JO ::exp Jordan ::lcode eng ::sem-class country-code
-::abbrev JP ::exp Japan ::lcode eng ::sem-class country-code
-::abbrev KE ::exp Kenya ::lcode eng ::sem-class country-code
-::abbrev KG ::exp Kyrgyzstan ::lcode eng ::sem-class country-code
-::abbrev KH ::exp Cambodia ::lcode eng ::sem-class country-code
-::abbrev KP ::exp Democratic People's Republic of Korea ::lcode eng ::sem-class country-code
-::abbrev KP ::exp North Korea ::lcode eng ::sem-class country-code
-::abbrev KR ::exp Republic of Korea ::lcode eng ::sem-class country-code
-::abbrev KR ::exp South Korea ::lcode eng ::sem-class country-code
-::abbrev KZ ::exp Kazakhstan ::lcode eng ::sem-class country-code
+::abbrev AF ::exp Afghanistan ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev AL ::exp Albania ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev AT ::exp Austria ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev AU ::exp Australia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev BA ::exp Bosnia and Herzegovina ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev BD ::exp Bangladesh ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev BE ::exp Belgium ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev BG ::exp Bulgaria ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev BR ::exp Brazil ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev CA ::exp Canada ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev CG ::exp Republic of Congo ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev CH ::exp Switzerland ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev CN ::exp China ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev CR ::exp Costa Rica ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev CU ::exp Cuba ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev CV ::exp Cape Verde ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev DE ::exp Germany ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev DK ::exp Denmark ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev DZ ::exp Algeria ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev EE ::exp Estonia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev EG ::exp Egypt ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev ES ::exp Spain ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev FR ::exp France ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev GB ::exp Great Britain, United Kingdom ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev GE ::exp Georgia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev GH ::exp Ghana ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev HK ::exp Hong Kong ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev HN ::exp Honduras ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev HR ::exp Croatia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev ID ::exp Indonesia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev IN ::exp India ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev IQ ::exp Iraq ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev IR ::exp Iran ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev IL ::exp Israel ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev IT ::exp Italy ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev JO ::exp Jordan ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev JP ::exp Japan ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev KE ::exp Kenya ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev KG ::exp Kyrgyzstan ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev KH ::exp Cambodia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev KP ::exp Democratic People's Republic of Korea ::lcode eng ::sem-class country-code  ::case-sensitive True
+::abbrev KP ::exp North Korea ::lcode eng ::sem-class country-code  ::case-sensitive True
+::abbrev KR ::exp Republic of Korea ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev KR ::exp South Korea ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev KZ ::exp Kazakhstan ::lcode eng ::sem-class country-code ::case-sensitive True
 ::abbrev LA ::exp Laos ::lcode eng ::sem-class country-code ::case-sensitive True
-::abbrev LY ::exp Libya ::lcode eng ::sem-class country-code
-::abbrev LY ::exp Libyan Arab Jamahiriya ::lcode eng ::sem-class country-code
-::abbrev MA ::exp Morocco ::lcode eng ::sem-class country-code
-::abbrev MC ::exp Monaco ::lcode eng ::sem-class country-code
-::abbrev MK ::exp North Macedonia ::lcode eng ::sem-class country-code
+::abbrev LY ::exp Libya ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev LY ::exp Libyan Arab Jamahiriya ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev MA ::exp Morocco ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev MC ::exp Monaco ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev MK ::exp North Macedonia ::lcode eng ::sem-class country-code ::case-sensitive True
 ::abbrev MK ::exp Former Yugoslav Republic of Macedonia ::lcode eng ::sem-class country-code
-::abbrev MM ::exp Myanmar ::lcode eng ::sem-class country-code
+::abbrev MM ::exp Myanmar ::lcode eng ::sem-class country-code ::case-sensitive True
 ::abbrev MR ::exp Mauritania ::lcode eng ::sem-class country-code ::case-sensitive True
-::abbrev MX ::exp Mexico ::lcode eng ::sem-class country-code
-::abbrev MY ::exp Malaysia ::lcode eng ::sem-class country-code
-::abbrev NI ::exp Nicaragua ::lcode eng ::sem-class country-code
-::abbrev NL ::exp Netherlands ::lcode eng ::sem-class country-code
-::abbrev PA ::exp Panama ::lcode eng ::sem-class country-code
-::abbrev PE ::exp Peru ::lcode eng ::sem-class country-code
-::abbrev PH ::exp Philippines ::lcode eng ::sem-class country-code
-::abbrev PK ::exp Pakistan ::lcode eng ::sem-class country-code
-::abbrev PS ::exp Palestine ::lcode eng ::sem-class country-code
-::abbrev PS ::exp Palestinian Territory ::lcode eng ::sem-class country-code
-::abbrev RO ::exp Romania ::lcode eng ::sem-class country-code
-::abbrev RU ::exp Russia ::lcode eng ::sem-class country-code
-::abbrev RU ::exp Russian Federation ::lcode eng ::sem-class country-code
-::abbrev QA ::exp Qatar ::lcode eng ::sem-class country-code
-::abbrev SA ::exp Saudi Arabia ::lcode eng ::sem-class country-code
-::abbrev SE ::exp Sweden ::lcode eng ::sem-class country-code
-::abbrev SG ::exp Singapore ::lcode eng ::sem-class country-code
-::abbrev SK ::exp Slovakia ::lcode eng ::sem-class country-code
-::abbrev SY ::exp Syria ::lcode eng ::sem-class country-code
-::abbrev TH ::exp Thailand ::lcode eng ::sem-class country-code
-::abbrev TJ ::exp Tajikistan ::lcode eng ::sem-class country-code
-::abbrev TM ::exp Turkmenistan ::lcode eng ::sem-class country-code
-::abbrev TN ::exp Tunisia ::lcode eng ::sem-class country-code
-::abbrev TW ::exp Taiwan ::lcode eng ::sem-class country-code
-::abbrev TZ ::exp Tanzania ::lcode eng ::sem-class country-code
-::abbrev UA ::exp Ukraine ::lcode eng ::sem-class country-code
-::abbrev UK ::exp United Kingdom; Great Britain; Britain ::lcode eng ::sem-class country-code
-::abbrev US ::exp United States; United States of America ::lcode eng ::sem-class country-code
-::abbrev UZ ::exp Uzbekistan ::lcode eng ::sem-class country-code
-::abbrev VN ::exp Vietnam; Viet Nam ::lcode eng ::sem-class country-code
-::abbrev YE ::exp Yemen ::lcode eng ::sem-class country-code
-::abbrev ZA ::exp South Africa ::lcode eng ::sem-class country-code
-::abbrev ZW ::exp Zimbabwe ::lcode eng ::sem-class country-code
+::abbrev MX ::exp Mexico ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev MY ::exp Malaysia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev NI ::exp Nicaragua ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev NL ::exp Netherlands ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev PA ::exp Panama ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev PE ::exp Peru ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev PH ::exp Philippines ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev PK ::exp Pakistan ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev PS ::exp Palestine ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev PS ::exp Palestine ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev RO ::exp Romania ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev RU ::exp Russia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev RU ::exp Russian Federation ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev QA ::exp Qatar ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev SA ::exp Saudi Arabia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev SE ::exp Sweden ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev SG ::exp Singapore ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev SK ::exp Slovakia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev SY ::exp Syria ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev TH ::exp Thailand ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev TJ ::exp Tajikistan ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev TM ::exp Turkmenistan ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev TN ::exp Tunisia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev TW ::exp Taiwan ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev TZ ::exp Tanzania ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev UA ::exp Ukraine ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev UK ::exp United Kingdom; Great Britain; Britain ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev US ::exp United States; United States of America ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev UZ ::exp Uzbekistan ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev VN ::exp Vietnam; Viet Nam ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev YE ::exp Yemen ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev ZA ::exp South Africa ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev ZW ::exp Zimbabwe ::lcode eng ::sem-class country-code ::case-sensitive True
 
 ::abbrev UAE ::exp United Arab Emirates ::lcode eng ::sem-class country
 ::abbrev U.K. ::exp United Kingdom ::lcode eng ::sem-class country
@@ -391,8 +393,8 @@
 ::abbrev EMT ::exp epithelial-mesenchymal transition ::lcode eng ::sem-class general
 ::abbrev ICBM ::exp intercontinental ballistic missile ::lcode eng ::sem-class general
 ::abbrev IED ::exp improvised explosive device ::lcode eng ::sem-class general
-::abbrev IP ::exp intellectual property ::lcode eng ::sem-class general
-::abbrev IP ::exp internet protocol ::lcode eng ::sem-class general
+::abbrev IP ::exp intellectual property ::lcode eng ::sem-class general ::case-sensitive True
+::abbrev IP ::exp internet protocol ::lcode eng ::sem-class general ::case-sensitive True
 ::abbrev IT ::exp information technology ::lcode eng ::sem-class general ::case-sensitive True
 ::abbrev MM ::exp multiple myeloma ::lcode eng ::sem-class general
 ::abbrev MP ::exp member of parliament ::lcode eng ::sem-class general ::country UK
@@ -419,6 +421,7 @@
 ::abbrev hrs ::exp hour ::lcode eng ::sem-class unit-of-measurement
 ::abbrev kg ::exp kilogram ::lcode eng ::sem-class unit-of-measurement
 ::abbrev km ::exp kilometer ::lcode eng ::sem-class unit-of-measurement
+::abbrev km² ::exp square kilometer ::lcode eng ::sem-class unit-of-measurement
 ::abbrev lb ::exp pound ::lcode eng ::sem-class unit-of-measurement
 ::abbrev lb. ::exp pound ::lcode eng ::sem-class unit-of-measurement
 ::abbrev lbs ::exp pounds ::lcode eng ::sem-class unit-of-measurement
@@ -432,7 +435,7 @@
 ::abbrev mph ::exp miles per hour ::lcode eng ::sem-class unit-of-measurement
 ::abbrev µm ::exp micrometer ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True
 ::abbrev µM ::exp micromolar ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True
-::abbrev ng ::exp nanogram ::lcode eng ::sem-class unit-of-measurement
+::abbrev ng ::exp nanogram ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True
 ::abbrev nM ::exp nanomolar ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True
 ::abbrev yr. ::exp year ::lcode eng ::sem-class unit-of-measurement
 ::abbrev yrs. ::exp years ::lcode eng ::sem-class unit-of-measurement
@@ -451,10 +454,15 @@
 ::abbrev math ::exp mathematics ::lcode eng ::sem-class general
 ::abbrev maths ::exp mathematics ::lcode eng ::sem-class general
 ::abbrev pic ::exp picture ::lcode eng ::sem-class general
+::abbrev Q-tip ::lcode eng ::sem-class general
+::abbrev Q-tips ::lcode eng ::sem-class general
 ::abbrev sis ::exp sister ::lcode eng ::sem-class general
 ::abbrev TV ::exp television ::lcode eng ::sem-class general
+::abbrev SA/LW ::exp small arms and light weapons ::lcode eng ::sem-class general
 
-::abbrev cont'd. ::exp continued ::lcode eng
+::abbrev %pw ::lcode eng ::sem-class disfluency
+
+::abbrev cont'd ::exp continued ::lcode eng
 ::abbrev eff'd ::exp fucked ::lcode eng
 ::abbrev int'l ::exp international ::lcode eng
 ::abbrev nat'l ::exp national ::lcode eng
