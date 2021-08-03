@@ -54,6 +54,7 @@
 ::contraction wouldnot ::target would not ::lcode eng
 ::contraction wouldnt ::target would n't ::lcode eng
 ::contraction I'm ::target I 'm ::lcode eng
+::contraction c'mon ::target come on ::lcode eng
 # ::contraction rock'n'roll ::target rock and also roll ::lcode eng  # for testing purposes only
 
 # English repairs (e.g. to undo damage by previous tokenizer)
@@ -61,8 +62,9 @@
 ::repair ca n't ::target can n't ::lcode eng
 ::repair sha n't ::target shall n't ::lcode eng
 ::repair wo n't ::target will n't ::lcode eng
+::repair S.p . A. ::target S.p.A. ::lcode eng
 
-# English tokens to be preserved (e.g. from punctuation stripping)
+# English tokens to be preserved (e.g. protect them against punctuation stripping)
 ::preserve 'd ::lcode eng
 ::preserve 'em ::lcode eng
 ::preserve 're ::lcode eng
@@ -73,6 +75,7 @@
 ::preserve 've ::lcode eng
 ::preserve l' ::lcode eng
 ::preserve n't ::lcode eng
+::preserve d'oh ::lcode eng
 # French
 ::preserve c' ::lcode eng   # C'est la vie.
 ::preserve d' ::lcode eng   # Coeur d'Alene
