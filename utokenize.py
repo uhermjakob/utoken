@@ -26,8 +26,8 @@ from utoken import util
 
 log.basicConfig(level=log.INFO)
 
-__version__ = '0.0.2'
-last_mod_date = 'August 2, 2021'
+__version__ = '0.0.3'
+last_mod_date = 'August 3, 2021'
 
 
 class VertexMap:
@@ -534,18 +534,22 @@ class Tokenizer:
                 return False
         return True
 
-    @staticmethod
-    def adjust_capitalization(s: str, orig_s) -> str:
+    re_letters_only = regex.compile(r'\P{L}')
+
+    def adjust_capitalization(self, s: str, orig_s) -> str:
         """Adjust capitalization of s according to orig_s. Example: if s=will orig_s=Wo then return Will"""
         if s == orig_s:
             return s
-        elif (len(orig_s) >= 1) and orig_s[0].isupper():
-            if (len(orig_s) >= 2) and orig_s[1].isupper():
-                return s.upper()
-            else:
-                return s.capitalize()
         else:
-            return s
+            if self.re_letters_only.sub('', s) == self.re_letters_only.sub('', orig_s):
+                return s
+            elif (len(orig_s) >= 1) and orig_s[0].isupper():
+                if (len(orig_s) >= 2) and orig_s[1].isupper():
+                    return s.upper()
+                else:
+                    return s.capitalize()
+            else:
+                return s
 
     def map_contraction(self, orig_token: str, contraction_source: str, contraction_target: str,
                         orig_start_position: int) -> Tuple[List[str], List[str], List[int]]:
