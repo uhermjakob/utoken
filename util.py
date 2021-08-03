@@ -11,7 +11,7 @@ import sys
 from typing import Dict, List, Optional, Pattern
 
 __version__ = '0.0.2'
-last_mod_date = 'July 31, 2021'
+last_mod_date = 'August 2, 2021'
 
 
 class ResourceEntry:
@@ -75,6 +75,8 @@ class ResourceDict:
         self.resource_dict: Dict[str, List[ResourceEntry]] = {}          # primary dict
         self.reverse_resource_dict: Dict[str, List[ResourceEntry]] = {}  # reverse index
         self.prefix_dict: Dict[str, bool] = {}              # prefixes of headwords to more efficiently stop search
+        self.prefix_dict_preserve: Dict[str, bool] = {}
+        self.prefix_dict_punct: Dict[str, bool] = {}
         self.max_s_length: int = 0
 
     def register_resource_entry_in_reverse_resource_dict(self, resource_entry: ResourceEntry, rev_anchors: List[str]):
@@ -178,7 +180,12 @@ class ResourceDict:
                                 self.max_s_length = len(s)
                             lc_s = s.lower()
                             for prefix_length in range(1, len(lc_s)+1):
-                                self.prefix_dict[lc_s[:prefix_length]] = True
+                                if head_slot == 'punct-split':
+                                    self.prefix_dict_punct[lc_s[:prefix_length]] = True
+                                elif head_slot == 'preserve':
+                                    self.prefix_dict_preserve[lc_s[:prefix_length]] = True
+                                else:
+                                    self.prefix_dict[lc_s[:prefix_length]] = True
                             if sem_class := slot_value_in_double_colon_del_list(line, 'sem-class'):
                                 resource_entry.sem_class = sem_class
                             if slot_value_in_double_colon_del_list(line, 'case-sensitive'):
