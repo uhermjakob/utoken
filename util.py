@@ -137,7 +137,7 @@ class ResourceDict:
                         valid = double_colon_del_list_validation(line, str(line_number), filename,
                                                                  valid_slots=['abbrev', 'case-sensitive', 'comment',
                                                                               'contraction', 'country', 'exp',
-                                                                              'group', 'lcode',
+                                                                              'group', 'inflection', 'lcode',
                                                                               'left-context', 'left-context-not',
                                                                               'preserve', 'punct-split', 'repair',
                                                                               'right-context', 'right-context-not',
