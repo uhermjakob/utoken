@@ -64,6 +64,14 @@
 ::repair wo n't ::target will n't ::lcode eng
 ::repair S.p . A. ::target S.p.A. ::lcode eng  # TO-DO: Capitalization
 
+::repair e.g ::target e.g. ::lcode eng
+::repair etc ::target etc. ::lcode eng
+::repair i.e ::target i.e. ::lcode eng
+::repair E.U ::target E.U. ::lcode eng
+::repair U.K ::target U.K. ::lcode eng
+::repair U.N ::target U.N. ::lcode eng
+::repair U.S ::target U.S. ::lcode eng
+
 # English tokens to be preserved (e.g. protect them against punctuation stripping)
 ::preserve 'd ::lcode eng
 ::preserve 'em ::lcode eng
@@ -82,6 +90,8 @@
 ::preserve n' ::lcode eng
 ::preserve qu' ::lcode eng
 ::preserve s' ::lcode eng
+
+::preserve 3D ::lcode eng
 
 # English abbreviations
 ::abbrev Jan. ::exp January ::lcode eng ::sem-class month-of-the-year
@@ -270,6 +280,7 @@
 
 ::abbrev ASEAN ::exp Association of Southeast Asian Nations ::lcode eng ::sem-class international-organization
 ::abbrev EU ::exp European Union ::lcode eng ::sem-class international-organization
+::abbrev E.U. ::exp European Union ::lcode eng ::sem-class international-organization
 ::abbrev GCC ::exp Golf Cooperation Council ::lcode eng ::sem-class international-organization
 ::abbrev IAEA ::exp International Atomic Energy Agency ::lcode eng ::sem-class international-organization
 ::abbrev NATO ::exp North Atlantic Treaty Organization ::lcode eng ::sem-class international-organization
@@ -411,6 +422,12 @@
 
 ::abbrev WWI ::exp World War I ::lcode eng ::sem-class event
 ::abbrev WWII ::exp World War II ::lcode eng ::sem-class event
+::abbrev WW1 ::exp World War I ::lcode eng ::sem-class event
+::abbrev WW2 ::exp World War II ::lcode eng ::sem-class event
+
+::abbrev AIDS ::exp Acquired Immunodeficiency Syndrome ::lcode eng ::sem-class disease
+::abbrev HIV ::exp human immunodeficiency virus ::lcode eng ::sem-class virus
+::abbrev HIV/AIDS ::exp human immunodeficiency virus; Acquired Immunodeficiency Syndrome ::lcode eng ::sem-class disease
 
 ::abbrev A&E ::exp accident and emergency department ::lcode eng ::sem-class general
 ::abbrev AAM ::exp air-to-air missile ::lcode eng ::sem-class general
@@ -479,6 +496,10 @@
 ::abbrev yr. ::exp year ::lcode eng ::sem-class unit-of-measurement
 ::abbrev yrs. ::exp years ::lcode eng ::sem-class unit-of-measurement
 
+::abbrev mph ::exp mile per hour ::lcode eng ::sem-class unit-of-measurement
+::abbrev mSv/hr ::exp millisievert per hour ::lcode eng ::sem-class unit-of-measurement
+::abbrev μSv/hr ::exp microsievert per hour ::lcode eng ::sem-class unit-of-measurement
+
 ::abbrev ad ::exp advertisement ::lcode eng ::sem-class general
 ::abbrev asap ::exp as soon as possible ::lcode eng ::sem-class general
 ::abbrev bd ::exp bluray disc ::lcode eng ::sem-class general
@@ -500,6 +521,7 @@
 ::abbrev SA/LW ::exp small arms and light weapons ::lcode eng ::sem-class general
 
 ::abbrev %pw ::lcode eng ::sem-class disfluency
+::abbrev a2k ::exp able to know ::lcode eng ::sem-class general
 
 ::abbrev cont'd ::exp continued ::lcode eng
 ::abbrev eff'd ::exp fucked ::lcode eng
