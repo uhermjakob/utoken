@@ -20,7 +20,7 @@ import pstats
 import re
 import regex
 import sys
-from typing import Callable, List, Match, Optional, TextIO, Type
+from typing import Callable, List, Match, Optional, TextIO, Tuple, Type
 # import unicodedata as ud
 from utoken import util
 
@@ -271,34 +271,38 @@ class Tokenizer:
     @staticmethod
     def rec_tok(token_surfs: List[str], start_positions: List[int], s: str, offset: int,
                 token_type: str, line_id: str, chart: Optional[Chart],
-                lang_code: str, ht: dict, calling_function, **token_kwargs) -> [str, Token]:
+                lang_code: str, ht: dict, calling_function, orig_token_surfs: Optional[List[str]] = None,
+                **token_kwargs) -> [str, Token]:
         """Recursive tokenization step (same method, applied to remaining string) using token-surf and start-position.
         Once a heuristic has identified a particular token span and type,
         this method computes all offsets, creates a new token, and recursively
         calls the calling function on the string preceding and following the new token.
         token_surfs/start_positions must not overlap and be in order"""
-        # log.info(f'rec_tok token_surfs: {token_surfs} start_positions: {start_positions} s: {s} offset: {offset}')
+        # log.info(f'rec_tok token_surfs: {token_surfs} orig_token_surfs: {orig_token_surfs} '
+        #          f'start_positions: {start_positions} s: {s} offset: {offset}')
         tokenizations = []
         position = 0
         for i in range(len(token_surfs)):
             token_surf = token_surfs[i]
+            orig_token_surf = orig_token_surfs[i] if orig_token_surfs else token_surfs[i]
             start_position = start_positions[i]
-            end_position = start_position + len(token_surf)
+            end_position = start_position + len(orig_token_surf)
             offset1 = offset + position
             offset2 = offset + start_position
             offset3 = offset + end_position
-            pre = s[position:start_position]
-            tokenizations.append(calling_function(pre, chart, ht, lang_code, line_id, offset1))
+            if pre := s[position:start_position]:
+                tokenizations.append(calling_function(pre, chart, ht, lang_code, line_id, offset1))
             tokenizations.append(token_surf)
             if chart:
                 new_token = Token(token_surf, line_id, token_type,
-                                  ComplexSpan([SimpleSpan(offset2, offset3, vm=chart.vertex_map)]))
+                                  ComplexSpan([SimpleSpan(offset2, offset3, vm=chart.vertex_map)]),
+                                  orig_surf=orig_token_surf)
                 for key, value in token_kwargs.items():
                     setattr(new_token, key, value)
                 chart.register_token(new_token)
             position = end_position
-        post = s[position:]
-        tokenizations.append(calling_function(post, chart, ht, lang_code, line_id, offset+position))
+        if post := s[position:]:
+            tokenizations.append(calling_function(post, chart, ht, lang_code, line_id, offset+position))
         return util.join_tokens(tokenizations)
 
     def rec_tok_m3(self, m3: Match[str], s: str, offset: int,
@@ -313,7 +317,25 @@ class Tokenizer:
         end_position = start_position + len(token)
         token_surf = s[start_position:end_position]  # in case that the regex match operates on a mapped string
         return self.rec_tok([token_surf], [start_position], s, offset, token_type, line_id, chart,
-                            lang_code, ht, calling_function, **token_kwargs)
+                            lang_code, ht, calling_function, [token_surf], **token_kwargs)
+
+    def rec_tok_m5(self, m5: Match[str], s: str, offset: int,
+                   token_type: str, line_id: str, chart: Optional[Chart],
+                   lang_code: str, ht: dict, calling_function, **token_kwargs) -> [str, Token]:
+        """Two-token version of rec_tok_m3.
+        Recursive double tokenization step (same method, applied to remaining string) using Match object.
+        The name 'm5' refers to the three groups it expects in the match object:
+        (1) pre-token (2) token1 and (3) inter-token (4) token2 (5) post-token.
+        Method computes token-surf and start-position, then calls rec_tok."""
+        pre_token, token1, inter_token, token2, post_token = m5.group(1, 2, 3, 4, 5)
+        start_position1 = len(pre_token)
+        end_position1 = start_position1 + len(token1)
+        start_position2 = end_position1 + len(inter_token)
+        end_position2 = start_position2 + len(token2)
+        token_surfs = [s[start_position1:end_position1], s[start_position2:end_position2]]
+        start_positions = [start_position1, start_position2]
+        return self.rec_tok(token_surfs, start_positions, s, offset, token_type, line_id, chart,
+                            lang_code, ht, calling_function, token_surfs, **token_kwargs)
 
     def next_tok(self, current_tok_function:
                  Optional[Callable[[str, Chart, dict, str, Optional[str], int], str]],
@@ -465,47 +487,15 @@ class Tokenizer:
             return self.rec_tok_m3(m3, s, offset, 'NUMBER', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    re_eng_neg_contraction = \
-        re.compile(r'(.*?)\b(ai|are|ca|can|could|did|do|does|had|has|have|is|sha|should|was|were|wo|would)'
-                   r'(n[o\'’]t)\b(.*)', flags=re.IGNORECASE)
     re_eng_suf_contraction = re.compile(r'(.*?[a-z])([\'’](?:d|em|ll|m|re|s|ve))\b(.*)', flags=re.IGNORECASE)
     re_eng_preserve_token = regex.compile(r'(.*?)(?<!\pL\pM*|\d)([\'’](?:ll|re|s|ve|d|m))(?!\pL|\pM|\d)(.*)',
                                           flags=regex.IGNORECASE)
 
     def tokenize_english_contractions(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                                       line_id: Optional[str] = None, offset: int = 0) -> str:
-        """This tokenization step handles English contractions, e.g. (don't -> do not; won't -> will not;
-        John's -> John 's; he'd -> he 'd"""
+        """This tokenization step handles English contractions such as John's -> John 's; he'd -> he 'd
+        Others such as don't -> do not; won't -> will not are handled as resource_entries"""
         this_function = self.tokenize_english_contractions
-        # Tokenize contracted negation, e.g. "can't", "cannot", "couldn't"
-        if m := self.re_eng_neg_contraction.match(s):
-            pre, orig_token_surf1, token_surf2, post = m.group(1, 2, 3, 4)
-            # Expand contracted first part, e.g. "wo" (as in "won't") to "will"
-            t1 = orig_token_surf1.lower()
-            token_surf1 = 'is' if t1 == 'ai' else 'can' if t1 == 'ca' else 'shall' if t1 == 'sha' \
-                else 'will' if t1 == 'wo' else orig_token_surf1
-            # adjust capitalization
-            if token_surf1 is not orig_token_surf1:
-                if (len(orig_token_surf1) >= 1) and orig_token_surf1[0].isupper():
-                    if (len(orig_token_surf1) >= 2) and orig_token_surf1[1].isupper():
-                        token_surf1 = token_surf1.upper()
-                    else:
-                        token_surf1 = token_surf1.capitalize()
-            start_position = len(pre)
-            middle_position = start_position + len(orig_token_surf1)
-            end_position = middle_position + len(token_surf2)
-            offset2, offset3, offset4 = offset + start_position, offset + middle_position, offset + end_position
-            if chart:
-                new_token1 = Token(token_surf1, line_id, 'DECONTRACTION1',
-                                   ComplexSpan([SimpleSpan(offset2, offset3, vm=chart.vertex_map)]),
-                                   orig_surf=orig_token_surf1)
-                new_token2 = Token(token_surf2, line_id, 'DECONTRACTION2',
-                                   ComplexSpan([SimpleSpan(offset3, offset4, vm=chart.vertex_map)]))
-                chart.register_token(new_token1)
-                chart.register_token(new_token2)
-            pre_tokenization = this_function(pre, chart, ht, lang_code, line_id, offset)
-            post_tokenization = this_function(post, chart, ht, lang_code, line_id, offset4)
-            return util.join_tokens([pre_tokenization, token_surf1, token_surf2, post_tokenization])
         # Tokenize other contractions such as:
         #   (1) "John's mother", "He's hungry.", "He'll come.", "We're here.", "You've got to be kidding."
         #   (2) "He'd rather die.", "They'd been informed.", "It'd be like war.",  but not "cont'd", "EFF'd up people"
@@ -547,6 +537,80 @@ class Tokenizer:
                 return False
         return True
 
+    @staticmethod
+    def adjust_capitalization(s: str, orig_s) -> str:
+        """Adjust capitalization of s according to orig_s. Example: if s=will orig_s=Wo then return Will"""
+        if s == orig_s:
+            return s
+        elif (len(orig_s) >= 1) and orig_s[0].isupper():
+            if (len(orig_s) >= 2) and orig_s[1].isupper():
+                return s.upper()
+            else:
+                return s.capitalize()
+        else:
+            return s
+
+    def map_contraction(self, orig_token: str, contraction_source: str, contraction_target: str,
+                        orig_start_position: int) -> Tuple[List[str], List[str], List[int]]:
+        """Example: orig_token='Can't' contraction_source='can't' contraction_target='can n't'"""
+        tokens1 = []
+        tokens2 = []
+        orig_tokens1 = []
+        orig_tokens2 = []
+        start_positions1 = []
+        start_positions2 = []
+        token = orig_token
+        start_position = orig_start_position
+        end_position = start_position+len(token)
+        source = contraction_source
+        target = contraction_target
+
+        while token != '':
+            # log.info(f'token: {token} source: {source} target: {target} start_position: {start_position} '
+            #          f'end_position: {end_position}')
+            target_elems = target.split()
+            if target_elems and source.endswith(target_elems[-1]):
+                token_elem_len = len(target_elems[-1])
+                token_elem_start_position = end_position-token_elem_len
+                token_elem = target_elems.pop()
+                orig_token_elem = token[len(token)-token_elem_len:]
+                # log.info(f'insert token-e: {token_elem} orig_tokens: {orig_token_elem} '
+                #          f'start_positions: {token_elem_start_position}')
+                tokens2.insert(0, self.adjust_capitalization(token_elem, orig_token_elem))
+                orig_tokens2.insert(0, orig_token_elem)
+                start_positions2.insert(0, token_elem_start_position)
+                end_position -= token_elem_len
+                token = token[:-token_elem_len]
+                source = source[:-token_elem_len]
+                target = target[:-token_elem_len].rstrip()
+            elif target_elems and source.startswith(target_elems[0]):
+                token_elem_len = len(target_elems[0])
+                token_elem_start_position = start_position
+                token_elem = target_elems.pop(0)
+                orig_token_elem = token[:token_elem_len]
+                # log.info(f'insert token-s: {token_elem} orig_tokens: {orig_token_elem} '
+                #          f'start_positions: {token_elem_start_position}')
+                tokens1.append(self.adjust_capitalization(token_elem, orig_token_elem))
+                orig_tokens1.append(orig_token_elem)
+                start_positions1.append(token_elem_start_position)
+                start_position += token_elem_len
+                token = token[token_elem_len:]
+                source = source[token_elem_len:]
+                target = target[token_elem_len:].lstrip()
+            elif len(target_elems) >= 1:  # Primarily for single target_elems.
+                # For multiple remaining mismatching target_elems, consider a separate case below.
+                # log.info(f'insert token-w: {target} orig_tokens: {token} '
+                #          f'start_positions: {start_position}')
+                tokens1.append(self.adjust_capitalization(target, token))
+                orig_tokens1.append(token)
+                start_positions1.append(start_position)
+                token = ""
+            else:
+                break
+        # log.info(f'return tokens: {tokens1 + tokens2} orig_tokens: {orig_tokens1 + orig_tokens2} '
+        #          f'start_positions: {start_positions1+start_positions2}')
+        return tokens1 + tokens2, orig_tokens1 + orig_tokens2, start_positions1 + start_positions2
+
     re_starts_w_modifier = regex.compile(r'\pM')
     re_starts_w_letter = regex.compile(r'\pL')
     re_ends_in_letter = regex.compile(r'.*\pL\pM*$')       # including any modifiers
@@ -557,7 +621,6 @@ class Tokenizer:
         such as data/tok-resource-eng.txt."""
         this_function = self.tokenize_according_to_resource_entries
 
-        # self.profile.enable()
         last_primary_char_cat = None  # 'primary': not counting modifying letters
         for start_position in range(0, len(s)):
             c = s[start_position]
@@ -583,6 +646,7 @@ class Tokenizer:
                         if self.resource_entry_fulfills_conditions(resource_entry, util.ResourceEntry, token_candidate,
                                                                    s, start_position, end_position, offset):
                             sem_class = resource_entry.sem_class
+                            resource_surf = resource_entry.s
                             # resource_entry_type_name = type(resource_entry).__name__
                             clause = ''
                             if sem_class:
@@ -591,17 +655,20 @@ class Tokenizer:
                                 side = resource_entry.side
                                 clause += f'; side: {side}'
                             if isinstance(resource_entry, util.AbbreviationEntry):
-                                # self.profile.disable()
                                 return self.rec_tok([token_candidate], [start_position], s, offset, 'ABBREV',
-                                                    line_id, chart, lang_code, ht, this_function,
+                                                    line_id, chart, lang_code, ht, this_function, [token_candidate],
                                                     sem_class=resource_entry.sem_class)
-                            # resource_surf = resource_entry.s
+                            if isinstance(resource_entry, util.ContractionEntry):
+                                tokens, orig_tokens, start_positions = \
+                                    self.map_contraction(token_candidate, resource_surf, resource_entry.target,
+                                                         start_position)
+                                return self.rec_tok(tokens, start_positions, s, offset, 'DECONTRACTION',
+                                                    line_id, chart, lang_code, ht, this_function, orig_tokens,
+                                                    sem_class=resource_entry.sem_class)
                             # log.info(f'  TARE l.{line_id} {token_candidate} ({start_position}-{end_position} '
                             #          f'matches {resource_surf} ({resource_entry_type_name}{clause})')
                 end_position -= 1
-            # HHERE
             last_primary_char_cat = current_char_cat
-        # self.profile.disable()
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_right_context_of_initial_letter = regex.compile(r'\s?(?:\p{Lu}\.\s?)*\p{Lu}\p{Ll}{2}')
