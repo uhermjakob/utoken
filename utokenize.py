@@ -471,20 +471,26 @@ class Tokenizer:
                 return self.rec_tok_m3(m3, s, offset, token_type, line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    re_number = regex.compile(r'(.*?)'
+    re_number = regex.compile(r'(.*?)'                                # excludes integers
                               r'(?<![-−–+.]|\d)'                      # negative lookbehind
                               r'([-−–+]?'                             # plus/minus sign
                               r'(?:\d{1,3}(?:,\d\d\d)+(?:\.\d+)?|'    # Western style, e.g. 12,345,678.90
                               r'\d{1,2}(?:,\d\d)*,\d\d\d(?:\.\d+)?|'  # Indian style, e.g. 1,23,45,678.90
-                              r'\d+(?:\.\d+)?))'                      # plain, e.g. 12345678.90
+                              r'\d+\.\d+))'                           # floating point, e.g. 12345678.90
                               r'(?![.,]\d)'                           # negative lookahead
                               r'(.*)')
+    re_integer = regex.compile(r'(.*?)'
+                               r'(?<![-−–+.]|\d|\pL\pM*)'             # negative lookbehind (stricter: no letters)
+                               r'([-−–+]?'                            # plus/minus sign
+                               r'\d+)'                                # plain integer, e.g. 12345678
+                               r'(?![.,]\d)'                          # negative lookahead
+                               r'(.*)')
 
     def tokenize_numbers(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                          line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off numbers such as 12,345,678.90"""
         this_function = self.tokenize_numbers
-        if m3 := self.re_number.match(s):
+        if m3 := self.re_number.match(s) or self.re_integer.match(s):
             return self.rec_tok_m3(m3, s, offset, 'NUMBER', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
