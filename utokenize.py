@@ -182,9 +182,10 @@ class Tokenizer:
                                    self.tokenize_mt_punctuation,
                                    self.tokenize_according_to_resource_entries,
                                    self.tokenize_english_contractions,
-                                   self.tokenize_numbers,
                                    self.tokenize_abbreviations,
-                                   self.tokenize_punctuation,
+                                   self.tokenize_numbers,
+                                   self.tokenize_preserve_according_to_resource_entries,
+                                   self.tokenize_punctuation_according_to_resource_entries,
                                    self.tokenize_main]
         self.next_tok_step_dict = {}
         for i in range(0, len(self.tok_step_functions) - 1):
@@ -488,8 +489,6 @@ class Tokenizer:
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_eng_suf_contraction = re.compile(r'(.*?[a-z])([\'’](?:d|em|ll|m|re|s|ve))\b(.*)', flags=re.IGNORECASE)
-    re_eng_preserve_token = regex.compile(r'(.*?)(?<!\pL\pM*|\d)([\'’](?:ll|re|s|ve|d|m))(?!\pL|\pM|\d)(.*)',
-                                          flags=regex.IGNORECASE)
 
     def tokenize_english_contractions(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                                       line_id: Optional[str] = None, offset: int = 0) -> str:
@@ -502,8 +501,6 @@ class Tokenizer:
         #   (3) "I'm done.", "I don't like'm.", "Get'em."
         if m3 := self.re_eng_suf_contraction.match(s):
             return self.rec_tok_m3(m3, s, offset, 'DECONTRACTION', line_id, chart, lang_code, ht, this_function)
-        if m3 := self.re_eng_preserve_token.match(s):
-            return self.rec_tok_m3(m3, s, offset, 'PRESERVE', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     def resource_entry_fulfills_conditions(self, resource_entry: util.ResourceEntry,
@@ -513,7 +510,7 @@ class Tokenizer:
         """This method checks whether a resource-entry is of the proper type fulfills any conditions associated with it,
         including case-sensitive and positive and/or negative contexts to the left and/or right."""
         if not isinstance(resource_entry, required_resource_entry_type):
-            log.info(f'resource-entry({token_surf}) is not {required_resource_entry_type}')
+            # log.info(f'resource-entry({token_surf}) is not {required_resource_entry_type}')
             return False
         if resource_entry.case_sensitive:
             if resource_entry.s != token_surf:
@@ -568,11 +565,11 @@ class Tokenizer:
         while token != '':
             # log.info(f'token: {token} source: {source} target: {target} start_position: {start_position} '
             #          f'end_position: {end_position}')
-            target_elems = target.split()
-            if target_elems and source.endswith(target_elems[-1]):
-                token_elem_len = len(target_elems[-1])
+            target_elements = target.split()
+            if target_elements and source.endswith(target_elements[-1]):
+                token_elem_len = len(target_elements[-1])
                 token_elem_start_position = end_position-token_elem_len
-                token_elem = target_elems.pop()
+                token_elem = target_elements.pop()
                 orig_token_elem = token[len(token)-token_elem_len:]
                 # log.info(f'insert token-e: {token_elem} orig_tokens: {orig_token_elem} '
                 #          f'start_positions: {token_elem_start_position}')
@@ -588,10 +585,10 @@ class Tokenizer:
                     token = token[:-1]
                     if target.endswith(' '):
                         target = target[:-1]
-            elif target_elems and source.startswith(target_elems[0]):
-                token_elem_len = len(target_elems[0])
+            elif target_elements and source.startswith(target_elements[0]):
+                token_elem_len = len(target_elements[0])
                 token_elem_start_position = start_position
-                token_elem = target_elems.pop(0)
+                token_elem = target_elements.pop(0)
                 orig_token_elem = token[:token_elem_len]
                 # log.info(f'insert token-s: {token_elem} orig_tokens: {orig_token_elem} '
                 #          f'start_positions: {token_elem_start_position}')
@@ -607,8 +604,8 @@ class Tokenizer:
                     token = token[1:]
                     if target.startswith(' '):
                         target = target[1:]
-            elif len(target_elems) >= 1:  # Primarily for single target_elems.
-                # For multiple remaining mismatching target_elems, consider a separate case below.
+            elif len(target_elements) >= 1:  # Primarily for single target_elements.
+                # For multiple remaining mismatching target_elements, consider a separate case below.
                 # log.info(f'insert token-w: {target} orig_tokens: {token} '
                 #          f'start_positions: {start_position}')
                 tokens1.append(self.adjust_capitalization(target, token))
@@ -623,7 +620,11 @@ class Tokenizer:
 
     re_starts_w_modifier = regex.compile(r'\pM')
     re_starts_w_letter = regex.compile(r'\pL')
-    re_ends_in_letter = regex.compile(r'.*\pL\pM*$')       # including any modifiers
+    re_starts_w_letter_or_digit = regex.compile(r'(\pL|\d)')
+    re_starts_w_single_s = regex.compile(r's(?!\pL|\d)', flags=regex.IGNORECASE)
+    re_ends_w_letter = regex.compile(r'.*\pL\pM*$')          # including any modifiers
+    re_ends_w_apostrophe = regex.compile(r".*['‘’]$")
+    re_ends_w_letter_or_digit = regex.compile(r'.*(\pL\pM*|\d)[-_&]?$')
 
     def tokenize_according_to_resource_entries(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                                                line_id: Optional[str] = None, offset: int = 0) -> str:
@@ -650,20 +651,16 @@ class Tokenizer:
                 token_candidate = s[start_position:end_position]
                 right_context = s[end_position:]
                 # general restriction: if token ends in a letter, it can't be followed by a letter
-                if (not(self.re_ends_in_letter.match(token_candidate) and self.re_starts_w_letter.match(right_context))
+                if (not(self.re_ends_w_letter.match(token_candidate) and self.re_starts_w_letter.match(right_context))
                         and not(self.re_starts_w_modifier.match(right_context))):  # not followed by orphan modifier
                     for resource_entry in self.tok_dict.resource_dict.get(token_candidate.lower(), []):
                         if self.resource_entry_fulfills_conditions(resource_entry, util.ResourceEntry, token_candidate,
                                                                    s, start_position, end_position, offset):
                             sem_class = resource_entry.sem_class
                             resource_surf = resource_entry.s
-                            # resource_entry_type_name = type(resource_entry).__name__
                             clause = ''
                             if sem_class:
                                 clause += f'; sem: {sem_class}'
-                            if isinstance(resource_entry, util.PunctSplitEntry):
-                                side = resource_entry.side
-                                clause += f'; side: {side}'
                             if isinstance(resource_entry, util.AbbreviationEntry):
                                 return self.rec_tok([token_candidate], [start_position], s, offset, 'ABBREV',
                                                     line_id, chart, lang_code, ht, this_function, [token_candidate],
@@ -682,13 +679,102 @@ class Tokenizer:
                                 return self.rec_tok(tokens, start_positions, s, offset, 'REPAIR',
                                                     line_id, chart, lang_code, ht, this_function, orig_tokens,
                                                     sem_class=resource_entry.sem_class)
-                            # log.info(f'  TARE l.{line_id} {token_candidate} ({start_position}-{end_position} '
-                            #          f'matches {resource_surf} ({resource_entry_type_name}{clause})')
                 end_position -= 1
             last_primary_char_cat = current_char_cat
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    re_right_context_of_initial_letter = regex.compile(r'\s?(?:\p{Lu}\.\s?)*\p{Lu}\p{Ll}{2}')
+    def tokenize_preserve_according_to_resource_entries(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+                                                        line_id: Optional[str] = None, offset: int = 0) -> str:
+        """This tokenization step handles preserve entries according to data files such as data/tok-resource-eng.txt.
+        This method mirrors the structure of tokenize_according_to_resource_entries. It is separate,
+        because it needs to be mch further down the tokenization step sequence."""
+        this_function = self.tokenize_preserve_according_to_resource_entries
+
+        last_primary_char_cat = None  # 'primary': not counting modifying letters
+        for start_position in range(0, len(s)):
+            c = s[start_position]
+            if self.re_starts_w_modifier.match(c):
+                continue
+            # general restriction: if token starts with a letter, it can't be preceded by a letter
+            current_char_cat = CharCat.cat(c)
+            if last_primary_char_cat == CharCat.LETTER and current_char_cat == last_primary_char_cat:
+                continue
+            max_end_position = start_position
+            position = start_position+1
+            while position <= len(s) \
+                    and self.tok_dict.prefix_dict_preserve.get(s[start_position:position].lower(), False):
+                max_end_position = position
+                position += 1
+            end_position = max_end_position
+            while end_position > start_position:
+                token_candidate = s[start_position:end_position]
+                right_context = s[end_position:]
+                # general restriction: if token ends in a letter, it can't be followed by a letter
+                if (not(self.re_ends_w_letter.match(token_candidate) and self.re_starts_w_letter.match(right_context))
+                        and not(self.re_starts_w_modifier.match(right_context))):  # not followed by orphan modifier
+                    for resource_entry in self.tok_dict.resource_dict.get(token_candidate.lower(), []):
+                        if self.resource_entry_fulfills_conditions(resource_entry, util.PreserveEntry, token_candidate,
+                                                                   s, start_position, end_position, offset):
+                            sem_class = resource_entry.sem_class
+                            clause = ''
+                            if sem_class:
+                                clause += f'; sem: {sem_class}'
+                            left_context = s[:start_position]
+                            if (not(self.re_ends_w_letter_or_digit.match(token_candidate)
+                                    and self.re_starts_w_letter_or_digit.match(right_context))
+                                    and (not(self.re_ends_w_letter_or_digit.match(left_context)
+                                             and self.re_starts_w_letter_or_digit.match(token_candidate)))
+                                    # don't split off d' from d's etc.
+                                    and (not(self.re_ends_w_apostrophe.match(token_candidate)
+                                             and self.re_starts_w_single_s.match(right_context)))):
+                                return self.rec_tok([token_candidate], [start_position], s, offset, 'PRESERVE',
+                                                    line_id, chart, lang_code, ht, this_function, [token_candidate],
+                                                    sem_class=resource_entry.sem_class)
+                end_position -= 1
+            last_primary_char_cat = current_char_cat
+        return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
+
+    def tokenize_punctuation_according_to_resource_entries(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+                                                           line_id: Optional[str] = None, offset: int = 0) -> str:
+        """This tokenization step handles punctuation according to data files such as data/tok-resource-eng.txt.
+        This method mirrors the structure of tokenize_according_to_resource_entries. It is separate,
+        because it needs to be mch further down the tokenization step sequence."""
+        this_function = self.tokenize_punctuation_according_to_resource_entries
+
+        for start_position in range(0, len(s)):
+            max_end_position = start_position
+            position = start_position+1
+            while position <= len(s) and self.tok_dict.prefix_dict_punct.get(s[start_position:position].lower(), False):
+                max_end_position = position
+                position += 1
+            end_position = max_end_position
+            while end_position > start_position:
+                token_candidate = s[start_position:end_position]
+                for resource_entry in self.tok_dict.resource_dict.get(token_candidate.lower(), []):
+                    if self.resource_entry_fulfills_conditions(resource_entry, util.PunctSplitEntry, token_candidate,
+                                                               s, start_position, end_position, offset):
+                        side = resource_entry.side
+                        end_position2 = end_position
+                        if resource_entry.group:
+                            while end_position2 < len(s) and s[end_position2-1] == s[end_position2]:
+                                end_position2 += 1
+                        token = s[start_position:end_position2]  # includes any group reduplication
+                        if side == 'both':
+                            return self.rec_tok([token], [start_position], s, offset, 'PUNCT',
+                                                line_id, chart, lang_code, ht, this_function, [token],
+                                                sem_class=resource_entry.sem_class)
+                        elif side == 'start' and ((start_position == 0) or s[start_position-1].isspace()):
+                            return self.rec_tok([token], [start_position], s, offset, 'PUNCT-S',
+                                                line_id, chart, lang_code, ht, this_function, [token],
+                                                sem_class=resource_entry.sem_class)
+                        elif side == 'end' and ((end_position2 == len(s)) or s[end_position2].isspace()):
+                            return self.rec_tok([token], [start_position], s, offset, 'PUNCT-E',
+                                                line_id, chart, lang_code, ht, this_function, [token],
+                                                sem_class=resource_entry.sem_class)
+                end_position -= 1
+        return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
+
+    re_right_context_of_initial_letter = regex.compile(r'\s?(?:\s?\p{Lu}\.)*\s?\p{Lu}\p{Ll}{2}')
 
     def tokenize_abbreviations(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                                line_id: Optional[str] = None, offset: int = 0) -> str:
@@ -712,31 +798,6 @@ class Tokenizer:
         this_function = self.tokenize_mt_punctuation
         if m3 := self.re_mt_punct.match(s):
             return self.rec_tok_m3(m3, s, offset, 'DASH', line_id, chart, lang_code, ht, this_function)
-        return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
-
-    re_punct = re.compile(r'(.*?)'  # break off punctuation anywhere
-                          r'(["“”„‟(){}«»\[\]〈〉（）［］【】「」《》。，、։።፣፤፥፦፧፨፠\u3008-\u3011\u3014-\u301B।॥%‰‱٪¢£€¥₹฿©®]|'
-                          r'—+|…+|\.{2,}|\$+)'
-                          r'(.*)$')
-    re_punct_s = re.compile(r'(|.*?\s)(\'+|‘+|[¡¿])(.*)$')  # break off punctuation at the beginning of a token
-    re_punct_e = re.compile(r'(.*?)(\'+|’+|[.?!‼⁇⁈⁉‽؟،,;؛！;？；:：])(\s.*|)$')  # break off punct. at the end of a token
-
-    def tokenize_punctuation(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
-                             line_id: Optional[str] = None, offset: int = 0) -> str:
-        """This tokenization step splits off regular punctuation."""
-        this_function = self.tokenize_punctuation
-        # Some punctuation should always be split off by itself regardless of context:
-        # parentheses, brackets, dandas, currency signs.
-        if m3 := self.re_punct.match(s):
-            return self.rec_tok_m3(m3, s, offset, 'PUNCT', line_id, chart, lang_code, ht, this_function)
-        # Some punctuation should be split off from the beginning of a token
-        # (with a space or sentence-start to the left of the punctuation).
-        if m3 := self.re_punct_s.match(s):
-            return self.rec_tok_m3(m3, s, offset, 'PUNCT-S', line_id, chart, lang_code, ht, this_function)
-        # Some punctuation should be split off from the end of a token
-        # (with a space or sentence-end to the right of the punctuation.
-        if m3 := self.re_punct_e.match(s):
-            return self.rec_tok_m3(m3, s, offset, 'PUNCT-E', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     @staticmethod
@@ -830,7 +891,7 @@ def main(argv):
     parser.add_argument('-f', '--first_token_is_line_id', action='count', default=0, help='First token is line ID')
     parser.add_argument('-v', '--verbose', action='count', default=0, help='write change log etc. to STDERR')
     parser.add_argument('-c', '--chart', action='count', default=0, help='build chart, even without annotation output')
-    parser.add_argument('--mt', action='count', default=0, help='MT-stype output with @ added to certain punctuation')
+    parser.add_argument('--mt', action='count', default=0, help='MT-style output with @ added to certain punctuation')
     parser.add_argument('--version', action='version',
                         version=f'%(prog)s {__version__} last modified: {last_mod_date}')
     args = parser.parse_args(argv)
