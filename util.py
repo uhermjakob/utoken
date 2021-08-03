@@ -10,7 +10,7 @@ import regex
 import sys
 from typing import Dict, List, Optional, Pattern
 
-__version__ = '0.0.2'
+__version__ = '0.0.3'
 last_mod_date = 'August 2, 2021'
 
 
