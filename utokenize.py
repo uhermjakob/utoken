@@ -583,6 +583,11 @@ class Tokenizer:
                 token = token[:-token_elem_len]
                 source = source[:-token_elem_len]
                 target = target[:-token_elem_len].rstrip()
+                while token.endswith(' '):
+                    end_position -= 1
+                    token = token[:-1]
+                    if target.endswith(' '):
+                        target = target[:-1]
             elif target_elems and source.startswith(target_elems[0]):
                 token_elem_len = len(target_elems[0])
                 token_elem_start_position = start_position
@@ -597,6 +602,11 @@ class Tokenizer:
                 token = token[token_elem_len:]
                 source = source[token_elem_len:]
                 target = target[token_elem_len:].lstrip()
+                while token.startswith(' '):
+                    start_position += 1
+                    token = token[1:]
+                    if target.startswith(' '):
+                        target = target[1:]
             elif len(target_elems) >= 1:  # Primarily for single target_elems.
                 # For multiple remaining mismatching target_elems, consider a separate case below.
                 # log.info(f'insert token-w: {target} orig_tokens: {token} '
@@ -663,6 +673,13 @@ class Tokenizer:
                                     self.map_contraction(token_candidate, resource_surf, resource_entry.target,
                                                          start_position)
                                 return self.rec_tok(tokens, start_positions, s, offset, 'DECONTRACTION',
+                                                    line_id, chart, lang_code, ht, this_function, orig_tokens,
+                                                    sem_class=resource_entry.sem_class)
+                            if isinstance(resource_entry, util.RepairEntry):
+                                tokens, orig_tokens, start_positions = \
+                                    self.map_contraction(token_candidate, resource_surf, resource_entry.target,
+                                                         start_position)
+                                return self.rec_tok(tokens, start_positions, s, offset, 'REPAIR',
                                                     line_id, chart, lang_code, ht, this_function, orig_tokens,
                                                     sem_class=resource_entry.sem_class)
                             # log.info(f'  TARE l.{line_id} {token_candidate} ({start_position}-{end_position} '
