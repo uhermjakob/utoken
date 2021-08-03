@@ -2,6 +2,7 @@
 * Very preliminary (version 0.0.2)
 * A universal tokenizer, i.e. designed to work with a wide variety of scripts and languages.
 * Modular, expandable architecture.
+* More information in data files rather than program code.
 * Written in Python.
 * Maintains a chart data structure with detailed additional information that can also serve as a basis for further processing.
 
