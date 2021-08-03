@@ -92,6 +92,7 @@
 ::preserve s' ::lcode eng
 
 ::preserve 3D ::lcode eng
+::preserve so-called ::lcode eng
 
 # English abbreviations
 ::abbrev Jan. ::exp January ::lcode eng ::sem-class month-of-the-year
@@ -299,6 +300,8 @@
 ::abbrev WSJ ::exp Wall Street Journal ::lcode eng ::sem-class media-organization
 
 ::abbrev AT&T ::lcode eng ::sem-class company
+::abbrev K-Mart ::lcode eng ::sem-class company
+::abbrev T-Mobile ::lcode eng ::sem-class company
 
 ::abbrev CFE ::exp Conventional Forces in Europe ::lcode eng ::sem-class treaty
 ::abbrev NAFTA ::exp North American Free Trade Agreement ::lcode eng ::sem-class treaty
@@ -424,6 +427,13 @@
 ::abbrev WWII ::exp World War II ::lcode eng ::sem-class event
 ::abbrev WW1 ::exp World War I ::lcode eng ::sem-class event
 ::abbrev WW2 ::exp World War II ::lcode eng ::sem-class event
+::abbrev D-Day ::exp Normandy landings ::lcode eng ::sem-class event
+
+::abbrev A-bomb ::exp atomic bomb ::lcode eng ::sem-class weapon ::inflection A-bombs; A-bombing; A-bombed
+::abbrev AK47 ::lcode eng ::sem-class weapon ::inflection AK47s
+::abbrev AK-47 ::lcode eng ::sem-class weapon ::inflection AK-47s
+::abbrev SA/LW ::exp small arms and light weapons ::lcode eng ::sem-class weapon
+::abbrev Topol-M ::exp RT-2PM2 Topol-M ::lcode eng ::sem-class weapon
 
 ::abbrev AIDS ::exp Acquired Immunodeficiency Syndrome ::lcode eng ::sem-class disease
 ::abbrev HIV ::exp human immunodeficiency virus ::lcode eng ::sem-class virus
@@ -506,19 +516,17 @@
 ::abbrev bro ::exp brother ::lcode eng ::sem-class general
 ::abbrev CD ::exp compact disc ::lcode eng ::sem-class general
 ::abbrev DVD ::exp digital versatile disc ::lcode eng ::sem-class general
-::abbrev exec ::exp executive ::lcode eng ::sem-class general
-::abbrev execs ::exp executives ::lcode eng ::sem-class general
+::abbrev exec ::exp executive ::lcode eng ::sem-class general ::inflection execs
 ::abbrev lib ::exp liberal ::lcode eng ::sem-class general
 ::abbrev lol ::exp laughing out loud ::lcode eng ::sem-class general
 ::abbrev mag ::exp magazine ::lcode eng ::sem-class general
 ::abbrev math ::exp mathematics ::lcode eng ::sem-class general
 ::abbrev maths ::exp mathematics ::lcode eng ::sem-class general
 ::abbrev pic ::exp picture ::lcode eng ::sem-class general
-::abbrev Q-tip ::lcode eng ::sem-class general
-::abbrev Q-tips ::lcode eng ::sem-class general
+::abbrev Q-tip ::lcode eng ::sem-class general ::inflection Q-tips
 ::abbrev sis ::exp sister ::lcode eng ::sem-class general
 ::abbrev TV ::exp television ::lcode eng ::sem-class general
-::abbrev SA/LW ::exp small arms and light weapons ::lcode eng ::sem-class general
+::abbrev e-mail ::exp electronic mail ::lcode eng ::sem-class general ::inflection e-mails
 
 ::abbrev %pw ::lcode eng ::sem-class disfluency
 ::abbrev a2k ::exp able to know ::lcode eng ::sem-class general
