@@ -22,7 +22,7 @@ import regex
 import sys
 from typing import Callable, List, Match, Optional, TextIO, Tuple, Type
 # import unicodedata as ud
-from utoken import util
+import util
 
 log.basicConfig(level=log.INFO)
 
