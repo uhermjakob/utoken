@@ -27,7 +27,7 @@ from utoken import util
 log.basicConfig(level=log.INFO)
 
 __version__ = '0.0.3'
-last_mod_date = 'August 3, 2021'
+last_mod_date = 'August 4, 2021'
 
 
 class VertexMap:
@@ -179,13 +179,15 @@ class Tokenizer:
                                    self.tokenize_urls,
                                    self.tokenize_emails,
                                    self.tokenize_hashtags_and_handles,
-                                   self.tokenize_mt_punctuation,
+                                   self.tokenize_abbreviation_patterns,
                                    self.tokenize_according_to_resource_entries,
+                                   self.tokenize_abbreviation_initials,
                                    self.tokenize_english_contractions,
-                                   self.tokenize_abbreviations,
                                    self.tokenize_numbers,
                                    self.tokenize_preserve_according_to_resource_entries,
+                                   self.tokenize_mt_punctuation,
                                    self.tokenize_punctuation_according_to_resource_entries,
+                                   self.tokenize_post_punct,
                                    self.tokenize_main]
         self.next_tok_step_dict = {}
         for i in range(0, len(self.tok_step_functions) - 1):
@@ -483,7 +485,7 @@ class Tokenizer:
                                r'(?<![-−–+.]|\d|\pL\pM*)'             # negative lookbehind (stricter: no letters)
                                r'([-−–+]?'                            # plus/minus sign
                                r'\d+)'                                # plain integer, e.g. 12345678
-                               r'(?![.,]\d)'                          # negative lookahead
+                               r'(?![-−–.,]?\d)'                      # negative lookahead
                                r'(.*)')
 
     def tokenize_numbers(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
@@ -631,6 +633,7 @@ class Tokenizer:
     re_starts_w_modifier = regex.compile(r'\pM')
     re_starts_w_letter = regex.compile(r'\pL')
     re_starts_w_letter_or_digit = regex.compile(r'(\pL|\d)')
+    re_starts_w_dashed_digit = regex.compile(r'[-−–]?\d')
     re_starts_w_single_s = regex.compile(r's(?!\pL|\d)', flags=regex.IGNORECASE)
     re_ends_w_letter = regex.compile(r'.*\pL\pM*$')          # including any modifiers
     re_ends_w_apostrophe = regex.compile(r".*['‘’]$")
@@ -671,7 +674,10 @@ class Tokenizer:
                             clause = ''
                             if sem_class:
                                 clause += f'; sem: {sem_class}'
-                            if isinstance(resource_entry, util.AbbreviationEntry):
+                            if (isinstance(resource_entry, util.AbbreviationEntry)
+                                    and ((sem_class == 'currency')
+                                            or (not(self.re_ends_w_letter.match(token_candidate)
+                                                and self.re_starts_w_dashed_digit.match(right_context))))):
                                 return self.rec_tok([token_candidate], [start_position], s, offset, 'ABBREV',
                                                     line_id, chart, lang_code, ht, this_function, [token_candidate],
                                                     sem_class=resource_entry.sem_class)
@@ -786,10 +792,11 @@ class Tokenizer:
 
     re_right_context_of_initial_letter = regex.compile(r'\s?(?:\s?\p{Lu}\.)*\s?\p{Lu}\p{Ll}{2}')
 
-    def tokenize_abbreviations(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
-                               line_id: Optional[str] = None, offset: int = 0) -> str:
+    def tokenize_abbreviation_initials(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+                                       line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off initials, e.g. J.F.Kennedy -> J. F. Kennedy"""
-        this_function = self.tokenize_abbreviations
+        this_function = self.tokenize_abbreviation_initials
+        # Explore possibility of m3-style regex
         for start_position in range(0, len(s)-1):
             char = s[start_position]
             if char.isalpha() and char.isupper() and (s[start_position+1] == '.') \
@@ -800,6 +807,20 @@ class Tokenizer:
                                         line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
+    re_abbrev_acronym = regex.compile(r'(.*?)'
+                                      r'(?<!\pL\pM*|\d|[-−–]+)'
+                                      r'(\p{Lu}+[-−–](?:\d|\p{Lu}\pM*){1,3}(?:s)?)'
+                                      r'(?!\pL|\d|[-−–])'
+                                      r'(.*)')
+
+    def tokenize_abbreviation_patterns(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+                                       line_id: Optional[str] = None, offset: int = 0) -> str:
+        """This tokenization step splits off pattern-based abbreviations."""
+        this_function = self.tokenize_abbreviation_patterns
+        if m3 := self.re_abbrev_acronym.match(s):
+            return self.rec_tok_m3(m3, s, offset, 'ABBREV-P', line_id, chart, lang_code, ht, this_function)
+        return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
+
     re_mt_punct = regex.compile(r'(.*?(?:\pL\pM*\pL\pM*|\d|[!?’]))([-−–]+)(\pL\pM*\pL\pM*|\d)')
 
     def tokenize_mt_punctuation(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
@@ -808,6 +829,16 @@ class Tokenizer:
         this_function = self.tokenize_mt_punctuation
         if m3 := self.re_mt_punct.match(s):
             return self.rec_tok_m3(m3, s, offset, 'DASH', line_id, chart, lang_code, ht, this_function)
+        return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
+
+    re_integer2 = regex.compile(r'(.*?)(?<!\pL\pM*|\d|[-−–+.])(\d+)((?:\pL|[/]).*)')
+
+    def tokenize_post_punct(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+                               line_id: Optional[str] = None, offset: int = 0) -> str:
+        """This tokenization step splits leading integers from letters, e.g. 5weeks -> 5 weeks."""
+        this_function = self.tokenize_post_punct
+        if m3 := self.re_integer2.match(s):
+            return self.rec_tok_m3(m3, s, offset, 'NUMBER2', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     @staticmethod
