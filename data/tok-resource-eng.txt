@@ -40,7 +40,6 @@
 ::contraction shouldn't ::target should n't ::lcode eng
 ::contraction shouldnot ::target should not ::lcode eng
 ::contraction shouldnt ::target should n't ::lcode eng
-::contraction shouldnt ::target should n't ::lcode eng
 ::contraction wasn't ::target was n't ::lcode eng
 ::contraction wasnot ::target was not ::lcode eng
 ::contraction wasnt ::target was n't ::lcode eng
@@ -91,8 +90,13 @@
 ::preserve qu' ::lcode eng
 ::preserve s' ::lcode eng
 
-::preserve 3D ::lcode eng
+::preserve brother-in-law ::lcode eng ::inflection brothers-in-law
+::preserve daughter-in-law ::lcode eng ::inflection daughers-in-law
+::preserve father-in-law ::lcode eng ::inflection fathers-in-law
+::preserve mother-in-law ::lcode eng ::inflection mothers-in-law
+::preserve sister-in-law ::lcode eng ::inflection sisters-in-law
 ::preserve so-called ::lcode eng
+::preserve son-in-law ::lcode eng ::inflection sons-in-law
 
 # English abbreviations
 ::abbrev Jan. ::exp January ::lcode eng ::sem-class month-of-the-year
@@ -296,6 +300,7 @@
 ::abbrev ABC ::exp American Broadcasting Corporation ::lcode eng ::sem-class media-organization
 ::abbrev ABC ::exp Australian Broadcasting Corporation ::lcode eng ::sem-class media-organization
 ::abbrev CCTV ::exp China Central Television ::lcode eng ::sem-class media-organization
+::abbrev ITAR-TASS ::lcode eng ::sem-class media-organization
 ::abbrev NYT ::exp New York Times ::lcode eng ::sem-class media-organization
 ::abbrev WSJ ::exp Wall Street Journal ::lcode eng ::sem-class media-organization
 
@@ -488,6 +493,7 @@
 ::abbrev kg ::exp kilogram ::lcode eng ::sem-class unit-of-measurement
 ::abbrev km ::exp kilometer ::lcode eng ::sem-class unit-of-measurement
 ::abbrev km² ::exp square kilometer ::lcode eng ::sem-class unit-of-measurement
+::abbrev km2 ::exp square kilometer ::lcode eng ::sem-class unit-of-measurement
 ::abbrev lb ::exp pound ::lcode eng ::sem-class unit-of-measurement
 ::abbrev lb. ::exp pound ::lcode eng ::sem-class unit-of-measurement
 ::abbrev lbs ::exp pounds ::lcode eng ::sem-class unit-of-measurement
@@ -527,6 +533,9 @@
 ::abbrev sis ::exp sister ::lcode eng ::sem-class general
 ::abbrev TV ::exp television ::lcode eng ::sem-class general
 ::abbrev e-mail ::exp electronic mail ::lcode eng ::sem-class general ::inflection e-mails
+::abbrev 3D ::exp three dimensional ::lcode eng ::sem-class general
+::abbrev T-shirt ::lcode eng ::sem-class general ::inflection T-shirts
+::abbrev X-ray ::lcode eng ::sem-class general ::inflection X-rays
 
 ::abbrev %pw ::lcode eng ::sem-class disfluency
 ::abbrev a2k ::exp able to know ::lcode eng ::sem-class general
