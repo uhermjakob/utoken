@@ -93,10 +93,13 @@
 ::preserve brother-in-law ::lcode eng ::inflection brothers-in-law
 ::preserve daughter-in-law ::lcode eng ::inflection daughers-in-law
 ::preserve father-in-law ::lcode eng ::inflection fathers-in-law
+::preserve in-laws ::lcode eng
 ::preserve mother-in-law ::lcode eng ::inflection mothers-in-law
 ::preserve sister-in-law ::lcode eng ::inflection sisters-in-law
 ::preserve so-called ::lcode eng
 ::preserve son-in-law ::lcode eng ::inflection sons-in-law
+::preserve T-shirt ::lcode eng ::inflection T-shirts
+::preserve X-ray ::lcode eng ::inflection X-rays
 
 # English abbreviations
 ::abbrev Jan. ::exp January ::lcode eng ::sem-class month-of-the-year
@@ -534,8 +537,6 @@
 ::abbrev TV ::exp television ::lcode eng ::sem-class general
 ::abbrev e-mail ::exp electronic mail ::lcode eng ::sem-class general ::inflection e-mails
 ::abbrev 3D ::exp three dimensional ::lcode eng ::sem-class general
-::abbrev T-shirt ::lcode eng ::sem-class general ::inflection T-shirts
-::abbrev X-ray ::lcode eng ::sem-class general ::inflection X-rays
 
 ::abbrev %pw ::lcode eng ::sem-class disfluency
 ::abbrev a2k ::exp able to know ::lcode eng ::sem-class general
