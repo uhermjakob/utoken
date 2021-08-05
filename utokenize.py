@@ -637,7 +637,7 @@ class Tokenizer:
     re_starts_w_single_s = regex.compile(r's(?!\pL|\d)', flags=regex.IGNORECASE)
     re_ends_w_letter = regex.compile(r'.*\pL\pM*$')          # including any modifiers
     re_ends_w_apostrophe = regex.compile(r".*['‘’]$")
-    re_ends_w_letter_or_digit = regex.compile(r'.*(\pL\pM*|\d)[-_&]?$')
+    re_ends_w_letter_or_digit = regex.compile(r'.*(\pL\pM*|\d)$')
 
     def tokenize_according_to_resource_entries(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                                                line_id: Optional[str] = None, offset: int = 0) -> str:
@@ -676,8 +676,8 @@ class Tokenizer:
                                 clause += f'; sem: {sem_class}'
                             if (isinstance(resource_entry, util.AbbreviationEntry)
                                     and ((sem_class == 'currency')
-                                            or (not(self.re_ends_w_letter.match(token_candidate)
-                                                and self.re_starts_w_dashed_digit.match(right_context))))):
+                                         or (not(self.re_ends_w_letter.match(token_candidate)
+                                                 and self.re_starts_w_dashed_digit.match(right_context))))):
                                 return self.rec_tok([token_candidate], [start_position], s, offset, 'ABBREV',
                                                     line_id, chart, lang_code, ht, this_function, [token_candidate],
                                                     sem_class=resource_entry.sem_class)
@@ -834,7 +834,7 @@ class Tokenizer:
     re_integer2 = regex.compile(r'(.*?)(?<!\pL\pM*|\d|[-−–+.])(\d+)((?:\pL|[/]).*)')
 
     def tokenize_post_punct(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
-                               line_id: Optional[str] = None, offset: int = 0) -> str:
+                            line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits leading integers from letters, e.g. 5weeks -> 5 weeks."""
         this_function = self.tokenize_post_punct
         if m3 := self.re_integer2.match(s):
