@@ -51,7 +51,7 @@
 ::span 18-19 ::type PUNCT-E ::surf ,
 ::line Dat1 ::s 1800-കളുടെ
 ::span 0-4 ::type NUMBER ::surf 1800
-::span 4-5 ::type DASH ::surf -
+::span 4-5 ::type PUNCT-S ::surf -
 ::span 5-10 ::type MAIN ::surf കളുടെ
 ::line Abb1 ::s പ്രസ്. ജോൺ എഫ്. കെന്നഡി.
 ::span 0-6 ::type ABBREV ::sem-class pre-name-title ::surf പ്രസ്.
