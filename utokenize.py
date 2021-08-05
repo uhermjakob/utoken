@@ -194,6 +194,42 @@ class Tokenizer:
             self.next_tok_step_dict[self.tok_step_functions[i]] = self.tok_step_functions[i + 1]
         self.next_tok_step_dict[self.tok_step_functions[-1]] = None
         self.char_type_vector_dict = {}
+        # The following dictionary captures the irregular mappings from Windows1252 to UTF8.
+        # noinspection SpellCheckingInspection
+        self.spec_windows1252_to_utf8_dict = {
+            '\x80': '\u20AC',  # Euro Sign
+            #  81 is unassigned in Windows-1252
+            '\x82': '\u201A',  # Single Low-9 Quotation Mark
+            '\x83': '\u0192',  # Latin Small Letter F With Hook
+            '\x84': '\u201E',  # Double Low-9 Quotation Mark
+            '\x85': '\u2026',  # Horizontal Ellipsis
+            '\x86': '\u2020',  # Dagger
+            '\x87': '\u2021',  # Double Dagger
+            '\x88': '\u02C6',  # Modifier Letter Circumflex Accent
+            '\x89': '\u2030',  # Per Mille Sign
+            '\x8A': '\u0160',  # Latin Capital Letter S With Caron
+            '\x8B': '\u2039',  # Single Left-Pointing Angle Quotation Mark
+            '\x8C': '\u0152',  # Latin Capital Ligature OE
+            #  8D is unassigned in Windows-1252
+            '\x8E': '\u017D',  # Latin Capital Letter Z With Caron
+            #  8F is unassigned in Windows-1252
+            #  90 is unassigned in Windows-1252
+            '\x91': '\u2018',  # Left Single Quotation Mark
+            '\x92': '\u2019',  # Right Single Quotation Mark
+            '\x93': '\u201C',  # Left Double Quotation Mark
+            '\x94': '\u201D',  # Right Double Quotation Mark
+            '\x95': '\u2022',  # Bullet
+            '\x96': '\u2013',  # En Dash
+            '\x97': '\u2014',  # Em Dash
+            '\x98': '\u02DC',  # Small Tilde
+            '\x99': '\u2122',  # Trade Mark Sign
+            '\x9A': '\u0161',  # Latin Small Letter S With Caron
+            '\x9B': '\u203A',  # Single Right-Pointing Angle Quotation Mark
+            '\x9C': '\u0153',  # Latin Small Ligature OE
+            #  9D is unassigned in Windows-1252
+            '\x9E': '\u017E',  # Latin Small Letter Z With Caron
+            '\x9F': '\u0178'  # Latin Capital Letter Y With Diaeresis
+        }
         # Initialize elementary bit vectors (integers each with a different bit set) will be used in bitwise operations.
         # To be expanded.
         self.lv = 0
@@ -352,6 +388,14 @@ class Tokenizer:
             s = next_tokenization_function(s, chart, ht, lang_code, line_id, offset)
         return s
 
+    def apply_spec_windows1252_to_utf8_mapping_dict(self, match: Match[str]) -> str:
+        """Maps substring resulting from misencoding to repaired UTF8."""
+        s = match.group()
+        if s in self.spec_windows1252_to_utf8_dict:
+            return self.spec_windows1252_to_utf8_dict[s]
+        else:
+            return s
+
     def normalize_characters(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                              line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenizer step deletes non-decodable bytes and most control characters."""
@@ -376,8 +420,12 @@ class Tokenizer:
                 chart.s0 = s
                 chart.s = s
 
+        # repair some control characters in the C1 Control black (assuming they are still unconverted Windows1252),
         # delete some control characters, replace non-standard spaces with ASCII space
         if self.lv & self.char_is_deletable_control_character:
+            s = re.sub(r'[\u0080-\u009F]', self.apply_spec_windows1252_to_utf8_mapping_dict, s)
+            if chart:
+                chart.s = s
             for i in range(len(s)-1, -1, -1):
                 if chart:
                     char = chart.s[i]
