@@ -82,6 +82,7 @@
 ::punct-split , ::side both ::left-context \pL\pM* ::right-context \pL
 ::punct-split / ::side both ::left-context \pL\pM*\pL\pM* ::right-context \pL\pM*\pL  #right-context-not (?:hr|yr)\b
 ::punct-split ~ ::side both ::left-context \pL ::right-context \pL
+::punct-split . ::side both ::left-context \p{Ll}\p{Ll} ::right-context \p{Lu}\p{Ll}
 
 # split off punctuation from start of token
 ::punct-split ' ::side start ::group True
