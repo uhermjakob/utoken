@@ -509,7 +509,6 @@ class Tokenizer:
         """This tokenization step splits off filename tokens such as presentation.pptx"""
         this_function = self.tokenize_filenames
         if m3 := self.re_filename.match(s):
-            log.info(f'tokenize_filenames: {m3.group(2)}')
             return self.rec_tok_m3(m3, s, offset, 'FILENAME', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
