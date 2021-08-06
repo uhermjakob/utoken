@@ -27,7 +27,7 @@ import util
 log.basicConfig(level=log.INFO)
 
 __version__ = '0.0.3'
-last_mod_date = 'August 5, 2021'
+last_mod_date = 'August 6, 2021'
 
 
 class VertexMap:
@@ -178,6 +178,7 @@ class Tokenizer:
                                    self.tokenize_xmls,
                                    self.tokenize_urls,
                                    self.tokenize_emails,
+                                   self.tokenize_filenames,
                                    self.tokenize_hashtags_and_handles,
                                    self.tokenize_abbreviation_patterns,
                                    self.tokenize_according_to_resource_entries,
@@ -473,10 +474,15 @@ class Tokenizer:
                             r"(?:\p{L}\p{M}*|\d|[/]))"
                             r'(.*)$',
                             flags=regex.IGNORECASE)
+    # Consider out-sourcing the following top-level domain names to data file.
+    # Challenge: top-domain names (e.g. at|be|in|is|it|my|no|so|US) that can also be regular words, e.g. G-20.In car.so
+    common_top_domain_suffixes = "museum|info|cat|com|edu|gov|int|mil|net|org|ar|at|au|be|bg|bi|br|ca|ch|cn|co|cz|" \
+                                 "de|dk|es|eu|fi|fr|gr|hk|hu|id|ie|il|in|ir|is|it|jp|ke|kr|lu|mg|mx|my|nl|no|nz|" \
+                                 "ph|pl|pt|ro|rs|ru|rw|se|sg|sk|so|tr|tv|tw|tz|ua|ug|uk|us|za"
     re_url2 = regex.compile(r'(.*?)'
                             r'(?<![\p{Latin}&&\p{Letter}]|\@)'  # negative lookbehind: no Latin+ letters, no @ please
                             r"((?:www(?:\.(?:\p{L}\p{M}*|\d|[-_]))+\.(?:[a-z]{2,4}]))|"
-                            r"(?:(?:(?:\p{L}\p{M}*|\d|[-_])+\.)+(?:com|edu|gov|mil|org|ca|de|fr|jp|ro|ru|tv|ua|uk)))"
+                            r"(?:(?:(?:\p{L}\p{M}*|\d|[-_])+\.)+(?:" + common_top_domain_suffixes + ")))"
                             r'(?![\p{Latin}&&\p{Letter}])'      # negative lookahead: no Latin+ letters please
                             r'(.*)$',
                             flags=regex.IGNORECASE)
@@ -487,6 +493,24 @@ class Tokenizer:
         this_function = self.tokenize_urls
         if m3 := self.re_url1.match(s) or self.re_url2.match(s):
             return self.rec_tok_m3(m3, s, offset, 'URL', line_id, chart, lang_code, ht, this_function)
+        return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
+
+    common_file_suffixes = "aspx?|bmp|cgi|csv|docx?|eps|gif|html?|jpeg|jpg|mov|mp3|mp4|" \
+                           "pdf|php|png|pptx?|ps|rtf|tiff|tsv|tok|txt|xlsx?|xml"
+    re_filename = regex.compile(r'(.*?)'
+                                r'(?<!\pL\pM*|\d|[-_.@])'  # negative lookbehind: no letters, digits, @ please
+                                r"((?:\pL\pM*)(?:\pL\pM*|\d|[-_.])*(?:\pL\pM*|\d)\.(?:" + common_file_suffixes + "))"
+                                r'(?!\pL|\d)'      # negative lookahead: no letters or digits please
+                                r'(.*)$',
+                                flags=regex.IGNORECASE)
+
+    def tokenize_filenames(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+                           line_id: Optional[str] = None, offset: int = 0) -> str:
+        """This tokenization step splits off filename tokens such as presentation.pptx"""
+        this_function = self.tokenize_filenames
+        if m3 := self.re_filename.match(s):
+            log.info(f'tokenize_filenames: {m3.group(2)}')
+            return self.rec_tok_m3(m3, s, offset, 'FILENAME', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_email = regex.compile(r'(.*?)'
