@@ -791,7 +791,7 @@ class Tokenizer:
                                     # don't split off d' from d's etc.
                                     and (not(self.re_ends_w_apostrophe.match(token_candidate)
                                              and self.re_starts_w_single_s.match(right_context)))):
-                                return self.rec_tok([token_candidate], [start_position], s, offset, 'PRESERVE',
+                                return self.rec_tok([token_candidate], [start_position], s, offset, 'LEXICAL',
                                                     line_id, chart, lang_code, ht, this_function, [token_candidate],
                                                     sem_class=resource_entry.sem_class)
                 end_position -= 1
@@ -886,11 +886,28 @@ class Tokenizer:
         """This tokenization step splits leading integers from letters, e.g. 5weeks -> 5 weeks."""
         this_function = self.tokenize_post_punct
         if m3 := self.re_integer2.match(s):
-            return self.rec_tok_m3(m3, s, offset, 'NUMBER2', line_id, chart, lang_code, ht, this_function)
+            return self.rec_tok_m3(m3, s, offset, 'NUMBER-2', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    @staticmethod
-    def tokenize_main(s: str, chart: Chart, _ht: dict, _lang_code: str = '',
+    re_contains_letter = regex.compile(r'.*\pL')
+    re_contains_number = regex.compile(r'.*\pN')
+    re_contains_symbol = regex.compile(r'(?V1).*[\p{S}--[-=*+<>^|`]]')
+    re_contains_punct = regex.compile(r'(?V1).*[\p{P}||[-=*+<>^|`]]')
+
+    def basic_token_type(self, s: str) -> str:
+        """For annotation output"""
+        if self.re_contains_letter.match(s):
+            return 'WORD-B'
+        if self.re_contains_number.match(s):
+            return 'NUMBER-B'
+        if self.re_contains_symbol.match(s):
+            return 'SYMBOL-B'
+        if self.re_contains_punct.match(s):
+            return 'PUNCT-B'
+        else:
+            return 'MISC-B'
+
+    def tokenize_main(self, s: str, chart: Chart, _ht: dict, _lang_code: str = '',
                       line_id: Optional[str] = None, offset: int = 0) -> str:
         """This is the final tokenization step that tokenizes the remaining string by spaces."""
         tokens = []
@@ -904,7 +921,7 @@ class Tokenizer:
                     token_surf = s[start_index:index]
                     tokens.append(token_surf)
                     if chart:
-                        new_token = Token(token_surf, str(line_id), 'MAIN',
+                        new_token = Token(token_surf, str(line_id), self.basic_token_type(token_surf),
                                           ComplexSpan([SimpleSpan(offset+start_index, offset+index,
                                                                   vm=chart.vertex_map)]))
                         chart.register_token(new_token)
