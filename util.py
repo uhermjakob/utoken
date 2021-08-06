@@ -11,7 +11,7 @@ import sys
 from typing import Dict, List, Optional, Pattern
 
 __version__ = '0.0.3'
-last_mod_date = 'August 2, 2021'
+last_mod_date = 'August 5, 2021'
 
 
 class ResourceEntry:
@@ -126,7 +126,7 @@ class ResourceDict:
                         if orig_line.startswith('#'):
                             continue
                         if (m1 := re.match(r"(.*::\S+(?:\s+\S+)?)(.*)$", orig_line)) \
-                            and (m2 := re.match(r"(.*?)\s+#.*", m1.group(2))):
+                                and (m2 := re.match(r"(.*?)\s+#.*", m1.group(2))):
                             line_without_comment = m1.group(1) + m2.group(1)
                     lines = self.expand_resource_lines(line_without_comment)
                     n_expanded_lines += len(lines) - 1
@@ -215,7 +215,9 @@ class ResourceDict:
                             if right_context_not_s := slot_value_in_double_colon_del_list(line, 'right-context-not'):
                                 try:
                                     resource_entry.right_context_not = \
-                                        regex.compile(eval('r"(?!' + right_context_s + ')"'))
+                                        regex.compile(eval('r"(?!' + right_context_not_s + ')"'))
+                                    # log.info(f'Right-context-not({s}) {right_context_not_s}
+                                    # {resource_entry.right_context_not}')
                                 except regex.error:
                                     log.warning(f'Regex compile error in l.{line_number} for {s} ::right-context-not '
                                                 f'{right_context_not_s}')
