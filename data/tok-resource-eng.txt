@@ -92,9 +92,9 @@
 ::preserve s' ::lcode eng
 
 ::preserve big-time ::lcode eng
-::preserve brother-in-law ::lcode eng ::inflection brothers-in-law
-::preserve daughter-in-law ::lcode eng ::inflection daughers-in-law
-::preserve father-in-law ::lcode eng ::inflection fathers-in-law
+::preserve brother-in-law ::lcode eng ::inflections brothers-in-law
+::preserve daughter-in-law ::lcode eng ::inflections daughers-in-law
+::preserve father-in-law ::lcode eng ::inflections fathers-in-law
 ::preserve full-scale ::lcode eng
 ::preserve full-time ::lcode eng
 ::preserve high-end ::lcode eng
@@ -104,19 +104,19 @@
 ::preserve long-term ::lcode eng
 ::preserve mid-term ::lcode eng
 ::preserve modern-day ::lcode eng
-::preserve mother-in-law ::lcode eng ::inflection mothers-in-law
+::preserve mother-in-law ::lcode eng ::inflections mothers-in-law
 ::preserve part-time ::lcode eng
 ::preserve real-time ::lcode eng
 ::preserve same-sex ::lcode eng
 ::preserve science-fiction ::lcode eng
 ::preserve self-righteous ::lcode eng
 ::preserve short-term ::lcode eng
-::preserve sister-in-law ::lcode eng ::inflection sisters-in-law
+::preserve sister-in-law ::lcode eng ::inflections sisters-in-law
 ::preserve small-scale ::lcode eng
 ::preserve so-called ::lcode eng
-::preserve son-in-law ::lcode eng ::inflection sons-in-law
-::preserve T-shirt ::lcode eng ::inflection T-shirts
-::preserve X-ray ::lcode eng ::inflection X-rays
+::preserve son-in-law ::lcode eng ::inflections sons-in-law
+::preserve T-shirt ::lcode eng ::inflections T-shirts
+::preserve X-ray ::lcode eng ::inflections X-rays
 
 # English abbreviations
 ::abbrev Jan. ::exp January ::lcode eng ::sem-class month-of-the-year
@@ -454,9 +454,9 @@
 ::abbrev WW2 ::exp World War II ::lcode eng ::sem-class event
 ::abbrev D-Day ::exp Normandy landings ::lcode eng ::sem-class event
 
-::abbrev A-bomb ::exp atomic bomb ::lcode eng ::sem-class weapon ::inflection A-bombs; A-bombing; A-bombed
-::abbrev AK47 ::lcode eng ::sem-class weapon ::inflection AK47s
-::abbrev AK-47 ::lcode eng ::sem-class weapon ::inflection AK-47s
+::abbrev A-bomb ::exp atomic bomb ::lcode eng ::sem-class weapon ::inflections A-bombs; A-bombing; A-bombed
+::abbrev AK47 ::lcode eng ::sem-class weapon ::inflections AK47s
+::abbrev AK-47 ::lcode eng ::sem-class weapon ::inflections AK-47s
 ::abbrev SA/LW ::exp small arms and light weapons ::lcode eng ::sem-class weapon
 ::abbrev Topol-M ::exp RT-2PM2 Topol-M ::lcode eng ::sem-class weapon
 
@@ -542,19 +542,22 @@
 ::abbrev bro ::exp brother ::lcode eng ::sem-class general
 ::abbrev CD ::exp compact disc ::lcode eng ::sem-class general
 ::abbrev DVD ::exp digital versatile disc ::lcode eng ::sem-class general
-::abbrev exec ::exp executive ::lcode eng ::sem-class general ::inflection execs
+::abbrev exec ::exp executive ::lcode eng ::sem-class general ::inflections execs
 ::abbrev lib ::exp liberal ::lcode eng ::sem-class general
 ::abbrev lol ::exp laughing out loud ::lcode eng ::sem-class general
 ::abbrev mag ::exp magazine ::lcode eng ::sem-class general
 ::abbrev math ::exp mathematics ::lcode eng ::sem-class general
 ::abbrev maths ::exp mathematics ::lcode eng ::sem-class general
 ::abbrev pic ::exp picture ::lcode eng ::sem-class general
-::abbrev Q-tip ::lcode eng ::sem-class general ::inflection Q-tips
+::abbrev Q-tip ::lcode eng ::sem-class general ::inflections Q-tips
 ::abbrev sis ::exp sister ::lcode eng ::sem-class general
 ::abbrev TV ::exp television ::lcode eng ::sem-class general
-::abbrev e-mail ::exp electronic mail ::lcode eng ::sem-class general ::inflection e-mails
+::abbrev e-mail ::exp electronic mail ::lcode eng ::sem-class general ::inflections e-mails
 ::abbrev 3D ::exp three dimensional ::lcode eng ::sem-class general
 ::abbrev sci-fi ::exp science-fiction ::lcode eng ::sem-class general
+::abbrev w/o ::exp without ::lcode eng ::sem-class general
+::abbrev w/ ::exp with ::lcode eng ::sem-class general ::right-context-not \S
+::abbrev s/he ::exp she or he ::lcode eng ::sem-class general
 
 ::abbrev %pw ::lcode eng ::sem-class disfluency
 ::abbrev a2k ::exp able to know ::lcode eng ::sem-class general

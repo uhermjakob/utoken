@@ -90,6 +90,7 @@
 ::punct-split ¿ ::side start ::group True
 ::punct-split ~ ::side start ::group True
 ::punct-split _ ::side start ::group True
+::punct-split / ::side start ::group True ::right-context \pL
 ::punct-split * ::side start ::right-context \pL  # don't group, because of ****ing
 ::punct-split - ::side start ::group True ::right-context -*\pL\pM*\pL
 
@@ -118,4 +119,7 @@
 ::punct-split ~ ::side end
 ::punct-split * ::side end ::left-context \pL\pM*
 ::punct-split _ ::side end ::group True
+::punct-split / ::side end ::group True :;left-context (?:\pL\pM*\pL\pM*|[.,;:!?])
 ::punct-split - ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?])
+::punct-split = ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?])
+
