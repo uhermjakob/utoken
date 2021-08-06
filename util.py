@@ -88,27 +88,39 @@ class ResourceDict:
     @staticmethod
     def expand_resource_lines(orig_line: str) -> List[str]:
         lines = [orig_line]
+        # expand resource entry with apostophe to alternatives with closely related characters (e.g. single quotes)
         apostrophe = "'"
         n_lines = len(lines)
         for line in lines[0:n_lines]:
             if apostrophe in line:
                 repl_chars = "’‘"
-                if "::punct-split" in orig_line:
+                if "::punct-split" in line:
                     continue
-                elif m5 := regex.match(r'(::\S+\s+)(\S|\S.*?\S)(\s+::target\s+)(\S|\S.*?\S)(\s+::\S.*|\s*)$',
-                                       orig_line):
+                elif m5 := regex.match(r'(::\S+\s+)(\S|\S.*?\S)(\s+::target\s+)(\S|\S.*?\S)(\s+::\S.*|\s*)$', line):
                     if apostrophe in m5.group(2):
                         for repl_char in repl_chars:
                             new_line = f'{m5.group(1)}{regex.sub(apostrophe, repl_char, m5.group(2))}{m5.group(3)}' \
                                        f'{regex.sub(apostrophe, repl_char, m5.group(4))}{m5.group(5)}'
                             # log.info(f'Expanded line {new_line}')
                             lines.append(new_line)
-                elif m3 := regex.match(r'(::\S+\s+)(\S|\S.*?\S)(\s+::\S.*|\s*)$', orig_line):
+                elif m3 := regex.match(r'(::\S+\s+)(\S|\S.*?\S)(\s+::\S.*|\s*)$', line):
                     if apostrophe in m3.group(2):
                         for repl_char in repl_chars:
                             new_line = f'{m3.group(1)}{regex.sub(apostrophe, repl_char, m3.group(2))}{m3.group(3)}'
                             # log.info(f'Expanded line {new_line}')
                             lines.append(new_line)
+        # expand resource entry with ::inflections
+        n_lines = len(lines)
+        for line in lines[0:n_lines]:
+            inflection_s = slot_value_in_double_colon_del_list(line, 'inflections')
+            inflections = re.split(r';\s*', inflection_s) if inflection_s else []
+            for inflection in inflections:
+                if m3 := regex.match(r'(::\S+\s+)(\S|\S.*?\S)(\s+::\S.*)$', line):
+                    new_line = f'{m3.group(1)}{inflection}{m3.group(3)}'
+                    # remove ::inflections ...
+                    new_line = re.sub(r'::inflections\s+(?:\S|\S.*\S)\s*(::\S.*|)$', r'\1', new_line)
+                    # log.info(f'Expanded line {new_line}')
+                    lines.append(new_line)
         return lines
 
     def load_resource(self, filename: str) -> None:
@@ -137,7 +149,7 @@ class ResourceDict:
                         valid = double_colon_del_list_validation(line, str(line_number), filename,
                                                                  valid_slots=['abbrev', 'case-sensitive', 'comment',
                                                                               'contraction', 'country', 'exp',
-                                                                              'group', 'inflection', 'lcode',
+                                                                              'group', 'inflections', 'lcode',
                                                                               'left-context', 'left-context-not',
                                                                               'preserve', 'punct-split', 'repair',
                                                                               'right-context', 'right-context-not',
