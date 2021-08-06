@@ -63,13 +63,14 @@
 ::repair wo n't ::target will n't ::lcode eng
 ::repair S.p . A. ::target S.p.A. ::lcode eng  # TO-DO: Capitalization
 
-::repair e.g ::target e.g. ::lcode eng
-::repair etc ::target etc. ::lcode eng
-::repair i.e ::target i.e. ::lcode eng
-::repair E.U ::target E.U. ::lcode eng
-::repair U.K ::target U.K. ::lcode eng
-::repair U.N ::target U.N. ::lcode eng
-::repair U.S ::target U.S. ::lcode eng
+# The following entries should eventually rendered into a pattern rule.
+::repair e.g ::target e.g. ::lcode eng ::right-context-not \s*[.]
+::repair etc ::target etc. ::lcode eng ::right-context-not \s*[.]
+::repair i.e ::target i.e. ::lcode eng ::right-context-not \s*[.]
+::repair E.U ::target E.U. ::lcode eng ::right-context-not \s*[.]
+::repair U.K ::target U.K. ::lcode eng ::right-context-not \s*[.]
+::repair U.N ::target U.N. ::lcode eng ::right-context-not \s*[.]
+::repair U.S ::target U.S. ::lcode eng ::right-context-not \s*[.]
 
 # English tokens to be preserved (e.g. protect them against punctuation stripping)
 ::preserve 'd ::lcode eng
@@ -90,12 +91,28 @@
 ::preserve qu' ::lcode eng
 ::preserve s' ::lcode eng
 
+::preserve big-time ::lcode eng
 ::preserve brother-in-law ::lcode eng ::inflection brothers-in-law
 ::preserve daughter-in-law ::lcode eng ::inflection daughers-in-law
 ::preserve father-in-law ::lcode eng ::inflection fathers-in-law
+::preserve full-scale ::lcode eng
+::preserve full-time ::lcode eng
+::preserve high-end ::lcode eng
+::preserve high-tech ::lcode eng
 ::preserve in-laws ::lcode eng
+::preserve large-scale ::lcode eng
+::preserve long-term ::lcode eng
+::preserve mid-term ::lcode eng
+::preserve modern-day ::lcode eng
 ::preserve mother-in-law ::lcode eng ::inflection mothers-in-law
+::preserve part-time ::lcode eng
+::preserve real-time ::lcode eng
+::preserve same-sex ::lcode eng
+::preserve science-fiction ::lcode eng
+::preserve self-righteous ::lcode eng
+::preserve short-term ::lcode eng
 ::preserve sister-in-law ::lcode eng ::inflection sisters-in-law
+::preserve small-scale ::lcode eng
 ::preserve so-called ::lcode eng
 ::preserve son-in-law ::lcode eng ::inflection sons-in-law
 ::preserve T-shirt ::lcode eng ::inflection T-shirts
@@ -537,6 +554,7 @@
 ::abbrev TV ::exp television ::lcode eng ::sem-class general
 ::abbrev e-mail ::exp electronic mail ::lcode eng ::sem-class general ::inflection e-mails
 ::abbrev 3D ::exp three dimensional ::lcode eng ::sem-class general
+::abbrev sci-fi ::exp science-fiction ::lcode eng ::sem-class general
 
 ::abbrev %pw ::lcode eng ::sem-class disfluency
 ::abbrev a2k ::exp able to know ::lcode eng ::sem-class general
