@@ -12,19 +12,18 @@ Mr. Miller ( Mary 's ex - brother-in-law ) can n't afford $ 15,000.00 .
 ```
 #### Optional annotation output
 ```
-::line L1 ::s Mr. Miller (Mary's ex-brother-in-law) can't afford $15,000.00.
 ::span 0-3 ::type ABBREV ::sem-class pre-name-title ::surf Mr.
-::span 4-10 ::type MAIN ::surf Miller
+::span 4-10 ::type WORD-B ::surf Miller
 ::span 11-12 ::type PUNCT ::surf (
-::span 12-16 ::type MAIN ::surf Mary
+::span 12-16 ::type WORD-B ::surf Mary
 ::span 16-18 ::type DECONTRACTION ::surf 's
-::span 19-21 ::type MAIN ::surf ex
+::span 19-21 ::type WORD-B ::surf ex
 ::span 21-22 ::type PUNCT-E ::surf -
-::span 22-36 ::type PRESERVE ::surf brother-in-law
+::span 22-36 ::type LEXICAL ::surf brother-in-law
 ::span 36-37 ::type PUNCT ::surf )
 ::span 38-40 ::type DECONTRACTION ::surf can
 ::span 40-43 ::type DECONTRACTION ::surf n't
-::span 44-50 ::type MAIN ::surf afford
+::span 44-50 ::type WORD-B ::surf afford
 ::span 51-52 ::type PUNCT ::surf $
 ::span 52-61 ::type NUMBER ::surf 15,000.00
 ::span 61-62 ::type PUNCT-E ::surf .
