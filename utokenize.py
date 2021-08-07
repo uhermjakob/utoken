@@ -183,6 +183,7 @@ class Tokenizer:
                                    self.tokenize_abbreviation_patterns,
                                    self.tokenize_according_to_resource_entries,
                                    self.tokenize_abbreviation_initials,
+                                   self.tokenize_abbreviation_periods,
                                    self.tokenize_english_contractions,
                                    self.tokenize_numbers,
                                    self.tokenize_preserve_according_to_resource_entries,
@@ -861,7 +862,7 @@ class Tokenizer:
                 end_position -= 1
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    re_right_context_of_initial_letter = regex.compile(r'\s?(?:\s?\p{Lu}\.)*\s?\p{Lu}\p{Ll}{2}')
+    re_right_context_of_initial_letter = regex.compile(r"\s?(?:\s?\p{Lu}\.)*\s?(?:\p{Lu}\p{Ll}{2}|(?:Mc|O'|O’)\p{Lu})")
 
     def tokenize_abbreviation_initials(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                                        line_id: Optional[str] = None, offset: int = 0) -> str:
@@ -878,18 +879,31 @@ class Tokenizer:
                                         line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    re_abbrev_acronym = regex.compile(r'(.*?)'
-                                      r'(?<!\pL\pM*|\d|[-−–]+)'
-                                      r'(\p{Lu}+[-−–](?:\d|\p{Lu}\pM*){1,3}(?:s)?)'
-                                      r'(?!\pL|\d|[-−–])'
-                                      r'(.*)')
+    re_abbrev_acronym_product = regex.compile(r'(.*?)'
+                                              r'(?<!\pL\pM*|\d|[-−–]+)'
+                                              r'(\p{Lu}+[-−–](?:\d|\p{Lu}\pM*){1,3}(?:s)?)'
+                                              r'(?!\pL|\d|[-−–])'
+                                              r'(.*)')
+    re_abbrev_acronym_periods = regex.compile(r'(.*?)'
+                                              r'(?<!\pL\pM*|\d|[-−–.]+)'
+                                              r'((?:\pL\pM*\.){2,})'
+                                              r'(?!\pL|\d|[.])'
+                                              r'(.*)')
 
     def tokenize_abbreviation_patterns(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                                        line_id: Optional[str] = None, offset: int = 0) -> str:
-        """This tokenization step splits off pattern-based abbreviations."""
+        """This tokenization step splits off pattern-based abbreviations such as F-15B"""
         this_function = self.tokenize_abbreviation_patterns
-        if m3 := self.re_abbrev_acronym.match(s):
+        if m3 := self.re_abbrev_acronym_product.match(s):
             return self.rec_tok_m3(m3, s, offset, 'ABBREV-P', line_id, chart, lang_code, ht, this_function)
+        return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
+
+    def tokenize_abbreviation_periods(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+                                      line_id: Optional[str] = None, offset: int = 0) -> str:
+        """This tokenization step splits off pattern-based abbreviations such as B.A.T."""
+        this_function = self.tokenize_abbreviation_periods
+        if m3 := self.re_abbrev_acronym_periods.match(s):
+            return self.rec_tok_m3(m3, s, offset, 'ABBREV-PP', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_mt_punct = regex.compile(r'(.*?(?:\pL\pM*\pL\pM*|\d|[!?’]))([-−–]+)(\pL\pM*\pL\pM*|\d)')
