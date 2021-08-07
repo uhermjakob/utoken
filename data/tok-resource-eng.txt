@@ -62,6 +62,7 @@
 ::repair sha n't ::target shall n't ::lcode eng
 ::repair wo n't ::target will n't ::lcode eng
 ::repair S.p . A. ::target S.p.A. ::lcode eng  # TO-DO: Capitalization
+::repair kW/h ::target kWh ::lcode eng
 
 # The following entries should eventually rendered into a pattern rule.
 ::repair e.g ::target e.g. ::lcode eng ::right-context-not \s*[.]
@@ -117,6 +118,8 @@
 ::preserve son-in-law ::lcode eng ::inflections sons-in-law
 ::preserve T-shirt ::lcode eng ::inflections T-shirts
 ::preserve X-ray ::lcode eng ::inflections X-rays
+
+::punct-split / ::side both ::lcode eng ::right-context (?:day|gallon|hour|hr|min|minute|month|sec|second|week|wk|yr)\b
 
 # English abbreviations
 ::abbrev Jan. ::exp January ::lcode eng ::sem-class month-of-the-year
@@ -514,6 +517,7 @@
 ::abbrev km ::exp kilometer ::lcode eng ::sem-class unit-of-measurement
 ::abbrev km² ::exp square kilometer ::lcode eng ::sem-class unit-of-measurement
 ::abbrev km2 ::exp square kilometer ::lcode eng ::sem-class unit-of-measurement
+::abbrev kWh ::exp kilowatt-hour ::lcode eng ::sem-class unit-of-measurement
 ::abbrev lb ::exp pound ::lcode eng ::sem-class unit-of-measurement
 ::abbrev lb. ::exp pound ::lcode eng ::sem-class unit-of-measurement
 ::abbrev lbs ::exp pounds ::lcode eng ::sem-class unit-of-measurement
@@ -555,6 +559,7 @@
 ::abbrev e-mail ::exp electronic mail ::lcode eng ::sem-class general ::inflections e-mails
 ::abbrev 3D ::exp three dimensional ::lcode eng ::sem-class general
 ::abbrev sci-fi ::exp science-fiction ::lcode eng ::sem-class general
+::abbrev A/C ::exp air conditioning ::lcode eng ::sem-class general
 ::abbrev w/o ::exp without ::lcode eng ::sem-class general
 ::abbrev w/ ::exp with ::lcode eng ::sem-class general ::right-context-not \S
 ::abbrev s/he ::exp she or he ::lcode eng ::sem-class general

@@ -109,7 +109,7 @@
 ::punct-split ؟ ::side end
 ::punct-split ، ::side end
 ::punct-split , ::side end
-::punct-split ; ::side end
+::punct-split ; ::side end ::left-context-not &(?:amp|apos|gt|lt|nbsp|quot|#\d+|#x[0-9A-F]+)
 ::punct-split ؛ ::side end
 ::punct-split ！ ::side end
 ::punct-split ; ::side end
@@ -120,7 +120,7 @@
 ::punct-split ~ ::side end
 ::punct-split * ::side end ::left-context \pL\pM*
 ::punct-split _ ::side end ::group True
-::punct-split / ::side end ::group True :;left-context (?:\pL\pM*\pL\pM*|[.,;:!?])
+::punct-split / ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?])
 ::punct-split - ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?])
 ::punct-split = ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?])
 
