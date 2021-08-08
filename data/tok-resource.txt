@@ -109,7 +109,7 @@
 ::punct-split ؟ ::side end
 ::punct-split ، ::side end
 ::punct-split , ::side end
-::punct-split ; ::side end ::left-context-not &(?:amp|apos|gt|lt|nbsp|quot|#\d+|#x[0-9A-F]+)
+::punct-split ; ::side end ::left-context-not &(?:amp|apos|gt|lt|nbsp|quot|#\d+|#x[0-9A-F]+)  # XML tags, e.g. &#x234;
 ::punct-split ؛ ::side end
 ::punct-split ！ ::side end
 ::punct-split ; ::side end
