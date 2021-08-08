@@ -27,7 +27,7 @@ import util
 log.basicConfig(level=log.INFO)
 
 __version__ = '0.0.3'
-last_mod_date = 'August 6, 2021'
+last_mod_date = 'August 7, 2021'
 
 
 class VertexMap:
@@ -621,86 +621,107 @@ class Tokenizer:
         if s == orig_s:
             return s
         else:
-            if self.re_letters_only.sub('', s) == self.re_letters_only.sub('', orig_s):
+            if self.re_letters_only.sub('', s) == (orig_s_letters := self.re_letters_only.sub('', orig_s)):
                 return s
-            elif (len(orig_s) >= 1) and orig_s[0].isupper():
-                if (len(orig_s) >= 2) and orig_s[1].isupper():
+            elif (len(orig_s_letters) >= 1) and orig_s_letters[0].isupper():
+                if (len(orig_s_letters) >= 2) and orig_s_letters[1].isupper():
                     return s.upper()
                 else:
                     return s.capitalize()
             else:
                 return s
 
-    def map_contraction(self, orig_token: str, contraction_source: str, contraction_target: str,
-                        orig_start_position: int) -> Tuple[List[str], List[str], List[int]]:
-        """Example: orig_token='Can't' contraction_source='can't' contraction_target='can n't'"""
-        tokens1 = []
-        tokens2 = []
-        orig_tokens1 = []
-        orig_tokens2 = []
-        start_positions1 = []
-        start_positions2 = []
-        token = orig_token
-        start_position = orig_start_position
-        end_position = start_position+len(token)
-        source = contraction_source
-        target = contraction_target
+    re_space = re.compile(r'\s+')
 
-        while token != '':
-            # log.info(f'token: {token} source: {source} target: {target} start_position: {start_position} '
-            #          f'end_position: {end_position}')
-            target_elements = target.split()
-            if target_elements and source.endswith(target_elements[-1]):
-                token_elem_len = len(target_elements[-1])
-                token_elem_start_position = end_position-token_elem_len
-                token_elem = target_elements.pop()
-                orig_token_elem = token[len(token)-token_elem_len:]
-                # log.info(f'insert token-e: {token_elem} orig_tokens: {orig_token_elem} '
-                #          f'start_positions: {token_elem_start_position}')
-                tokens2.insert(0, self.adjust_capitalization(token_elem, orig_token_elem))
-                orig_tokens2.insert(0, orig_token_elem)
-                start_positions2.insert(0, token_elem_start_position)
-                end_position -= token_elem_len
-                token = token[:-token_elem_len]
-                source = source[:-token_elem_len]
-                target = target[:-token_elem_len].rstrip()
-                while token.endswith(' '):
-                    end_position -= 1
-                    token = token[:-1]
-                    if target.endswith(' '):
-                        target = target[:-1]
-            elif target_elements and source.startswith(target_elements[0]):
-                token_elem_len = len(target_elements[0])
-                token_elem_start_position = start_position
-                token_elem = target_elements.pop(0)
-                orig_token_elem = token[:token_elem_len]
-                # log.info(f'insert token-s: {token_elem} orig_tokens: {orig_token_elem} '
-                #          f'start_positions: {token_elem_start_position}')
-                tokens1.append(self.adjust_capitalization(token_elem, orig_token_elem))
-                orig_tokens1.append(orig_token_elem)
-                start_positions1.append(token_elem_start_position)
-                start_position += token_elem_len
-                token = token[token_elem_len:]
-                source = source[token_elem_len:]
-                target = target[token_elem_len:].lstrip()
-                while token.startswith(' '):
-                    start_position += 1
-                    token = token[1:]
-                    if target.startswith(' '):
-                        target = target[1:]
-            elif len(target_elements) >= 1:  # Primarily for single target_elements.
-                # For multiple remaining mismatching target_elements, consider a separate case below.
-                # log.info(f'insert token-w: {target} orig_tokens: {token} '
-                #          f'start_positions: {start_position}')
-                tokens1.append(self.adjust_capitalization(target, token))
-                orig_tokens1.append(token)
-                start_positions1.append(start_position)
-                token = ""
-            else:
-                break
-        # log.info(f'return tokens: {tokens1 + tokens2} orig_tokens: {orig_tokens1 + orig_tokens2} '
-        #          f'start_positions: {start_positions1+start_positions2}')
-        return tokens1 + tokens2, orig_tokens1 + orig_tokens2, start_positions1 + start_positions2
+    def map_contraction(self, orig_token: str, contraction_source: str, contraction_target: str,
+                        orig_start_position: int, char_splits: Optional[List[int]] = None) \
+            -> Tuple[List[str], List[str], List[int]]:
+        """Example: orig_token='Can't' contraction_source='can't' contraction_target='can n't'"""
+
+        if char_splits:
+            start_position = orig_start_position
+            remaining_orig_token = orig_token
+            target_tokens = self.re_space.split(contraction_target)
+            start_positions, tokens, orig_tokens = [], [], []
+            for i in range(0, len(char_splits)):
+                orig_token_len = char_splits[i]
+                orig_token_elem = remaining_orig_token[:orig_token_len]
+                orig_tokens.append(orig_token_elem)
+                remaining_orig_token = remaining_orig_token[orig_token_len:]
+                start_positions.append(start_position)
+                start_position += orig_token_len
+                target_token = target_tokens[i]
+                adjusted_target_token = self.adjust_capitalization(target_token, orig_token_elem)
+                tokens.append(adjusted_target_token)
+            return tokens, orig_tokens, start_positions
+        else:
+            tokens1 = []
+            tokens2 = []
+            orig_tokens1 = []
+            orig_tokens2 = []
+            start_positions1 = []
+            start_positions2 = []
+            token = orig_token
+            start_position = orig_start_position
+            end_position = start_position+len(token)
+            source = contraction_source
+            target = contraction_target
+
+            while token != '':
+                # log.info(f'token: {token} source: {source} target: {target} start_position: {start_position} '
+                #          f'end_position: {end_position}')
+                target_elements = target.split()
+                if target_elements and source.endswith(target_elements[-1]):
+                    token_elem_len = len(target_elements[-1])
+                    token_elem_start_position = end_position-token_elem_len
+                    token_elem = target_elements.pop()
+                    orig_token_elem = token[len(token)-token_elem_len:]
+                    # log.info(f'insert token-e: {token_elem} orig_tokens: {orig_token_elem} '
+                    #          f'start_positions: {token_elem_start_position}')
+                    tokens2.insert(0, self.adjust_capitalization(token_elem, orig_token_elem))
+                    orig_tokens2.insert(0, orig_token_elem)
+                    start_positions2.insert(0, token_elem_start_position)
+                    end_position -= token_elem_len
+                    token = token[:-token_elem_len]
+                    source = source[:-token_elem_len]
+                    target = target[:-token_elem_len].rstrip()
+                    while token.endswith(' '):
+                        end_position -= 1
+                        token = token[:-1]
+                        if target.endswith(' '):
+                            target = target[:-1]
+                elif target_elements and source.startswith(target_elements[0]):
+                    token_elem_len = len(target_elements[0])
+                    token_elem_start_position = start_position
+                    token_elem = target_elements.pop(0)
+                    orig_token_elem = token[:token_elem_len]
+                    # log.info(f'insert token-s: {token_elem} orig_tokens: {orig_token_elem} '
+                    #          f'start_positions: {token_elem_start_position}')
+                    tokens1.append(self.adjust_capitalization(token_elem, orig_token_elem))
+                    orig_tokens1.append(orig_token_elem)
+                    start_positions1.append(token_elem_start_position)
+                    start_position += token_elem_len
+                    token = token[token_elem_len:]
+                    source = source[token_elem_len:]
+                    target = target[token_elem_len:].lstrip()
+                    while token.startswith(' '):
+                        start_position += 1
+                        token = token[1:]
+                        if target.startswith(' '):
+                            target = target[1:]
+                elif len(target_elements) >= 1:  # Primarily for single target_elements.
+                    # For multiple remaining mismatching target_elements, consider a separate case below.
+                    # log.info(f'insert token-w: {target} orig_tokens: {token} '
+                    #          f'start_positions: {start_position}')
+                    tokens1.append(self.adjust_capitalization(target, token))
+                    orig_tokens1.append(token)
+                    start_positions1.append(start_position)
+                    token = ""
+                else:
+                    break
+            # log.info(f'return tokens: {tokens1 + tokens2} orig_tokens: {orig_tokens1 + orig_tokens2} '
+            #          f'start_positions: {start_positions1+start_positions2}')
+            return tokens1 + tokens2, orig_tokens1 + orig_tokens2, start_positions1 + start_positions2
 
     re_starts_w_modifier = regex.compile(r'\pM')
     re_starts_w_letter = regex.compile(r'\pL')
@@ -756,7 +777,7 @@ class Tokenizer:
                             if isinstance(resource_entry, util.ContractionEntry):
                                 tokens, orig_tokens, start_positions = \
                                     self.map_contraction(token_candidate, resource_surf, resource_entry.target,
-                                                         start_position)
+                                                         start_position, char_splits=resource_entry.char_splits)
                                 return self.rec_tok(tokens, start_positions, s, offset, 'DECONTRACTION',
                                                     line_id, chart, lang_code, ht, this_function, orig_tokens,
                                                     sem_class=resource_entry.sem_class)
@@ -1038,15 +1059,13 @@ def main(argv):
     parser.add_argument('--version', action='version',
                         version=f'%(prog)s {__version__} last modified: {last_mod_date}')
     args = parser.parse_args(argv)
-    pr = cProfile.Profile()
     lang_code = args.lc
     tok = Tokenizer(lang_code=lang_code)
     tok.chart_p = bool(args.annotation) or bool(args.chart)
     tok.first_token_is_line_id_p = bool(args.first_token_is_line_id)
-    tok.verbose = args.verbose
-    tok.profile = pr
-    # if args.profile:
-    #   pr.enable()
+    if args.profile:
+        tok.profile = cProfile.Profile()
+        tok.profile.enable()
 
     # Open any input or output files. Make sure utf-8 encoding is properly set (in older Python3 versions).
     if args.input is sys.stdin and not re.search('utf-8', sys.stdin.encoding, re.IGNORECASE):
@@ -1077,8 +1096,8 @@ def main(argv):
         sys.stderr.write('\n')
     # Log some change stats.
     if args.profile:
-        pr.disable()
-        ps = pstats.Stats(pr, stream=args.profile).sort_stats(pstats.SortKey.TIME)
+        tok.profile.disable()
+        ps = pstats.Stats(tok.profile, stream=args.profile).sort_stats(pstats.SortKey.TIME)
         ps.print_stats()
     end_time = datetime.datetime.now()
     elapsed_time = end_time - start_time
