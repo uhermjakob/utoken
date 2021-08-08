@@ -1,6 +1,6 @@
 # English contractions
 ::contraction ain't ::target is n't ::lcode eng
-::contraction aint ::target is n't ::lcode eng
+::contraction aint ::target is n't ::lcode eng ::char-split 2,2
 ::contraction aren't ::target are n't ::lcode eng
 ::contraction arenot ::target are not ::lcode eng
 ::contraction arent ::target are n't ::lcode eng
@@ -48,7 +48,7 @@
 ::contraction werent ::target were n't ::lcode eng
 ::contraction willnot ::target will not ::lcode eng
 ::contraction won't ::target will n't ::lcode eng
-::contraction wont ::target will n't ::lcode eng
+::contraction wont ::target will n't ::lcode eng ::char-split 2,2
 ::contraction wouldn't ::target would n't ::lcode eng
 ::contraction wouldnot ::target would not ::lcode eng
 ::contraction wouldnt ::target would n't ::lcode eng
