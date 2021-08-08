@@ -43,7 +43,7 @@
 ::span 37-44 ::type WORD-B ::surf waiting
 ::span 44-45 ::type PUNCT-E ::surf ,
 ::span 46-50 ::type DECONTRACTION ::surf HAVE
-::span 50-53 ::type DECONTRACTION ::surf N't
+::span 50-53 ::type DECONTRACTION ::surf N'T
 ::span 54-56 ::type WORD-B ::surf WE
 ::span 56-57 ::type PUNCT-E ::surf ?
 ::span 58-59 ::type DECONTRACTION ::surf I
