@@ -11,7 +11,7 @@ import sys
 from typing import Dict, List, Optional, Pattern
 
 __version__ = '0.0.3'
-last_mod_date = 'August 5, 2021'
+last_mod_date = 'August 7, 2021'
 
 
 class ResourceEntry:
@@ -50,9 +50,11 @@ class RepairEntry(ResourceEntry):
 
 class ContractionEntry(ResourceEntry):
     def __init__(self, contraction: str, decontraction: str, sem_class: Optional[str] = None,
-                 lcode: Optional[str] = None, country: Optional[str] = None, comment: Optional[str] = None):
+                 lcode: Optional[str] = None, country: Optional[str] = None, comment: Optional[str] = None,
+                 char_splits: Optional[List[int]] = None):
         super().__init__(contraction, sem_class=sem_class, lcode=lcode, country=country, comment=comment)
         self.target = decontraction      # e.g. "won't" is decontracted to "will n't"
+        self.char_splits = char_splits   # e.g. [2,3] for "won't"/"will n't" as latter elems map to 2+3 chars in won't
 
 
 class PreserveEntry(ResourceEntry):
@@ -123,6 +125,8 @@ class ResourceDict:
                     lines.append(new_line)
         return lines
 
+    re_comma_space = re.compile(r',\s*')
+
     def load_resource(self, filename: str) -> None:
         """Loads abbreviations, contractions etc. Example input file: data/tok-resource-eng.txt"""
         try:
@@ -147,7 +151,8 @@ class ResourceDict:
                             continue
                         # Check whether cost file line is well-formed. Following call will output specific warnings.
                         valid = double_colon_del_list_validation(line, str(line_number), filename,
-                                                                 valid_slots=['abbrev', 'case-sensitive', 'comment',
+                                                                 valid_slots=['abbrev', 'case-sensitive',
+                                                                              'char-split', 'comment',
                                                                               'contraction', 'country', 'exp',
                                                                               'group', 'inflections', 'lcode',
                                                                               'left-context', 'left-context-not',
@@ -175,7 +180,27 @@ class ResourceDict:
                             self.register_resource_entry_in_reverse_resource_dict(resource_entry, expansions)
                         elif head_slot == 'contraction':
                             target = slot_value_in_double_colon_del_list(line, 'target')
-                            resource_entry = ContractionEntry(s, target)
+                            char_split_s = slot_value_in_double_colon_del_list(line, 'char-split')
+                            char_splits = None
+                            if char_split_s:
+                                target_tokens = re.split(r'\s+', target)
+                                if re.match(r'\d+(?:,\s*\d+)*', char_split_s):
+                                    char_splits = [int(i) for i in self.re_comma_space.split(char_split_s)]
+                                    if (l1 := len(target_tokens)) != (l2 := len(char_splits)):
+                                        log.warning(f"Number of target elements ({l1}) and "
+                                                    f"number of char-split elements ({l2}) don't match "
+                                                    f"in line {line_number} in {filename}")
+                                        char_splits = None
+                                    if (l1 := len(s)) != (l2 := sum(char_splits)):
+                                        log.warning(f"Length of contraction ({l1}) and "
+                                                    f"sum of char-split elements ({l2}) don't match "
+                                                    f"in line {line_number} in {filename}")
+                                        char_splits = None
+                                else:
+                                    log.warning(f'Ignoring ill-formed ::char-split {char_split_s} '
+                                                f'in line {line_number} in {filename} '
+                                                f'(Value should be list of comma-separated integers, e.g. 2,3')
+                            resource_entry = ContractionEntry(s, target, char_splits=char_splits)
                             self.register_resource_entry_in_reverse_resource_dict(resource_entry, [target])
                         elif head_slot == 'preserve':
                             resource_entry = PreserveEntry(s)
