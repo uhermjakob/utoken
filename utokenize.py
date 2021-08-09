@@ -252,14 +252,15 @@ class Tokenizer:
         bit_vector = bit_vector << 1
         self.char_is_left_square_bracket = bit_vector
         self.range_init_char_type_vector_dict()
-        self.chart_p = False
-        self.first_token_is_line_id_p = False
-        self.verbose = False
-        self.lang_code = lang_code
+        self.chart_p: bool = False
+        self.mt_tok_p: bool = False
+        self.first_token_is_line_id_p: bool = False
+        self.verbose: bool = False
+        self.lang_code: Optional[str] = lang_code
         self.n_lines_tokenized = 0
         self.tok_dict = util.ResourceDict()
-        self.current_orig_s = None
-        self.current_s = None
+        self.current_orig_s: Optional[str] = None
+        self.current_s: Optional[str] = None
         self.profile = None
         if lang_code:
             self.tok_dict.load_resource(f'data/tok-resource-{lang_code}.txt')
@@ -309,8 +310,21 @@ class Tokenizer:
         self.char_type_vector_dict['['] \
             = self.char_type_vector_dict.get('[', 0) | self.char_is_left_square_bracket
 
-    @staticmethod
-    def rec_tok(token_surfs: List[str], start_positions: List[int], s: str, offset: int,
+    def add_any_mt_tok_delimiter(self, token: str, start_offset: int, end_offset: int) -> str:
+        """In MT-tokenization mode, adds @ before and after certain punctuation so facilitate later detokenization."""
+        if token in ['-']:
+            if current_s := self.current_s:
+                # left_context = current_s[:start_offset]
+                # right_context = current_s[end_offset:]
+                # token0 = token
+                if not (start_offset and current_s[start_offset-1].isspace()):
+                    token = "@" + token
+                if not ((end_offset < len(current_s)) and current_s[end_offset].isspace()):
+                    token = token + "@"
+                # log.info(f'add@: {left_context} :: {token0} :: {right_context} => {token}')
+        return token
+
+    def rec_tok(self, token_surfs: List[str], start_positions: List[int], s: str, offset: int,
                 token_type: str, line_id: str, chart: Optional[Chart],
                 lang_code: str, ht: dict, calling_function, orig_token_surfs: Optional[List[str]] = None,
                 **token_kwargs) -> [str, Token]:
@@ -325,12 +339,14 @@ class Tokenizer:
         position = 0
         for i in range(len(token_surfs)):
             token_surf = token_surfs[i]
-            orig_token_surf = orig_token_surfs[i] if orig_token_surfs else token_surfs[i]
+            orig_token_surf = orig_token_surfs[i] if orig_token_surfs else token_surf
             start_position = start_positions[i]
             end_position = start_position + len(orig_token_surf)
             offset1 = offset + position
             offset2 = offset + start_position
             offset3 = offset + end_position
+            if self.mt_tok_p:
+                token_surf = self.add_any_mt_tok_delimiter(token_surf, offset2, offset3)
             if pre := s[position:start_position]:
                 tokenizations.append(calling_function(pre, chart, ht, lang_code, line_id, offset1))
             tokenizations.append(token_surf)
@@ -470,7 +486,7 @@ class Tokenizer:
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_url1 = regex.compile(r'(.*?)'
-                            r"((?:https?|ftp)://"
+                            r"((?:https?|ftps?)://"
                             r"(\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+]|\((?:\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+])\))+"
                             r"(?:\p{L}\p{M}*|\d|[/]))"
                             r'(.*)$',
@@ -1062,6 +1078,7 @@ def main(argv):
     lang_code = args.lc
     tok = Tokenizer(lang_code=lang_code)
     tok.chart_p = bool(args.annotation) or bool(args.chart)
+    tok.mt_tok_p = bool(args.mt)
     tok.first_token_is_line_id_p = bool(args.first_token_is_line_id)
     if args.profile:
         tok.profile = cProfile.Profile()
@@ -1087,6 +1104,8 @@ def main(argv):
             log_info += f'  Annotation: {args.annotation.name}'
         if tok.chart_p:
             log_info += f'  Chart to be built: {tok.chart_p}'
+        if tok.mt_tok_p:
+            log_info += f'  MT tokenization (e.g. @-@): {tok.mt_tok_p}'
         if lang_code:
             log_info += f'  ISO 639-3 language code: {lang_code}'
         log.info(log_info)
