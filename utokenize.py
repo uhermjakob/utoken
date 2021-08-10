@@ -20,7 +20,7 @@ import re
 import regex
 import sys
 from typing import Callable, List, Match, Optional, TextIO, Tuple, Type
-# import unicodedata as ud
+import unicodedata as ud
 import util
 
 log.basicConfig(level=log.INFO)
@@ -247,6 +247,8 @@ class Tokenizer:
         bit_vector = bit_vector << 1
         self.char_is_alpha = bit_vector
         bit_vector = bit_vector << 1
+        self.char_is_modifier = bit_vector
+        bit_vector = bit_vector << 1
         self.char_is_digit = bit_vector
         self.range_init_char_type_vector_dict()
         self.chart_p: bool = False
@@ -323,6 +325,10 @@ class Tokenizer:
             elif char.isdigit():
                 self.char_type_vector_dict[char] \
                     = self.char_type_vector_dict.get(char, 0) | self.char_is_digit
+            elif ud.category(char).startswith("M"):
+                self.char_type_vector_dict[char] \
+                    = self.char_type_vector_dict.get(char, 0) | self.char_is_modifier
+        self.char_is_dash_or_digit = self.char_is_dash | self.char_is_digit
 
     def add_any_mt_tok_delimiter(self, token: str, start_offset: int, end_offset: int) -> str:
         """In MT-tokenization mode, adds @ before and after certain punctuation so facilitate later detokenization."""
@@ -782,28 +788,34 @@ class Tokenizer:
         this_function = self.tokenize_according_to_resource_entries
 
         last_primary_char_type_vector = 0  # 'primary': not counting modifying letters
-        for start_position in range(0, len(s)):
+        len_s = len(s)
+        s_lc = s.lower()
+        for start_position in range(0, len_s):
             c = s[start_position]
-            if self.re_starts_w_modifier.match(c):
+            current_char_type_vector = self.char_type_vector_dict.get(c, 0)
+            if current_char_type_vector & self.char_is_modifier:
                 continue
             # general restriction: if token starts with a letter, it can't be preceded by a letter
-            current_char_type_vector = self.char_type_vector_dict.get(c, 0)
             if last_primary_char_type_vector & self.char_is_alpha \
                     and current_char_type_vector & self.char_is_alpha:
                 continue
             max_end_position = start_position
             position = start_position+1
-            while position <= len(s) and self.tok_dict.prefix_dict.get(s[start_position:position].lower(), False):
+            while position <= len_s and self.tok_dict.prefix_dict.get(s_lc[start_position:position], False):
                 max_end_position = position
                 position += 1
             end_position = max_end_position
             while end_position > start_position:
                 token_candidate = s[start_position:end_position]
+                token_candidate_lc = s_lc[start_position:end_position]
                 right_context = s[end_position:]
+                rc0 = right_context[0] if right_context != '' else ' '  # first character of right context
+                rc0_type_vector = self.char_type_vector_dict.get(rc0, 0)
                 # general restriction: if token ends in a letter, it can't be followed by a letter
-                if (not(self.re_ends_w_letter.match(token_candidate) and self.re_starts_w_letter.match(right_context))
-                        and not(self.re_starts_w_modifier.match(right_context))):  # not followed by orphan modifier
-                    for resource_entry in self.tok_dict.resource_dict.get(token_candidate.lower(), []):
+                token_candidate_ends_in_letter = bool(self.re_ends_w_letter.match(token_candidate))
+                if (not(token_candidate_ends_in_letter and (rc0_type_vector & self.char_is_alpha))
+                        and not(rc0_type_vector & self.char_is_modifier)):  # not followed by orphan modifier
+                    for resource_entry in self.tok_dict.resource_dict.get(token_candidate_lc, []):
                         if self.resource_entry_fulfills_conditions(resource_entry, util.ResourceEntry, token_candidate,
                                                                    s, start_position, end_position, offset):
                             sem_class = resource_entry.sem_class
@@ -813,7 +825,8 @@ class Tokenizer:
                                 clause += f'; sem: {sem_class}'
                             if (isinstance(resource_entry, util.AbbreviationEntry)
                                     and ((sem_class == 'currency')
-                                         or (not(self.re_ends_w_letter.match(token_candidate)
+                                         or (not(token_candidate_ends_in_letter
+                                                 and (rc0_type_vector & self.char_is_dash_or_digit)  # quick pre-check
                                                  and self.re_starts_w_dashed_digit.match(right_context))))):
                                 return self.rec_tok([token_candidate], [start_position], s, offset, 'ABBREV',
                                                     line_id, chart, lang_code, ht, this_function, [token_candidate],
@@ -844,7 +857,8 @@ class Tokenizer:
         this_function = self.tokenize_preserve_according_to_resource_entries
 
         last_primary_char_type_vector = 0  # 'primary': not counting modifying letters
-        for start_position in range(0, len(s)):
+        len_s = len(s)
+        for start_position in range(0, len_s):
             c = s[start_position]
             if self.re_starts_w_modifier.match(c):
                 continue
@@ -855,7 +869,7 @@ class Tokenizer:
                 continue
             max_end_position = start_position
             position = start_position+1
-            while position <= len(s) \
+            while position <= len_s \
                     and self.tok_dict.prefix_dict_preserve.get(s[start_position:position].lower(), False):
                 max_end_position = position
                 position += 1
@@ -895,10 +909,11 @@ class Tokenizer:
         because it needs to be mch further down the tokenization step sequence."""
         this_function = self.tokenize_punctuation_according_to_resource_entries
 
-        for start_position in range(0, len(s)):
+        len_s = len(s)
+        for start_position in range(0, len_s):
             max_end_position = start_position
             position = start_position+1
-            while position <= len(s) and self.tok_dict.prefix_dict_punct.get(s[start_position:position].lower(), False):
+            while position <= len_s and self.tok_dict.prefix_dict_punct.get(s[start_position:position].lower(), False):
                 max_end_position = position
                 position += 1
             end_position = max_end_position
@@ -910,7 +925,7 @@ class Tokenizer:
                         side = resource_entry.side
                         end_position2 = end_position
                         if resource_entry.group:
-                            while end_position2 < len(s) and s[end_position2-1] == s[end_position2]:
+                            while end_position2 < len_s and s[end_position2-1] == s[end_position2]:
                                 end_position2 += 1
                         token = s[start_position:end_position2]  # includes any group reduplication
                         if side == 'both':
@@ -921,7 +936,7 @@ class Tokenizer:
                             return self.rec_tok([token], [start_position], s, offset, 'PUNCT-S',
                                                 line_id, chart, lang_code, ht, this_function, [token],
                                                 sem_class=resource_entry.sem_class)
-                        elif side == 'end' and ((end_position2 == len(s)) or s[end_position2].isspace()):
+                        elif side == 'end' and ((end_position2 == len_s) or s[end_position2].isspace()):
                             return self.rec_tok([token], [start_position], s, offset, 'PUNCT-E',
                                                 line_id, chart, lang_code, ht, this_function, [token],
                                                 sem_class=resource_entry.sem_class)
