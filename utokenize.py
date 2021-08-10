@@ -1140,9 +1140,11 @@ def main(argv):
                         help='(optional scope for performance analysis)')
     parser.add_argument('--lc', type=Optional[str], default=None,
                         metavar='LANGUAGE-CODE', help="ISO 639-3, e.g. 'fas' for Persian")
-    parser.add_argument('-f', '--first_token_is_line_id', action='count', default=0, help='First token is line ID')
+    parser.add_argument('-f', '--first_token_is_line_id', action='count', default=0,
+                        help='First token is line ID (and will be exempt from any tokenization)')
     parser.add_argument('-v', '--verbose', action='count', default=0, help='write change log etc. to STDERR')
-    parser.add_argument('-c', '--chart', action='count', default=0, help='build chart, even without annotation output')
+    parser.add_argument('-c', '--chart', action='count', default=0,
+                        help='build annotation chart, even without annotation output')
     parser.add_argument('--mt', action='count', default=0, help='MT-style output with @ added to certain punctuation')
     parser.add_argument('--version', action='version',
                         version=f'%(prog)s {__version__} last modified: {last_mod_date}')
