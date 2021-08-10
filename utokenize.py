@@ -11,7 +11,6 @@ import argparse
 from itertools import chain
 import cProfile
 import datetime
-from enum import Enum
 import functools
 import logging as log
 # import os
@@ -161,16 +160,6 @@ class Chart:
             annotation_file.write(f'::surf {token.surf}\n')
 
 
-class CharCat(Enum):
-    LETTER = 1
-    DIGIT = 2
-    OTHER = 3
-
-    @staticmethod
-    def cat(c: str):
-        return CharCat.LETTER if c.isalpha() else CharCat.DIGIT if c.isdigit() else CharCat.OTHER
-
-
 class Tokenizer:
     def __init__(self, lang_code: Optional[str] = None):
         # Ordered list of tokenization steps
@@ -248,9 +237,15 @@ class Tokenizer:
         bit_vector = bit_vector << 1
         self.char_is_at_sign = bit_vector
         bit_vector = bit_vector << 1
+        self.char_is_apostrophe = bit_vector
+        bit_vector = bit_vector << 1
         self.char_is_less_than_sign = bit_vector
         bit_vector = bit_vector << 1
         self.char_is_left_square_bracket = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_alpha = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_digit = bit_vector
         self.range_init_char_type_vector_dict()
         self.chart_p: bool = False
         self.mt_tok_p: bool = False
@@ -309,6 +304,19 @@ class Tokenizer:
         # At sign
         self.char_type_vector_dict['['] \
             = self.char_type_vector_dict.get('[', 0) | self.char_is_left_square_bracket
+        # Apostrophe (incl. right single quotation mark)
+        for char in "'’":
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_apostrophe
+        # alpha, digit
+        for code_point in range(0x0000, 0xE0200):  # All Unicode points
+            char = chr(code_point)
+            if char.isalpha():
+                self.char_type_vector_dict[char] \
+                    = self.char_type_vector_dict.get(char, 0) | self.char_is_alpha
+            elif char.isdigit():
+                self.char_type_vector_dict[char] \
+                    = self.char_type_vector_dict.get(char, 0) | self.char_is_digit
 
     def add_any_mt_tok_delimiter(self, token: str, start_offset: int, end_offset: int) -> str:
         """In MT-tokenization mode, adds @ before and after certain punctuation so facilitate later detokenization."""
@@ -327,7 +335,7 @@ class Tokenizer:
     def rec_tok(self, token_surfs: List[str], start_positions: List[int], s: str, offset: int,
                 token_type: str, line_id: str, chart: Optional[Chart],
                 lang_code: str, ht: dict, calling_function, orig_token_surfs: Optional[List[str]] = None,
-                **token_kwargs) -> [str, Token]:
+                **kwargs) -> [str, Token]:
         """Recursive tokenization step (same method, applied to remaining string) using token-surf and start-position.
         Once a heuristic has identified a particular token span and type,
         this method computes all offsets, creates a new token, and recursively
@@ -348,14 +356,18 @@ class Tokenizer:
             if self.mt_tok_p:
                 token_surf = self.add_any_mt_tok_delimiter(token_surf, offset2, offset3)
             if pre := s[position:start_position]:
-                tokenizations.append(calling_function(pre, chart, ht, lang_code, line_id, offset1))
+                if i == 0 and kwargs.get('left_done', False):
+                    tokenizations.append(self.next_tok(calling_function, pre, chart, ht, lang_code, line_id, offset1))
+                else:
+                    tokenizations.append(calling_function(pre, chart, ht, lang_code, line_id, offset1))
             tokenizations.append(token_surf)
             if chart:
                 new_token = Token(token_surf, line_id, token_type,
                                   ComplexSpan([SimpleSpan(offset2, offset3, vm=chart.vertex_map)]),
                                   orig_surf=orig_token_surf)
-                for key, value in token_kwargs.items():
-                    setattr(new_token, key, value)
+                for key, value in kwargs.items():
+                    if hasattr(new_token, key):
+                        setattr(new_token, key, value)
                 chart.register_token(new_token)
             position = end_position
         if post := s[position:]:
@@ -442,6 +454,10 @@ class Tokenizer:
         # delete some control characters, replace non-standard spaces with ASCII space
         if self.lv & self.char_is_deletable_control_character:
             s = re.sub(r'[\u0080-\u009F]', self.apply_spec_windows1252_to_utf8_mapping_dict, s)
+            # update line vector
+            for char in s:
+                if char_type_vector := self.char_type_vector_dict.get(char, 0):
+                    self.lv = self.lv | char_type_vector
             if chart:
                 chart.s = s
             for i in range(len(s)-1, -1, -1):
@@ -485,6 +501,7 @@ class Tokenizer:
                 return self.rec_tok_m3(m3, s, offset, 'BBCode', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
+    re_dot_ab = regex.compile(r'.*\.[a-z][a-z]', flags=regex.IGNORECASE)  # expected in URLs and filenames
     re_url1 = regex.compile(r'(.*?)'
                             r"((?:https?|ftps?)://"
                             r"(\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+]|\((?:\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+])\))+"
@@ -508,8 +525,9 @@ class Tokenizer:
                       line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off URL tokens such as https://www.amazon.com"""
         this_function = self.tokenize_urls
-        if m3 := self.re_url1.match(s) or self.re_url2.match(s):
-            return self.rec_tok_m3(m3, s, offset, 'URL', line_id, chart, lang_code, ht, this_function)
+        if self.re_dot_ab.match(s):
+            if m3 := self.re_url1.match(s) or self.re_url2.match(s):
+                return self.rec_tok_m3(m3, s, offset, 'URL', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     common_file_suffixes = "aspx?|bmp|cgi|csv|docx?|eps|gif|html?|jpeg|jpg|mov|mp3|mp4|" \
@@ -525,8 +543,9 @@ class Tokenizer:
                            line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off filename tokens such as presentation.pptx"""
         this_function = self.tokenize_filenames
-        if m3 := self.re_filename.match(s):
-            return self.rec_tok_m3(m3, s, offset, 'FILENAME', line_id, chart, lang_code, ht, this_function)
+        if self.re_dot_ab.match(s):
+            if m3 := self.re_filename.match(s):
+                return self.rec_tok_m3(m3, s, offset, 'FILENAME', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_email = regex.compile(r'(.*?)'
@@ -580,8 +599,9 @@ class Tokenizer:
                          line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off numbers such as 12,345,678.90"""
         this_function = self.tokenize_numbers
-        if m3 := self.re_number.match(s) or self.re_integer.match(s):
-            return self.rec_tok_m3(m3, s, offset, 'NUMBER', line_id, chart, lang_code, ht, this_function)
+        if self.lv & self.char_is_digit:
+            if m3 := self.re_number.match(s) or self.re_integer.match(s):
+                return self.rec_tok_m3(m3, s, offset, 'NUMBER', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_eng_suf_contraction = re.compile(r'(.*?[a-z])([\'’](?:d|em|ll|m|re|s|ve))\b(.*)', flags=re.IGNORECASE)
@@ -591,12 +611,13 @@ class Tokenizer:
         """This tokenization step handles English contractions such as John's -> John 's; he'd -> he 'd
         Others such as don't -> do not; won't -> will not are handled as resource_entries"""
         this_function = self.tokenize_english_contractions
-        # Tokenize other contractions such as:
-        #   (1) "John's mother", "He's hungry.", "He'll come.", "We're here.", "You've got to be kidding."
-        #   (2) "He'd rather die.", "They'd been informed.", "It'd be like war.",  but not "cont'd", "EFF'd up people"
-        #   (3) "I'm done.", "I don't like'm.", "Get'em."
-        if m3 := self.re_eng_suf_contraction.match(s):
-            return self.rec_tok_m3(m3, s, offset, 'DECONTRACTION', line_id, chart, lang_code, ht, this_function)
+        if self.lv & self.char_is_apostrophe:
+            # Tokenize contractions such as:
+            # (1) "John's mother", "He's hungry.", "He'll come.", "We're here.", "You've got to be kidding."
+            # (2) "He'd rather die.", "They'd been informed.", "It'd be like war.",  but not "cont'd", "EFF'd up people"
+            # (3) "I'm done.", "I don't like'm.", "Get'em."
+            if m3 := self.re_eng_suf_contraction.match(s):
+                return self.rec_tok_m3(m3, s, offset, 'DECONTRACTION', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     def resource_entry_fulfills_conditions(self, resource_entry: util.ResourceEntry,
@@ -754,14 +775,15 @@ class Tokenizer:
         such as data/tok-resource-eng.txt."""
         this_function = self.tokenize_according_to_resource_entries
 
-        last_primary_char_cat = None  # 'primary': not counting modifying letters
+        last_primary_char_type_vector = 0  # 'primary': not counting modifying letters
         for start_position in range(0, len(s)):
             c = s[start_position]
             if self.re_starts_w_modifier.match(c):
                 continue
             # general restriction: if token starts with a letter, it can't be preceded by a letter
-            current_char_cat = CharCat.cat(c)
-            if last_primary_char_cat == CharCat.LETTER and current_char_cat == last_primary_char_cat:
+            current_char_type_vector = self.char_type_vector_dict.get(c, 0)
+            if last_primary_char_type_vector & self.char_is_alpha \
+                    and current_char_type_vector & self.char_is_alpha:
                 continue
             max_end_position = start_position
             position = start_position+1
@@ -789,23 +811,23 @@ class Tokenizer:
                                                  and self.re_starts_w_dashed_digit.match(right_context))))):
                                 return self.rec_tok([token_candidate], [start_position], s, offset, 'ABBREV',
                                                     line_id, chart, lang_code, ht, this_function, [token_candidate],
-                                                    sem_class=resource_entry.sem_class)
+                                                    sem_class=resource_entry.sem_class, left_done=True)
                             if isinstance(resource_entry, util.ContractionEntry):
                                 tokens, orig_tokens, start_positions = \
                                     self.map_contraction(token_candidate, resource_surf, resource_entry.target,
                                                          start_position, char_splits=resource_entry.char_splits)
                                 return self.rec_tok(tokens, start_positions, s, offset, 'DECONTRACTION',
                                                     line_id, chart, lang_code, ht, this_function, orig_tokens,
-                                                    sem_class=resource_entry.sem_class)
+                                                    sem_class=resource_entry.sem_class, left_done=True)
                             if isinstance(resource_entry, util.RepairEntry):
                                 tokens, orig_tokens, start_positions = \
                                     self.map_contraction(token_candidate, resource_surf, resource_entry.target,
                                                          start_position)
                                 return self.rec_tok(tokens, start_positions, s, offset, 'REPAIR',
                                                     line_id, chart, lang_code, ht, this_function, orig_tokens,
-                                                    sem_class=resource_entry.sem_class)
+                                                    sem_class=resource_entry.sem_class, left_done=True)
                 end_position -= 1
-            last_primary_char_cat = current_char_cat
+            last_primary_char_type_vector = current_char_type_vector
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     def tokenize_preserve_according_to_resource_entries(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
@@ -815,14 +837,15 @@ class Tokenizer:
         because it needs to be mch further down the tokenization step sequence."""
         this_function = self.tokenize_preserve_according_to_resource_entries
 
-        last_primary_char_cat = None  # 'primary': not counting modifying letters
+        last_primary_char_type_vector = 0  # 'primary': not counting modifying letters
         for start_position in range(0, len(s)):
             c = s[start_position]
             if self.re_starts_w_modifier.match(c):
                 continue
             # general restriction: if token starts with a letter, it can't be preceded by a letter
-            current_char_cat = CharCat.cat(c)
-            if last_primary_char_cat == CharCat.LETTER and current_char_cat == last_primary_char_cat:
+            current_char_type_vector = self.char_type_vector_dict.get(c, 0)
+            if last_primary_char_type_vector & self.char_is_alpha \
+                    and current_char_type_vector & self.char_is_alpha:
                 continue
             max_end_position = start_position
             position = start_position+1
@@ -856,7 +879,7 @@ class Tokenizer:
                                                     line_id, chart, lang_code, ht, this_function, [token_candidate],
                                                     sem_class=resource_entry.sem_class)
                 end_position -= 1
-            last_primary_char_cat = current_char_cat
+            last_primary_char_type_vector = current_char_type_vector
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     def tokenize_punctuation_according_to_resource_entries(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
