@@ -26,7 +26,7 @@ import util
 log.basicConfig(level=log.INFO)
 
 __version__ = '0.0.3'
-last_mod_date = 'August 7, 2021'
+last_mod_date = 'August 9, 2021'
 
 
 class VertexMap:
