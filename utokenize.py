@@ -25,8 +25,8 @@ import util
 
 log.basicConfig(level=log.INFO)
 
-__version__ = '0.0.3'
-last_mod_date = 'August 9, 2021'
+__version__ = '0.0.4'
+last_mod_date = 'August 10, 2021'
 
 
 class VertexMap:
@@ -263,7 +263,7 @@ class Tokenizer:
         self.current_s: Optional[str] = None
         self.profile = None
         self.profile_active: bool = False
-        self.profile_scope_limit: Optional[str] = None
+        self.profile_scope: Optional[str] = None
         if lang_code:
             self.tok_dict.load_resource(f'data/tok-resource-{lang_code}.txt')
         self.tok_dict.load_resource('data/tok-resource.txt')  # language-independent tok-resource
@@ -347,8 +347,8 @@ class Tokenizer:
         return token
 
     def rec_tok(self, token_surfs: List[str], start_positions: List[int], s: str, offset: int,
-                token_type: str, line_id: str, chart: Optional[Chart],
-                lang_code: str, ht: dict, calling_function, orig_token_surfs: Optional[List[str]] = None,
+                token_type: str, line_id: str, chart: Optional[Chart], lang_code: Optional[str],
+                ht: dict, calling_function, orig_token_surfs: Optional[List[str]] = None,
                 **kwargs) -> [str, Token]:
         """Recursive tokenization step (same method, applied to remaining string) using token-surf and start-position.
         Once a heuristic has identified a particular token span and type,
@@ -428,9 +428,9 @@ class Tokenizer:
         next_tokenization_function: Callable[[str, Chart, dict, str, Optional[str], int], str] \
             = self.next_tok_step_dict[current_tok_function] if current_tok_function \
             else self.tok_step_functions[0]  # first tokenization step
-        if self.profile_scope_limit:
+        if self.profile_scope:
             next_tokenization_function_name = next_tokenization_function.__name__
-            if self.profile_scope_limit == next_tokenization_function_name:
+            if self.profile_scope == next_tokenization_function_name:
                 # log.info(f'enable for {next_tokenization_function_name}')
                 self.profile.enable()
                 self.profile_active = True
@@ -513,7 +513,7 @@ class Tokenizer:
                            r'(.*)$',
                            flags=re.IGNORECASE)
 
-    def tokenize_xmls(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+    def tokenize_xmls(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                       line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off XML tokens such as <a href="URL">...</a>"""
         this_function = self.tokenize_xmls
@@ -545,7 +545,7 @@ class Tokenizer:
                             r'(.*)$',
                             flags=regex.IGNORECASE)
 
-    def tokenize_urls(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+    def tokenize_urls(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                       line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off URL tokens such as https://www.amazon.com"""
         this_function = self.tokenize_urls
@@ -563,7 +563,7 @@ class Tokenizer:
                                 r'(.*)$',
                                 flags=regex.IGNORECASE)
 
-    def tokenize_filenames(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+    def tokenize_filenames(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                            line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off filename tokens such as presentation.pptx"""
         this_function = self.tokenize_filenames
@@ -580,7 +580,7 @@ class Tokenizer:
                              r'(?!\pL|\pM|\d|[.])'
                              r'(.*)$', flags=regex.IGNORECASE)
 
-    def tokenize_emails(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+    def tokenize_emails(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                         line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off email-address tokens such as ChunkyLover53@aol.com"""
         this_function = self.tokenize_emails
@@ -594,7 +594,7 @@ class Tokenizer:
                                             r'(?![.]?(?:\pL|\d))'
                                             r'(.*)$', flags=regex.IGNORECASE)
 
-    def tokenize_hashtags_and_handles(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+    def tokenize_hashtags_and_handles(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                                       line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off email-address tokens such as ChunkyLover53@aol.com"""
         this_function = self.tokenize_hashtags_and_handles
@@ -619,7 +619,7 @@ class Tokenizer:
                                r'(?![-−–.,]?\d)'                      # negative lookahead
                                r'(.*)')
 
-    def tokenize_numbers(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+    def tokenize_numbers(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                          line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off numbers such as 12,345,678.90"""
         this_function = self.tokenize_numbers
@@ -630,7 +630,7 @@ class Tokenizer:
 
     re_eng_suf_contraction = re.compile(r'(.*?[a-z])([\'’](?:d|em|ll|m|re|s|ve))\b(.*)', flags=re.IGNORECASE)
 
-    def tokenize_english_contractions(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+    def tokenize_english_contractions(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                                       line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step handles English contractions such as John's -> John 's; he'd -> he 'd
         Others such as don't -> do not; won't -> will not are handled as resource_entries"""
@@ -793,7 +793,7 @@ class Tokenizer:
     re_ends_w_apostrophe = regex.compile(r".*['‘’]$")
     re_ends_w_letter_or_digit = regex.compile(r'.*(\pL\pM*|\d)$')
 
-    def tokenize_according_to_resource_entries(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+    def tokenize_according_to_resource_entries(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                                                line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step handles abbreviations, contractions and repairs according to data files
         such as data/tok-resource-eng.txt."""
@@ -861,8 +861,9 @@ class Tokenizer:
             last_primary_char_type_vector = current_char_type_vector
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    def tokenize_preserve_according_to_resource_entries(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
-                                                        line_id: Optional[str] = None, offset: int = 0) -> str:
+    def tokenize_preserve_according_to_resource_entries(self, s: str, chart: Chart, ht: dict,
+                                                        lang_code: Optional[str] = None, line_id: Optional[str] = None,
+                                                        offset: int = 0) -> str:
         """This tokenization step handles preserve entries according to data files such as data/tok-resource-eng.txt.
         This method mirrors the structure of tokenize_according_to_resource_entries. It is separate,
         because it needs to be mch further down the tokenization step sequence."""
@@ -918,7 +919,8 @@ class Tokenizer:
             last_primary_char_type_vector = current_char_type_vector
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    def tokenize_punctuation_according_to_resource_entries(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+    def tokenize_punctuation_according_to_resource_entries(self, s: str, chart: Chart, ht: dict,
+                                                           lang_code: Optional[str] = None,
                                                            line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step handles punctuation according to data files such as data/tok-resource-eng.txt.
         This method mirrors the structure of tokenize_according_to_resource_entries. It is separate,
@@ -964,7 +966,7 @@ class Tokenizer:
     re_cap_initial_letter = regex.compile(r".*\p{Lu}\.")
     re_right_context_of_initial_letter = regex.compile(r"\s?(?:\s?\p{Lu}\.)*\s?(?:\p{Lu}\p{Ll}{2}|(?:Mc|O'|O’)\p{Lu})")
 
-    def tokenize_abbreviation_initials(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+    def tokenize_abbreviation_initials(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                                        line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off initials, e.g. J.F.Kennedy -> J. F. Kennedy"""
         this_function = self.tokenize_abbreviation_initials
@@ -986,7 +988,7 @@ class Tokenizer:
                                               r'(?!\pL|\d|[-−–])'
                                               r'(.*)')
 
-    def tokenize_abbreviation_patterns(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+    def tokenize_abbreviation_patterns(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                                        line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off pattern-based abbreviations such as F-15B"""
         this_function = self.tokenize_abbreviation_patterns
@@ -1002,7 +1004,7 @@ class Tokenizer:
                                               r'(?!\pL|\d|[.])'
                                               r'(.*)')
 
-    def tokenize_abbreviation_periods(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+    def tokenize_abbreviation_periods(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                                       line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off pattern-based abbreviations such as B.A.T."""
         this_function = self.tokenize_abbreviation_periods
@@ -1013,7 +1015,7 @@ class Tokenizer:
 
     re_mt_punct = regex.compile(r'(.*?(?:\pL\pM*\pL\pM*|\d|[!?’]))([-−–]+)(\pL\pM*\pL\pM*|\d)')
 
-    def tokenize_mt_punctuation(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+    def tokenize_mt_punctuation(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                                 line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step currently splits of dashes in certain contexts."""
         this_function = self.tokenize_mt_punctuation
@@ -1023,7 +1025,7 @@ class Tokenizer:
 
     re_integer2 = regex.compile(r'(.*?)(?<!\pL\pM*|\d|[-−–+.])(\d+)((?:\pL|[/]).*)')
 
-    def tokenize_post_punct(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+    def tokenize_post_punct(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                             line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits leading integers from letters, e.g. 5weeks -> 5 weeks."""
         this_function = self.tokenize_post_punct
@@ -1049,7 +1051,7 @@ class Tokenizer:
         else:
             return 'MISC-B'
 
-    def tokenize_main(self, s: str, chart: Chart, _ht: dict, _lang_code: str = '',
+    def tokenize_main(self, s: str, chart: Chart, _ht: dict, _lang_code: Optional[str] = None,
                       line_id: Optional[str] = None, offset: int = 0) -> str:
         """This is the final tokenization step that tokenizes the remaining string by spaces."""
         tokens = []
@@ -1073,8 +1075,8 @@ class Tokenizer:
             index += 1
         return util.join_tokens(tokens)
 
-    def tokenize_string(self, s: str, ht: dict, lang_code: str = '', line_id: Optional[str] = None,
-                        annotation_file: Optional[TextIO] = None) -> str:
+    def tokenize_string(self, s: str, ht: dict, lang_code: Optional[str], line_id: Optional[str],
+                        annotation_file: Optional[TextIO]) -> str:
         regex.DEFAULT_VERSION = regex.VERSION1
         self.current_orig_s = s
         self.current_s = s
@@ -1104,7 +1106,7 @@ class Tokenizer:
     re_id_snt = re.compile(r'(\S+)(\s+)(\S|\S.*\S)\s*$')
 
     def tokenize_lines(self, ht: dict, input_file: TextIO, output_file: TextIO, annotation_file: Optional[TextIO],
-                       lang_code=''):
+                       lang_code: Optional[str] = None):
         """Apply normalization/cleaning to a file (or STDIN/STDOUT)."""
         line_number = 0
         for line in input_file:
@@ -1114,12 +1116,11 @@ class Tokenizer:
                 if m := self.re_id_snt.match(line):
                     line_id, line_id_sep, core_line = m.group(1, 2, 3)
                     output_file.write(line_id + line_id_sep
-                                      + self.tokenize_string(core_line, ht, lang_code=lang_code,
-                                                             line_id=line_id, annotation_file=annotation_file)
+                                      + self.tokenize_string(core_line, ht, lang_code, line_id, annotation_file)
                                       + "\n")
             else:
-                output_file.write(self.tokenize_string(line.rstrip("\n"), ht, lang_code=lang_code,
-                                                       line_id=str(line_number), annotation_file=annotation_file)
+                line_id = str(line_number)
+                output_file.write(self.tokenize_string(line.rstrip("\n"), ht, lang_code, line_id, annotation_file)
                                   + "\n")
 
 
@@ -1134,8 +1135,11 @@ def main(argv):
     parser.add_argument('-a', '--annotation', type=argparse.FileType('w', encoding='utf-8', errors='ignore'),
                         default=None, metavar='ANNOTATION-FILENAME', help='(optional output)')
     parser.add_argument('-p', '--profile', type=argparse.FileType('w', encoding='utf-8', errors='ignore'),
-                        default=None, metavar='cProfile-FILENAME', help='(optional output)')
-    parser.add_argument('--lc', type=str, default='', metavar='LANGUAGE-CODE', help="ISO 639-3, e.g. 'fas' for Persian")
+                        default=None, metavar='PROFILE-FILENAME', help='(optional output for performance analysis)')
+    parser.add_argument('--profile_scope', type=Optional[str], default=None,
+                        help='(optional scope for performance analysis)')
+    parser.add_argument('--lc', type=Optional[str], default=None,
+                        metavar='LANGUAGE-CODE', help="ISO 639-3, e.g. 'fas' for Persian")
     parser.add_argument('-f', '--first_token_is_line_id', action='count', default=0, help='First token is line ID')
     parser.add_argument('-v', '--verbose', action='count', default=0, help='write change log etc. to STDERR')
     parser.add_argument('-c', '--chart', action='count', default=0, help='build chart, even without annotation output')
@@ -1148,11 +1152,10 @@ def main(argv):
     tok.chart_p = bool(args.annotation) or bool(args.chart)
     tok.mt_tok_p = bool(args.mt)
     tok.first_token_is_line_id_p = bool(args.first_token_is_line_id)
-    tok.profile_scope_limit = None
-    # tok.profile_scope_limit = 'tokenize_according_to_resource_entries'
-    if args.profile or tok.profile_scope_limit:
+    tok.profile_scope = args.profile_scope  # e.g. None or 'tokenize_according_to_resource_entries'
+    if args.profile or tok.profile_scope:
         tok.profile = cProfile.Profile()
-        if tok.profile_scope_limit is None:
+        if tok.profile_scope is None:
             tok.profile.enable()
             tok.profile_active = True
 
@@ -1186,8 +1189,8 @@ def main(argv):
     if (log.INFO >= log.root.level) and (tok.n_lines_tokenized >= 1000):
         sys.stderr.write('\n')
     # Log some change stats.
-    if args.profile or tok.profile_scope_limit:
-        if tok.profile_scope_limit is None:
+    if args.profile or tok.profile_scope:
+        if tok.profile_scope is None:
             tok.profile.disable()
             tok.profile_active = False
         ps = pstats.Stats(tok.profile, stream=args.profile).sort_stats(pstats.SortKey.TIME)
