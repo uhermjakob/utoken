@@ -250,6 +250,7 @@ class Tokenizer:
         self.char_is_modifier = bit_vector
         bit_vector = bit_vector << 1
         self.char_is_digit = bit_vector
+        self.char_is_dash_or_digit = self.char_is_dash | self.char_is_digit
         self.range_init_char_type_vector_dict()
         self.chart_p: bool = False
         self.mt_tok_p: bool = False
@@ -261,6 +262,8 @@ class Tokenizer:
         self.current_orig_s: Optional[str] = None
         self.current_s: Optional[str] = None
         self.profile = None
+        self.profile_active: bool = False
+        self.profile_scope_limit: Optional[str] = None
         if lang_code:
             self.tok_dict.load_resource(f'data/tok-resource-{lang_code}.txt')
         self.tok_dict.load_resource('data/tok-resource.txt')  # language-independent tok-resource
@@ -328,7 +331,6 @@ class Tokenizer:
             elif ud.category(char).startswith("M"):
                 self.char_type_vector_dict[char] \
                     = self.char_type_vector_dict.get(char, 0) | self.char_is_modifier
-        self.char_is_dash_or_digit = self.char_is_dash | self.char_is_digit
 
     def add_any_mt_tok_delimiter(self, token: str, start_offset: int, end_offset: int) -> str:
         """In MT-tokenization mode, adds @ before and after certain punctuation so facilitate later detokenization."""
@@ -426,6 +428,16 @@ class Tokenizer:
         next_tokenization_function: Callable[[str, Chart, dict, str, Optional[str], int], str] \
             = self.next_tok_step_dict[current_tok_function] if current_tok_function \
             else self.tok_step_functions[0]  # first tokenization step
+        if self.profile_scope_limit:
+            next_tokenization_function_name = next_tokenization_function.__name__
+            if self.profile_scope_limit == next_tokenization_function_name:
+                # log.info(f'enable for {next_tokenization_function_name}')
+                self.profile.enable()
+                self.profile_active = True
+            elif self.profile_active:
+                # log.info(f'disable for {next_tokenization_function_name}')
+                self.profile_active = False
+                self.profile.disable()
         if next_tokenization_function:
             s = next_tokenization_function(s, chart, ht, lang_code, line_id, offset)
         return s
@@ -858,29 +870,33 @@ class Tokenizer:
 
         last_primary_char_type_vector = 0  # 'primary': not counting modifying letters
         len_s = len(s)
+        s_lc = s.lower()
         for start_position in range(0, len_s):
             c = s[start_position]
-            if self.re_starts_w_modifier.match(c):
+            current_char_type_vector = self.char_type_vector_dict.get(c, 0)
+            if current_char_type_vector & self.char_is_modifier:
                 continue
             # general restriction: if token starts with a letter, it can't be preceded by a letter
-            current_char_type_vector = self.char_type_vector_dict.get(c, 0)
             if last_primary_char_type_vector & self.char_is_alpha \
                     and current_char_type_vector & self.char_is_alpha:
                 continue
             max_end_position = start_position
             position = start_position+1
             while position <= len_s \
-                    and self.tok_dict.prefix_dict_preserve.get(s[start_position:position].lower(), False):
+                    and self.tok_dict.prefix_dict_preserve.get(s_lc[start_position:position], False):
                 max_end_position = position
                 position += 1
             end_position = max_end_position
             while end_position > start_position:
                 token_candidate = s[start_position:end_position]
+                token_candidate_lc = s_lc[start_position:end_position]
                 right_context = s[end_position:]
+                rc0 = right_context[0] if right_context != '' else ' '  # first character of right context
+                rc0_type_vector = self.char_type_vector_dict.get(rc0, 0)
                 # general restriction: if token ends in a letter, it can't be followed by a letter
-                if (not(self.re_ends_w_letter.match(token_candidate) and self.re_starts_w_letter.match(right_context))
-                        and not(self.re_starts_w_modifier.match(right_context))):  # not followed by orphan modifier
-                    for resource_entry in self.tok_dict.resource_dict.get(token_candidate.lower(), []):
+                if (not((rc0_type_vector & self.char_is_alpha) and self.re_ends_w_letter.match(token_candidate))
+                        and not(rc0_type_vector & self.char_is_modifier)):  # not followed by orphan modifier
+                    for resource_entry in self.tok_dict.resource_dict.get(token_candidate_lc, []):
                         if self.resource_entry_fulfills_conditions(resource_entry, util.PreserveEntry, token_candidate,
                                                                    s, start_position, end_position, offset):
                             sem_class = resource_entry.sem_class
@@ -910,16 +926,18 @@ class Tokenizer:
         this_function = self.tokenize_punctuation_according_to_resource_entries
 
         len_s = len(s)
+        s_lc = s.lower()
         for start_position in range(0, len_s):
             max_end_position = start_position
             position = start_position+1
-            while position <= len_s and self.tok_dict.prefix_dict_punct.get(s[start_position:position].lower(), False):
+            while position <= len_s and self.tok_dict.prefix_dict_punct.get(s_lc[start_position:position], False):
                 max_end_position = position
                 position += 1
             end_position = max_end_position
             while end_position > start_position:
                 token_candidate = s[start_position:end_position]
-                for resource_entry in self.tok_dict.resource_dict.get(token_candidate.lower(), []):
+                token_candidate_lc = s[start_position:end_position]
+                for resource_entry in self.tok_dict.resource_dict.get(token_candidate_lc, []):
                     if self.resource_entry_fulfills_conditions(resource_entry, util.PunctSplitEntry, token_candidate,
                                                                s, start_position, end_position, offset):
                         side = resource_entry.side
@@ -973,7 +991,7 @@ class Tokenizer:
         """This tokenization step splits off pattern-based abbreviations such as F-15B"""
         this_function = self.tokenize_abbreviation_patterns
         if self.lv & self.char_is_dash:
-           if m3 := self.re_abbrev_acronym_product.match(s):
+            if m3 := self.re_abbrev_acronym_product.match(s):
                 return self.rec_tok_m3(m3, s, offset, 'ABBREV-P', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
@@ -1130,11 +1148,17 @@ def main(argv):
     tok.chart_p = bool(args.annotation) or bool(args.chart)
     tok.mt_tok_p = bool(args.mt)
     tok.first_token_is_line_id_p = bool(args.first_token_is_line_id)
-    if args.profile:
+    # tok.profile_scope_limit = None
+    # tok.profile_scope_limit = 'tokenize_according_to_resource_entries'
+    # tok.profile_scope_limit = 'tokenize_preserve_according_to_resource_entries'
+    tok.profile_scope_limit = 'tokenize_punctuation_according_to_resource_entries'
+    if args.profile or tok.profile_scope_limit:
         tok.profile = cProfile.Profile()
-        tok.profile.enable()
+        if tok.profile_scope_limit is None:
+            tok.profile.enable()
+            tok.profile_active = True
 
-    # Open any input or output files. Make sure utf-8 encoding is properly set (in older Python3 versions).
+# Open any input or output files. Make sure utf-8 encoding is properly set (in older Python3 versions).
     if args.input is sys.stdin and not re.search('utf-8', sys.stdin.encoding, re.IGNORECASE):
         log.error(f"Bad STDIN encoding '{sys.stdin.encoding}' as opposed to 'utf-8'. \
                     Suggestion: 'export PYTHONIOENCODING=UTF-8' or use '--input FILENAME' option")
@@ -1164,8 +1188,10 @@ def main(argv):
     if (log.INFO >= log.root.level) and (tok.n_lines_tokenized >= 1000):
         sys.stderr.write('\n')
     # Log some change stats.
-    if args.profile:
-        tok.profile.disable()
+    if args.profile or tok.profile_scope_limit:
+        if tok.profile_scope_limit is None:
+            tok.profile.disable()
+            tok.profile_active = False
         ps = pstats.Stats(tok.profile, stream=args.profile).sort_stats(pstats.SortKey.TIME)
         ps.print_stats()
     end_time = datetime.datetime.now()
