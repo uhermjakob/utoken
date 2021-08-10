@@ -1148,10 +1148,8 @@ def main(argv):
     tok.chart_p = bool(args.annotation) or bool(args.chart)
     tok.mt_tok_p = bool(args.mt)
     tok.first_token_is_line_id_p = bool(args.first_token_is_line_id)
-    # tok.profile_scope_limit = None
+    tok.profile_scope_limit = None
     # tok.profile_scope_limit = 'tokenize_according_to_resource_entries'
-    # tok.profile_scope_limit = 'tokenize_preserve_according_to_resource_entries'
-    tok.profile_scope_limit = 'tokenize_punctuation_according_to_resource_entries'
     if args.profile or tok.profile_scope_limit:
         tok.profile = cProfile.Profile()
         if tok.profile_scope_limit is None:
