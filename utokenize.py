@@ -239,6 +239,8 @@ class Tokenizer:
         bit_vector = bit_vector << 1
         self.char_is_apostrophe = bit_vector
         bit_vector = bit_vector << 1
+        self.char_is_dash = bit_vector
+        bit_vector = bit_vector << 1
         self.char_is_less_than_sign = bit_vector
         bit_vector = bit_vector << 1
         self.char_is_left_square_bracket = bit_vector
@@ -308,6 +310,10 @@ class Tokenizer:
         for char in "'’":
             self.char_type_vector_dict[char] \
                 = self.char_type_vector_dict.get(char, 0) | self.char_is_apostrophe
+        # Dash (incl. hyphen)
+        for char in "-−–":
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_dash
         # alpha, digit
         for code_point in range(0x0000, 0xE0200):  # All Unicode points
             char = chr(code_point)
@@ -877,7 +883,7 @@ class Tokenizer:
                                              and self.re_starts_w_single_s.match(right_context)))):
                                 return self.rec_tok([token_candidate], [start_position], s, offset, 'LEXICAL',
                                                     line_id, chart, lang_code, ht, this_function, [token_candidate],
-                                                    sem_class=resource_entry.sem_class)
+                                                    sem_class=resource_entry.sem_class, left_done=True)
                 end_position -= 1
             last_primary_char_type_vector = current_char_type_vector
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
@@ -922,6 +928,7 @@ class Tokenizer:
                 end_position -= 1
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
+    re_cap_initial_letter = regex.compile(r".*\p{Lu}\.")
     re_right_context_of_initial_letter = regex.compile(r"\s?(?:\s?\p{Lu}\.)*\s?(?:\p{Lu}\p{Ll}{2}|(?:Mc|O'|O’)\p{Lu})")
 
     def tokenize_abbreviation_initials(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
@@ -929,14 +936,15 @@ class Tokenizer:
         """This tokenization step splits off initials, e.g. J.F.Kennedy -> J. F. Kennedy"""
         this_function = self.tokenize_abbreviation_initials
         # Explore possibility of m3-style regex
-        for start_position in range(0, len(s)-1):
-            char = s[start_position]
-            if char.isalpha() and char.isupper() and (s[start_position+1] == '.') \
-               and ((start_position == 0) or not s[start_position - 1].isalpha()):
-                if self.re_right_context_of_initial_letter.match(s[start_position+2:]):
-                    token_surf = s[start_position:start_position+2]
-                    return self.rec_tok([token_surf], [start_position], s, offset, 'ABBREV-I',
-                                        line_id, chart, lang_code, ht, this_function)
+        if self.re_cap_initial_letter.match(s):
+            for start_position in range(0, len(s)-1):
+                char = s[start_position]
+                if char.isalpha() and char.isupper() and (s[start_position+1] == '.') \
+                   and ((start_position == 0) or not s[start_position - 1].isalpha()):
+                    if self.re_right_context_of_initial_letter.match(s[start_position+2:]):
+                        token_surf = s[start_position:start_position+2]
+                        return self.rec_tok([token_surf], [start_position], s, offset, 'ABBREV-I',
+                                            line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_abbrev_acronym_product = regex.compile(r'(.*?)'
@@ -944,26 +952,30 @@ class Tokenizer:
                                               r'(\p{Lu}+[-−–](?:\d|\p{Lu}\pM*){1,3}(?:s)?)'
                                               r'(?!\pL|\d|[-−–])'
                                               r'(.*)')
+
+    def tokenize_abbreviation_patterns(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
+                                       line_id: Optional[str] = None, offset: int = 0) -> str:
+        """This tokenization step splits off pattern-based abbreviations such as F-15B"""
+        this_function = self.tokenize_abbreviation_patterns
+        if self.lv & self.char_is_dash:
+           if m3 := self.re_abbrev_acronym_product.match(s):
+                return self.rec_tok_m3(m3, s, offset, 'ABBREV-P', line_id, chart, lang_code, ht, this_function)
+        return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
+
+    re_dot_pl = regex.compile(r'.*\pL')  # used to filter the following below
     re_abbrev_acronym_periods = regex.compile(r'(.*?)'
                                               r'(?<!\pL\pM*|\d|[-−–.]+)'
                                               r'((?:\pL\pM*\.){2,})'
                                               r'(?!\pL|\d|[.])'
                                               r'(.*)')
 
-    def tokenize_abbreviation_patterns(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
-                                       line_id: Optional[str] = None, offset: int = 0) -> str:
-        """This tokenization step splits off pattern-based abbreviations such as F-15B"""
-        this_function = self.tokenize_abbreviation_patterns
-        if m3 := self.re_abbrev_acronym_product.match(s):
-            return self.rec_tok_m3(m3, s, offset, 'ABBREV-P', line_id, chart, lang_code, ht, this_function)
-        return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
-
     def tokenize_abbreviation_periods(self, s: str, chart: Chart, ht: dict, lang_code: str = '',
                                       line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off pattern-based abbreviations such as B.A.T."""
         this_function = self.tokenize_abbreviation_periods
-        if m3 := self.re_abbrev_acronym_periods.match(s):
-            return self.rec_tok_m3(m3, s, offset, 'ABBREV-PP', line_id, chart, lang_code, ht, this_function)
+        if self.re_dot_pl.match(s):
+            if m3 := self.re_abbrev_acronym_periods.match(s):
+                return self.rec_tok_m3(m3, s, offset, 'ABBREV-PP', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_mt_punct = regex.compile(r'(.*?(?:\pL\pM*\pL\pM*|\d|[!?’]))([-−–]+)(\pL\pM*\pL\pM*|\d)')
