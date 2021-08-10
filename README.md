@@ -4,35 +4,34 @@ _utoken_ is a tokenizer that divides text into words, punctuation and special to
 ### Example
 #### Input
 ```
-Mr. Miller (Mary's ex-brother-in-law) can't afford $15,000.00.
+Capt. O'Connor's car can't've cost $100,000.
 ```
+
 #### Output
 ```
-Mr. Miller ( Mary 's ex - brother-in-law ) can n't afford $ 15,000.00 .
+Capt. O'Connor 's car can n't 've cost $ 100,000 .
 ```
+
 #### Optional annotation output
 ```
-::span 0-3 ::type ABBREV ::sem-class pre-name-title ::surf Mr.
-::span 4-10 ::type WORD-B ::surf Miller
-::span 11-12 ::type PUNCT ::surf (
-::span 12-16 ::type WORD-B ::surf Mary
-::span 16-18 ::type DECONTRACTION ::surf 's
-::span 19-21 ::type WORD-B ::surf ex
-::span 21-22 ::type PUNCT-E ::surf -
-::span 22-36 ::type LEXICAL ::surf brother-in-law
-::span 36-37 ::type PUNCT ::surf )
-::span 38-40 ::type DECONTRACTION ::surf can
-::span 40-43 ::type DECONTRACTION ::surf n't
-::span 44-50 ::type WORD-B ::surf afford
-::span 51-52 ::type PUNCT ::surf $
-::span 52-61 ::type NUMBER ::surf 15,000.00
-::span 61-62 ::type PUNCT-E ::surf .
+::line L1 ::s Capt. O'Connor's car can't've cost $100,000.
+::span 0-5 ::type ABBREV ::sem-class military-rank ::surf Capt.
+::span 6-14 ::type WORD-B ::surf O'Connor
+::span 14-16 ::type DECONTRACTION ::surf 's
+::span 17-20 ::type WORD-B ::surf car
+::span 21-23 ::type DECONTRACTION ::surf can
+::span 23-26 ::type DECONTRACTION ::surf n't
+::span 26-29 ::type LEXICAL ::surf 've
+::span 30-34 ::type WORD-B ::surf cost
+::span 35-36 ::type PUNCT ::surf $
+::span 36-43 ::type NUMBER ::surf 100,000
+::span 43-44 ::type PUNCT-E ::surf .
 ```
 
 ### Usage
 ```
-utokenize.py [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-a ANNOTATION-FILENAME] [-p cProfile-FILENAME]
-             [--lc LANGUAGE-CODE] [-f] [-v] [-c] [--mt] [--version]
+utokenize.py [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-a ANNOTATION-FILENAME] [-p PROFILE-FILENAME]
+                    [--profile_scope PROFILE_SCOPE] [--lc LANGUAGE-CODE] [-f] [-v] [-c] [--mt] [--version]
 optional arguments:
   -h, --help            show this help message and exit
   -i INPUT-FILENAME, --input INPUT-FILENAME
@@ -41,13 +40,15 @@ optional arguments:
                         (default: STDOUT)
   -a ANNOTATION-FILENAME, --annotation ANNOTATION-FILENAME
                         (optional output)
-  -p cProfile-FILENAME, --profile cProfile-FILENAME
-                        (optional output)
+  -p PROFILE-FILENAME, --profile PROFILE-FILENAME
+                        (optional output for performance analysis)
+  --profile_scope PROFILE_SCOPE
+                        (optional scope for performance analysis)
   --lc LANGUAGE-CODE    ISO 639-3, e.g. 'fas' for Persian
   -f, --first_token_is_line_id
-                        First token is line ID
+                        First token is line ID (and will be exempt from any tokenization)
   -v, --verbose         write change log etc. to STDERR
-  -c, --chart           build chart, even without annotation output
+  -c, --chart           build annotation chart, even without annotation output
   --mt                  MT-style output with @ added to certain punctuation
   --version             show program's version number and exit
 ```
