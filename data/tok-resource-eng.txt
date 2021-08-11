@@ -137,24 +137,38 @@
 ::abbrev Dec. ::exp December ::lcode eng ::sem-class month-of-the-year
 
 ::abbrev Amb. ::exp Ambassador ::lcode eng ::sem-class pre-name-title
+::abbrev Asst. ::exp Assistant ::lcode eng ::sem-class pre-name-title
 ::abbrev Br. ::exp Brother ::lcode eng ::sem-class pre-name-title
 ::abbrev Dr. ::exp Doctor ::lcode eng ::sem-class pre-name-title
+::abbrev Drs. ::exp Doctors ::lcode eng ::sem-class pre-name-title
 ::abbrev Eng. ::exp Engineer ::lcode eng ::sem-class pre-name-title
 ::abbrev Fr. ::exp Father ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev Gov. ::exp Governor ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev Hon. ::exp Honorable ::lcode eng ::sem-class pre-name-title ::case-sensitive True
+::abbrev Hr. ::exp Herr ::lcode eng ::sem-class pre-name-title ::case-sensitive True
 ::abbrev Ing. ::exp Ingenieur; Ingeniero ::lcode eng ::sem-class pre-name-title
+::abbrev Insp. ::exp Inspector ::lcode eng ::sem-class pre-name-title
 ::abbrev Ir. ::exp Ingenieur ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev Jr. ::exp Junior ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev Messrs. ::exp Messieurs ::lcode eng ::sem-class pre-name-title
+::abbrev Mlle. ::exp Mademoiselle ::lcode eng ::sem-class pre-name-title
+::abbrev Mlles. ::exp Mesdemoiselles ::lcode eng ::sem-class pre-name-title
+::abbrev Mme. ::exp Madame ::lcode eng ::sem-class pre-name-title
+::abbrev Mmes. ::exp Mesdames ::lcode eng ::sem-class pre-name-title
 ::abbrev Mr. ::exp Mister ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev Mrs. ::exp Misses ::lcode eng ::sem-class pre-name-title
 ::abbrev Ms. ::lcode eng ::sem-class pre-name-title ::case-sensitive True ::left-context-not [.]
+::abbrev Msgr. ::exp Monsignor ::lcode eng ::sem-class pre-name-title
 ::abbrev Pres. ::exp President ::lcode eng ::sem-class pre-name-title
 ::abbrev Prof. ::exp Professor ::lcode eng ::sem-class pre-name-title
 ::abbrev Rep. ::exp Representative ::lcode eng ::sem-class pre-name-title ::case-sensitive True
+::abbrev Reps. ::exp Representatives ::lcode eng ::sem-class pre-name-title
 ::abbrev Rev. ::exp Reverend ::lcode eng ::sem-class pre-name-title
+::abbrev Rt Hon. ::exp Right Honorable ::lcode eng ::sem-class pre-name-title
+::abbrev Rt.Hon. ::exp Right Honorable ::lcode eng ::sem-class pre-name-title
+::abbrev Rt. Hon. ::exp Right Honorable ::lcode eng ::sem-class pre-name-title
 ::abbrev Sen. ::exp Senator ::lcode eng ::sem-class pre-name-title
+::abbrev Sens. ::exp Senators ::lcode eng ::sem-class pre-name-title
 ::abbrev Sr. ::exp Senior ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev St. ::exp Saint ::lcode eng ::sem-class pre-name-title ::case-sensitive True ::left-context-not 1  # 1st
 ::abbrev Spt. ::exp Superintendent ::lcode eng ::sem-class pre-name-title
@@ -166,8 +180,12 @@
 ::abbrev Brig.Gen. ::exp Brigadier General ::lcode eng ::sem-class military-rank
 ::abbrev Brig.-Gen. ::exp Brigadier General ::lcode eng ::sem-class military-rank
 ::abbrev Capt. ::exp Captain ::lcode eng ::sem-class military-rank
+::abbrev Cpl. ::exp Corporal ::lcode eng ::sem-class military-rank
 ::abbrev Cpt. ::exp Captain ::lcode eng ::sem-class military-rank
 ::abbrev Col. ::exp Colonel ::lcode eng ::sem-class military-rank
+::abbrev Cmdr. ::exp Commander ::lcode eng ::sem-class military-rank
+::abbrev Comdr. ::exp Commander ::lcode eng ::sem-class military-rank
+::abbrev Ens. ::exp Ensign ::lcode eng ::sem-class military-rank
 ::abbrev Gen. ::exp General ::lcode eng ::sem-class military-rank
 ::abbrev Lt. ::exp Lieutenant ::lcode eng ::sem-class military-rank
 ::abbrev Lt.Gen. ::exp Lieutenant General ::lcode eng ::sem-class military-rank
@@ -175,6 +193,8 @@
 ::abbrev Maj. ::exp Major ::lcode eng ::sem-class military-rank
 ::abbrev Maj.Gen. ::exp Major General ::lcode eng ::sem-class military-rank
 ::abbrev Maj.-Gen. ::exp Major General ::lcode eng ::sem-class military-rank
+::abbrev Pfc. ::exp Private First Class ::lcode eng ::sem-class military-rank
+::abbrev Pvt. ::exp Private ::lcode eng ::sem-class military-rank
 ::abbrev Sgt. ::exp Sergeant ::lcode eng ::sem-class military-rank
 ::abbrev PV1 ::exp Private ::lcode eng ::sem-class military-rank
 ::abbrev PV2 ::exp Private Second Class ::lcode eng ::sem-class military-rank
@@ -192,20 +212,26 @@
 
 ::abbrev A.D. ::exp anno Domini ::lcode eng ::sem-class general
 ::abbrev a.m. ::exp ante meridiem ::lcode eng ::sem-class general
+::abbrev adj. ::exp adjective ::lcode eng ::sem-class general
+::abbrev adv. ::exp adverb ::lcode eng ::sem-class general
 ::abbrev al. ::exp alii ::lcode eng ::sem-class general
 ::abbrev B.C. ::exp before Christ ::lcode eng ::sem-class general
 ::abbrev B.S. ::exp bullshit ::lcode eng ::sem-class general
+::abbrev bldg. ::exp building ::lcode eng ::sem-class general
+::abbrev bros. ::exp brothers ::lcode eng ::sem-class general
 ::abbrev etc. ::exp et cetera; and other things ::lcode eng ::sem-class general
 ::abbrev cf. ::exp confer; compare ::lcode eng ::sem-class general
 ::abbrev ed. ::exp editor ::lcode eng ::sem-class general
 ::abbrev e.g. ::exp exempli gratia; for example ::lcode eng ::sem-class general
 ::abbrev et al. ::exp et alii; et aliae; and others ::lcode eng ::sem-class general
+::abbrev hosp. ::exp hospital ::lcode eng ::sem-class general
 ::abbrev i.e. ::exp id est; that is ::lcode eng ::sem-class general
 ::abbrev misc. ::exp miscellaneous ::lcode eng ::sem-class general
 ::abbrev Mt. ::exp Mount ::lcode eng ::sem-class general ::case-sensitive True
 ::abbrev p.m. ::exp post meridiem ::lcode eng ::sem-class general
 ::abbrev p.s. ::exp post scriptum ::lcode eng ::sem-class general
 ::abbrev S.E. ::exp standard error ::lcode eng ::sem-class general
+::abbrev v. ::exp versus ::lcode eng ::sem-class general
 ::abbrev vs. ::exp versus ::lcode eng ::sem-class general
 
 ::abbrev B.P. ::exp blood pressure ::lcode eng ::sem-class medical
@@ -241,6 +267,7 @@
 ::abbrev pp. ::exp pages ::lcode eng ::sem-class corpus-component ::case-sensitive True ::left-context-not [.] ::right-context \s*\d
 ::abbrev No. ::exp number ::lcode eng ::sem-class corpus-component ::case-sensitive True ::right-context \s*\d
 ::abbrev Nos. ::exp numbers ::lcode eng ::sem-class corpus-component ::case-sensitive True ::right-context \s*\d
+::abbrev Nr. ::exp number ::lcode eng ::sem-class corpus-component
 ::abbrev sect. ::exp section ::lcode eng ::sem-class corpus-component
 ::abbrev sects. ::exp sections ::lcode eng ::sem-class corpus-component
 ::abbrev vol. ::exp volume ::lcode eng ::sem-class corpus-component
@@ -445,6 +472,7 @@
 
 ::abbrev NZD ::exp New Zealand dollar ::lcode eng ::sem-class currency
 ::abbrev RMB ::exp renminbi ::lcode eng ::sem-class currency
+::abbrev Rs. ::exp rupees ::lcode eng ::sem-class currency
 ::abbrev USD ::exp United States dollar ::lcode eng ::sem-class currency
 
 ::abbrev LA ::exp Los Angeles ::lcode eng ::sem-class city ::case-sensitive True
