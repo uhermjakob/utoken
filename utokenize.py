@@ -26,7 +26,7 @@ import util
 log.basicConfig(level=log.INFO)
 
 __version__ = '0.0.4'
-last_mod_date = 'August 10, 2021'
+last_mod_date = 'August 12, 2021'
 
 
 class VertexMap:
@@ -155,7 +155,7 @@ class Chart:
         annotation_file.write(f'::line {self.snt_id} ::s {self.s0}\n')
         for token in self.tokens:
             annotation_file.write(f'::span {token.span.print_hard_span()} ::type {token.creator} ')
-            if token.sem_class and token.sem_class != 'general':
+            if token.sem_class:
                 annotation_file.write(f'::sem-class {token.sem_class} ')
             annotation_file.write(f'::surf {token.surf}\n')
 

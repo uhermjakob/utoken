@@ -142,18 +142,19 @@
 ::abbrev Dr. ::exp Doctor ::lcode eng ::sem-class pre-name-title
 ::abbrev Drs. ::exp Doctors ::lcode eng ::sem-class pre-name-title
 ::abbrev Eng. ::exp Engineer ::lcode eng ::sem-class pre-name-title
-::abbrev Fr. ::exp Father ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
+::abbrev Fr. ::exp Father; Frau; Mrs. ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
+::abbrev Frl. ::exp Fräulein; Misses ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev Gov. ::exp Governor ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev Hon. ::exp Honorable ::lcode eng ::sem-class pre-name-title ::case-sensitive True
-::abbrev Hr. ::exp Herr ::lcode eng ::sem-class pre-name-title ::case-sensitive True
+::abbrev Hr. ::exp Herr; Mister ::lcode eng ::sem-class pre-name-title ::case-sensitive True
 ::abbrev Ing. ::exp Ingenieur; Ingeniero ::lcode eng ::sem-class pre-name-title
 ::abbrev Insp. ::exp Inspector ::lcode eng ::sem-class pre-name-title
 ::abbrev Ir. ::exp Ingenieur ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev Jr. ::exp Junior ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev Messrs. ::exp Messieurs ::lcode eng ::sem-class pre-name-title
-::abbrev Mlle. ::exp Mademoiselle ::lcode eng ::sem-class pre-name-title
+::abbrev Mlle. ::exp Mademoiselle; Miss ::lcode eng ::sem-class pre-name-title
 ::abbrev Mlles. ::exp Mesdemoiselles ::lcode eng ::sem-class pre-name-title
-::abbrev Mme. ::exp Madame ::lcode eng ::sem-class pre-name-title
+::abbrev Mme. ::exp Madame; Mrs. ::lcode eng ::sem-class pre-name-title
 ::abbrev Mmes. ::exp Mesdames ::lcode eng ::sem-class pre-name-title
 ::abbrev Mr. ::exp Mister ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev Mrs. ::exp Misses ::lcode eng ::sem-class pre-name-title
@@ -200,7 +201,7 @@
 ::abbrev PV2 ::exp Private Second Class ::lcode eng ::sem-class military-rank
 ::abbrev 1SG ::exp First Sergeant ::lcode eng ::sem-class military-rank
 
-::abbrev Ret. ::exp Retired ::lcode eng ::sem-class general
+::abbrev Ret. ::exp Retired ::lcode eng
 
 ::abbrev Co. ::exp Company ::lcode eng ::sem-class company-type ::left-context \s
 ::abbrev Corp. ::exp Corporation ::lcode eng ::sem-class company-type
@@ -210,29 +211,32 @@
 ::abbrev N.V. ::exp Naamloze vennootschap ::lcode eng ::sem-class company-type
 ::abbrev S.p.A. ::exp Società per Azioni ::lcode eng ::sem-class company-type
 
-::abbrev A.D. ::exp anno Domini ::lcode eng ::sem-class general
-::abbrev a.m. ::exp ante meridiem ::lcode eng ::sem-class general
-::abbrev adj. ::exp adjective ::lcode eng ::sem-class general
-::abbrev adv. ::exp adverb ::lcode eng ::sem-class general
-::abbrev al. ::exp alii ::lcode eng ::sem-class general
-::abbrev B.C. ::exp before Christ ::lcode eng ::sem-class general
-::abbrev B.S. ::exp bullshit ::lcode eng ::sem-class general
-::abbrev bldg. ::exp building ::lcode eng ::sem-class general
-::abbrev bros. ::exp brothers ::lcode eng ::sem-class general
-::abbrev etc. ::exp et cetera; and other things ::lcode eng ::sem-class general
-::abbrev cf. ::exp confer; compare ::lcode eng ::sem-class general
-::abbrev ed. ::exp editor ::lcode eng ::sem-class general
-::abbrev e.g. ::exp exempli gratia; for example ::lcode eng ::sem-class general
-::abbrev et al. ::exp et alii; et aliae; and others ::lcode eng ::sem-class general
-::abbrev hosp. ::exp hospital ::lcode eng ::sem-class general
-::abbrev i.e. ::exp id est; that is ::lcode eng ::sem-class general
-::abbrev misc. ::exp miscellaneous ::lcode eng ::sem-class general
-::abbrev Mt. ::exp Mount ::lcode eng ::sem-class general ::case-sensitive True
-::abbrev p.m. ::exp post meridiem ::lcode eng ::sem-class general
-::abbrev p.s. ::exp post scriptum ::lcode eng ::sem-class general
-::abbrev S.E. ::exp standard error ::lcode eng ::sem-class general
-::abbrev v. ::exp versus ::lcode eng ::sem-class general
-::abbrev vs. ::exp versus ::lcode eng ::sem-class general
+::abbrev A.D. ::exp anno Domini ::lcode eng
+::abbrev a.m. ::exp ante meridiem ::lcode eng
+::abbrev adj. ::exp adjective ::lcode eng
+::abbrev adv. ::exp adverb ::lcode eng
+::abbrev al. ::exp alii ::lcode eng
+::abbrev Apt. ::exp apartment ::lcode eng ::case-sensitive True
+::abbrev B.C. ::exp before Christ ::lcode eng
+::abbrev B.S. ::exp bullshit ::lcode eng
+::abbrev bldg. ::exp building ::lcode eng
+::abbrev bros. ::exp brothers ::lcode eng
+::abbrev etc. ::exp et cetera; and other things ::lcode eng
+::abbrev cf. ::exp confer; compare ::lcode eng
+::abbrev ed. ::exp editor ::lcode eng
+::abbrev e.g. ::exp exempli gratia; for example ::lcode eng
+::abbrev et al. ::exp et alii; et aliae; and others ::lcode eng
+::abbrev Flr. ::exp floor ::lcode eng
+::abbrev hosp. ::exp hospital ::lcode eng
+::abbrev i.e. ::exp id est; that is ::lcode eng
+::abbrev misc. ::exp miscellaneous ::lcode eng
+::abbrev Mt. ::exp Mount ::lcode eng ::case-sensitive True
+::abbrev p.m. ::exp post meridiem ::lcode eng
+::abbrev p.s. ::exp post scriptum ::lcode eng
+::abbrev S.E. ::exp standard error ::lcode eng
+::abbrev Ste. ::exp suite ::lcode eng ::case-sensitive True
+::abbrev v. ::exp versus; von ::lcode eng
+::abbrev vs. ::exp versus ::lcode eng
 
 ::abbrev B.P. ::exp blood pressure ::lcode eng ::sem-class medical
 ::abbrev flu ::exp influenza ::lcode eng ::sem-class medical
@@ -495,43 +499,43 @@
 ::abbrev HIV ::exp human immunodeficiency virus ::lcode eng ::sem-class virus
 ::abbrev HIV/AIDS ::exp human immunodeficiency virus; Acquired Immunodeficiency Syndrome ::lcode eng ::sem-class disease
 
-::abbrev A&E ::exp accident and emergency department ::lcode eng ::sem-class general
-::abbrev AAM ::exp air-to-air missile ::lcode eng ::sem-class general
-::abbrev AC ::exp air conditioning ::lcode eng ::sem-class general
-::abbrev AC ::exp alternating current ::lcode eng ::sem-class general
-::abbrev ATM ::exp automated teller machine ::lcode eng ::sem-class general
-::abbrev B&B ::exp bed and breakfast ::lcode eng ::sem-class general
-::abbrev CEO ::exp chief executive officer ::lcode eng ::sem-class general
-::abbrev CCTV ::exp closed-circuit television ::lcode eng ::sem-class general
-::abbrev CEO ::exp chief executive officer ::lcode eng ::sem-class general
-::abbrev CFO ::exp chief financial officer ::lcode eng ::sem-class general
-::abbrev CPU ::exp central processing unit ::lcode eng ::sem-class general
-::abbrev CS ::exp computer science ::lcode eng ::sem-class general
-::abbrev DD ::exp dear daughter ::lcode eng ::sem-class general
-::abbrev DDoS ::exp distributed denial of service ::lcode eng ::sem-class general
-::abbrev DH ::exp dear husband ::lcode eng ::sem-class general
-::abbrev DS ::exp dear son ::lcode eng ::sem-class general
-::abbrev DW ::exp dear wife ::lcode eng ::sem-class general
-::abbrev EMT ::exp epithelial-mesenchymal transition ::lcode eng ::sem-class general
-::abbrev ICBM ::exp intercontinental ballistic missile ::lcode eng ::sem-class general
-::abbrev IED ::exp improvised explosive device ::lcode eng ::sem-class general
-::abbrev IP ::exp intellectual property ::lcode eng ::sem-class general ::case-sensitive True
-::abbrev IP ::exp internet protocol ::lcode eng ::sem-class general ::case-sensitive True
-::abbrev IT ::exp information technology ::lcode eng ::sem-class general ::case-sensitive True
-::abbrev MM ::exp multiple myeloma ::lcode eng ::sem-class general
-::abbrev MP ::exp member of parliament ::lcode eng ::sem-class general ::country UK
-::abbrev MP ::exp military police ::lcode eng ::sem-class general
-::abbrev NGO ::exp non-governmental organization ::lcode eng ::sem-class general
-::abbrev OP ::exp original poster ::lcode eng ::sem-class general
-::abbrev PC ::exp personal computer ::lcode eng ::sem-class general
-::abbrev PC ::exp politically correct ::lcode eng ::sem-class general
-::abbrev POW ::exp prisoner of war ::lcode eng ::sem-class general
-::abbrev Q&A ::exp question and answer ::lcode eng ::sem-class general
-::abbrev R&B ::exp rythm and blues ::lcode eng ::sem-class general
-::abbrev R&D ::exp research and development ::lcode eng ::sem-class general
-::abbrev RPG ::exp rocket-propelled grenade ::lcode eng ::sem-class general
-::abbrev S&L ::exp savings and loan ::lcode eng ::sem-class general
-::abbrev WMD ::exp weapons of mass destruction ::lcode eng ::sem-class general
+::abbrev A&E ::exp accident and emergency department ::lcode eng
+::abbrev AAM ::exp air-to-air missile ::lcode eng
+::abbrev AC ::exp air conditioning ::lcode eng
+::abbrev AC ::exp alternating current ::lcode eng
+::abbrev ATM ::exp automated teller machine ::lcode eng
+::abbrev B&B ::exp bed and breakfast ::lcode eng
+::abbrev CEO ::exp chief executive officer ::lcode eng
+::abbrev CCTV ::exp closed-circuit television ::lcode eng
+::abbrev CEO ::exp chief executive officer ::lcode eng
+::abbrev CFO ::exp chief financial officer ::lcode eng
+::abbrev CPU ::exp central processing unit ::lcode eng
+::abbrev CS ::exp computer science ::lcode eng
+::abbrev DD ::exp dear daughter ::lcode eng
+::abbrev DDoS ::exp distributed denial of service ::lcode eng
+::abbrev DH ::exp dear husband ::lcode eng
+::abbrev DS ::exp dear son ::lcode eng
+::abbrev DW ::exp dear wife ::lcode eng
+::abbrev EMT ::exp epithelial-mesenchymal transition ::lcode eng
+::abbrev ICBM ::exp intercontinental ballistic missile ::lcode eng
+::abbrev IED ::exp improvised explosive device ::lcode eng
+::abbrev IP ::exp intellectual property ::lcode eng ::case-sensitive True
+::abbrev IP ::exp internet protocol ::lcode eng ::case-sensitive True
+::abbrev IT ::exp information technology ::lcode eng ::case-sensitive True
+::abbrev MM ::exp multiple myeloma ::lcode eng
+::abbrev MP ::exp member of parliament ::lcode eng ::country UK
+::abbrev MP ::exp military police ::lcode eng
+::abbrev NGO ::exp non-governmental organization ::lcode eng
+::abbrev OP ::exp original poster ::lcode eng
+::abbrev PC ::exp personal computer ::lcode eng
+::abbrev PC ::exp politically correct ::lcode eng
+::abbrev POW ::exp prisoner of war ::lcode eng
+::abbrev Q&A ::exp question and answer ::lcode eng
+::abbrev R&B ::exp rythm and blues ::lcode eng
+::abbrev R&D ::exp research and development ::lcode eng
+::abbrev RPG ::exp rocket-propelled grenade ::lcode eng
+::abbrev S&L ::exp savings and loan ::lcode eng
+::abbrev WMD ::exp weapons of mass destruction ::lcode eng
 
 ::abbrev cm ::exp centimeter ::lcode eng ::sem-class unit-of-measurement
 ::abbrev d. ::exp day ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
@@ -568,32 +572,32 @@
 ::abbrev mSv/hr ::exp millisievert per hour ::lcode eng ::sem-class unit-of-measurement
 ::abbrev μSv/hr ::exp microsievert per hour ::lcode eng ::sem-class unit-of-measurement
 
-::abbrev ad ::exp advertisement ::lcode eng ::sem-class general
-::abbrev asap ::exp as soon as possible ::lcode eng ::sem-class general
-::abbrev bd ::exp bluray disc ::lcode eng ::sem-class general
-::abbrev bro ::exp brother ::lcode eng ::sem-class general
-::abbrev CD ::exp compact disc ::lcode eng ::sem-class general
-::abbrev DVD ::exp digital versatile disc ::lcode eng ::sem-class general
-::abbrev exec ::exp executive ::lcode eng ::sem-class general ::inflections execs
-::abbrev lib ::exp liberal ::lcode eng ::sem-class general
-::abbrev lol ::exp laughing out loud ::lcode eng ::sem-class general
-::abbrev mag ::exp magazine ::lcode eng ::sem-class general
-::abbrev math ::exp mathematics ::lcode eng ::sem-class general
-::abbrev maths ::exp mathematics ::lcode eng ::sem-class general
-::abbrev pic ::exp picture ::lcode eng ::sem-class general
-::abbrev Q-tip ::lcode eng ::sem-class general ::inflections Q-tips
-::abbrev sis ::exp sister ::lcode eng ::sem-class general
-::abbrev TV ::exp television ::lcode eng ::sem-class general
-::abbrev e-mail ::exp electronic mail ::lcode eng ::sem-class general ::inflections e-mails
-::abbrev 3D ::exp three dimensional ::lcode eng ::sem-class general
-::abbrev sci-fi ::exp science-fiction ::lcode eng ::sem-class general
-::abbrev A/C ::exp air conditioning ::lcode eng ::sem-class general
-::abbrev w/o ::exp without ::lcode eng ::sem-class general
-::abbrev w/ ::exp with ::lcode eng ::sem-class general ::right-context-not \S
-::abbrev s/he ::exp she or he ::lcode eng ::sem-class general
+::abbrev ad ::exp advertisement ::lcode eng
+::abbrev asap ::exp as soon as possible ::lcode eng
+::abbrev bd ::exp bluray disc ::lcode eng
+::abbrev bro ::exp brother ::lcode eng
+::abbrev CD ::exp compact disc ::lcode eng
+::abbrev DVD ::exp digital versatile disc ::lcode eng
+::abbrev exec ::exp executive ::lcode eng ::inflections execs
+::abbrev lib ::exp liberal ::lcode eng
+::abbrev lol ::exp laughing out loud ::lcode eng
+::abbrev mag ::exp magazine ::lcode eng
+::abbrev math ::exp mathematics ::lcode eng
+::abbrev maths ::exp mathematics ::lcode eng
+::abbrev pic ::exp picture ::lcode eng
+::abbrev Q-tip ::lcode eng ::inflections Q-tips
+::abbrev sis ::exp sister ::lcode eng
+::abbrev TV ::exp television ::lcode eng
+::abbrev e-mail ::exp electronic mail ::lcode eng ::inflections e-mails
+::abbrev 3D ::exp three dimensional ::lcode eng
+::abbrev sci-fi ::exp science-fiction ::lcode eng
+::abbrev A/C ::exp air conditioning ::lcode eng
+::abbrev w/o ::exp without ::lcode eng
+::abbrev w/ ::exp with ::lcode eng ::right-context-not \S
+::abbrev s/he ::exp she or he ::lcode eng
 
 ::abbrev %pw ::lcode eng ::sem-class disfluency
-::abbrev a2k ::exp able to know ::lcode eng ::sem-class general
+::abbrev a2k ::exp able to know ::lcode eng
 
 ::abbrev cont'd ::exp continued ::lcode eng
 ::abbrev eff'd ::exp fucked ::lcode eng

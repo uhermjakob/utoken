@@ -11,7 +11,7 @@ import sys
 from typing import Dict, List, Optional, Pattern
 
 __version__ = '0.0.4'
-last_mod_date = 'August 10, 2021'
+last_mod_date = 'August 12, 2021'
 
 
 class ResourceEntry:
