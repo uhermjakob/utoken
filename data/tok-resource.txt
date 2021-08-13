@@ -7,8 +7,8 @@
 ::lexical 'Ndrangheta ::sem-class criminal-organization ::country Italy
 
 # Person names to be preserved
-::lexical D'Alessio ::sem-class person
-::lexical D'Artagnan ::sem-class person
+::lexical D'Alessio ::sem-class person-last-name
+::lexical D'Artagnan ::sem-class person-last-name
 
 # split off punctuation anywhere
 ::punct-split &quot; ::side both ::group True

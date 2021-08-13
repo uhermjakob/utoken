@@ -328,7 +328,7 @@
 ::abbrev UCLA ::exp University of California, Los Angeles ::lcode eng ::sem-class educational-organization
 ::abbrev USC ::exp University of Southern California ::lcode eng ::sem-class educational-organization
 
-::abbrev USMC ::exp United States Marine Corps ::lcode eng ::sem-class military-organization
+::abbrev USMC ::exp United States Marine Corps ::lcode eng ::sem-class military
 
 ::abbrev ASEAN ::exp Association of Southeast Asian Nations ::lcode eng ::sem-class international-organization
 ::abbrev EU ::exp European Union ::lcode eng ::sem-class international-organization
