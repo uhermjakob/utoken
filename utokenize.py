@@ -912,7 +912,8 @@ class Tokenizer:
                                     # don't split off d' from d's etc.
                                     and (not(self.re_ends_w_apostrophe.match(token_candidate)
                                              and self.re_starts_w_single_s.match(right_context)))):
-                                return self.rec_tok([token_candidate], [start_position], s, offset, 'LEXICAL',
+                                return self.rec_tok([token_candidate], [start_position], s, offset,
+                                                    resource_entry.tag or 'LEXICAL',
                                                     line_id, chart, lang_code, ht, this_function, [token_candidate],
                                                     sem_class=resource_entry.sem_class, left_done=True)
                 end_position -= 1

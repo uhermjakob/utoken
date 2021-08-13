@@ -245,7 +245,8 @@ class ResourceDict:
                                 resource_entry.sem_class = sem_class
                             if slot_value_in_double_colon_del_list(line, 'case-sensitive'):
                                 resource_entry.case_sensitive = True
-                                # log.info(f'Case-sensitive({s}) is True')
+                            if tag := slot_value_in_double_colon_del_list(line, 'tag'):
+                                resource_entry.tag = tag
                             if left_context_s := slot_value_in_double_colon_del_list(line, 'left-context'):
                                 try:
                                     resource_entry.left_context = regex.compile(eval('r".*' + left_context_s + '$"'))
