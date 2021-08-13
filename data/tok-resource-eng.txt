@@ -69,49 +69,49 @@
 ::repair U.N ::target U.N. ::lcode eng ::right-context-not \s*[.] ::problem missing period
 ::repair U.S ::target U.S. ::lcode eng ::right-context-not \s*[.] ::problem missing period
 
-::preserve 'd ::lcode eng ::tag DECONTRACTION-L
-::preserve 'em ::lcode eng ::tag DECONTRACTION-L
-::preserve 're ::lcode eng ::tag DECONTRACTION-L
-::preserve 'll ::lcode eng ::tag DECONTRACTION-L
-::preserve 'm ::lcode eng ::tag DECONTRACTION-L
-::preserve 're ::lcode eng ::tag DECONTRACTION-L
-::preserve 's ::lcode eng ::tag DECONTRACTION-L
-::preserve 've ::lcode eng ::tag DECONTRACTION-L
-::preserve l' ::lcode eng ::tag DECONTRACTION-L
-::preserve n't ::lcode eng ::tag DECONTRACTION-L
-::preserve d'oh ::lcode eng
-::preserve c' ::lcode eng ::tag DECONTRACTION-L ::etym-lc fra ::example C'est la vie.
-::preserve d' ::lcode eng ::tag DECONTRACTION-L ::etym-lc fra  ::example Coeur d'Alene
-::preserve n' ::lcode eng ::tag DECONTRACTION-L ::etym-lc fra
-::preserve qu' ::lcode eng ::tag DECONTRACTION-L ::etym-lc fra
-::preserve s' ::lcode eng ::tag DECONTRACTION-L ::etym-lc fra
+::lexical 'd ::lcode eng ::tag DECONTRACTION-L
+::lexical 'em ::lcode eng ::tag DECONTRACTION-L
+::lexical 're ::lcode eng ::tag DECONTRACTION-L
+::lexical 'll ::lcode eng ::tag DECONTRACTION-L
+::lexical 'm ::lcode eng ::tag DECONTRACTION-L
+::lexical 're ::lcode eng ::tag DECONTRACTION-L
+::lexical 's ::lcode eng ::tag DECONTRACTION-L
+::lexical 've ::lcode eng ::tag DECONTRACTION-L
+::lexical l' ::lcode eng ::tag DECONTRACTION-L
+::lexical n't ::lcode eng ::tag DECONTRACTION-L
+::lexical d'oh ::lcode eng
+::lexical c' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::example C'est la vie.
+::lexical d' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra  ::example Coeur d'Alene
+::lexical n' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra
+::lexical qu' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra
+::lexical s' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra
 
-::preserve big-time ::lcode eng
-::preserve brother-in-law ::lcode eng ::inflections brothers-in-law
-::preserve daughter-in-law ::lcode eng ::inflections daughers-in-law
-::preserve father-in-law ::lcode eng ::inflections fathers-in-law
-::preserve full-scale ::lcode eng
-::preserve full-time ::lcode eng
-::preserve high-end ::lcode eng
-::preserve high-tech ::lcode eng
-::preserve in-laws ::lcode eng
-::preserve large-scale ::lcode eng
-::preserve long-term ::lcode eng
-::preserve mid-term ::lcode eng
-::preserve modern-day ::lcode eng
-::preserve mother-in-law ::lcode eng ::inflections mothers-in-law
-::preserve part-time ::lcode eng
-::preserve real-time ::lcode eng
-::preserve same-sex ::lcode eng
-::preserve science-fiction ::lcode eng
-::preserve self-righteous ::lcode eng
-::preserve short-term ::lcode eng
-::preserve sister-in-law ::lcode eng ::inflections sisters-in-law
-::preserve small-scale ::lcode eng
-::preserve so-called ::lcode eng
-::preserve son-in-law ::lcode eng ::inflections sons-in-law
-::preserve T-shirt ::lcode eng ::inflections T-shirts
-::preserve X-ray ::lcode eng ::inflections X-rays
+::lexical big-time ::lcode eng
+::lexical brother-in-law ::lcode eng ::inflections brothers-in-law
+::lexical daughter-in-law ::lcode eng ::inflections daughers-in-law
+::lexical father-in-law ::lcode eng ::inflections fathers-in-law
+::lexical full-scale ::lcode eng
+::lexical full-time ::lcode eng
+::lexical high-end ::lcode eng
+::lexical high-tech ::lcode eng
+::lexical in-laws ::lcode eng
+::lexical large-scale ::lcode eng
+::lexical long-term ::lcode eng
+::lexical mid-term ::lcode eng
+::lexical modern-day ::lcode eng
+::lexical mother-in-law ::lcode eng ::inflections mothers-in-law
+::lexical part-time ::lcode eng
+::lexical real-time ::lcode eng
+::lexical same-sex ::lcode eng
+::lexical science-fiction ::lcode eng
+::lexical self-righteous ::lcode eng
+::lexical short-term ::lcode eng
+::lexical sister-in-law ::lcode eng ::inflections sisters-in-law
+::lexical small-scale ::lcode eng
+::lexical so-called ::lcode eng
+::lexical son-in-law ::lcode eng ::inflections sons-in-law
+::lexical T-shirt ::lcode eng ::inflections T-shirts
+::lexical X-ray ::lcode eng ::inflections X-rays
 
 ::punct-split / ::side both ::lcode eng ::right-context (?:day|gallon|hour|hr|min|minute|month|sec|second|week|wk|yr)\b
 
@@ -218,7 +218,7 @@
 ::abbrev cf. ::exp confer; compare ::lcode eng
 ::abbrev ed. ::exp editor ::lcode eng
 ::abbrev e.g. ::exp exempli gratia; for example ::lcode eng
-::abbrev et al. ::exp et alii; et aliae; and others ::lcode eng ::etym-lc lat
+::abbrev et al. ::exp et alii; et aliae; and others ::lcode eng ::etym-lcode lat
 ::abbrev Flr. ::exp floor ::lcode eng
 ::abbrev hosp. ::exp hospital ::lcode eng
 ::abbrev i.e. ::exp id est; that is ::lcode eng

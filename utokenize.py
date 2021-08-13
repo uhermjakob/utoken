@@ -26,7 +26,7 @@ import util
 log.basicConfig(level=log.INFO)
 
 __version__ = '0.0.4'
-last_mod_date = 'August 12, 2021'
+last_mod_date = 'August 13, 2021'
 
 
 class VertexMap:
@@ -175,7 +175,7 @@ class Tokenizer:
                                    self.tokenize_abbreviation_periods,
                                    self.tokenize_english_contractions,
                                    self.tokenize_numbers,
-                                   self.tokenize_preserve_according_to_resource_entries,
+                                   self.tokenize_lexical_according_to_resource_entries,
                                    self.tokenize_mt_punctuation,
                                    self.tokenize_punctuation_according_to_resource_entries,
                                    self.tokenize_post_punct,
@@ -861,13 +861,13 @@ class Tokenizer:
             last_primary_char_type_vector = current_char_type_vector
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    def tokenize_preserve_according_to_resource_entries(self, s: str, chart: Chart, ht: dict,
-                                                        lang_code: Optional[str] = None, line_id: Optional[str] = None,
-                                                        offset: int = 0) -> str:
-        """This tokenization step handles preserve entries according to data files such as data/tok-resource-eng.txt.
+    def tokenize_lexical_according_to_resource_entries(self, s: str, chart: Chart, ht: dict,
+                                                       lang_code: Optional[str] = None, line_id: Optional[str] = None,
+                                                       offset: int = 0) -> str:
+        """This tokenization step handles lexical entries according to data files such as data/tok-resource-eng.txt.
         This method mirrors the structure of tokenize_according_to_resource_entries. It is separate,
         because it needs to be mch further down the tokenization step sequence."""
-        this_function = self.tokenize_preserve_according_to_resource_entries
+        this_function = self.tokenize_lexical_according_to_resource_entries
 
         last_primary_char_type_vector = 0  # 'primary': not counting modifying letters
         len_s = len(s)
@@ -884,7 +884,7 @@ class Tokenizer:
             max_end_position = start_position
             position = start_position+1
             while position <= len_s \
-                    and self.tok_dict.prefix_dict_preserve.get(s_lc[start_position:position], False):
+                    and self.tok_dict.prefix_dict_lexical.get(s_lc[start_position:position], False):
                 max_end_position = position
                 position += 1
             end_position = max_end_position
@@ -898,7 +898,7 @@ class Tokenizer:
                 if (not((rc0_type_vector & self.char_is_alpha) and self.re_ends_w_letter.match(token_candidate))
                         and not(rc0_type_vector & self.char_is_modifier)):  # not followed by orphan modifier
                     for resource_entry in self.tok_dict.resource_dict.get(token_candidate_lc, []):
-                        if self.resource_entry_fulfills_conditions(resource_entry, util.PreserveEntry, token_candidate,
+                        if self.resource_entry_fulfills_conditions(resource_entry, util.LexicalEntry, token_candidate,
                                                                    s, start_position, end_position, offset):
                             sem_class = resource_entry.sem_class
                             clause = ''

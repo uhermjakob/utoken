@@ -11,7 +11,7 @@ import sys
 from typing import Dict, List, Optional, Pattern
 
 __version__ = '0.0.4'
-last_mod_date = 'August 12, 2021'
+last_mod_date = 'August 13, 2021'
 
 
 class ResourceEntry:
@@ -59,7 +59,7 @@ class ContractionEntry(ResourceEntry):
         self.char_splits = char_splits   # e.g. [2,3] for "won't"/"will n't" as latter elems map to 2+3 chars in won't
 
 
-class PreserveEntry(ResourceEntry):
+class LexicalEntry(ResourceEntry):
     def __init__(self, s: str, sem_class: Optional[str] = None, lcode: Optional[str] = None,
                  country: Optional[str] = None, tag: Optional[str] = None):
         super().__init__(s, sem_class=sem_class, lcode=lcode, country=country, tag=tag)
@@ -79,7 +79,7 @@ class ResourceDict:
         self.resource_dict: Dict[str, List[ResourceEntry]] = {}          # primary dict
         self.reverse_resource_dict: Dict[str, List[ResourceEntry]] = {}  # reverse index
         self.prefix_dict: Dict[str, bool] = {}              # prefixes of headwords to more efficiently stop search
-        self.prefix_dict_preserve: Dict[str, bool] = {}
+        self.prefix_dict_lexical: Dict[str, bool] = {}
         self.prefix_dict_punct: Dict[str, bool] = {}
         self.max_s_length: int = 0
 
@@ -159,7 +159,7 @@ class ResourceDict:
                                                                               'comment',
                                                                               'contraction',
                                                                               'country',
-                                                                              'etym-lc',
+                                                                              'etym-lcode',
                                                                               'example',
                                                                               'exp',
                                                                               'group',
@@ -167,7 +167,7 @@ class ResourceDict:
                                                                               'lcode',
                                                                               'left-context',
                                                                               'left-context-not',
-                                                                              'preserve',
+                                                                              'lexical',
                                                                               'problem',
                                                                               'punct-split',
                                                                               'repair',
@@ -179,7 +179,7 @@ class ResourceDict:
                                                                               'target'],
                                                                  required_slot_dict={'abbrev': [],
                                                                                      'contraction': ['target'],
-                                                                                     'preserve': [],
+                                                                                     'lexical': [],
                                                                                      'punct-split': ['side'],
                                                                                      'repair': ['target']})
                         if not valid:
@@ -220,8 +220,8 @@ class ResourceDict:
                                                 f'(Value should be list of comma-separated integers, e.g. 2,3')
                             resource_entry = ContractionEntry(s, target, char_splits=char_splits)
                             self.register_resource_entry_in_reverse_resource_dict(resource_entry, [target])
-                        elif head_slot == 'preserve':
-                            resource_entry = PreserveEntry(s)
+                        elif head_slot == 'lexical':
+                            resource_entry = LexicalEntry(s)
                         elif head_slot == 'punct-split':
                             side = slot_value_in_double_colon_del_list(line, 'side')
                             group = slot_value_in_double_colon_del_list(line, 'group')
@@ -237,8 +237,8 @@ class ResourceDict:
                             for prefix_length in range(1, len(lc_s)+1):
                                 if head_slot == 'punct-split':
                                     self.prefix_dict_punct[lc_s[:prefix_length]] = True
-                                elif head_slot == 'preserve':
-                                    self.prefix_dict_preserve[lc_s[:prefix_length]] = True
+                                elif head_slot == 'lexical':
+                                    self.prefix_dict_lexical[lc_s[:prefix_length]] = True
                                 else:
                                     self.prefix_dict[lc_s[:prefix_length]] = True
                             if sem_class := slot_value_in_double_colon_del_list(line, 'sem-class'):
