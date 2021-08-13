@@ -16,18 +16,19 @@ last_mod_date = 'August 12, 2021'
 
 class ResourceEntry:
     """Annotated entries for abbreviations, contractions, repairs etc."""
-    def __init__(self, s: str,
-                 sem_class: Optional[str] = None, lcode: Optional[str] = None,
-                 country: Optional[str] = None, comment: Optional[str] = None,
+    def __init__(self, s: str, tag: Optional[str] = None,
+                 sem_class: Optional[str] = None, country: Optional[str] = None,
+                 lcode: Optional[str] = None, etym_lcode: Optional[str] = None,
                  left_context: Optional[Pattern[str]] = None, left_context_not: Optional[Pattern[str]] = None,
                  right_context: Optional[Pattern[str]] = None, right_context_not: Optional[Pattern[str]] = None,
                  case_sensitive: bool = False):
         self.s = s                      # e.g. Gen.
         self.lcode = lcode              # language code, e.g. eng
+        self.etym_lcode = etym_lcode    # etymological language code, e.g. lat
         self.country = country          # country, e.g. Canada
         self.sem_class = sem_class      # e.g. pre-name-title
         self.case_sensitive = case_sensitive
-        self.comment = comment
+        self.tag = tag
         self.left_context: Optional[Pattern[str]] = left_context
         self.left_context_not: Optional[Pattern[str]] = left_context_not
         self.right_context: Optional[Pattern[str]] = right_context
@@ -36,37 +37,38 @@ class ResourceEntry:
 
 class AbbreviationEntry(ResourceEntry):
     def __init__(self, abbrev: str, expansions: Optional[List[str]], sem_class: Optional[str] = None,
-                 lcode: Optional[str] = None, country: Optional[str] = None, comment: Optional[str] = None):
-        super().__init__(abbrev, sem_class=sem_class, lcode=lcode, country=country, comment=comment)
+                 lcode: Optional[str] = None, country: Optional[str] = None, tag: Optional[str] = None):
+        super().__init__(abbrev, sem_class=sem_class, lcode=lcode, country=country, tag=tag)
         self.expansions = expansions      # e.g. [General]
 
 
 class RepairEntry(ResourceEntry):
-    def __init__(self, bad_s: str, good_s: str, sem_class: Optional[str] = None,
-                 lcode: Optional[str] = None, country: Optional[str] = None, comment: Optional[str] = None):
-        super().__init__(bad_s, sem_class=sem_class, lcode=lcode, country=country, comment=comment)
+    def __init__(self, bad_s: str, good_s: str, sem_class: Optional[str] = None, problem: Optional[str] = None,
+                 lcode: Optional[str] = None, country: Optional[str] = None, tag: Optional[str] = None):
+        super().__init__(bad_s, sem_class=sem_class, lcode=lcode, country=country, tag=tag)
         self.target = good_s      # repaired, e.g. "ca n't" is repaired as "can n't"
+        self.problem = problem
 
 
 class ContractionEntry(ResourceEntry):
     def __init__(self, contraction: str, decontraction: str, sem_class: Optional[str] = None,
-                 lcode: Optional[str] = None, country: Optional[str] = None, comment: Optional[str] = None,
+                 lcode: Optional[str] = None, country: Optional[str] = None, tag: Optional[str] = None,
                  char_splits: Optional[List[int]] = None):
-        super().__init__(contraction, sem_class=sem_class, lcode=lcode, country=country, comment=comment)
+        super().__init__(contraction, sem_class=sem_class, lcode=lcode, country=country, tag=tag)
         self.target = decontraction      # e.g. "won't" is decontracted to "will n't"
         self.char_splits = char_splits   # e.g. [2,3] for "won't"/"will n't" as latter elems map to 2+3 chars in won't
 
 
 class PreserveEntry(ResourceEntry):
-    def __init__(self, s: str, sem_class: Optional[str] = None,
-                 lcode: Optional[str] = None, country: Optional[str] = None, comment: Optional[str] = None):
-        super().__init__(s, sem_class=sem_class, lcode=lcode, country=country, comment=comment)
+    def __init__(self, s: str, sem_class: Optional[str] = None, lcode: Optional[str] = None,
+                 country: Optional[str] = None, tag: Optional[str] = None):
+        super().__init__(s, sem_class=sem_class, lcode=lcode, country=country, tag=tag)
 
 
 class PunctSplitEntry(ResourceEntry):
     def __init__(self, s: str, side: str, group: Optional[bool], sem_class: Optional[str] = None,
-                 lcode: Optional[str] = None, country: Optional[str] = None, comment: Optional[str] = None):
-        super().__init__(s, sem_class=sem_class, lcode=lcode, country=country, comment=comment)
+                 lcode: Optional[str] = None, country: Optional[str] = None, tag: Optional[str] = None):
+        super().__init__(s, sem_class=sem_class, lcode=lcode, country=country, tag=tag)
         self.side = side
         self.group = group if group else False
 
@@ -151,14 +153,30 @@ class ResourceDict:
                             continue
                         # Check whether cost file line is well-formed. Following call will output specific warnings.
                         valid = double_colon_del_list_validation(line, str(line_number), filename,
-                                                                 valid_slots=['abbrev', 'case-sensitive',
-                                                                              'char-split', 'comment',
-                                                                              'contraction', 'country', 'exp',
-                                                                              'group', 'inflections', 'lcode',
-                                                                              'left-context', 'left-context-not',
-                                                                              'preserve', 'punct-split', 'repair',
-                                                                              'right-context', 'right-context-not',
-                                                                              'sem-class', 'side', 'target'],
+                                                                 valid_slots=['abbrev',
+                                                                              'case-sensitive',
+                                                                              'char-split',
+                                                                              'comment',
+                                                                              'contraction',
+                                                                              'country',
+                                                                              'etym-lc',
+                                                                              'example',
+                                                                              'exp',
+                                                                              'group',
+                                                                              'inflections',
+                                                                              'lcode',
+                                                                              'left-context',
+                                                                              'left-context-not',
+                                                                              'preserve',
+                                                                              'problem',
+                                                                              'punct-split',
+                                                                              'repair',
+                                                                              'right-context',
+                                                                              'right-context-not',
+                                                                              'sem-class',
+                                                                              'side',
+                                                                              'tag',
+                                                                              'target'],
                                                                  required_slot_dict={'abbrev': [],
                                                                                      'contraction': ['target'],
                                                                                      'preserve': [],

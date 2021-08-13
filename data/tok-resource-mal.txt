@@ -11,4 +11,3 @@
 ::abbrev ഇ. ::lcode mal ::sem-class name-initial ::comment E.
 ::abbrev എഫ്. ::lcode mal ::sem-class name-initial ::comment F.
 ::abbrev ഡബ്ല്യു. ::lcode mal ::sem-class name-initial ::comment W.
-
