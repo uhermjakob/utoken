@@ -11,7 +11,7 @@ import sys
 from typing import Dict, List, Optional, Pattern
 
 __version__ = '0.0.4'
-last_mod_date = 'August 13, 2021'
+last_mod_date = 'August 14, 2021'
 
 
 class ResourceEntry:
@@ -183,8 +183,6 @@ class ResourceDict:
                         targets.append(target_without_suffix + suffix_variation)
                     for misspelling_variation, target_variation in zip(misspellings, targets):
                         new_line = f'::repair {misspelling_variation} ::target {target_variation} {rest_line}'
-                        if misspelling.startswith('until'):
-                            log.info(f'::misspelling new-line {new_line}')
                         lines.append(new_line)
             else:
                 misspelling_s = slot_value_in_double_colon_del_list(line, 'misspelling')
