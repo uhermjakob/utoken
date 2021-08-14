@@ -6,6 +6,12 @@ import re
 import regex
 import sys
 from typing import Optional
+import unicodedata as ud
+
+
+def strip_diacritics(s):
+    return ''.join(c for c in ud.normalize('NFD', s)
+                   if ud.category(c) != 'Mn')
 
 
 def slot_value_in_double_colon_del_list(s: str, slot: str, default: Optional[str] = None) -> str:
@@ -17,7 +23,8 @@ re_non_letters = regex.compile(r'\PL')
 
 
 def token_sort_function(s: str) -> str:
-    key1 = re_non_letters.sub('', s).lower()  # removes non-letters, lower case; e.g. Capt. -> capt
+    """ removes non-letters, removes diacritics, lowers case; e.g. Capt. -> capt"""
+    key1 = strip_diacritics(re_non_letters.sub('', s)).lower()
     return f'{key1} \U000FFFFF {s}'
 
 
@@ -33,7 +40,12 @@ if __name__ == "__main__":
     dict_new = {}
     head_slot_order = ['contraction', 'repair', 'punct-split', 'abbrev', 'lexical', 'misspelling']
     for file in ['anchor', 'new']:
-        filename = sys.argv[1] if file == 'anchor' else sys.argv[2]
+        if file == 'anchor':
+            filename = sys.argv[1]
+        elif len(sys.argv) >= 3:
+            filename = sys.argv[2]
+        else:
+            continue  # no merge, just re-sort anchor file
         with open(filename) as f:
             line_number = 0
             for line in f:
@@ -61,6 +73,11 @@ if __name__ == "__main__":
                         sub_group_p = True
                     else:
                         group_key += ' ::token-category-none'
+                    if tag := slot_value_in_double_colon_del_list(line, 'tag'):
+                        group_key += f' ::tag {tag}'
+                        sub_group_p = True
+                    else:
+                        group_key += ' ::tag-none'
                     if etym_lcode := slot_value_in_double_colon_del_list(line, 'etym-lcode'):
                         group_key += f' ::etym-lcode {etym_lcode}'
                         sub_group_p = True
@@ -70,7 +87,7 @@ if __name__ == "__main__":
                         group_key += f' ::problem {problem}'
                         sub_group_p = True
                     else:
-                        group_key += ' ::sem-class-none'
+                        group_key += ' ::problem-none'
                     token_list = group_key_to_token_dict.get(group_key, [])
                     if file == 'anchor':
                         anchor_token_to_group_key_dict.setdefault(token, []).append(group_key)
