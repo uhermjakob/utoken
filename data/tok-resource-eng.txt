@@ -97,10 +97,6 @@
 
 ::abbrev LA ::exp Los Angeles ::lcode eng ::sem-class city ::case-sensitive True
 
-::abbrev AT&T ::lcode eng ::sem-class company
-::abbrev K-Mart ::lcode eng ::sem-class company
-::abbrev T-Mobile ::lcode eng ::sem-class company
-
 ::abbrev Co. ::exp Company ::lcode eng ::sem-class company-type ::left-context \s
 ::abbrev Corp. ::exp Corporation ::lcode eng ::sem-class company-type
 ::abbrev Inc. ::exp Incorporated ::lcode eng ::sem-class company-type
@@ -127,13 +123,6 @@
 ::abbrev sects. ::exp sections ::lcode eng ::sem-class corpus-component
 ::abbrev vol. ::exp volume ::lcode eng ::sem-class corpus-component
 ::abbrev vols. ::exp volumes ::lcode eng ::sem-class corpus-component
-
-::abbrev EE.UU. ::exp Estados Unidos; United States ::lcode eng ::sem-class country
-::abbrev UAE ::exp United Arab Emirates ::lcode eng ::sem-class country
-::abbrev U.K. ::exp United Kingdom ::lcode eng ::sem-class country
-::abbrev U.S. ::exp United States ::lcode eng ::sem-class country
-::abbrev U.S.A. ::exp United States of America ::lcode eng ::sem-class country
-::abbrev USA ::exp United States of America; United States ::lcode eng ::sem-class country
 
 ::abbrev AF ::exp Afghanistan ::lcode eng ::sem-class country-code ::case-sensitive True
 ::abbrev AL ::exp Albania ::lcode eng ::sem-class country-code ::case-sensitive True
@@ -232,47 +221,12 @@
 ::abbrev Rs. ::exp rupees ::lcode eng ::sem-class currency-unit
 ::abbrev USD ::exp United States dollar ::lcode eng ::sem-class currency-unit
 
-::abbrev AIDS ::exp Acquired Immunodeficiency Syndrome ::lcode eng ::sem-class disease
-::abbrev HIV/AIDS ::exp human immunodeficiency virus; Acquired Immunodeficiency Syndrome ::lcode eng ::sem-class disease
-
-::abbrev %pw ::lcode eng ::sem-class disfluency
-
-::abbrev ISI ::exp Information Sciences Institute ::lcode eng ::sem-class educational-organization ::case-sensitive True
-::abbrev MIT ::exp Massachusetts Institute of Technology ::lcode eng ::sem-class educational-organization ::case-sensitive True
-::abbrev UCLA ::exp University of California, Los Angeles ::lcode eng ::sem-class educational-organization
-::abbrev USC ::exp University of Southern California ::lcode eng ::sem-class educational-organization
-
 ::abbrev D-Day ::exp Normandy landings ::lcode eng ::sem-class event
 ::abbrev V-E Day ::exp Victory in Europe Day ::lcode eng ::sem-class event ::alt-spelling VE Day; VE-Day
 ::abbrev WW1 ::exp World War I ::lcode eng ::sem-class event
 ::abbrev WW2 ::exp World War II ::lcode eng ::sem-class event
 ::abbrev WWI ::exp World War I ::lcode eng ::sem-class event
 ::abbrev WWII ::exp World War II ::lcode eng ::sem-class event
-
-::abbrev ESA ::exp European Space Agency ::lcode eng ::sem-class government-organiztion
-::abbrev NASA ::exp National Aeronautics and Space Administration ::lcode eng ::sem-class government-organiztion
-::abbrev USPS ::exp United States Postal Service ::lcode eng ::sem-class government-organiztion
-
-::abbrev ASEAN ::exp Association of Southeast Asian Nations ::lcode eng ::sem-class international-organization
-::abbrev E.U. ::exp European Union ::lcode eng ::sem-class international-organization
-::abbrev EU ::exp European Union ::lcode eng ::sem-class international-organization
-::abbrev GCC ::exp Golf Cooperation Council ::lcode eng ::sem-class international-organization
-::abbrev IAEA ::exp International Atomic Energy Agency ::lcode eng ::sem-class international-organization
-::abbrev NATO ::exp North Atlantic Treaty Organization ::lcode eng ::sem-class international-organization
-::abbrev OSCE ::exp Organization for Security and Cooperation in Europe ::lcode eng ::sem-class international-organization
-::abbrev U.N. ::exp United Nations ::lcode eng ::sem-class international-organization
-::abbrev UN ::exp United Nations ::lcode eng ::sem-class international-organization ::case-sensitive True
-::abbrev UNDCP ::exp United Nations Drug Control Program ::lcode eng ::sem-class international-organization
-::abbrev UNODC ::exp United Nations Office for Drugs and Crime ::lcode eng ::sem-class international-organization
-::abbrev WHO ::exp World Health Organization ::lcode eng ::sem-class international-organization ::case-sensitive True
-::abbrev WTO ::exp World Trade Organization ::lcode eng ::sem-class international-organization
-
-::abbrev ABC ::exp American Broadcasting Corporation ::lcode eng ::sem-class media-organization
-::abbrev ABC ::exp Australian Broadcasting Corporation ::lcode eng ::sem-class media-organization
-::abbrev CCTV ::exp China Central Television ::lcode eng ::sem-class media-organization
-::abbrev ITAR-TASS ::lcode eng ::sem-class media-organization
-::abbrev NYT ::exp New York Times ::lcode eng ::sem-class media-organization
-::abbrev WSJ ::exp Wall Street Journal ::lcode eng ::sem-class media-organization
 
 ::abbrev B.P. ::exp blood pressure ::lcode eng ::sem-class medical
 ::abbrev flu ::exp influenza ::lcode eng ::sem-class medical
@@ -425,58 +379,33 @@
 ::abbrev NY ::exp New York ::lcode eng ::sem-class state-code ::country United States
 ::abbrev TX ::exp Texas ::lcode eng ::sem-class state-code ::country United States
 
-::abbrev CO2 ::exp carbon dioxide ::lcode eng ::sem-class substance
-::abbrev H2O ::exp water ::lcode eng ::sem-class substance
-::abbrev TNT ::exp trinitrotoluene ::lcode eng ::sem-class substance
-
 ::abbrev JI ::exp Jemaah Islamiyah ::lcode eng ::sem-class terrorist-organization ::case-sensitive True
 
 ::abbrev CFE ::exp Conventional Forces in Europe ::lcode eng ::sem-class treaty
 ::abbrev NAFTA ::exp North American Free Trade Agreement ::lcode eng ::sem-class treaty
 ::abbrev NPT ::exp Non-Proliferation Treaty ::lcode eng ::sem-class treaty
 
-::abbrev cm ::exp centimeter ::lcode eng ::sem-class unit-of-measurement
 ::abbrev d. ::exp day ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
 ::abbrev fl oz ::exp fluid ounce ::lcode eng ::sem-class unit-of-measurement
 ::abbrev fl. oz. ::exp fluid ounce ::lcode eng ::sem-class unit-of-measurement
 ::abbrev fl.oz. ::exp fluid ounce ::lcode eng ::sem-class unit-of-measurement
-::abbrev g ::exp gram ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
 ::abbrev h ::exp hour ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
 ::abbrev hrs ::exp hour ::lcode eng ::sem-class unit-of-measurement
-::abbrev kg ::exp kilogram ::lcode eng ::sem-class unit-of-measurement
-::abbrev km ::exp kilometer ::lcode eng ::sem-class unit-of-measurement
-::abbrev km2 ::exp square kilometer ::lcode eng ::sem-class unit-of-measurement
-::abbrev km² ::exp square kilometer ::lcode eng ::sem-class unit-of-measurement
-::abbrev kWh ::exp kilowatt-hour ::lcode eng ::sem-class unit-of-measurement ::misspelling kW/h
 ::abbrev lb ::exp pound ::lcode eng ::sem-class unit-of-measurement
 ::abbrev lb. ::exp pound ::lcode eng ::sem-class unit-of-measurement
 ::abbrev lbs ::exp pounds ::lcode eng ::sem-class unit-of-measurement
 ::abbrev lbs. ::exp pounds ::lcode eng ::sem-class unit-of-measurement
-::abbrev M ::exp molar ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
-::abbrev m ::exp meter ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
-::abbrev mg ::exp milligram ::lcode eng ::sem-class unit-of-measurement
 ::abbrev min ::exp minute ::lcode eng ::sem-class unit-of-measurement
-::abbrev ml ::exp milliliter ::lcode eng ::sem-class unit-of-measurement
-::abbrev mm ::exp millimeter ::lcode eng ::sem-class unit-of-measurement
 ::abbrev mph ::exp miles per hour ::lcode eng ::sem-class unit-of-measurement
 ::abbrev mph ::exp mile per hour ::lcode eng ::sem-class unit-of-measurement
 ::abbrev mSv/hr ::exp millisievert per hour ::lcode eng ::sem-class unit-of-measurement
-::abbrev ng ::exp nanogram ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True
-::abbrev nM ::exp nanomolar ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True
 ::abbrev sq. mi. ::exp square mile; square miles ::lcode eng ::sem-class unit-of-measurement
 ::abbrev yr. ::exp year ::lcode eng ::sem-class unit-of-measurement
 ::abbrev yrs. ::exp years ::lcode eng ::sem-class unit-of-measurement
-::abbrev µM ::exp micromolar ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True
-::abbrev µm ::exp micrometer ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True
 ::abbrev μSv/hr ::exp microsievert per hour ::lcode eng ::sem-class unit-of-measurement
 
-::abbrev HIV ::exp human immunodeficiency virus ::lcode eng ::sem-class virus
-
 ::abbrev A-bomb ::exp atomic bomb ::lcode eng ::sem-class weapon ::inflections A-bombs; A-bombing; A-bombed
-::abbrev AK-47 ::lcode eng ::sem-class weapon ::inflections AK-47s
-::abbrev AK47 ::lcode eng ::sem-class weapon ::inflections AK47s
 ::abbrev SA/LW ::exp small arms and light weapons ::lcode eng ::sem-class weapon
-::abbrev Topol-M ::exp RT-2PM2 Topol-M ::lcode eng ::sem-class weapon
 
 ::abbrev et al. ::exp et alii; et aliae; and others ::lcode eng ::etym-lcode lat
 
@@ -512,23 +441,19 @@
 ::abbrev b/w ::exp black and white; between ::lcode eng
 ::abbrev 'cause ::exp because ::lcode eng
 ::abbrev CCTV ::exp closed-circuit television ::lcode eng
-::abbrev CD ::exp compact disc ::lcode eng
 ::abbrev CEO ::exp chief executive officer ::lcode eng
 ::abbrev CEO ::exp chief executive officer ::lcode eng
 ::abbrev cf. ::exp confer; compare ::lcode eng
 ::abbrev CFO ::exp chief financial officer ::lcode eng
 ::abbrev c/o ::exp care of ::lcode eng
 ::abbrev cont'd ::exp continued ::lcode eng
-::abbrev CPU ::exp central processing unit ::lcode eng
 ::abbrev CS ::exp computer science ::lcode eng
 ::abbrev cul8r ::exp see you later ::lcode eng
-::abbrev 3D ::exp three dimensional ::lcode eng
 ::abbrev DD ::exp dear daughter ::lcode eng
 ::abbrev DDoS ::exp distributed denial of service ::lcode eng
 ::abbrev decr. ::exp decrease ::lcode eng
 ::abbrev DH ::exp dear husband ::lcode eng
 ::abbrev DS ::exp dear son ::lcode eng
-::abbrev DVD ::exp digital versatile disc ::lcode eng
 ::abbrev DW ::exp dear wife ::lcode eng
 ::abbrev ed. ::exp editor ::lcode eng
 ::abbrev e'er ::exp ever ::lcode eng
@@ -952,6 +877,7 @@
 ::lexical short-term ::lcode eng
 ::lexical sister-in-law ::lcode eng ::plural sisters-in-law
 ::lexical small-scale ::lcode eng
+::lexical smart-ass ::lcode eng ::alt-spelling smart ass; smartass; smart-a$$; smart a$$; smarta$$
 ::lexical so-called ::lcode eng
 ::lexical son-in-law ::lcode eng ::plural sons-in-law
 ::lexical son of a bitch ::lcode eng ::plural sons of bitches
