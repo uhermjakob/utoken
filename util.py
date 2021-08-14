@@ -105,14 +105,27 @@ class ResourceDict:
                         for repl_char in repl_chars:
                             new_line = f'{m5.group(1)}{regex.sub(apostrophe, repl_char, m5.group(2))}{m5.group(3)}' \
                                        f'{regex.sub(apostrophe, repl_char, m5.group(4))}{m5.group(5)}'
-                            # log.info(f'Expanded line {new_line}')
                             lines.append(new_line)
                 elif m3 := regex.match(r'(::\S+\s+)(\S|\S.*?\S)(\s+::\S.*|\s*)$', line):
                     if apostrophe in m3.group(2):
                         for repl_char in repl_chars:
                             new_line = f'{m3.group(1)}{regex.sub(apostrophe, repl_char, m3.group(2))}{m3.group(3)}'
-                            # log.info(f'Expanded line {new_line}')
                             lines.append(new_line)
+        # expand resource entry with ::plural
+        n_lines = len(lines)
+        for line in lines[0:n_lines]:
+            plural_s = slot_value_in_double_colon_del_list(line, 'plural')
+            plurals = re.split(r';\s*', plural_s) if plural_s else []
+            for plural in plurals:
+                if m3 := regex.match(r'(::\S+\s+)(\S|\S.*?\S)(\s+::\S.*)$', line):
+                    if plural == '+s':
+                        plural2 = m3.group(2) + 's'
+                    else:
+                        plural2 = plural
+                    new_line = f'{m3.group(1)}{plural2}{m3.group(3)}'
+                    # remove ::plural ...
+                    new_line = re.sub(r'::plural\s+(?:\S|\S.*\S)\s*(::\S.*|)$', r'\1', new_line)
+                    lines.append(new_line)
         # expand resource entry with ::inflections
         n_lines = len(lines)
         for line in lines[0:n_lines]:
@@ -123,8 +136,65 @@ class ResourceDict:
                     new_line = f'{m3.group(1)}{inflection}{m3.group(3)}'
                     # remove ::inflections ...
                     new_line = re.sub(r'::inflections\s+(?:\S|\S.*\S)\s*(::\S.*|)$', r'\1', new_line)
-                    # log.info(f'Expanded line {new_line}')
                     lines.append(new_line)
+        # expand resource entry with ::alt-spelling
+        n_lines = len(lines)
+        for line in lines[0:n_lines]:
+            alt_spelling_s = slot_value_in_double_colon_del_list(line, 'alt-spelling')
+            alt_spellings = re.split(r';\s*', alt_spelling_s) if alt_spelling_s else []
+            for alt_spelling in alt_spellings:
+                if m3 := regex.match(r'(::\S+\s+)(\S|\S.*?\S)(\s+::\S.*)$', line):
+                    if alt_spelling == '+hyphen':
+                        alt_spelling2 = re.sub(' ', '-', m3.group(2))
+                    else:
+                        alt_spelling2 = m3.group(2)
+                    new_line = f'{m3.group(1)}{alt_spelling2}{m3.group(3)}'
+                    # remove ::alt-spelling ...
+                    new_line = re.sub(r'::alt-spelling\s+(?:\S|\S.*\S)\s*(::\S.*|)$', r'\1', new_line)
+                    lines.append(new_line)
+        # expand resource entry with ::misspelling
+        n_lines = len(lines)
+        for line in lines[0:n_lines]:
+            if line.startswith('::misspelling'):
+                misspelling = slot_value_in_double_colon_del_list(line, 'misspelling')
+                target = slot_value_in_double_colon_del_list(line, 'target')
+                if misspelling and target:
+                    rest_line = line.rstrip()
+                    rest_line = re.sub(r'::misspelling\s+(?:\S|\S.*\S)\s*(::\S.*|)$', r'\1', rest_line)
+                    rest_line = re.sub(r'::target\s+(?:\S|\S.*\S)\s*(::\S.*|)$', r'\1', rest_line)
+                    rest_line = re.sub(r'::suffix-variations\s+(?:\S|\S.*\S)\s*(::\S.*|)$', r'\1', rest_line)
+                    raw_suffix_variation_s = slot_value_in_double_colon_del_list(line, 'suffix-variations')
+                    if raw_suffix_variation_s and (m2 := regex.match(r'((?:\pL\pM*)+)\/(.*)$', raw_suffix_variation_s)):
+                        lemma_suffix = m2.group(1)
+                        suffix_variations = re.split(r';\s*', m2.group(2))
+                    else:
+                        lemma_suffix = ''
+                        suffix_variations = re.split(r';\s*', raw_suffix_variation_s) if raw_suffix_variation_s else []
+                    misspellings = [misspelling]
+                    targets = [target]
+                    misspelling_without_suffix = misspelling[:-len(lemma_suffix)] \
+                        if lemma_suffix and misspelling.endswith(lemma_suffix) \
+                        else misspelling
+                    target_without_suffix = target[:-len(lemma_suffix)] \
+                        if lemma_suffix and target.endswith(lemma_suffix) \
+                        else target
+                    for suffix_variation in suffix_variations:
+                        misspellings.append(misspelling_without_suffix + suffix_variation)
+                        targets.append(target_without_suffix + suffix_variation)
+                    for misspelling_variation, target_variation in zip(misspellings, targets):
+                        new_line = f'::repair {misspelling_variation} ::target {target_variation} {rest_line}'
+                        if misspelling.startswith('until'):
+                            log.info(f'::misspelling new-line {new_line}')
+                        lines.append(new_line)
+            else:
+                misspelling_s = slot_value_in_double_colon_del_list(line, 'misspelling')
+                misspellings = re.split(r';\s*', misspelling_s) if misspelling_s else []
+                for misspelling in misspellings:
+                    if m3 := regex.match(r'(::(?:abbrev|lexical)\s+)(\S|\S.*?\S)(\s+::\S.*)$', line):
+                        new_line = f'::repair {misspelling} ::target {m3.group(2)}{m3.group(3)}'
+                        # remove ::misspelling ...
+                        new_line = re.sub(r'::misspelling\s+(?:\S|\S.*\S)\s*(::\S.*|)$', r'\1', new_line)
+                        lines.append(new_line)
         return lines
 
     re_comma_space = re.compile(r',\s*')
@@ -154,6 +224,7 @@ class ResourceDict:
                         # Check whether cost file line is well-formed. Following call will output specific warnings.
                         valid = double_colon_del_list_validation(line, str(line_number), filename,
                                                                  valid_slots=['abbrev',
+                                                                              'alt-spelling',
                                                                               'case-sensitive',
                                                                               'char-split',
                                                                               'comment',
@@ -168,6 +239,8 @@ class ResourceDict:
                                                                               'left-context',
                                                                               'left-context-not',
                                                                               'lexical',
+                                                                              'misspelling',
+                                                                              'plural',
                                                                               'problem',
                                                                               'punct-split',
                                                                               'repair',
@@ -175,11 +248,13 @@ class ResourceDict:
                                                                               'right-context-not',
                                                                               'sem-class',
                                                                               'side',
+                                                                              'suffix-variations',
                                                                               'tag',
                                                                               'target'],
                                                                  required_slot_dict={'abbrev': [],
                                                                                      'contraction': ['target'],
                                                                                      'lexical': [],
+                                                                                     'misspelling': ['target'],
                                                                                      'punct-split': ['side'],
                                                                                      'repair': ['target']})
                         if not valid:
