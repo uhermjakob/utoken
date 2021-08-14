@@ -147,7 +147,7 @@ class ResourceDict:
                     if alt_spelling == '+hyphen':
                         alt_spelling2 = re.sub(' ', '-', m3.group(2))
                     else:
-                        alt_spelling2 = m3.group(2)
+                        alt_spelling2 = alt_spelling
                     new_line = f'{m3.group(1)}{alt_spelling2}{m3.group(3)}'
                     # remove ::alt-spelling ...
                     new_line = re.sub(r'::alt-spelling\s+(?:\S|\S.*\S)\s*(::\S.*|)$', r'\1', new_line)
@@ -248,7 +248,9 @@ class ResourceDict:
                                                                               'side',
                                                                               'suffix-variations',
                                                                               'tag',
-                                                                              'target'],
+                                                                              'target',
+                                                                              'taxon',
+                                                                              'token-category'],
                                                                  required_slot_dict={'abbrev': [],
                                                                                      'contraction': ['target'],
                                                                                      'lexical': [],
@@ -408,9 +410,11 @@ def double_colon_del_list_validation(s: str, line_id: str, filename: str,
         else:
             log.warning(f"# Warning: suspected missing space in '{value}' in line {line_id} in {filename}")
     m = re.match(r'(?:.*\s)?(:[a-z]\S*)', s)
-    if m:
-        valid = False
-        log.warning(f"suspected missing colon in '{m.group(1)}' in line {line_id} in {filename}")
+    if m:  # Element starts with single colon (:). Might be slot with a missing colon.
+        if not (re.match(r':[a-z][-_a-z]*[a-z]:$', m.group(1), flags=re.IGNORECASE)  # Exception :emoji-shortcut:
+                and re.match(r'.*\b(?:symbol|emoji)\b', s, flags=re.IGNORECASE)):
+            valid = False
+            log.warning(f"suspected missing colon in '{m.group(1)}' in line {line_id} in {filename}")
     return valid
 
 
