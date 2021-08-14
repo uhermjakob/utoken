@@ -715,6 +715,8 @@ class Tokenizer:
                 adjusted_target_token = self.adjust_capitalization(target_token, orig_token_elem)
                 tokens.append(adjusted_target_token)
             return tokens, orig_tokens, start_positions
+        elif (' ' not in contraction_source) and (' ' not in contraction_target):
+            return [self.adjust_capitalization(contraction_target, orig_token)], [orig_token], [orig_start_position]
         else:
             tokens1 = []
             tokens2 = []
@@ -836,7 +838,7 @@ class Tokenizer:
                             if sem_class:
                                 clause += f'; sem: {sem_class}'
                             if (isinstance(resource_entry, util.AbbreviationEntry)
-                                    and ((sem_class == 'currency')
+                                    and ((sem_class == 'currency-unit')
                                          or (not(token_candidate_ends_in_letter
                                                  and (rc0_type_vector & self.char_is_dash_or_digit)  # quick pre-check
                                                  and self.re_starts_w_dashed_digit.match(right_context))))):
