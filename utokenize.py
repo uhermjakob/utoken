@@ -245,6 +245,8 @@ class Tokenizer:
         bit_vector = bit_vector << 1
         self.char_is_left_square_bracket = bit_vector
         bit_vector = bit_vector << 1
+        self.char_is_micro_sign = bit_vector
+        bit_vector = bit_vector << 1
         self.char_is_alpha = bit_vector
         bit_vector = bit_vector << 1
         self.char_is_modifier = bit_vector
@@ -308,6 +310,9 @@ class Tokenizer:
         # Less-than sign
         self.char_type_vector_dict['<'] \
             = self.char_type_vector_dict.get('<', 0) | self.char_is_less_than_sign
+        # Micro sign; often normalized to Greek letter mu
+        self.char_type_vector_dict['µ'] \
+            = self.char_type_vector_dict.get('µ', 0) | self.char_is_micro_sign
         # At sign
         self.char_type_vector_dict['['] \
             = self.char_type_vector_dict.get('[', 0) | self.char_is_left_square_bracket
@@ -472,6 +477,12 @@ class Tokenizer:
                         f'from {util.reg_plural("position", n)} {", ".join(deleted_positions)}')
             if chart:
                 chart.s0 = s
+                chart.s = s
+
+        # replace micro sign (µ) by Greek letter mu (μ)
+        if self.lv & self.char_is_micro_sign:
+            s = re.sub('µ', 'μ', s)  # Yes, they look alike!
+            if chart:
                 chart.s = s
 
         # repair some control characters in the C1 Control black (assuming they are still unconverted Windows1252),
