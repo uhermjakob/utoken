@@ -42,7 +42,7 @@ if __name__ == "__main__":
         taxon = slot_value_in_double_colon_del_list(line, 'taxon')
         currency_prefix = slot_value_in_double_colon_del_list(line, 'currency-prefix')
 
-        if line.startswith('::token ') or line.startswith('::currency-prefix '):
+        if line.startswith('::token ') or line.startswith('::misspelling ') or line.startswith('::currency-prefix '):
             if line.startswith('::currency-prefix'):
                 out = f'::abbrev {currency_prefix}'
                 if abbreviation_expansion:
@@ -55,7 +55,7 @@ if __name__ == "__main__":
             elif abbreviation_expansion:
                 out = f'::abbrev {token} ::exp {abbreviation_expansion}'
             elif line.startswith('::misspelling'):
-                out = f'::misselling {misspelling}'
+                out = f'::misspelling {misspelling}'
                 if norm:
                     out += f' ::target {norm}'
                 else:
@@ -117,7 +117,7 @@ if __name__ == "__main__":
                 out += f' ::plural {plural}'
             if alt_spelling:
                 out += f' ::alt-spelling {alt_spelling}'
-            if misspelling:
+            if misspelling and not line.startswith('::misspelling'):
                 out += f' ::misspelling {misspelling}'
             if suffix_variations:
                 out += f' ::suffix-variations {suffix_variations}'
@@ -125,7 +125,7 @@ if __name__ == "__main__":
                 out += f' ::comment {comment}'
             if extras := (slots - {'token', 'lc', 'case-invariant', 'abbreviation-expansion', 'comment',
                                    'add-period-if-missing', 'alt-spelling', 'misspelling', 'misspelling-type',
-                                   'etym-lc', 'suffix-variations',
+                                   'etym-lc', 'suffix-variations', 'norm',
                                    'named-entity-type', 'plural', 'taxon', 'type', 'currency-prefix',
                                    'left-context', 'left-typed-context', 'right-context', 'right-typed-context'}):
                 log.warning(f'L.{line_number} abbreviation entry has unknown slots: {extras}')
