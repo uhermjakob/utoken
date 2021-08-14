@@ -28,19 +28,30 @@
 ::contraction havenot ::target have not ::lcode eng
 ::contraction haven't ::target have n't ::lcode eng
 ::contraction havent ::target have n't ::lcode eng
+::contraction havn't ::target have n't ::lcode eng
 ::contraction I'm ::target I 'm ::lcode eng
 ::contraction isnot ::target is not ::lcode eng
 ::contraction isn't ::target is n't ::lcode eng
 ::contraction isnt ::target is n't ::lcode eng
+::contraction let's ::target let 's ::lcode eng
+::contraction let's ::target let 's ::lcode eng
+::contraction mightnot ::target might not ::lcode eng
+::contraction mightn't ::target might n't ::lcode eng
 ::contraction mustnot ::target must not ::lcode eng
 ::contraction mustn't ::target must n't ::lcode eng
 ::contraction mustnt ::target must n't ::lcode eng
+::contraction neednot ::target need not ::lcode eng
+::contraction needn't ::target need n't ::lcode eng
 ::contraction shallnot ::target shall not ::lcode eng
 ::contraction shan't ::target shall n't ::lcode eng
 ::contraction shant ::target shall n't ::lcode eng
 ::contraction shouldnot ::target should not ::lcode eng
 ::contraction shouldn't ::target should n't ::lcode eng
 ::contraction shouldnt ::target should n't ::lcode eng
+::contraction 'tis ::target it is ::lcode eng
+::contraction 'tisn't ::target it is n't ::lcode eng
+::contraction 'twas ::target it was ::lcode eng
+::contraction 'twasn't ::target it was n't ::lcode eng
 ::contraction wasnot ::target was not ::lcode eng
 ::contraction wasn't ::target was n't ::lcode eng
 ::contraction wasnt ::target was n't ::lcode eng
@@ -53,6 +64,9 @@
 ::contraction wouldnot ::target would not ::lcode eng
 ::contraction wouldn't ::target would n't ::lcode eng
 ::contraction wouldnt ::target would n't ::lcode eng
+::contraction y'all ::target you all ::lcode eng
+::contraction y'know ::target you know ::lcode eng
+::contraction y're ::target you 're ::lcode eng
 
 ::repair e.g ::target e.g. ::lcode eng ::right-context-not \s*[.] ::problem missing period
 ::repair etc ::target etc. ::lcode eng ::right-context-not \s*[.] ::problem missing period
@@ -68,6 +82,7 @@
 ::repair wo n't ::target will n't ::lcode eng ::problem previous tokenizer
 
 ::punct-split / ::side both ::lcode eng ::right-context (?:day|gallon|hour|hr|min|minute|month|sec|second|week|wk|yr)\b
+::punct-split 'n' ::side both ::lcode eng ::left-context \pL\pM*\pL\pM* ::right-context \pL\pM*\pL
 
 ::abbrev DNA ::exp deoxyribonucleic acid ::lcode eng ::sem-class biomedical
 ::abbrev dna ::exp deoxyribonucleic acid ::lcode eng ::sem-class biomedical
@@ -495,6 +510,7 @@
 ::abbrev bros. ::exp brothers ::lcode eng
 ::abbrev B.S. ::exp bullshit ::lcode eng
 ::abbrev b/w ::exp black and white; between ::lcode eng
+::abbrev 'cause ::exp because ::lcode eng
 ::abbrev CCTV ::exp closed-circuit television ::lcode eng
 ::abbrev CD ::exp compact disc ::lcode eng
 ::abbrev CEO ::exp chief executive officer ::lcode eng
@@ -515,6 +531,7 @@
 ::abbrev DVD ::exp digital versatile disc ::lcode eng
 ::abbrev DW ::exp dear wife ::lcode eng
 ::abbrev ed. ::exp editor ::lcode eng
+::abbrev e'er ::exp ever ::lcode eng
 ::abbrev eff'd ::exp fucked ::lcode eng
 ::abbrev e.g. ::exp exempli gratia; for example ::lcode eng
 ::abbrev e-mail ::exp electronic mail ::lcode eng ::plural +s
@@ -522,6 +539,8 @@
 ::abbrev etc. ::exp et cetera; and other things ::lcode eng ::misspelling etc .; e.t.c.; e.t.c; et c.
 ::abbrev exec ::exp executive ::lcode eng ::inflections execs
 ::abbrev Flr. ::exp floor ::lcode eng
+::abbrev gov't ::exp government ::lcode eng
+::abbrev gov'ts ::exp governments ::lcode eng
 ::abbrev gr8 ::exp great ::lcode eng
 ::abbrev hosp. ::exp hospital ::lcode eng
 ::abbrev ICBM ::exp intercontinental ballistic missile ::lcode eng
@@ -551,8 +570,10 @@
 ::abbrev Mt. ::exp Mount ::lcode eng ::case-sensitive True
 ::abbrev n/a ::exp not available; not applicable ::lcode eng
 ::abbrev nat'l ::exp national ::lcode eng
+::abbrev ne'er ::exp never ::lcode eng
 ::abbrev NGO ::exp non-governmental organization ::lcode eng
 ::abbrev o/b/o ::exp on behalf of; or best offer ::lcode eng
+::abbrev o'er ::exp over ::lcode eng
 ::abbrev OP ::exp original poster ::lcode eng
 ::abbrev o/p ::exp original poster ::lcode eng
 ::abbrev PC ::exp personal computer ::lcode eng
@@ -606,7 +627,7 @@
 
 ::lexical c' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::example C'est la vie.
 ::lexical d' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra  ::example Coeur d'Alene
-::lexical n' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra
+::lexical n' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::left-context-not [']
 ::lexical qu' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra
 ::lexical s' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra
 
@@ -924,6 +945,7 @@
 ::lexical real estate ::lcode eng ::alt-spelling +hyphen
 ::lexical real-time ::lcode eng
 ::lexical riff-raff ::lcode eng
+::lexical rock'n'roll ::lcode eng
 ::lexical same-sex ::lcode eng
 ::lexical science-fiction ::lcode eng
 ::lexical self-righteous ::lcode eng
@@ -1064,3 +1086,4 @@
 ::misspelling whereever ::target wherever ::lcode eng
 ::misspelling wich ::target which ::lcode eng
 ::misspelling wierd ::target weird ::lcode eng
+
