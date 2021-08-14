@@ -270,58 +270,58 @@
 ::abbrev vol. ::exp volume ::lcode eng ::sem-class corpus-component
 ::abbrev vols. ::exp volumes ::lcode eng ::sem-class corpus-component
 
-::abbrev Ala. ::exp Alabama ::lcode eng ::sem-class US-state
-::abbrev Ariz. ::exp Arizona ::lcode eng ::sem-class US-state
-::abbrev Ark. ::exp Arkansas ::lcode eng ::sem-class US-state ::case-sensitive True
-::abbrev Calif. ::exp California ::lcode eng ::sem-class US-state
-::abbrev Colo. ::exp Colorado ::lcode eng ::sem-class US-state
-::abbrev Conn. ::exp Connecticut ::lcode eng ::sem-class US-state
-::abbrev D.C. ::exp District of Columbia ::lcode eng ::sem-class US-state
-::abbrev Del. ::exp Delaware ::lcode eng ::sem-class US-state
-::abbrev Fla. ::exp Florida ::lcode eng ::sem-class US-state
-::abbrev Ga. ::exp Georgia ::lcode eng ::sem-class US-state
-::abbrev Ill. ::exp Illinois ::lcode eng ::sem-class US-state ::case-sensitive True
-::abbrev Ind. ::exp Indiana ::lcode eng ::sem-class US-state
-::abbrev Kans. ::exp Kansas ::lcode eng ::sem-class US-state
-::abbrev Ky. ::exp Kentucky ::lcode eng ::sem-class US-state
-::abbrev La. ::exp Louisiana ::lcode eng ::sem-class US-state ::case-sensitive True
-::abbrev Mass. ::exp Massachusetts ::lcode eng ::sem-class US-state
-::abbrev Md. ::exp Maryland ::lcode eng ::sem-class US-state ::case-sensitive True
-::abbrev Mich. ::exp Michigan ::lcode eng ::sem-class US-state
-::abbrev Minn. ::exp Minnesota ::lcode eng ::sem-class US-state
-::abbrev Miss. ::exp Mississippi ::lcode eng ::sem-class US-state
-::abbrev Mo. ::exp Missouri ::lcode eng ::sem-class US-state ::case-sensitive True
-::abbrev Mont. ::exp Montana ::lcode eng ::sem-class US-state
-::abbrev Nebr. ::exp Nebraska ::lcode eng ::sem-class US-state
-::abbrev Nev. ::exp Nevada ::lcode eng ::sem-class US-state
-::abbrev N.C. ::exp North Carolina ::lcode eng ::sem-class US-state
-::abbrev N.D. ::exp North Dakota ::lcode eng ::sem-class US-state
-::abbrev N.H. ::exp New Hampshire ::lcode eng ::sem-class US-state
-::abbrev N.J. ::exp New Jersey ::lcode eng ::sem-class US-state
-::abbrev N.M. ::exp New Mexico ::lcode eng ::sem-class US-state
-::abbrev N.Y. ::exp New York ::lcode eng ::sem-class US-state
-::abbrev Okla. ::exp Oklahoma ::lcode eng ::sem-class US-state
-::abbrev Ore. ::exp Oregon ::lcode eng ::sem-class US-state
-::abbrev Pa. ::exp Pennsylvania ::lcode eng ::sem-class US-state ::case-sensitive True
-::abbrev P.R. ::exp Puerto Rico ::lcode eng ::sem-class US-state
-::abbrev R.I. ::exp Rhode Island ::lcode eng ::sem-class US-state
-::abbrev S.C. ::exp South Carolina ::lcode eng ::sem-class US-state ::case-sensitive True
-::abbrev S.D. ::exp South Dakota ::lcode eng ::sem-class US-state
-::abbrev Tenn. ::exp Tennessee ::lcode eng ::sem-class US-state
-::abbrev Tex. ::exp Texas ::lcode eng ::sem-class US-state
-::abbrev Va. ::exp Virginia ::lcode eng ::sem-class US-state ::case-sensitive True
-::abbrev V.I. ::exp Virgin Islands ::lcode eng ::sem-class US-state
-::abbrev Vt. ::exp Vermont ::lcode eng ::sem-class US-state
-::abbrev Wash. ::exp Washington ::lcode eng ::sem-class US-state ::case-sensitive True
-::abbrev W.Va. ::exp West Virginia ::lcode eng ::sem-class US-state
-::abbrev Wis. ::exp Wisconsin ::lcode eng ::sem-class US-state
-::abbrev Wyo. ::exp Wyoming ::lcode eng ::sem-class US-state
+::abbrev Ala. ::exp Alabama ::lcode eng ::sem-class state ::country United States
+::abbrev Ariz. ::exp Arizona ::lcode eng ::sem-class state ::country United States
+::abbrev Ark. ::exp Arkansas ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev Calif. ::exp California ::lcode eng ::sem-class state ::country United States
+::abbrev Colo. ::exp Colorado ::lcode eng ::sem-class state ::country United States
+::abbrev Conn. ::exp Connecticut ::lcode eng ::sem-class state ::country United States
+::abbrev D.C. ::exp District of Columbia ::lcode eng ::sem-class state ::country United States
+::abbrev Del. ::exp Delaware ::lcode eng ::sem-class state ::country United States
+::abbrev Fla. ::exp Florida ::lcode eng ::sem-class state ::country United States
+::abbrev Ga. ::exp Georgia ::lcode eng ::sem-class state ::country United States
+::abbrev Ill. ::exp Illinois ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev Ind. ::exp Indiana ::lcode eng ::sem-class state ::country United States
+::abbrev Kans. ::exp Kansas ::lcode eng ::sem-class state ::country United States
+::abbrev Ky. ::exp Kentucky ::lcode eng ::sem-class state ::country United States
+::abbrev La. ::exp Louisiana ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev Mass. ::exp Massachusetts ::lcode eng ::sem-class state ::country United States
+::abbrev Md. ::exp Maryland ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev Mich. ::exp Michigan ::lcode eng ::sem-class state ::country United States
+::abbrev Minn. ::exp Minnesota ::lcode eng ::sem-class state ::country United States
+::abbrev Miss. ::exp Mississippi ::lcode eng ::sem-class state ::country United States
+::abbrev Mo. ::exp Missouri ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev Mont. ::exp Montana ::lcode eng ::sem-class state ::country United States
+::abbrev Nebr. ::exp Nebraska ::lcode eng ::sem-class state ::country United States
+::abbrev Nev. ::exp Nevada ::lcode eng ::sem-class state ::country United States
+::abbrev N.C. ::exp North Carolina ::lcode eng ::sem-class state ::country United States
+::abbrev N.D. ::exp North Dakota ::lcode eng ::sem-class state ::country United States
+::abbrev N.H. ::exp New Hampshire ::lcode eng ::sem-class state ::country United States
+::abbrev N.J. ::exp New Jersey ::lcode eng ::sem-class state ::country United States
+::abbrev N.M. ::exp New Mexico ::lcode eng ::sem-class state ::country United States
+::abbrev N.Y. ::exp New York ::lcode eng ::sem-class state ::country United States
+::abbrev Okla. ::exp Oklahoma ::lcode eng ::sem-class state ::country United States
+::abbrev Ore. ::exp Oregon ::lcode eng ::sem-class state ::country United States
+::abbrev Pa. ::exp Pennsylvania ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev P.R. ::exp Puerto Rico ::lcode eng ::sem-class state ::country United States
+::abbrev R.I. ::exp Rhode Island ::lcode eng ::sem-class state ::country United States
+::abbrev S.C. ::exp South Carolina ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev S.D. ::exp South Dakota ::lcode eng ::sem-class state ::country United States
+::abbrev Tenn. ::exp Tennessee ::lcode eng ::sem-class state ::country United States
+::abbrev Tex. ::exp Texas ::lcode eng ::sem-class state ::country United States
+::abbrev Va. ::exp Virginia ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev V.I. ::exp Virgin Islands ::lcode eng ::sem-class state ::country United States
+::abbrev Vt. ::exp Vermont ::lcode eng ::sem-class state ::country United States
+::abbrev Wash. ::exp Washington ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev W.Va. ::exp West Virginia ::lcode eng ::sem-class state ::country United States
+::abbrev Wis. ::exp Wisconsin ::lcode eng ::sem-class state ::country United States
+::abbrev Wyo. ::exp Wyoming ::lcode eng ::sem-class state ::country United States
 
-::abbrev CA ::exp California ::lcode eng ::sem-class US-state-code ::case-sensitive True
-::abbrev DC ::exp District of Columbia ::lcode eng ::sem-class US-state-code
-::abbrev GA ::exp Georgia ::lcode eng ::sem-class US-state-code
-::abbrev NY ::exp New York ::lcode eng ::sem-class US-state-code
-::abbrev TX ::exp Texas ::lcode eng ::sem-class US-state-code
+::abbrev CA ::exp California ::lcode eng ::sem-class state-code ::country United States ::case-sensitive True
+::abbrev DC ::exp District of Columbia ::lcode eng ::sem-class state-code ::country United States
+::abbrev GA ::exp Georgia ::lcode eng ::sem-class state-code ::country United States
+::abbrev NY ::exp New York ::lcode eng ::sem-class state-code ::country United States
+::abbrev TX ::exp Texas ::lcode eng ::sem-class state-code ::country United States
 
 ::abbrev ISI ::exp Information Sciences Institute ::lcode eng ::sem-class educational-organization ::case-sensitive True
 ::abbrev MIT ::exp Massachusetts Institute of Technology ::lcode eng ::sem-class educational-organization ::case-sensitive True
@@ -463,8 +463,8 @@
 
 ::abbrev UAE ::exp United Arab Emirates ::lcode eng ::sem-class country
 ::abbrev U.K. ::exp United Kingdom ::lcode eng ::sem-class country
-::abbrev U.S. ::exp United States ::lcode eng ::sem-class US-state
-::abbrev U.S.A. ::exp United States of America ::lcode eng ::sem-class US-state
+::abbrev U.S. ::exp United States ::lcode eng ::sem-class country
+::abbrev U.S.A. ::exp United States of America ::lcode eng ::sem-class country
 ::abbrev USA ::exp United States of America; United States ::lcode eng ::sem-class country
 
 ::abbrev NZD ::exp New Zealand dollar ::lcode eng ::sem-class currency
