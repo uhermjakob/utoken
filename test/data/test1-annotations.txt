@@ -26,7 +26,7 @@
 ::span 104-106 ::type WORD-B ::surf on
 ::span 107-129 ::type URL ::surf https://www.amazon.com
 ::span 130-133 ::type WORD-B ::surf for
-::span 134-135 ::type PUNCT ::surf $
+::span 134-135 ::type PUNCT ::sem-class currency-unit ::surf $
 ::span 135-141 ::type NUMBER ::surf 15,000
 ::span 141-142 ::type PUNCT-E ::surf .
 ::line Snt2 ::s Won't John's friend come? We've been waiting, HAVEN'T WE? I'm afraid he'd rather be elsewhere. Get'em. Ma'am, cont'd.
