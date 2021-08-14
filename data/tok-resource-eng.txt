@@ -627,7 +627,7 @@
 
 ::lexical c' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::example C'est la vie.
 ::lexical d' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra  ::example Coeur d'Alene
-::lexical n' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::left-context-not [']
+::lexical n' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::left-context-not ['’‘]
 ::lexical qu' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra
 ::lexical s' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra
 
