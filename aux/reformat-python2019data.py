@@ -87,7 +87,7 @@ if __name__ == "__main__":
                     sem_class = None
                 elif type_value == 'unit':
                     if currency_prefix:
-                        sem_class = 'monetary-unit'
+                        sem_class = 'currency-unit'
                     else:
                         sem_class = 'unit-of-measurement'
                 elif type_value in ['symbol', 'URL-prefix']:
