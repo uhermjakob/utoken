@@ -34,7 +34,7 @@ if __name__ == "__main__":
         left_typed_context = slot_value_in_double_colon_del_list(line, 'left-typed-context')
         right_context = slot_value_in_double_colon_del_list(line, 'right-context')
         right_typed_context = slot_value_in_double_colon_del_list(line, 'right-typed-context')
-        etym_lc = slot_value_in_double_colon_del_list(line, 'etym_lc')
+        etym_lc = slot_value_in_double_colon_del_list(line, 'etym-lc')
         add_period_if_missing = slot_value_in_double_colon_del_list(line, 'add-period-if-missing')
         suffix_variations = slot_value_in_double_colon_del_list(line, 'suffix-variations')
         sem_class = slot_value_in_double_colon_del_list(line, 'sem-class')
