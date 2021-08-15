@@ -269,7 +269,7 @@ class Tokenizer:
         if lang_code:
             self.tok_dict.load_resource(f'data/tok-resource-{lang_code}.txt')
         self.tok_dict.load_resource('data/tok-resource.txt')  # language-independent tok-resource
-        for lcode in ('eng', 'deu', 'mal'):
+        for lcode in ('eng', 'deu', 'hin', 'mal'):
             if lcode is not lang_code:
                 self.tok_dict.load_resource(f'data/tok-resource-{lcode}.txt')
 
