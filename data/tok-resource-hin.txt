@@ -1,0 +1,90 @@
+::abbrev क. ::lcode hin ::token-category consonant
+::abbrev ख. ::lcode hin ::token-category consonant
+::abbrev ग. ::lcode hin ::token-category consonant
+::abbrev घ. ::lcode hin ::token-category consonant
+::abbrev ङ. ::lcode hin ::token-category consonant
+::abbrev च. ::lcode hin ::token-category consonant
+::abbrev छ. ::lcode hin ::token-category consonant
+::abbrev ज. ::lcode hin ::token-category consonant
+::abbrev झ. ::lcode hin ::token-category consonant
+::abbrev ञ. ::lcode hin ::token-category consonant
+::abbrev ट. ::lcode hin ::token-category consonant
+::abbrev ठ. ::lcode hin ::token-category consonant
+::abbrev ड. ::lcode hin ::token-category consonant
+::abbrev ढ. ::lcode hin ::token-category consonant
+::abbrev ण. ::lcode hin ::token-category consonant
+::abbrev त. ::lcode hin ::token-category consonant
+::abbrev थ. ::lcode hin ::token-category consonant
+::abbrev द. ::lcode hin ::token-category consonant
+::abbrev ध. ::lcode hin ::token-category consonant
+::abbrev न. ::lcode hin ::token-category consonant
+::abbrev प. ::lcode hin ::token-category consonant
+::abbrev फ. ::lcode hin ::token-category consonant
+::abbrev ब. ::lcode hin ::token-category consonant
+::abbrev भ. ::lcode hin ::token-category consonant
+::abbrev म. ::lcode hin ::token-category consonant
+::abbrev य. ::lcode hin ::token-category consonant
+::abbrev र. ::lcode hin ::token-category consonant
+::abbrev ल. ::lcode hin ::token-category consonant
+::abbrev व. ::lcode hin ::token-category consonant
+::abbrev श. ::lcode hin ::token-category consonant
+::abbrev ष. ::lcode hin ::token-category consonant
+::abbrev स. ::lcode hin ::token-category consonant
+::abbrev ह. ::lcode hin ::token-category consonant
+
+::abbrev आइ. ::lcode hin ::token-category phonetics ::eng I.
+::abbrev आर. ::lcode hin ::token-category phonetics ::eng R.
+::abbrev ई. ::lcode hin ::token-category phonetics ::eng E.
+::abbrev ए. ::lcode hin ::token-category phonetics ::eng A.
+::abbrev एक्स. ::lcode hin ::token-category phonetics ::eng X.
+::abbrev एच. ::lcode hin ::token-category phonetics ::eng H.
+::abbrev एन. ::lcode hin ::token-category phonetics ::eng N.
+::abbrev एफ. ::lcode hin ::token-category phonetics ::eng F.
+::abbrev एम. ::lcode hin ::token-category phonetics ::eng M.
+::abbrev एल. ::lcode hin ::token-category phonetics ::eng L.
+::abbrev एस. ::lcode hin ::token-category phonetics ::eng S.
+::abbrev ऐ. ::lcode hin ::token-category phonetics ::eng A.
+::abbrev ऐक्स. ::lcode hin ::token-category phonetics ::eng X.
+::abbrev ऐच. ::lcode hin ::token-category phonetics ::eng H.
+::abbrev ऐन. ::lcode hin ::token-category phonetics ::eng N.
+::abbrev ऐफ. ::lcode hin ::token-category phonetics ::eng F.
+::abbrev ऐम. ::lcode hin ::token-category phonetics ::eng M.
+::abbrev ऐल. ::lcode hin ::token-category phonetics ::eng L.
+::abbrev ऐस. ::lcode hin ::token-category phonetics ::eng S.
+::abbrev ओ. ::lcode hin ::token-category phonetics ::eng O.
+::abbrev के. ::lcode hin ::token-category phonetics ::eng K.
+::abbrev क्यू. ::lcode hin ::token-category phonetics ::eng Q.
+::abbrev जी. ::lcode hin ::token-category phonetics ::eng G.
+::abbrev जे. ::lcode hin ::token-category phonetics ::eng J.
+::abbrev ज़ैड. ::lcode hin ::token-category phonetics ::eng Z.
+::abbrev टी. ::lcode hin ::token-category phonetics ::eng T.
+::abbrev डी. ::lcode hin ::token-category phonetics ::eng D.
+::abbrev डब्ल्यू. ::lcode hin ::token-category phonetics ::eng W.
+::abbrev पी. ::lcode hin ::token-category phonetics ::eng P.
+::abbrev बी. ::lcode hin ::token-category phonetics ::eng B.
+::abbrev यू. ::lcode hin ::token-category phonetics ::eng U.
+::abbrev वी. ::lcode hin ::token-category phonetics ::eng V.
+::abbrev वाई. ::lcode hin ::token-category phonetics ::eng Y.
+::abbrev वाय. ::lcode hin ::token-category phonetics ::eng Y.
+::abbrev सी. ::lcode hin ::token-category phonetics ::eng C.
+
+::abbrev ई ::exp ईसवी ::lcode hin ::eng AD (CE)
+::abbrev ई.पू. ::exp ईसा पूर्व ::lcode hin ::eng BC (BCE)
+::abbrev एच॰आई॰वी ::lcode hin ::eng HIV
+::abbrev टीवी. ::lcode hin ::eng TV
+::abbrev डा. ::lcode hin ::eng Dr.
+::abbrev डॉ. ::exp डॉक्टर ::lcode hin ::eng Dr.
+::abbrev दि॰ब॰स॰ ::exp दिवालोक बचत समय ::lcode hin ::eng daylight saving time
+::abbrev पु. ::exp पुल्लिंग ::lcode hin ::eng masculine
+::abbrev पृ. ::exp पृष्ठ ::lcode hin ::eng page
+::abbrev प्रा. ::exp प्राकृत ::lcode hin ::eng Prakrit (language)
+::abbrev पुर्त. ::exp पुर्तगाली ::lcode hin ::eng Portuguese
+::abbrev फ़ा. ::exp फ़ारसी ::lcode hin ::eng Farsi
+::abbrev यू॰आर॰एल ::lcode hin ::eng URL
+::abbrev यू॰टी॰सी॰ ::exp सार्व निर्देशांकित काल ::lcode hin ::eng UTC (Greenwich time)
+::abbrev रु. ::exp रुपया ::lcode hin ::eng rupee
+::abbrev विवि ::exp विश्वविद्यालय ::lcode hin ::eng university
+::abbrev श्री. ::lcode hin ::eng Mr.
+::abbrev सं. ::exp संस्कृत ::lcode hin ::eng Sanskrit
+::abbrev स्त्री. ::exp स्त्रीलिंग ::lcode hin ::eng feminine
+
