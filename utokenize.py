@@ -479,6 +479,13 @@ class Tokenizer:
                 chart.s0 = s
                 chart.s = s
 
+        # Replace &#160; &#xA0; &nbsp; with U+00A0 (non-breakable space)
+        if self.lv & self.char_is_ampersand:
+            s = re.sub(r'&#160;|&#xA0;|&nbsp;', u'\u00A0', s, flags=re.IGNORECASE)
+            if chart:
+                chart.s0 = s
+                chart.s = s
+
         # replace micro sign (µ) by Greek letter mu (μ)
         if self.lv & self.char_is_micro_sign:
             s = re.sub('µ', 'μ', s)  # Yes, they look alike!
