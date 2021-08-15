@@ -228,6 +228,7 @@ class ResourceDict:
                                                                               'comment',
                                                                               'contraction',
                                                                               'country',
+                                                                              'eng',
                                                                               'etym-lcode',
                                                                               'example',
                                                                               'exp',
