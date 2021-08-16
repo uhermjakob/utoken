@@ -13,7 +13,7 @@ import cProfile
 import datetime
 import functools
 import logging as log
-# import os
+import os
 # from pathlib import Path
 import pstats
 import re
@@ -161,7 +161,7 @@ class Chart:
 
 
 class Tokenizer:
-    def __init__(self, lang_code: Optional[str] = None):
+    def __init__(self, lang_code: Optional[str] = None, data_dir: Optional[str] = None):
         # Ordered list of tokenization steps
         self.tok_step_functions = [self.normalize_characters,
                                    self.tokenize_xmls,
@@ -266,12 +266,18 @@ class Tokenizer:
         self.profile = None
         self.profile_active: bool = False
         self.profile_scope: Optional[str] = None
+        if data_dir is None:
+            data_dir = '.'
+            for dir_cand in ('data', '../data'):
+                if os.path.isdir(dir_cand):
+                    data_dir = dir_cand
+                    break
         if lang_code:
-            self.tok_dict.load_resource(f'data/tok-resource-{lang_code}.txt')
-        self.tok_dict.load_resource('data/tok-resource.txt')  # language-independent tok-resource
-        for lcode in ('eng', 'deu', 'hin', 'mal'):
+            self.tok_dict.load_resource(f'{data_dir}/tok-resource-{lang_code}.txt')
+        self.tok_dict.load_resource(f'{data_dir}/tok-resource.txt')  # language-independent tok-resource
+        for lcode in ['eng']:  # For the time being, the English resources are always loaded.
             if lcode is not lang_code:
-                self.tok_dict.load_resource(f'data/tok-resource-{lcode}.txt')
+                self.tok_dict.load_resource(f'{data_dir}/tok-resource-{lcode}.txt')
 
     def range_init_char_type_vector_dict(self) -> None:
         # Deletable control characters,
@@ -1157,9 +1163,10 @@ def main(argv):
                         default=None, metavar='ANNOTATION-FILENAME', help='(optional output)')
     parser.add_argument('-p', '--profile', type=argparse.FileType('w', encoding='utf-8', errors='ignore'),
                         default=None, metavar='PROFILE-FILENAME', help='(optional output for performance analysis)')
-    parser.add_argument('--profile_scope', type=Optional[str], default=None,
+    parser.add_argument('--profile_scope', type=str, default=None,
                         help='(optional scope for performance analysis)')
-    parser.add_argument('--lc', type=Optional[str], default=None,
+    parser.add_argument('-d', '--data_directory', type=str, default=None)
+    parser.add_argument('--lc', type=str, default=None,
                         metavar='LANGUAGE-CODE', help="ISO 639-3, e.g. 'fas' for Persian")
     parser.add_argument('-f', '--first_token_is_line_id', action='count', default=0,
                         help='First token is line ID (and will be exempt from any tokenization)')
@@ -1171,7 +1178,8 @@ def main(argv):
                         version=f'%(prog)s {__version__} last modified: {last_mod_date}')
     args = parser.parse_args(argv)
     lang_code = args.lc
-    tok = Tokenizer(lang_code=lang_code)
+    data_dir = args.data_directory
+    tok = Tokenizer(lang_code=lang_code, data_dir=data_dir)
     tok.chart_p = bool(args.annotation) or bool(args.chart)
     tok.mt_tok_p = bool(args.mt)
     tok.first_token_is_line_id_p = bool(args.first_token_is_line_id)
