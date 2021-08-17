@@ -11,6 +11,8 @@ if __name__ == "__main__":
        for _ in range(2):
            line = re.sub('! !', '!!', line)
            line = re.sub('\? \?', '??', line)
+           line = re.sub('‹ ‹', '‹‹', line)
+           line = re.sub('› ›', '››', line)
        line = re.sub(r" (['’]) (['’]) ", r" \1\2 ", line)
        line = re.sub(r" (['’]) (['’])$", r" \1\2", line)
        line = re.sub(r" (['’]) (d|ll|m|re|s|ve)\b", r" \1\2", line, flags=re.IGNORECASE)
