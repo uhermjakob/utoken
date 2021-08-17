@@ -197,7 +197,7 @@ class ResourceDict:
 
     re_comma_space = re.compile(r',\s*')
 
-    def load_resource(self, filename: str) -> None:
+    def load_resource(self, filename: str, lang_code: Optional[str] = None) -> None:
         """Loads abbreviations, contractions etc. Example input file: data/tok-resource-eng.txt"""
         try:
             with open(filename) as f_in:
@@ -360,7 +360,10 @@ class ResourceDict:
                 expanded_clause = f' (plus {n_expanded_lines} expanded lines)' if n_expanded_lines else ''
                 log.info(f'Loaded {n_entries} entries from {line_number} lines{expanded_clause} in {filename}')
         except OSError:
-            log.warning(f'Could not open resource file {filename}')
+            if lang_code:
+                log.warning(f"No resource file available for language '{lang_code}' ({filename})")
+            else:
+                log.warning(f'Could not open general resource file {filename}')
 
 
 def slot_value_in_double_colon_del_list(line: str, slot: str, default: Optional[str] = None) -> str:
