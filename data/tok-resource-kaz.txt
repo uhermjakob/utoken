@@ -1,0 +1,5 @@
+::abbrev ж. ::exp жыл ::lcode kaz ::eng year ::left-context \d\s*
+::abbrev ж.т. ::lcode kaz ::eng born in
+::abbrev т.б. ::lcode kaz ::eng etc.
+
+::punct-split : ::side both ::left-context \pL\pM*\pL\pM* ::right-context \pL\pM*\pL
