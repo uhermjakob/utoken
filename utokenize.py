@@ -273,11 +273,11 @@ class Tokenizer:
                     data_dir = dir_cand
                     break
         if lang_code:
-            self.tok_dict.load_resource(f'{data_dir}/tok-resource-{lang_code}.txt')
+            self.tok_dict.load_resource(f'{data_dir}/tok-resource-{lang_code}.txt', lang_code=lang_code)
         self.tok_dict.load_resource(f'{data_dir}/tok-resource.txt')  # language-independent tok-resource
         for lcode in ['eng']:  # For the time being, the English resources are always loaded.
             if lcode is not lang_code:
-                self.tok_dict.load_resource(f'{data_dir}/tok-resource-{lcode}.txt')
+                self.tok_dict.load_resource(f'{data_dir}/tok-resource-{lcode}.txt', lang_code=lcode)
 
     def range_init_char_type_vector_dict(self) -> None:
         # Deletable control characters,
@@ -821,11 +821,46 @@ class Tokenizer:
     re_starts_w_modifier = regex.compile(r'\pM')
     re_starts_w_letter = regex.compile(r'\pL')
     re_starts_w_letter_or_digit = regex.compile(r'(\pL|\d)')
+    re_starts_w_single_letter = regex.compile(r'\pL\pM*(?!\pL)')
     re_starts_w_dashed_digit = regex.compile(r'[-−–]?\d')
     re_starts_w_single_s = regex.compile(r's(?!\pL|\d)', flags=regex.IGNORECASE)
     re_ends_w_letter = regex.compile(r'.*\pL\pM*$')          # including any modifiers
     re_ends_w_apostrophe = regex.compile(r".*['‘’]$")
     re_ends_w_letter_or_digit = regex.compile(r'.*(\pL\pM*|\d)$')
+    re_ends_w_letter_plus_period = regex.compile(r'.*\pL\pM*\.$')
+
+    def resource_entry_fulfills_general_context_conditions(self, token_candidate: str,
+                                                           _left_context: str, right_context: str) -> bool:
+        """Checks for general context requirements (not listed for a particular resource entry)."""
+        # type-vector of any first character of the right context
+        rc0_type_vector = self.char_type_vector_dict.get(right_context[0], 0) if right_context != '' else 0
+        # general restriction: if token ends in a letter, it can't be followed by a letter
+        if self.re_ends_w_letter.match(token_candidate) and (rc0_type_vector & self.char_is_alpha):
+            return False
+        # token can't be followed by an orphan modifier
+        if rc0_type_vector & self.char_is_modifier:
+            return False
+        return True
+
+    def abbreviation_entry_fulfills_general_context_conditions(self, token_candidate: str,
+                                                               left_context: str, right_context: str,
+                                                               abbreviation_entry: util.AbbreviationEntry) -> bool:
+        """Checks for general context requirements (not listed for a particular abbreviation entry)."""
+        if abbreviation_entry.sem_class == 'currency-unit':
+            return True
+        if self.re_ends_w_letter.match(token_candidate):
+            # type-vector of any first character of the right context
+            rc0_type_vector = self.char_type_vector_dict.get(right_context[0], 0) if right_context != '' else 0
+            if ((rc0_type_vector & self.char_is_dash_or_digit)  # quick pre-check
+                    and self.re_starts_w_dashed_digit.match(right_context)):
+                return False
+        if token_candidate.endswith('.') and self.re_starts_w_single_letter.match(right_context):
+            return False
+        if left_context.endswith('.') \
+                and '.' in token_candidate \
+                and self.re_ends_w_letter_plus_period.match(left_context):
+            return False
+        return True
 
     def tokenize_according_to_resource_entries(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                                                line_id: Optional[str] = None, offset: int = 0) -> str:
@@ -845,6 +880,7 @@ class Tokenizer:
             if last_primary_char_type_vector & self.char_is_alpha \
                     and current_char_type_vector & self.char_is_alpha:
                 continue
+            left_context = s[:start_position]
             max_end_position = start_position
             position = start_position+1
             while position <= len_s and self.tok_dict.prefix_dict.get(s_lc[start_position:position], False):
@@ -855,12 +891,8 @@ class Tokenizer:
                 token_candidate = s[start_position:end_position]
                 token_candidate_lc = s_lc[start_position:end_position]
                 right_context = s[end_position:]
-                rc0 = right_context[0] if right_context != '' else ' '  # first character of right context
-                rc0_type_vector = self.char_type_vector_dict.get(rc0, 0)
-                # general restriction: if token ends in a letter, it can't be followed by a letter
-                token_candidate_ends_in_letter = bool(self.re_ends_w_letter.match(token_candidate))
-                if (not(token_candidate_ends_in_letter and (rc0_type_vector & self.char_is_alpha))
-                        and not(rc0_type_vector & self.char_is_modifier)):  # not followed by orphan modifier
+                if self.resource_entry_fulfills_general_context_conditions(token_candidate,
+                                                                           left_context, right_context):
                     for resource_entry in self.tok_dict.resource_dict.get(token_candidate_lc, []):
                         if self.resource_entry_fulfills_conditions(resource_entry, util.ResourceEntry, token_candidate,
                                                                    s, start_position, end_position, offset):
@@ -870,10 +902,8 @@ class Tokenizer:
                             if sem_class:
                                 clause += f'; sem: {sem_class}'
                             if (isinstance(resource_entry, util.AbbreviationEntry)
-                                    and ((sem_class == 'currency-unit')
-                                         or (not(token_candidate_ends_in_letter
-                                                 and (rc0_type_vector & self.char_is_dash_or_digit)  # quick pre-check
-                                                 and self.re_starts_w_dashed_digit.match(right_context))))):
+                                    and self.abbreviation_entry_fulfills_general_context_conditions(
+                                        token_candidate, left_context, right_context, resource_entry)):
                                 return self.rec_tok([token_candidate], [start_position], s, offset, 'ABBREV',
                                                     line_id, chart, lang_code, ht, this_function, [token_candidate],
                                                     sem_class=resource_entry.sem_class, left_done=True)
