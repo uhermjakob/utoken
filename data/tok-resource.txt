@@ -75,7 +75,7 @@
 ::punct-split ، ::side both ::left-context \pL\pM*[-_+*'’‘`]* ::right-context \pL
 ::punct-split , ::side both ::left-context \d:\d{1,2} ::right-context \d{1,2}[-]\d  # Genesis 1:1,26-28
 ::punct-split / ::side both ::left-context \pL\pM*\pL\pM* ::right-context \pL\pM*\pL  #right-context-not (?:hr|yr)\b
-::punct-split ~ ::side both ::left-context \pL ::right-context \pL
+::punct-split ~ ::side both ::left-context \pL\pM* ::right-context \pL
 ::punct-split . ::side both ::left-context (?:\p{Ll}\p{Ll}|\d|[IVXL]+) ::right-context \p{Lu}\p{Ll}
 
 # split off punctuation from start of token

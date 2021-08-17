@@ -237,8 +237,7 @@
 
 ::abbrev Adm. ::exp Admiral ::lcode eng ::sem-class military-rank
 ::abbrev Brig. ::exp Brigadier ::lcode eng ::sem-class military-rank
-::abbrev Brig.-Gen. ::exp Brigadier General ::lcode eng ::sem-class military-rank
-::abbrev Brig.Gen. ::exp Brigadier General ::lcode eng ::sem-class military-rank
+::abbrev Brig.Gen. ::exp Brigadier General ::lcode eng ::sem-class military-rank ::alt-spelling Brig.-Gen.; Brig. Gen.
 ::abbrev Capt. ::exp Captain ::lcode eng ::sem-class military-rank
 ::abbrev Cmdr. ::exp Commander ::lcode eng ::sem-class military-rank
 ::abbrev Col. ::exp Colonel ::lcode eng ::sem-class military-rank
@@ -248,11 +247,10 @@
 ::abbrev Ens. ::exp Ensign ::lcode eng ::sem-class military-rank
 ::abbrev Gen. ::exp General ::lcode eng ::sem-class military-rank
 ::abbrev Lt. ::exp Lieutenant ::lcode eng ::sem-class military-rank ::case-sensitive True
-::abbrev Lt.-Gen. ::exp Lieutenant General ::lcode eng ::sem-class military-rank
-::abbrev Lt.Gen. ::exp Lieutenant General ::lcode eng ::sem-class military-rank
+::abbrev Lt.Col. ::exp Lieutenant Colonel ::lcode eng ::sem-class military-rank ::alt-spelling Lt.-Col.; Lt. Col.
+::abbrev Lt.Gen. ::exp Lieutenant General ::lcode eng ::sem-class military-rank ::alt-spelling Lt.-Gen.; Lt. Gen.
 ::abbrev Maj. ::exp Major ::lcode eng ::sem-class military-rank
-::abbrev Maj.-Gen. ::exp Major General ::lcode eng ::sem-class military-rank
-::abbrev Maj.Gen. ::exp Major General ::lcode eng ::sem-class military-rank
+::abbrev Maj.Gen. ::exp Major General ::lcode eng ::sem-class military-rank ::alt-spelling Maj.-Gen.; Maj. Gen.
 ::abbrev Pfc. ::exp Private First Class ::lcode eng ::sem-class military-rank
 ::abbrev PV1 ::exp Private ::lcode eng ::sem-class military-rank
 ::abbrev PV2 ::exp Private Second Class ::lcode eng ::sem-class military-rank
