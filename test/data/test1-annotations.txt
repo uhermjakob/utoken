@@ -4,7 +4,7 @@
 ::span 7-8 ::type PUNCT ::surf (
 ::span 8-28 ::type EMAIL-ADDRESS ::surf info@lenosgarage.com
 ::span 28-29 ::type PUNCT ::surf )
-::span 29-30 ::type PUNCT-E ::surf ,
+::span 29-30 ::type PUNCT-S ::surf ,
 ::span 31-34 ::type WORD-B ::surf his
 ::span 35-40 ::type WORD-B ::surf peace
 ::span 40-41 ::type DASH ::surf -
@@ -20,9 +20,9 @@
 ::span 86-88 ::type WORD-B ::surf on
 ::span 89-93 ::type WORD-B ::surf July
 ::span 94-96 ::type NUMBER ::surf 15
-::span 96-97 ::type PUNCT-E ::surf ,
+::span 96-97 ::type PUNCT-S ::surf ,
 ::span 98-102 ::type NUMBER ::surf 2021
-::span 102-103 ::type PUNCT-E ::surf ,
+::span 102-103 ::type PUNCT-S ::surf ,
 ::span 104-106 ::type WORD-B ::surf on
 ::span 107-129 ::type URL ::surf https://www.amazon.com
 ::span 130-133 ::type WORD-B ::surf for
@@ -59,6 +59,6 @@
 ::span 98-101 ::type DECONTRACTION ::surf 'em
 ::span 101-102 ::type PUNCT-E ::surf .
 ::span 103-108 ::type ABBREV ::surf Ma'am
-::span 108-109 ::type PUNCT-E ::surf ,
+::span 108-109 ::type PUNCT-S ::surf ,
 ::span 110-116 ::type ABBREV ::surf cont'd
 ::span 116-117 ::type PUNCT-E ::surf .
