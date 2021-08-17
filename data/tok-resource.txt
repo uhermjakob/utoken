@@ -37,6 +37,8 @@
 ::punct-split 〙 ::side both
 ::punct-split 〚 ::side both
 ::punct-split 〛 ::side both
+::punct-split ‹ ::side both ::group True
+::punct-split › ::side both ::group True
 ::punct-split 。 ::side both
 ::punct-split ， ::side both
 ::punct-split 、 ::side both
@@ -64,31 +66,39 @@
 ::punct-split © ::side both
 ::punct-split ® ::side both
 ::punct-split ™ ::side both
+::punct-split № ::side both
 ::punct-split $ ::side both ::token-category prefix ::sem-class currency-unit ::group True
 ::punct-split — ::side both ::group True
 ::punct-split … ::side both ::group True
 ::punct-split .. ::side both ::group True
-::punct-split , ::side both ::left-context \pL\pM* ::right-context \pL
+::punct-split , ::side both ::left-context \pL\pM*[-_+*'’‘`]* ::right-context \pL
+::punct-split ، ::side both ::left-context \pL\pM*[-_+*'’‘`]* ::right-context \pL
 ::punct-split , ::side both ::left-context \d:\d{1,2} ::right-context \d{1,2}[-]\d  # Genesis 1:1,26-28
 ::punct-split / ::side both ::left-context \pL\pM*\pL\pM* ::right-context \pL\pM*\pL  #right-context-not (?:hr|yr)\b
 ::punct-split ~ ::side both ::left-context \pL ::right-context \pL
-::punct-split . ::side both ::left-context \p{Ll}\p{Ll} ::right-context \p{Lu}\p{Ll}
+::punct-split . ::side both ::left-context (?:\p{Ll}\p{Ll}|\d|[IVXL]+) ::right-context \p{Lu}\p{Ll}
 
 # split off punctuation from start of token
 ::punct-split ' ::side start ::group True
 ::punct-split ‘ ::side start ::group True
+::punct-split ’ ::side start ::group True
+::punct-split ` ::side start ::group True
 ::punct-split ¡ ::side start ::group True
 ::punct-split ¿ ::side start ::group True
 ::punct-split ~ ::side start ::group True
 ::punct-split _ ::side start ::group True
 ::punct-split / ::side start ::group True ::right-context \pL
-::punct-split * ::side start ::right-context \pL  # don't group, because of ****ing
+::punct-split * ::side start ::right-context (?:\pL|['‘])  # don't group, because of ****ing
 ::punct-split - ::side start ::group True ::right-context -*\pL\pM*\pL
+::punct-split – ::side start ::group True ::right-context -*\pL\pM*\pL
 ::punct-split : ::side start ::left-context \d ::right-context \d+[-,]\d  # Genesis 1:26-28
+::punct-split , ::side start
 
 # split off punctuation from end of token
 ::punct-split ' ::side end ::group True
 ::punct-split ’ ::side end ::group True
+::punct-split ‘ ::side end ::group True
+::punct-split ` ::side end ::group True
 ::punct-split . ::side end
 ::punct-split ? ::side end ::group True
 ::punct-split ! ::side end ::group True
@@ -109,11 +119,12 @@
 ::punct-split : ::side end
 ::punct-split ： ::side end
 ::punct-split ~ ::side end
-::punct-split * ::side end ::left-context \pL\pM*
+::punct-split * ::side end ::left-context (?:\pL\pM*|[’,.])
 ::punct-split _ ::side end ::group True
 ::punct-split / ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?])
 ::punct-split - ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?])
 ::punct-split = ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?])
+::punct-split – ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?])
 
 ::abbrev AT&T ::sem-class company
 ::abbrev ES&S ::sem-class company
