@@ -294,6 +294,8 @@
 ::abbrev Fr. ::exp Father; Frau; Mrs. ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev Frl. ::exp Fräulein; Misses ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev Gov. ::exp Governor ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
+::abbrev H.E. ::exp His Excellency; Her Excellency ::sem-class pre-name-title ::left-context-not [.]
+::abbrev H.M. ::exp His Majesty; Her Majesty ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev Hon. ::exp Honorable ::lcode eng ::sem-class pre-name-title ::case-sensitive True
 ::abbrev Hr. ::exp Herr; Mister ::lcode eng ::sem-class pre-name-title ::case-sensitive True
 ::abbrev Ing. ::exp Ingenieur; Ingeniero ::lcode eng ::sem-class pre-name-title
@@ -504,6 +506,7 @@
 ::abbrev PC ::exp personal computer ::lcode eng
 ::abbrev PC ::exp politically correct ::lcode eng
 ::abbrev P/E ::exp price-to-earnings [ratio] ::lcode eng
+::abbrev Ph.D. ::exp doctor of philosophy ::lcode eng
 ::abbrev pic ::exp picture ::lcode eng
 ::abbrev p.m. ::exp post meridiem ::lcode eng
 ::abbrev POW ::exp prisoner of war ::lcode eng
@@ -513,6 +516,7 @@
 ::abbrev R&B ::exp rythm and blues ::lcode eng
 ::abbrev R&D ::exp research and development ::lcode eng
 ::abbrev Ret. ::exp Retired ::lcode eng
+::abbrev Rt. ::exp Right ::lcode eng
 ::abbrev RPG ::exp rocket-propelled grenade ::lcode eng
 ::abbrev r/w ::exp read/write ::lcode eng
 ::abbrev sci-fi ::exp science fiction ::lcode eng
