@@ -121,10 +121,10 @@
 ::punct-split ~ ::side end
 ::punct-split * ::side end ::left-context (?:\pL\pM*|[’,.])
 ::punct-split _ ::side end ::group True
-::punct-split / ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?])
-::punct-split - ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?])
-::punct-split = ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?])
-::punct-split – ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?])
+::punct-split / ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?'’‘])
+::punct-split - ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?'’‘])
+::punct-split = ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?'’‘])
+::punct-split – ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?'’‘])
 
 ::abbrev AT&T ::sem-class company
 ::abbrev ES&S ::sem-class company

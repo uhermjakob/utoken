@@ -1,3 +1,11 @@
+::punct-split ’’ ::lcode hin ::side both
+::punct-split ‘’ ::lcode hin ::side both
+::punct-split ’ ::lcode hin ::side both ::left-context [\p{Devanagari}&&\pL]\pM*   # split if left ends in Dev. letter
+::punct-split ’ ::lcode hin ::side both ::right-context [\p{Devanagari}&&\pL]      # or right starts with Dev. letter
+::punct-split . ::lcode hin ::side both ::left-context \d ::right-context [\p{Devanagari}&&\pL]
+::punct-split | ::side both ::group True ::left-context [\p{Devanagari}&&\pL]\pM*  # Vertical bar as danda
+::punct-split ? ::side both ::group True ::left-context [\p{Devanagari}&&\pL]\pM*
+
 ::abbrev क. ::lcode hin ::token-category consonant
 ::abbrev ख. ::lcode hin ::token-category consonant
 ::abbrev ग. ::lcode hin ::token-category consonant
