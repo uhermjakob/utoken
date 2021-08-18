@@ -267,17 +267,21 @@ class Tokenizer:
         self.profile_active: bool = False
         self.profile_scope: Optional[str] = None
         if data_dir is None:
-            data_dir = '.'
-            for dir_cand in ('data', '../data'):
-                if os.path.isdir(dir_cand):
-                    data_dir = dir_cand
-                    break
+            data_dir = self.default_data_dir()
+        # Load tokenization resource entries for language specified by 'lang_code'
         if lang_code:
-            self.tok_dict.load_resource(f'{data_dir}/tok-resource-{lang_code}.txt', lang_code=lang_code)
-        self.tok_dict.load_resource(f'{data_dir}/tok-resource.txt')  # language-independent tok-resource
-        for lcode in ['eng']:  # For the time being, the English resources are always loaded.
+            self.tok_dict.load_resource(os.path.join(data_dir, f'tok-resource-{lang_code}.txt'), lang_code=lang_code)
+        # Load language-independent tokenization resource entries
+        self.tok_dict.load_resource(os.path.join(data_dir, f'tok-resource.txt'))
+        # Load any other tokenization resource entries, for the time being just English
+        for lcode in ['eng']:
             if lcode is not lang_code:
-                self.tok_dict.load_resource(f'{data_dir}/tok-resource-{lcode}.txt', lang_code=lcode)
+                self.tok_dict.load_resource(os.path.join(data_dir, f'tok-resource-{lcode}.txt'), lang_code=lcode)
+
+    @staticmethod
+    def default_data_dir() -> str:
+        src_dir = os.path.dirname(os.path.realpath(__file__))
+        return os.path.join(src_dir, "data")
 
     def range_init_char_type_vector_dict(self) -> None:
         # Deletable control characters,
@@ -645,7 +649,7 @@ class Tokenizer:
                                r'(?![.,]?\d)'                           # negative lookahead
                                r'(.*)')
     re_integer = regex.compile(r'(.*?)'
-                               r'(?<![-−–+.]|\d|\pL\pM*)'             # negative lookbehind (stricter: no letters)
+                               r'(?<![-−–+.]|\d[,.]?|\pL\pM*)'        # negative lookbehind (stricter: no letters)
                                r'([-−–+]?'                            # plus/minus sign
                                r'\d+)'                                # plain integer, e.g. 12345678
                                r'(?![-−–.,]?\d)'                      # negative lookahead
@@ -1142,7 +1146,6 @@ class Tokenizer:
 
     def tokenize_string(self, s: str, ht: dict, lang_code: Optional[str], line_id: Optional[str],
                         annotation_file: Optional[TextIO]) -> str:
-        regex.DEFAULT_VERSION = regex.VERSION1
         self.current_orig_s = s
         self.current_s = s
         self.lv = 0  # line_char_type_vector
@@ -1203,7 +1206,7 @@ def main(argv):
                         default=None, metavar='PROFILE-FILENAME', help='(optional output for performance analysis)')
     parser.add_argument('--profile_scope', type=str, default=None,
                         help='(optional scope for performance analysis)')
-    parser.add_argument('-d', '--data_directory', type=str, default=None)
+    parser.add_argument('-d', '--data_directory', type=str, default=None, help='(default: standard data directory)')
     parser.add_argument('--lc', type=str, default=None,
                         metavar='LANGUAGE-CODE', help="ISO 639-3, e.g. 'fas' for Persian")
     parser.add_argument('-f', '--first_token_is_line_id', action='count', default=0,
