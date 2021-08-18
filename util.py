@@ -325,7 +325,8 @@ class ResourceDict:
                                 resource_entry.tag = tag
                             if left_context_s := slot_value_in_double_colon_del_list(line, 'left-context'):
                                 try:
-                                    resource_entry.left_context = regex.compile(eval('r".*' + left_context_s + '$"'))
+                                    resource_entry.left_context = regex.compile(eval('r".*' + left_context_s + '$"'),
+                                                                                flags=regex.VERSION1)
                                     # log.info(f'Left-context({s}) {left_context_s} {resource_entry.left_context}')
                                 except regex.error:
                                     log.warning(f'Regex compile error in l.{line_number} for {s} ::left-context '
@@ -333,13 +334,15 @@ class ResourceDict:
                             if left_context_not_s := slot_value_in_double_colon_del_list(line, 'left-context-not'):
                                 try:
                                     resource_entry.left_context_not = \
-                                        regex.compile(eval('r".*(?<!' + left_context_not_s + ')$"'))
+                                        regex.compile(eval('r".*(?<!' + left_context_not_s + ')$"'),
+                                                      flags=regex.VERSION1)
                                 except regex.error:
                                     log.warning(f'Regex compile error in l.{line_number} for {s} ::left-context-not '
                                                 f'{left_context_not_s}')
                             if right_context_s := slot_value_in_double_colon_del_list(line, 'right-context'):
                                 try:
-                                    resource_entry.right_context = regex.compile(eval('r"' + right_context_s + '"'))
+                                    resource_entry.right_context = regex.compile(eval('r"' + right_context_s + '"'),
+                                                                                 flags=regex.VERSION1)
                                     # log.info(f'Right-context({s}) {right_context_s} {resource_entry.right_context}')
                                 except regex.error:
                                     log.warning(f'Regex compile error in l.{line_number} for {s} ::right-context '
@@ -347,7 +350,8 @@ class ResourceDict:
                             if right_context_not_s := slot_value_in_double_colon_del_list(line, 'right-context-not'):
                                 try:
                                     resource_entry.right_context_not = \
-                                        regex.compile(eval('r"(?!' + right_context_not_s + ')"'))
+                                        regex.compile(eval('r"(?!' + right_context_not_s + ')"'),
+                                                      flags=regex.VERSION1)
                                     # log.info(f'Right-context-not({s}) {right_context_not_s}
                                     # {resource_entry.right_context_not}')
                                 except regex.error:
