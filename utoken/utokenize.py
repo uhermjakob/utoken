@@ -21,12 +21,10 @@ import regex
 import sys
 from typing import Callable, List, Match, Optional, TextIO, Tuple, Type
 import unicodedata as ud
-import util
+from . import __version__, last_mod_date
+from . import util
 
 log.basicConfig(level=log.INFO)
-
-__version__ = '0.0.4'
-last_mod_date = 'August 14, 2021'
 
 
 class VertexMap:
@@ -281,7 +279,7 @@ class Tokenizer:
     @staticmethod
     def default_data_dir() -> str:
         src_dir = os.path.dirname(os.path.realpath(__file__))
-        return os.path.join(src_dir, "data")
+        return os.path.join(src_dir, "../data")
 
     def range_init_char_type_vector_dict(self) -> None:
         # Deletable control characters,
@@ -1192,7 +1190,7 @@ class Tokenizer:
                                   + "\n")
 
 
-def main(argv):
+def main():
     """Wrapper around tokenization that takes care of argument parsing and prints change stats to STDERR."""
     # parse arguments
     parser = argparse.ArgumentParser(description='Tokenizes a given text')
@@ -1217,7 +1215,7 @@ def main(argv):
     parser.add_argument('--mt', action='count', default=0, help='MT-style output with @ added to certain punctuation')
     parser.add_argument('--version', action='version',
                         version=f'%(prog)s {__version__} last modified: {last_mod_date}')
-    args = parser.parse_args(argv)
+    args = parser.parse_args()
     lang_code = args.lc
     data_dir = args.data_directory
     tok = Tokenizer(lang_code=lang_code, data_dir=data_dir)
@@ -1278,4 +1276,4 @@ def main(argv):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1:])
+    main()
