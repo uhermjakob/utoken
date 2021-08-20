@@ -110,9 +110,11 @@ if __name__ == "__main__":
 
                 ref_clause = None
                 if lang_code and lang_code != 'eng':
-                    english_filename = re.sub(r'\.[a-z]{3}\.txt$', '\.eng\.txt', input_filename)
+                    english_filename = re.sub(r'\.[a-z]{3}\.txt$', '.eng.txt', input_filename)
+                    sys.stderr.write(f"**** {input_filename} to {english_filename}\n")
                     if os.path.isfile(english_filename):
-                        ref_clause = f' -ref {input_filename} -ref2 {english_filename} -ref-legends {lang_code}.txt eng.txt'
+                        ref_clause = f' -ref {input_filename} -ref2 {english_filename}' \
+                                     f' -ref-legends {lang_code}.txt eng.txt'
                 if not ref_clause:
                     ref_clause = f' -ref {input_filename} -ref-legend {lang_code}.txt'
                 sacremoses_viz_filename = os.path.join(public_test_data_dir, 'viz',
