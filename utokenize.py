@@ -12,6 +12,7 @@ from itertools import chain
 import cProfile
 import datetime
 import functools
+import json
 import logging as log
 import os
 # from pathlib import Path
@@ -158,6 +159,16 @@ class Chart:
             if token.sem_class:
                 annotation_file.write(f'::sem-class {token.sem_class} ')
             annotation_file.write(f'::surf {token.surf}\n')
+
+    def build_json_snt_annotation_object(self) -> dict:
+        chart_elems = []
+        self.sort_tokens()
+        for token in self.tokens:
+            chart_elem = {'span': token.span.print_hard_span(), 'type': token.creator}
+            if token.sem_class:
+                chart_elem['sem-class'] = token.sem_class
+            chart_elems.append(chart_elem)
+        return {'ID': self.snt_id, 'snt': self.s0, 'chart': chart_elems}
 
 
 class Tokenizer:
@@ -1145,7 +1156,8 @@ class Tokenizer:
         return util.join_tokens(tokens)
 
     def tokenize_string(self, s: str, ht: dict, lang_code: Optional[str], line_id: Optional[str],
-                        annotation_file: Optional[TextIO]) -> str:
+                        annotation_file: Optional[TextIO] = None, annotation_format: Optional[str] = None,
+                        annotation_newline: Optional[bool] = True) -> str:
         self.current_orig_s = s
         self.current_s = s
         self.lv = 0  # line_char_type_vector
@@ -1168,14 +1180,21 @@ class Tokenizer:
             elif (log.INFO >= log.root.level) and (self.n_lines_tokenized % 1000 == 0):
                 sys.stderr.write('+' if self.n_lines_tokenized % 10000 == 0 else '.')
             if annotation_file:
-                chart.print_to_file(annotation_file)
+                if annotation_format == 'json':
+                    json.dump(chart.build_json_snt_annotation_object(), annotation_file, ensure_ascii=False)
+                    if annotation_newline:
+                        annotation_file.write('\n')
+                else:
+                    chart.print_to_file(annotation_file)
         return s.strip()
 
     re_id_snt = re.compile(r'(\S+)(\s+)(\S|\S.*\S)\s*$')
 
     def tokenize_lines(self, ht: dict, input_file: TextIO, output_file: TextIO, annotation_file: Optional[TextIO],
-                       lang_code: Optional[str] = None):
+                       annotation_format: Optional[str] = None, lang_code: Optional[str] = None):
         """Apply normalization/cleaning to a file (or STDIN/STDOUT)."""
+        if annotation_file and annotation_format == 'json':
+            annotation_file.write('[\n')
         line_number = 0
         for line in input_file:
             line_number += 1
@@ -1184,12 +1203,16 @@ class Tokenizer:
                 if m := self.re_id_snt.match(line):
                     line_id, line_id_sep, core_line = m.group(1, 2, 3)
                     output_file.write(line_id + line_id_sep
-                                      + self.tokenize_string(core_line, ht, lang_code, line_id, annotation_file)
+                                      + self.tokenize_string(core_line, ht, lang_code, line_id,
+                                                             annotation_file, annotation_format)
                                       + "\n")
             else:
                 line_id = str(line_number)
-                output_file.write(self.tokenize_string(line.rstrip("\n"), ht, lang_code, line_id, annotation_file)
+                output_file.write(self.tokenize_string(line.rstrip("\n"), ht, lang_code, line_id,
+                                                       annotation_file, annotation_format)
                                   + "\n")
+        if annotation_file and annotation_format == 'json':
+            annotation_file.write(']\n')
 
 
 def main(argv):
@@ -1200,8 +1223,10 @@ def main(argv):
                         default=sys.stdin, metavar='INPUT-FILENAME', help='(default: STDIN)')
     parser.add_argument('-o', '--output', type=argparse.FileType('w', encoding='utf-8', errors='ignore'),
                         default=sys.stdout, metavar='OUTPUT-FILENAME', help='(default: STDOUT)')
-    parser.add_argument('-a', '--annotation', type=argparse.FileType('w', encoding='utf-8', errors='ignore'),
+    parser.add_argument('-a', '--annotation_file', type=argparse.FileType('w', encoding='utf-8', errors='ignore'),
                         default=None, metavar='ANNOTATION-FILENAME', help='(optional output)')
+    parser.add_argument('--annotation_format', type=str, default='json',
+                        help="(default: 'json'; alternative: 'double-colon')")
     parser.add_argument('-p', '--profile', type=argparse.FileType('w', encoding='utf-8', errors='ignore'),
                         default=None, metavar='PROFILE-FILENAME', help='(optional output for performance analysis)')
     parser.add_argument('--profile_scope', type=str, default=None,
@@ -1221,7 +1246,7 @@ def main(argv):
     lang_code = args.lc
     data_dir = args.data_directory
     tok = Tokenizer(lang_code=lang_code, data_dir=data_dir)
-    tok.chart_p = bool(args.annotation) or bool(args.chart)
+    tok.chart_p = bool(args.annotation_file) or bool(args.chart)
     tok.mt_tok_p = bool(args.mt)
     tok.first_token_is_line_id_p = bool(args.first_token_is_line_id)
     tok.profile_scope = args.profile_scope  # e.g. None or 'tokenize_according_to_resource_entries'
@@ -1247,8 +1272,8 @@ def main(argv):
             log_info += f'  Input: {args.input.name}'
         if args.output is not sys.stdout:
             log_info += f'  Output: {args.output.name}'
-        if args.annotation:
-            log_info += f'  Annotation: {args.annotation.name}'
+        if args.annotation_file:
+            log_info += f'  Annotation: {args.annotation_file.name}'
         if tok.chart_p:
             log_info += f'  Chart to be built: {tok.chart_p}'
         if tok.mt_tok_p:
@@ -1256,8 +1281,8 @@ def main(argv):
         if lang_code:
             log_info += f'  ISO 639-3 language code: {lang_code}'
         log.info(log_info)
-    tok.tokenize_lines(ht, input_file=args.input, output_file=args.output, annotation_file=args.annotation,
-                       lang_code=lang_code)
+    tok.tokenize_lines(ht, input_file=args.input, output_file=args.output, annotation_file=args.annotation_file,
+                       annotation_format=args.annotation_format, lang_code=lang_code)
     if (log.INFO >= log.root.level) and (tok.n_lines_tokenized >= 1000):
         sys.stderr.write('\n')
     # Log some change stats.
