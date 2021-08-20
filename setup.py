@@ -26,7 +26,7 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     classifiers=classifiers,
-    python_requires='>=3.7',
+    python_requires='>=3.8',
     url='https://github.com/isi-nlp/utoken',
     download_url='https://github.com/isi-nlp/utoken',
     platforms=['any'],
