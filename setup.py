@@ -30,7 +30,7 @@ setup(
     url='https://github.com/isi-nlp/utoken',
     download_url='https://github.com/isi-nlp/utoken',
     platforms=['any'],
-    author='Ulf Harmjakob',
+    author='Ulf Hermjakob',
     author_email='ulf@isi.edu',
     packages=find_namespace_packages(exclude=['aux']),
     keywords=['machine translation', 'datasets', 'NLP', 'natural language processing,'
