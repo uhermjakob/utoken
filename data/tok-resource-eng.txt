@@ -905,7 +905,7 @@
 ::misspelling accomodate ::target accommodate ::lcode eng ::suffix-variations e/ed;es;ing;ion;ions
 ::misspelling accross ::target across ::lcode eng
 ::misspelling acheive ::target achieve ::lcode eng ::suffix-variations e/ed;es;ing;ement;ements
-::misspelling agressive ::target aggressive ::lcode eng ::suffix-variations ive/ion;ions
+::misspelling agressive ::target aggressive ::lcode eng ::suffix-variations ive/ion;ions;or;ors
 ::misspelling apparant ::target apparent ::lcode eng ::suffix-variations ly
 ::misspelling appearence ::target appearance ::lcode eng
 ::misspelling arguement ::target argument ::lcode eng ::suffix-variations s
@@ -964,7 +964,7 @@
 ::misspelling liason ::target liaison ::lcode eng
 ::misspelling lollypop ::target lollipop ::lcode eng ::suffix-variations s
 ::misspelling millenium ::target millennium ::lcode eng ::suffix-variations um/a
-::misspelling mispell ::target misspell ::lcode eng ::suffix-variations ed/s/ing/ings
+::misspelling mispell ::target misspell ::lcode eng ::suffix-variations ed;s;ing;ings
 ::misspelling neccessary ::target necessary ::lcode eng ::suffix-variations y/ily
 ::misspelling noticable ::target noticeable ::lcode eng ::suffix-variations le/ly
 ::misspelling ocassion ::target occasion ::lcode eng ::suffix-variations s
@@ -988,7 +988,6 @@
 ::misspelling realy ::target really ::lcode eng
 ::misspelling recieve ::target receive ::lcode eng ::suffix-variations e/ed;es;ing
 ::misspelling refered ::target referred ::lcode eng ::suffix-variations ed/ing
-::misspelling refering ::target referred ::lcode eng
 ::misspelling religous ::target religious ::lcode eng ::suffix-variations ly
 ::misspelling rember ::target remember ::lcode eng ::suffix-variations ed;s;ing
 ::misspelling remeber ::target remember ::lcode eng ::suffix-variations ed;s;ing
