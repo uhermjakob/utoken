@@ -31,7 +31,7 @@ Capt. O'Connor 's car can n't 've cost $ 100,000 .
 ### Usage
 ```
 utokenize.py [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-a ANNOTATION-FILENAME] [-p PROFILE-FILENAME]
-                    [--profile_scope PROFILE_SCOPE] [--lc LANGUAGE-CODE] [-f] [-v] [-c] [--mt] [--version]
+             [--profile_scope PROFILE_SCOPE] [-d DATA_DIRECTORY] [--lc LANGUAGE-CODE] [-f] [-v] [-c] [--mt] [--version]
 optional arguments:
   -h, --help            show this help message and exit
   -i INPUT-FILENAME, --input INPUT-FILENAME
@@ -44,6 +44,8 @@ optional arguments:
                         (optional output for performance analysis)
   --profile_scope PROFILE_SCOPE
                         (optional scope for performance analysis)
+  -d DATA_DIRECTORY, --data_directory DATA_DIRECTORY
+                        (default: standard data directory)
   --lc LANGUAGE-CODE    ISO 639-3, e.g. 'fas' for Persian
   -f, --first_token_is_line_id
                         First token is line ID (and will be exempt from any tokenization)
@@ -60,12 +62,12 @@ optional arguments:
 * More information in data files rather than program code.
 * Written in Python.
 * Maintains a chart data structure with detailed additional information that can also serve as a basis for further processing.
-* Very preliminary (implementation started in mid-July 2021, current version 0.0.2)
+* Preliminary (implementation started in mid-July 2021, current version 0.0.4)
 
 ### Limitations
 * Currently excluded: no-space scripts like Chinese
 * Substantial set of resource entries (data file) currently for English only
-* Substantial testing so far for English only
+* Substantial testing so far only for English, Hindi, and to a lesser degree Kazakh and Uyghur
 
 ### Requirements
 * Python 3.8 or higher
