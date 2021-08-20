@@ -16,10 +16,11 @@ test/data/SARAL
 test/data/tmp
 test/data/uroman-large-test-set
 test/data/utoken-out/*save*
+test/data/utoken-out/*.json
 test/data/viz
 test/data/wildebeest
-test/data/Bible-eng_ult-woid.txt
-test/data/Bible-hin_irv-woid.txt
+test/data/Bible-ULT-woid.eng.txt
+test/data/Bible-IRV-woid.hin.txt
 to-do
 __pycache__
 .DS_Store

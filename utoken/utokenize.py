@@ -169,6 +169,7 @@ class Chart:
             chart_elem = {'span': token.span.print_hard_span(), 'type': token.creator}
             if token.sem_class:
                 chart_elem['sem-class'] = token.sem_class
+            chart_elem['surf'] = token.surf
             chart_elems.append(chart_elem)
         return {'ID': self.snt_id, 'snt': self.s0, 'chart': chart_elems}
 
@@ -279,6 +280,7 @@ class Tokenizer:
         self.profile = None
         self.profile_active: bool = False
         self.profile_scope: Optional[str] = None
+        self.annotation_json_elements: list[str] = []
         if data_dir is None:
             data_dir = self.default_data_dir()
         # Load tokenization resource entries for language specified by 'lang_code'
@@ -1158,8 +1160,7 @@ class Tokenizer:
         return util.join_tokens(tokens)
 
     def tokenize_string(self, s: str, ht: dict, lang_code: Optional[str], line_id: Optional[str],
-                        annotation_file: Optional[TextIO] = None, annotation_format: Optional[str] = None,
-                        annotation_newline: Optional[bool] = True) -> str:
+                        annotation_file: Optional[TextIO] = None, annotation_format: Optional[str] = None) -> str:
         self.current_orig_s = s
         self.current_s = s
         self.lv = 0  # line_char_type_vector
@@ -1183,9 +1184,8 @@ class Tokenizer:
                 sys.stderr.write('+' if self.n_lines_tokenized % 10000 == 0 else '.')
             if annotation_file:
                 if annotation_format == 'json':
-                    json.dump(chart.build_json_snt_annotation_object(), annotation_file, ensure_ascii=False)
-                    if annotation_newline:
-                        annotation_file.write('\n')
+                    self.annotation_json_elements.append(json.dumps(chart.build_json_snt_annotation_object(),
+                                                                    ensure_ascii=False))
                 else:
                     chart.print_to_file(annotation_file)
         return s.strip()
@@ -1195,8 +1195,6 @@ class Tokenizer:
     def tokenize_lines(self, ht: dict, input_file: TextIO, output_file: TextIO, annotation_file: Optional[TextIO],
                        annotation_format: Optional[str] = None, lang_code: Optional[str] = None):
         """Apply normalization/cleaning to a file (or STDIN/STDOUT)."""
-        if annotation_file and annotation_format == 'json':
-            annotation_file.write('[\n')
         line_number = 0
         for line in input_file:
             line_number += 1
@@ -1214,7 +1212,7 @@ class Tokenizer:
                                                        annotation_file, annotation_format)
                                   + "\n")
         if annotation_file and annotation_format == 'json':
-            annotation_file.write(']\n')
+            annotation_file.write('[' + ',\n'.join(self.annotation_json_elements) + ']\n')
 
 
 def main():
