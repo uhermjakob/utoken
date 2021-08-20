@@ -164,8 +164,8 @@
 ::abbrev KE ::exp Kenya ::lcode eng ::sem-class country-code ::case-sensitive True
 ::abbrev KG ::exp Kyrgyzstan ::lcode eng ::sem-class country-code ::case-sensitive True
 ::abbrev KH ::exp Cambodia ::lcode eng ::sem-class country-code ::case-sensitive True
-::abbrev KP ::exp Democratic People's Republic of Korea ::lcode eng ::sem-class country-code  ::case-sensitive True
-::abbrev KP ::exp North Korea ::lcode eng ::sem-class country-code  ::case-sensitive True
+::abbrev KP ::exp Democratic People's Republic of Korea ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev KP ::exp North Korea ::lcode eng ::sem-class country-code ::case-sensitive True
 ::abbrev KR ::exp Republic of Korea ::lcode eng ::sem-class country-code ::case-sensitive True
 ::abbrev KR ::exp South Korea ::lcode eng ::sem-class country-code ::case-sensitive True
 ::abbrev KZ ::exp Kazakhstan ::lcode eng ::sem-class country-code ::case-sensitive True
@@ -488,7 +488,7 @@
 ::abbrev math ::exp mathematics ::lcode eng
 ::abbrev maths ::exp mathematics ::lcode eng
 ::abbrev misc. ::exp miscellaneous ::lcode eng
-::abbrev MM ::exp multiple myeloma ::lcode eng
+::abbrev MM ::exp multiple myeloma ::lcode eng ::case-sensitive True
 ::abbrev m/o ::exp month old ::lcode eng
 ::abbrev MP ::exp member of parliament ::lcode eng ::country UK
 ::abbrev MP ::exp military police ::lcode eng
@@ -553,7 +553,7 @@
 ::lexical M&M's ::lcode eng ::sem-class product ::alt-spelling M&Ms
 
 ::lexical c' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::example C'est la vie.
-::lexical d' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra  ::example Coeur d'Alene
+::lexical d' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::example Coeur d'Alene
 ::lexical n' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::left-context-not ['’‘]
 ::lexical qu' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra
 ::lexical s' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra
