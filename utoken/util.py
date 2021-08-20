@@ -10,8 +10,8 @@ import regex
 import sys
 from typing import Dict, List, Optional, Pattern
 
-__version__ = '0.0.4'
-last_mod_date = 'August 14, 2021'
+__version__ = '0.0.5'
+last_mod_date = 'August 19, 2021'
 
 
 class ResourceEntry:
