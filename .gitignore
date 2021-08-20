@@ -15,7 +15,7 @@ test/data/tok-comparison
 test/data/SARAL
 test/data/tmp
 test/data/uroman-large-test-set
-test/data/utoken-out/*save?
+test/data/utoken-out/*save*
 test/data/viz
 test/data/wildebeest
 test/data/Bible-eng_ult-woid.txt
