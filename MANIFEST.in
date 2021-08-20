@@ -1,0 +1,8 @@
+include README.md
+include data/tok-resource-eng.txt
+include data/tok-resource-hin.txt
+include data/tok-resource-kaz.txt
+include data/tok-resource-mal.txt
+include data/tok-resource-uig.txt
+include data/tok-resource.txt
+global-exclude *.pyc
