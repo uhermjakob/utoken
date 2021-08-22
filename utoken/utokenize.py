@@ -25,9 +25,10 @@ import unicodedata as ud
 # from . import __version__, last_mod_date
 # from . import util
 import util
+from __init__ import __version__, last_mod_date
 
-__version__ = '0.0.5'
-last_mod_date = 'August 19, 2021'
+# __version__ = '0.0.5'
+# last_mod_date = 'August 21, 2021'
 
 log.basicConfig(level=log.INFO)
 
