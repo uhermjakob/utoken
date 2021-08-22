@@ -1,0 +1,104 @@
+
+::attach-tag @
+
+::markup-attach - ::group True ::comment hyphen
+::markup-attach – ::group True ::comment en-dash
+::markup-attach — ::group True ::comment em-dash
+::markup-attach : ::except auto-attach
+::markup-attach ' ::group True ::side open-or-close
+::markup-attach " ::side open-or-close
+::markup-attach _ ::side open-or-close
+::markup-attach * ::side open-or-close
+::markup-attach ~ ::side open-or-close
+
+::auto-attach / ::side both
+::auto-attach · ::side both ::comment middle dot
+
+::auto-attach ” ::side left ::comment right double quotation mark
+::auto-attach ’ ::side left ::group True ::comment right single quotation mark
+::auto-attach . ::side left ::group True
+::auto-attach … ::side left ::group True
+::auto-attach ! ::side left ::group True
+::auto-attach ? ::side left ::group True
+::auto-attach ‼ ::side left
+::auto-attach ⁇ ::side left
+::auto-attach ⁈ ::side left
+::auto-attach ⁉ ::side left
+::auto-attach ‽ ::side left
+::auto-attach , ::side left
+::auto-attach ; ::side left
+::auto-attach ) ::side left
+::auto-attach } ::side left
+::auto-attach ] ::side left
+::auto-attach › ::side left ::group True
+::auto-attach » ::side left
+::auto-attach 〉 ::side left
+::auto-attach ） ::side left
+::auto-attach ］ ::side left
+::auto-attach 】 ::side left
+::auto-attach 」 ::side left
+::auto-attach 》 ::side left
+::auto-attach 』 ::side left
+::auto-attach 】 ::side left
+::auto-attach 〕 ::side left
+::auto-attach 〗 ::side left
+::auto-attach 〙 ::side left
+::auto-attach 〛 ::side left
+::auto-attach 。 ::side left ::comment ideogrphic full stop
+::auto-attach 、 ::side left ::comment ideographic comma
+::auto-attach ！ ::side left ::comment fullwidth character
+::auto-attach ？ ::side left ::comment fullwidth character
+::auto-attach ， ::side left ::comment fullwidth character
+::auto-attach ； ::side left ::comment fullwidth character
+::auto-attach ： ::side left ::comment fullwidth character
+::auto-attach ։  ::side left::comment Armenian full stop
+::auto-attach ። ::side left ::comment Ethiopic full stop
+::auto-attach ፣ ::side left ::comment Ethiopic comma
+::auto-attach ፤ ::side left ::comment Ethiopic semicolon
+::auto-attach ፥ ::side left ::comment Ethiopic colon
+::auto-attach ፦ ::side left ::comment Ethiopic preface colon
+::auto-attach ፧ ::side left ::comment Ethiopic question mark
+::auto-attach ; ::side left ::comment Greek question mark
+::auto-attach ؟ ::side left ::comment Arabic question mark
+::auto-attach ، ::side left ::comment Arabic comma
+::auto-attach ؛ ::side left ::comment Arabic semicolon
+::auto-attach । ::side left ::commant Devanagari danda
+::auto-attach ॥ ::side left ::comment Devanagari double danda
+::auto-attach % ::side left ::left-context \d
+::auto-attach ‰ ::side left ::left-context \d
+::auto-attach ‱ ::side left ::left-context \d
+::auto-attach ٪ ::side left ::left-context \d ::comment Arabic percent sign
+::auto-attach + ::side left ::left-context \d[%‰kK]?
+::auto-attach © ::side left
+::auto-attach ® ::side left
+::auto-attach ™ ::side left
+
+::auto-attach “ ::side right ::comment left double quotation mark
+::auto-attach „ ::side right
+::auto-attach ‘ ::side right ::group True ::comment left single quotation mark
+::auto-attach ( ::side right
+::auto-attach { ::side right
+::auto-attach « ::side right
+::auto-attach [ ::side right
+::auto-attach 〈 ::side right
+::auto-attach （ ::side right
+::auto-attach ［ ::side right
+::auto-attach 【 ::side right
+::auto-attach 「 ::side right
+::auto-attach 《 ::side right
+::auto-attach 『 ::side right
+::auto-attach 【 ::side right
+::auto-attach 〔 ::side right
+::auto-attach 〖 ::side right
+::auto-attach 〘 ::side right
+::auto-attach 〚 ::side right
+::auto-attach ‹ ::side right ::group True
+::auto-attach ¡ ::side right ::group True
+::auto-attach ¿ ::side right ::group True
+::punct-split # ::side right ::right-context \d{1,4}\b
+::punct-split $ ::side right ::right-context \d
+::punct-split £ ::side right ::right-context \d
+::punct-split € ::side right ::right-context \d
+::punct-split ¥ ::side right ::right-context \d
+::punct-split ₹ ::side right ::right-context \d
+::punct-split ฿ ::side right ::right-context \d
