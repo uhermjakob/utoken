@@ -5,4 +5,5 @@ include data/tok-resource-kaz.txt
 include data/tok-resource-mal.txt
 include data/tok-resource-uig.txt
 include data/tok-resource.txt
+include data/detok-resource.txt
 global-exclude *.pyc
