@@ -5,11 +5,11 @@
 ::markup-attach – ::group True ::comment en-dash
 ::markup-attach — ::group True ::comment em-dash
 ::markup-attach : ::except auto-attach
-::markup-attach ' ::group True ::side open-or-close
-::markup-attach " ::side open-or-close
-::markup-attach _ ::side open-or-close
-::markup-attach * ::side open-or-close
-::markup-attach ~ ::side open-or-close
+::markup-attach ' ::group True ::paired-delimiter True
+::markup-attach " ::paired-delimiter True
+::markup-attach _ ::paired-delimiter True
+::markup-attach * ::paired-delimiter True
+::markup-attach ~ ::paired-delimiter True
 
 ::auto-attach / ::side both
 ::auto-attach · ::side both ::comment middle dot
@@ -39,7 +39,6 @@
 ::auto-attach 」 ::side left
 ::auto-attach 》 ::side left
 ::auto-attach 』 ::side left
-::auto-attach 】 ::side left
 ::auto-attach 〕 ::side left
 ::auto-attach 〗 ::side left
 ::auto-attach 〙 ::side left
@@ -51,7 +50,7 @@
 ::auto-attach ， ::side left ::comment fullwidth character
 ::auto-attach ； ::side left ::comment fullwidth character
 ::auto-attach ： ::side left ::comment fullwidth character
-::auto-attach ։  ::side left::comment Armenian full stop
+::auto-attach ։  ::side left ::comment Armenian full stop
 ::auto-attach ። ::side left ::comment Ethiopic full stop
 ::auto-attach ፣ ::side left ::comment Ethiopic comma
 ::auto-attach ፤ ::side left ::comment Ethiopic semicolon
@@ -62,7 +61,7 @@
 ::auto-attach ؟ ::side left ::comment Arabic question mark
 ::auto-attach ، ::side left ::comment Arabic comma
 ::auto-attach ؛ ::side left ::comment Arabic semicolon
-::auto-attach । ::side left ::commant Devanagari danda
+::auto-attach । ::side left ::comment Devanagari danda
 ::auto-attach ॥ ::side left ::comment Devanagari double danda
 ::auto-attach % ::side left ::left-context \d
 ::auto-attach ‰ ::side left ::left-context \d
@@ -87,7 +86,6 @@
 ::auto-attach 「 ::side right
 ::auto-attach 《 ::side right
 ::auto-attach 『 ::side right
-::auto-attach 【 ::side right
 ::auto-attach 〔 ::side right
 ::auto-attach 〖 ::side right
 ::auto-attach 〘 ::side right
@@ -95,10 +93,10 @@
 ::auto-attach ‹ ::side right ::group True
 ::auto-attach ¡ ::side right ::group True
 ::auto-attach ¿ ::side right ::group True
-::punct-split # ::side right ::right-context \d{1,4}\b
-::punct-split $ ::side right ::right-context \d
-::punct-split £ ::side right ::right-context \d
-::punct-split € ::side right ::right-context \d
-::punct-split ¥ ::side right ::right-context \d
-::punct-split ₹ ::side right ::right-context \d
-::punct-split ฿ ::side right ::right-context \d
+::auto-attach # ::side right ::right-context \d{1,4}\b
+::auto-attach $ ::side right ::right-context \d
+::auto-attach £ ::side right ::right-context \d
+::auto-attach € ::side right ::right-context \d
+::auto-attach ¥ ::side right ::right-context \d
+::auto-attach ₹ ::side right ::right-context \d
+::auto-attach ฿ ::side right ::right-context \d
