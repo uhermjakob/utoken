@@ -92,12 +92,14 @@ class Detokenizer:
         markup_attach_re = self.detok_dict.markup_attach_re
         attach_tag = self.detok_dict.attach_tag
         s = s.strip()
+        # log.info(f's: {s}')
         if s == '':
             return ''
         if '<' in s:
             tokens = self.tokens_in_tokenized_string(s)
         else:
-            tokens = s.split(r'\s+')
+            tokens = re.split(r'\s+', s)
+        # log.info(f"tokens: {' :: '.join(tokens)} ({len(tokens)})")
         eliminate_space_based_on_previous_token = True  # no space before first token
         result = ''
         prev_token = ''
