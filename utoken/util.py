@@ -501,7 +501,7 @@ class DetokenizationDict:
                                             f'{right_context_not_s}')
                         n_entries += 1
                 regex_string = '^@?(?:' + '|'.join(match_attach_re_elements) + ')@?$'
-                log.info(f"markup_attach_re: {regex_string}")
+                # log.info(f"markup_attach_re: {regex_string}")
                 self.markup_attach_re = re.compile(regex_string)
                 log.info(f'Loaded {n_entries} entries from {line_number} lines in {filename}')
         except OSError:
