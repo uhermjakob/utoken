@@ -1,8 +1,9 @@
 #!/usr/bin/env python
 
 """Script calls tokenizer(s), reformatters, visualizers for testing.
-   Sample call 1: utoken-test.py -i amr-general-corpus.eng.txt
-   Sample call 2: utoken-test.py -i set1
+   Sample call: utoken-test.py -i amr-general-corpus.eng.txt
+   Sample call: utoken-test.py -i set1
+   Sample call: utoken-test.py -i set2 -cv
 """
 
 import argparse
