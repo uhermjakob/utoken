@@ -27,9 +27,6 @@ import unicodedata as ud
 import util
 from __init__ import __version__, last_mod_date
 
-# __version__ = '0.0.5'
-# last_mod_date = 'August 21, 2021'
-
 log.basicConfig(level=log.INFO)
 
 
@@ -276,6 +273,7 @@ class Tokenizer:
         self.lang_code: Optional[str] = lang_code
         self.n_lines_tokenized = 0
         self.tok_dict = util.ResourceDict()
+        self.detok_dict = util.DetokenizationDict()
         self.current_orig_s: Optional[str] = None
         self.current_s: Optional[str] = None
         self.profile = None
@@ -293,6 +291,8 @@ class Tokenizer:
         for lcode in ['eng']:
             if lcode is not lang_code:
                 self.tok_dict.load_resource(os.path.join(data_dir, f'tok-resource-{lcode}.txt'), lang_code=lcode)
+        # Load detokenization resource entries, for proper mt-tokenization, e.g. @...@
+        self.detok_dict.load_resource(os.path.join(data_dir, f'detok-resource.txt'))
 
     @staticmethod
     def default_data_dir() -> str:
@@ -583,8 +583,10 @@ class Tokenizer:
                                  "ph|pl|pt|ro|rs|ru|rw|se|sg|sk|so|tr|tv|tw|tz|ua|ug|uk|us|za"
     re_url2 = regex.compile(r'(.*?)'
                             r'(?<![\p{Latin}&&\p{Letter}]|\@)'  # negative lookbehind: no Latin+ letters, no @ please
-                            r"((?:www(?:\.(?:\p{L}\p{M}*|\d|[-_]))+\.(?:[a-z]{2,4}]))|"
-                            r"(?:(?:(?:\p{L}\p{M}*|\d|[-_])+\.)+(?:" + common_top_domain_suffixes + ")))"
+                            r"((?:(?:www(?:\.(?:\p{L}\p{M}*|\d|[-_]))+\.(?:[a-z]{2,4}]))|"
+                            r"(?:(?:(?:\p{L}\p{M}*|\d|[-_])+\.)+(?:" + common_top_domain_suffixes + r")))"
+                            r"(?:\/(?:(?:\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+]|"
+                            r"\((?:\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+])\))*(?:\p{L}\p{M}*|\d|[/]))?)?)"
                             r'(?![\p{Latin}&&\p{Letter}])'      # negative lookahead: no Latin+ letters please
                             r'(.*)$',
                             flags=regex.IGNORECASE)
