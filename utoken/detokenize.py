@@ -24,12 +24,25 @@ class Detokenizer:
     def __init__(self, lang_code: Optional[str] = None, data_dir: Optional[str] = None):
         self.number_of_lines = 0
         self.lang_code: Optional[str] = lang_code
+        lang_codes = [lang_code] if lang_code else []
         self.first_token_is_line_id_p = False
         if data_dir is None:
             data_dir = self.default_data_dir()
-        self.detok_dict = util.DetokenizationDict()
-        self.detok_dict.load_resource(os.path.join(data_dir, f'detok-resource.txt'))
-        attach_tag = self.detok_dict.attach_tag
+        self.detok_resource = util.DetokenizationResource()
+        # Load detokenization resource entries
+        self.detok_resource.load_resource(os.path.join(data_dir, f'detok-resource.txt'))
+        # Load tokenization resource entries for language specified by 'lang_code' (to harvest a few contractions)
+        if lang_code:
+            self.detok_resource.load_resource(os.path.join(data_dir, f'tok-resource-{lang_code}.txt'), lang_codes)
+        # Load language-independent tokenization resource entries
+        self.detok_resource.load_resource(os.path.join(data_dir, f'tok-resource.txt'))
+        # Load any other tokenization resource entries, for the time being just English
+        for lcode in ['eng']:
+            if lcode != lang_code:
+                self.detok_resource.load_resource(os.path.join(data_dir, f'tok-resource-{lcode}.txt'), lang_codes)
+        # Now that all resource files have been loaded, form regex for all marked-up attachment elements
+        self.detok_resource.build_markup_attach_re()
+        attach_tag = self.detok_resource.attach_tag
         xml_tag_re_s = r'\s*(' + attach_tag + r'?</?[a-zA-Z][^<>]*>' + attach_tag + r'?)(\s.*|)$'
         # log.info(f'xml_tag_re_s {xml_tag_re_s}')
         self.xml_tag_re = re.compile(xml_tag_re_s)
@@ -47,50 +60,46 @@ class Detokenizer:
             s = m2.group(2)
         return tokens
 
-    @staticmethod
-    def detokenization_entry_fulfills_conditions(detokenization_entry: util.DetokenizationEntry,
-                                                 _token: str, left_context: str, right_context: str,
-                                                 lang_code: Optional[str], group: Optional[bool] = False) -> bool:
-        """This methods checks whether a detokenization-entry satisfies any context conditions."""
-        lang_codes = detokenization_entry.lang_codes
-        return ((not lang_code or not lang_codes or (lang_code in lang_codes))
-                and (not group or detokenization_entry.group)
-                and (not (re_l := detokenization_entry.left_context) or re_l.match(left_context))
-                and (not (re_l_n := detokenization_entry.left_context_not) or not re_l_n.match(left_context))
-                and (not (re_r := detokenization_entry.right_context) or re_r.match(right_context))
-                and (not (re_r_n := detokenization_entry.right_context_not) or not re_r_n.match(right_context)))
-
     def token_auto_attaches_to_left(self, s: str, left_context: str, right_context: str,
                                     lang_code: Optional[str]) -> bool:
-        for detokenization_entry in self.detok_dict.auto_attach_left.get(s, []):
-            if self.detokenization_entry_fulfills_conditions(detokenization_entry, s, left_context, right_context,
-                                                             lang_code):
+        lc_s = s.lower()
+        for detokenization_entry in self.detok_resource.auto_attach_left.get(lc_s, []):
+            if detokenization_entry.detokenization_entry_fulfills_conditions(s, left_context, right_context, lang_code):
                 return True
-        s0 = s[0]
+        s0 = lc_s[0]
         if all(c == s0 for c in s):
-            for detokenization_entry in self.detok_dict.auto_attach_left.get(s0, []):
-                if self.detokenization_entry_fulfills_conditions(detokenization_entry, s, left_context, right_context,
-                                                                 lang_code, True):
+            for detokenization_entry in self.detok_resource.auto_attach_left.get(s0, []):
+                if detokenization_entry.detokenization_entry_fulfills_conditions(s, left_context, right_context,
+                                                                                 lang_code, True):
                     return True
         return False
 
     def token_auto_attaches_to_right(self, s: str, left_context: str, right_context: str,
                                      lang_code: Optional[str]) -> bool:
-        for detokenization_entry in self.detok_dict.auto_attach_right.get(s, []):
-            if self.detokenization_entry_fulfills_conditions(detokenization_entry, s, left_context, right_context,
-                                                             lang_code):
+        lc_s = s.lower()
+        for detokenization_entry in self.detok_resource.auto_attach_right.get(lc_s, []):
+            if detokenization_entry.detokenization_entry_fulfills_conditions(s, left_context, right_context, lang_code):
                 return True
-        s0 = s[0]
+        s0 = lc_s[0]
         if all(c == s0 for c in s):
-            for detokenization_entry in self.detok_dict.auto_attach_right.get(s0, []):
-                if self.detokenization_entry_fulfills_conditions(detokenization_entry, s, left_context, right_context,
-                                                                 lang_code, True):
+            for detokenization_entry in self.detok_resource.auto_attach_right.get(s0, []):
+                if detokenization_entry.detokenization_entry_fulfills_conditions(s, left_context, right_context,
+                                                                                 lang_code, True):
                     return True
         return False
 
+    def token_contraction(self, s: str, lang_code: Optional[str]) -> Optional[str]:
+        lc_s = s.lower()
+        for detokenization_entry in self.detok_resource.contraction_dict.get(lc_s, []):
+            if detokenization_entry.detokenization_entry_fulfills_conditions(s, '', '', lang_code):
+                contraction = detokenization_entry.contraction_s
+                case_adjusted_contraction = util.adjust_capitalization(contraction, s)
+                return case_adjusted_contraction
+        return None
+
     def detokenize_string(self, s: str, lang_code: Optional[str], _line_id: Optional[str]) -> str:
-        markup_attach_re = self.detok_dict.markup_attach_re
-        attach_tag = self.detok_dict.attach_tag
+        markup_attach_re = self.detok_resource.markup_attach_re
+        attach_tag = self.detok_resource.attach_tag
         s = s.strip()
         # log.info(f's: {s}')
         if s == '':
@@ -102,11 +111,20 @@ class Detokenizer:
         # log.info(f"tokens: {' :: '.join(tokens)} ({len(tokens)})")
         eliminate_space_based_on_previous_token = True  # no space before first token
         result = ''
-        prev_token = ''
-        token = tokens[0]
-        next_tokens = tokens[1:]
-        next_tokens.append('')
-        for next_token in next_tokens:
+        next_i = 0
+        while (i := next_i) < (n_tokens := len(tokens)):    # Number of tokens can change dynamically below.
+            next_i = i + 1                                  # next_i can change dynamically below.
+            prev_token = tokens[i-1] if i >= 1 else ''
+            token = tokens[i]
+            next_token = tokens[i+1] if i+1 < n_tokens else ''
+            # Contract the next 2 tokens if appropriate, e.g. "can" + "n't" -> "can't".
+            if next_token:
+                two_tokens = ' '.join((token, next_token))
+                if contraction := self.token_contraction(two_tokens, lang_code):
+                    log.info(f'Contraction: {two_tokens} -> {contraction}')
+                    tokens[i:i+2] = [contraction]
+                    next_i = i
+                    continue
             token_is_marked_up = markup_attach_re.match(token)
             # Add space between tokens with certain exceptions.
             if ((not eliminate_space_based_on_previous_token)
@@ -120,7 +138,6 @@ class Detokenizer:
                 ((token_is_marked_up and token.endswith(attach_tag))
                     or self.token_auto_attaches_to_right(token, prev_token, next_token, lang_code))
             # log.info(f'Token-{i}: {token} is markup-punct')
-            prev_token, token = token, next_token
         return result
 
     re_id_snt = re.compile(r'(\S+)(\s+)(\S|\S.*\S)\s*$')
