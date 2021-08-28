@@ -4,6 +4,7 @@
 Written by Ulf Hermjakob, USC/ISI
 """
 # -*- encoding: utf-8 -*-
+from collections import defaultdict
 import logging as log
 import re
 import regex
@@ -86,6 +87,15 @@ class ResourceDict:
             rev_resource_list: List[ResourceEntry] = self.reverse_resource_dict.get(rev_anchor, [])
             rev_resource_list.append(resource_entry)
             self.reverse_resource_dict[rev_anchor] = rev_resource_list
+
+    @staticmethod
+    def line_without_comment(line: str) -> str:
+        if '#' in line:
+            if line.startswith('#'):
+                return '\n'
+            if (m1 := re.match(r"(.*::\S+(?:\s+\S+)?)(.*)$", line)) and (m2 := re.match(r"(.*?)\s+#.*", m1.group(2))):
+                return m1.group(1) + m2.group(1)
+        return line
 
     @staticmethod
     def expand_resource_lines(orig_line: str) -> List[str]:
@@ -206,13 +216,9 @@ class ResourceDict:
                 n_expanded_lines = 0
                 for orig_line in f_in:
                     line_number += 1
-                    line_without_comment = orig_line
-                    if '#' in orig_line:
-                        if orig_line.startswith('#'):
-                            continue
-                        if (m1 := re.match(r"(.*::\S+(?:\s+\S+)?)(.*)$", orig_line)) \
-                                and (m2 := re.match(r"(.*?)\s+#.*", m1.group(2))):
-                            line_without_comment = m1.group(1) + m2.group(1)
+                    line_without_comment = self.line_without_comment(orig_line)
+                    if line_without_comment.strip() == '':
+                        continue
                     lines = self.expand_resource_lines(line_without_comment)
                     n_expanded_lines += len(lines) - 1
                     for line in lines:
@@ -234,10 +240,12 @@ class ResourceDict:
                                                                               'group',
                                                                               'inflections',
                                                                               'lcode',
+                                                                              'lcode-not',
                                                                               'left-context',
                                                                               'left-context-not',
                                                                               'lexical',
                                                                               'misspelling',
+                                                                              'nonstandard',
                                                                               'plural',
                                                                               'problem',
                                                                               'punct-split',
@@ -246,6 +254,7 @@ class ResourceDict:
                                                                               'right-context-not',
                                                                               'sem-class',
                                                                               'side',
+                                                                              'substandard',
                                                                               'suffix-variations',
                                                                               'tag',
                                                                               'target',
@@ -372,7 +381,8 @@ class ResourceDict:
 class DetokenizationEntry:
     def __init__(self, s: str, group: Optional[bool] = False, lang_codes: List[str] = None,
                  left_context: Optional[Pattern[str]] = None, left_context_not: Optional[Pattern[str]] = None,
-                 right_context: Optional[Pattern[str]] = None, right_context_not: Optional[Pattern[str]] = None):
+                 right_context: Optional[Pattern[str]] = None, right_context_not: Optional[Pattern[str]] = None,
+                 case_sensitive: bool = False):
         self.s = s
         self.group = group
         self.lang_codes = lang_codes
@@ -380,26 +390,55 @@ class DetokenizationEntry:
         self.left_context_not: Optional[Pattern[str]] = left_context_not
         self.right_context: Optional[Pattern[str]] = right_context
         self.right_context_not: Optional[Pattern[str]] = right_context_not
+        self.case_sensitive = case_sensitive
+
+    def detokenization_entry_fulfills_conditions(self, token: str, left_context: str, right_context: str,
+                                                 lang_code: Optional[str], group: Optional[bool] = False) -> bool:
+        """This methods checks whether a detokenization-entry satisfies any context conditions."""
+        lang_codes = self.lang_codes
+        return ((not lang_code or not lang_codes or (lang_code in lang_codes))
+                and (not self.case_sensitive or (token == self.s))
+                and (not group or self.group)
+                and (not (re_l := self.left_context) or re_l.match(left_context))
+                and (not (re_l_n := self.left_context_not) or not re_l_n.match(left_context))
+                and (not (re_r := self.right_context) or re_r.match(right_context))
+                and (not (re_r_n := self.right_context_not) or not re_r_n.match(right_context)))
 
 
 class DetokenizationMarkupEntry(DetokenizationEntry):
     def __init__(self, s: str, group: Optional[bool] = False, paired_delimiter: Optional[bool] = False,
                  left_context: Optional[Pattern[str]] = None, left_context_not: Optional[Pattern[str]] = None,
-                 right_context: Optional[Pattern[str]] = None, right_context_not: Optional[Pattern[str]] = None):
+                 right_context: Optional[Pattern[str]] = None, right_context_not: Optional[Pattern[str]] = None,
+                 case_sensitive: Optional[bool] = False):
         super().__init__(s, group=group, left_context=left_context, left_context_not=left_context_not,
-                         right_context=right_context, right_context_not=right_context_not)
+                         right_context=right_context, right_context_not=right_context_not,
+                         case_sensitive=case_sensitive)
         self.paired_delimiter = paired_delimiter
+        self.exception_list = []
 
 
-class DetokenizationDict:
+class DetokenizationContractionEntry(DetokenizationEntry):
+    def __init__(self, target: str, contraction: str,
+                 left_context: Optional[Pattern[str]] = None, left_context_not: Optional[Pattern[str]] = None,
+                 right_context: Optional[Pattern[str]] = None, right_context_not: Optional[Pattern[str]] = None,
+                 case_sensitive: Optional[bool] = False):
+        super().__init__(target, left_context=left_context, left_context_not=left_context_not,
+                         right_context=right_context, right_context_not=right_context_not,
+                         case_sensitive=case_sensitive)
+        self.contraction_s = contraction
+
+
+class DetokenizationResource:
     def __init__(self):
         self.attach_tag = '@'
-        self.auto_attach_left = {}
-        self.auto_attach_right = {}
-        self.markup_attach = {}
+        self.auto_attach_left = defaultdict(list)
+        self.auto_attach_right = defaultdict(list)
+        self.markup_attach = defaultdict(list)
+        self.markup_attach_re_elements = []
         self.markup_attach_re = None
+        self.contraction_dict = defaultdict(list)
 
-    def load_resource(self, filename: str) -> None:
+    def load_resource(self, filename: str, lang_codes: Optional[List[str]] = None) -> None:
         """Loads detokenization resources such as auto-attach, markup-attach etc.
         Example input file: data/detok-resource.txt
         This file is also loaded and by the tokenizer to produce appropriate mt-style @...@ tokens."""
@@ -408,104 +447,155 @@ class DetokenizationDict:
                 line_number = 0
                 n_warnings = 0
                 n_entries = 0
-                match_attach_re_elements = []
-                for line in f_in:
+                for orig_line in f_in:
                     line_number += 1
-                    if re.match(r'^\uFEFF?\s*(?:#.*)?$', line):  # ignore empty or comment line
+                    line_without_comment = ResourceDict.line_without_comment(orig_line)
+                    if line_without_comment.strip() == '':
                         continue
-                    # Check whether cost file line is well-formed. Following call will output specific warnings.
-                    valid = double_colon_del_list_validation(line, str(line_number), filename,
-                                                             valid_slots=['attach-tag',
-                                                                          'auto-attach',
-                                                                          'comment',
-                                                                          'except',
-                                                                          'group',
-                                                                          'left-context',
-                                                                          'left-context-not',
-                                                                          'markup-attach',
-                                                                          'paired-delimiter',
-                                                                          'right-context',
-                                                                          'right-context-not',
-                                                                          'side'],
-                                                             required_slot_dict={'attach-tag': [],
-                                                                                 'auto-attach': ['side'],
-                                                                                 'markup-attach': []})
-                    if not valid:
-                        n_warnings += 1
-                        continue
-                    if m1 := re.match(r"::(\S+)", line):
-                        head_slot = m1.group(1)
-                    else:
-                        continue
-                    s = slot_value_in_double_colon_del_list(line, head_slot)
-                    detokenization_entry = None
-                    if head_slot == 'auto-attach':
-                        side = slot_value_in_double_colon_del_list(line, 'side')
-                        group = bool(slot_value_in_double_colon_del_list(line, 'group', False))
-                        lang_code_s = slot_value_in_double_colon_del_list(line, 'lcode')
-                        lang_codes = lang_code_s.split(r'[;,]\s') if lang_code_s else []
-                        detokenization_entry = DetokenizationEntry(s, group, lang_codes)
-                        if side == 'left' or side == 'both':
-                            attachment_list = self.auto_attach_left.get(s, [])
-                            if self.auto_attach_left.get(s, None):
-                                log.info(f'Duplicate ::auto-attach {s} ::side left')
-                            attachment_list.append(detokenization_entry)
-                            self.auto_attach_left[s] = attachment_list
-                        if side == 'right' or side == 'both':
-                            attachment_list = self.auto_attach_right.get(s, [])
-                            if attachment_list:
-                                log.info(f'Duplicate ::auto-attach {s} ::side right')
-                            attachment_list.append(detokenization_entry)
-                            self.auto_attach_right[s] = attachment_list
-                    elif head_slot == 'markup-attach':
-                        paired_delimiter = bool(slot_value_in_double_colon_del_list(line, 'paired-delimiter', False))
-                        group = bool(slot_value_in_double_colon_del_list(line, 'group', False))
-                        detokenization_entry = DetokenizationMarkupEntry(s, group=group,
-                                                                         paired_delimiter=paired_delimiter)
-                        attachment_list = self.markup_attach.get(s, [])
-                        attachment_list.append(detokenization_entry)
-                        self.markup_attach[s] = attachment_list
-                        match_attach_re_elements.append(re.escape(s) + ('+' if group else ''))
-                    elif head_slot == 'attach_tag':
-                        self.attach_tag = s
-                    if detokenization_entry:
-                        if left_context_s := slot_value_in_double_colon_del_list(line, 'left-context'):
-                            try:
-                                detokenization_entry.left_context = regex.compile(eval('r".*' + left_context_s + '$"'),
-                                                                                  flags=regex.VERSION1)
-                            except regex.error:
-                                log.warning(f'Regex compile error in l.{line_number} for {s} ::left-context '
-                                            f'{left_context_s}')
-                        if left_context_not_s := slot_value_in_double_colon_del_list(line, 'left-context-not'):
-                            try:
-                                detokenization_entry.left_context_not = \
-                                    regex.compile(eval('r".*(?<!' + left_context_not_s + ')$"'),
-                                                  flags=regex.VERSION1)
-                            except regex.error:
-                                log.warning(f'Regex compile error in l.{line_number} for {s} ::left-context-not '
-                                            f'{left_context_not_s}')
-                        if right_context_s := slot_value_in_double_colon_del_list(line, 'right-context'):
-                            try:
-                                detokenization_entry.right_context = regex.compile(eval('r"' + right_context_s + '"'),
-                                                                                   flags=regex.VERSION1)
-                            except regex.error:
-                                log.warning(f'Regex compile error in l.{line_number} for {s} ::right-context '
-                                            f'{right_context_s}')
-                        if right_context_not_s := slot_value_in_double_colon_del_list(line, 'right-context-not'):
-                            try:
-                                detokenization_entry.right_context_not = \
-                                    regex.compile(eval('r"(?!' + right_context_not_s + ')"'),
-                                                  flags=regex.VERSION1)
-                            except regex.error:
-                                log.warning(f'Regex compile error in l.{line_number} for {s} ::right-context-not '
-                                            f'{right_context_not_s}')
-                        n_entries += 1
-                regex_string = '^@?(?:' + '|'.join(match_attach_re_elements) + ')@?$'
-                # log.info(f"markup_attach_re: {regex_string}")
-                self.markup_attach_re = re.compile(regex_string)
+                    lines = ResourceDict.expand_resource_lines(line_without_comment)
+                    for line in lines:
+                        if re.match(r'^\uFEFF?\s*(?:#.*)?$', line):  # ignore empty or comment line
+                            continue
+                        if re.match(r'::(repair|punct-split|abbrev|misspelling)\b', line):
+                            continue  # In tok-resources, only ::contraction entries are relevant.
+                        # Check whether cost file line is well-formed. Following call will output specific warnings.
+                        valid = double_colon_del_list_validation(line, str(line_number), filename,
+                                                                 valid_slots=['alt-spelling',
+                                                                              'attach-tag',
+                                                                              'auto-attach',
+                                                                              'char-split',
+                                                                              'case-sensitive',
+                                                                              'comment',
+                                                                              'contraction',
+                                                                              'country',
+                                                                              'etym-lcode',
+                                                                              'example',
+                                                                              'except',
+                                                                              'group',
+                                                                              'lcode',
+                                                                              'lcode-not',
+                                                                              'left-context',
+                                                                              'left-context-not',
+                                                                              'lexical',
+                                                                              'markup-attach',
+                                                                              'misspelling',
+                                                                              'nonstandard',
+                                                                              'paired-delimiter',
+                                                                              'plural',
+                                                                              'right-context',
+                                                                              'right-context-not',
+                                                                              'sem-class',
+                                                                              'side',
+                                                                              'substandard',
+                                                                              'tag',
+                                                                              'target',
+                                                                              'taxon',
+                                                                              'token-category'],
+                                                                 required_slot_dict={'attach-tag': [],
+                                                                                     'auto-attach': ['side'],
+                                                                                     'contraction': ['target'],
+                                                                                     'lexical': [],
+                                                                                     'markup-attach': []})
+                        if not valid:
+                            n_warnings += 1
+                            continue
+                        if m1 := re.match(r"::(\S+)", line):
+                            head_slot = m1.group(1)
+                        else:
+                            continue
+                        if lang_codes:
+                            if line_lang_code_s := slot_value_in_double_colon_del_list(line, 'lcode'):
+                                line_lang_codes = re.split(r'[;,\s*]', line_lang_code_s)
+                                if not lists_share_element(lang_codes, line_lang_codes):
+                                    continue
+                        s = slot_value_in_double_colon_del_list(line, head_slot)
+                        lc_s = s.lower()
+                        detokenization_entry = None
+                        if head_slot == 'auto-attach':
+                            side = slot_value_in_double_colon_del_list(line, 'side')
+                            group = bool(slot_value_in_double_colon_del_list(line, 'group', False))
+                            lang_code_s = slot_value_in_double_colon_del_list(line, 'lcode')
+                            lang_codes = lang_code_s.split(r'[;,]\s') if lang_code_s else []
+                            detokenization_entry = DetokenizationEntry(s, group, lang_codes)
+                            if side == 'left' or side == 'both':
+                                if self.auto_attach_left.get(lc_s, None):
+                                    log.info(f'Duplicate ::auto-attach {lc_s} ::side left')
+                                self.auto_attach_left[lc_s].append(detokenization_entry)
+                            if side == 'right' or side == 'both':
+                                if self.auto_attach_right.get(lc_s, None):
+                                    log.info(f'Duplicate ::auto-attach {lc_s} ::side right')
+                                self.auto_attach_right[lc_s].append(detokenization_entry)
+                        elif head_slot == 'markup-attach':
+                            paired_delimiter = bool(slot_value_in_double_colon_del_list(line, 'paired-delimiter',
+                                                                                        False))
+                            group = bool(slot_value_in_double_colon_del_list(line, 'group', False))
+                            detokenization_entry = DetokenizationMarkupEntry(s, group=group,
+                                                                             paired_delimiter=paired_delimiter)
+                            if except_s := slot_value_in_double_colon_del_list(line, 'except'):
+                                detokenization_entry.exception_list = re.split(r'\s+', except_s)
+                            self.markup_attach[lc_s].append(detokenization_entry)
+                            self.markup_attach_re_elements.append(re.escape(lc_s) + ('+' if group else ''))
+                        elif head_slot == 'attach_tag':
+                            self.attach_tag = s
+                        elif head_slot == 'contraction':
+                            if ((not slot_value_in_double_colon_del_list(line, 'nonstandard'))
+                                    and (not slot_value_in_double_colon_del_list(line, 'substandard'))):
+                                target = slot_value_in_double_colon_del_list(line, 'target')
+                                lc_target = target.lower()
+                                detokenization_entry = DetokenizationContractionEntry(target, s)
+                                self.contraction_dict[lc_target].append(detokenization_entry)
+                        elif head_slot == 'lexical':
+                            tag = slot_value_in_double_colon_del_list(line, 'tag')
+                            if tag in ('DECONTRACTION-L', 'DECONTRACTION-R', 'DECONTRACTION-B'):
+                                detokenization_entry = DetokenizationEntry(s)
+                                if tag in ('DECONTRACTION-L', 'DECONTRACTION-B'):  # e.g. s', 'n'
+                                    self.auto_attach_right[lc_s].append(detokenization_entry)
+                                if tag in ('DECONTRACTION-R', 'DECONTRACTION-B'):  # e.g. 's, 'n'
+                                    self.auto_attach_left[lc_s].append(detokenization_entry)
+                        if detokenization_entry:
+                            detokenization_entry.case_sensitive = \
+                                bool(slot_value_in_double_colon_del_list(line, 'case-sensitive'))
+                            if left_context_s := slot_value_in_double_colon_del_list(line, 'left-context'):
+                                try:
+                                    detokenization_entry.left_context = \
+                                        regex.compile(eval('r".*' + left_context_s + '$"'), flags=regex.VERSION1)
+                                except regex.error:
+                                    log.warning(f'Regex compile error in l.{line_number} for {s} ::left-context '
+                                                f'{left_context_s}')
+                            if left_context_not_s := slot_value_in_double_colon_del_list(line, 'left-context-not'):
+                                try:
+                                    detokenization_entry.left_context_not = \
+                                        regex.compile(eval('r".*(?<!' + left_context_not_s + ')$"'),
+                                                      flags=regex.VERSION1)
+                                except regex.error:
+                                    log.warning(f'Regex compile error in l.{line_number} for {s} ::left-context-not '
+                                                f'{left_context_not_s}')
+                            if right_context_s := slot_value_in_double_colon_del_list(line, 'right-context'):
+                                try:
+                                    detokenization_entry.right_context = \
+                                        regex.compile(eval('r"' + right_context_s + '"'), flags=regex.VERSION1)
+                                except regex.error:
+                                    log.warning(f'Regex compile error in l.{line_number} for {s} ::right-context '
+                                                f'{right_context_s}')
+                            if right_context_not_s := slot_value_in_double_colon_del_list(line, 'right-context-not'):
+                                try:
+                                    detokenization_entry.right_context_not = \
+                                        regex.compile(eval('r"(?!' + right_context_not_s + ')"'),
+                                                      flags=regex.VERSION1)
+                                except regex.error:
+                                    log.warning(f'Regex compile error in l.{line_number} for {s} ::right-context-not '
+                                                f'{right_context_not_s}')
+                            n_entries += 1
                 log.info(f'Loaded {n_entries} entries from {line_number} lines in {filename}')
         except OSError:
             log.warning(f'Could not open general resource file {filename}')
+
+    def build_markup_attach_re(self) -> None:
+        """After all detok resources are loaded, compile markup_attach_re from markup_attach_re_elements."""
+        attach_tag = self.attach_tag
+        regex_string = '^' + attach_tag + '?(?:' + '|'.join(self.markup_attach_re_elements) + ')' + attach_tag + '?$'
+        # log.info(f"markup_attach_re: {regex_string}")
+        self.markup_attach_re = re.compile(regex_string)
 
 
 def slot_value_in_double_colon_del_list(line: str, slot: str, default: Optional = None) -> str:
@@ -562,6 +652,36 @@ def double_colon_del_list_validation(s: str, line_id: str, filename: str,
             valid = False
             log.warning(f"suspected missing colon in '{m.group(1)}' in line {line_id} in {filename}")
     return valid
+
+
+def lists_share_element(list1: list, list2: list) -> bool:
+    for elem1 in list1:
+        for elem2 in list2:
+            if elem1 == elem2:
+                return True
+    return False
+
+
+re_non_letter = regex.compile(r'\P{L}')
+re_split_on_first_letter = regex.compile(r'(\P{L}+)(\p{L}.*)')
+
+
+def adjust_capitalization(s: str, orig_s) -> str:
+    """Adjust capitalization of s according to orig_s. Example: if s=will orig_s=Wo then return Will"""
+    if s == orig_s:
+        return s
+    else:
+        if re_non_letter.sub('', s) == (orig_s_letters := re_non_letter.sub('', orig_s)):
+            return s
+        elif (len(orig_s_letters) >= 1) and orig_s_letters[0].isupper():
+            if (len(orig_s_letters) >= 2) and orig_s_letters[1].isupper():
+                return s.upper()
+            elif m2 := re_split_on_first_letter.match(s):
+                return m2.group(1) + m2.group(2).capitalize()
+            else:
+                return s.capitalize()
+        else:
+            return s
 
 
 def increment_dict_count(ht: dict, key: str, increment=1) -> int:
