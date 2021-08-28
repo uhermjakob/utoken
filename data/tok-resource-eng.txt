@@ -1,5 +1,5 @@
-::contraction ain't ::target is n't ::lcode eng ::nonstandard True
-::contraction aint ::target is n't ::lcode eng ::char-split 2,2 ::substandard True
+::contraction ain't ::target ai n't ::lcode eng
+::contraction aint ::target ai n't ::lcode eng ::char-split 2,2 ::substandard True
 ::contraction arenot ::target are not ::lcode eng ::substandard True
 ::contraction aren't ::target are n't ::lcode eng
 ::contraction arent ::target are n't ::lcode eng ::substandard True
@@ -842,7 +842,6 @@
 ::lexical know-how ::lcode eng
 ::lexical large-scale ::lcode eng
 ::lexical last-ditch ::lcode eng
-::lexical less than ::lcode eng
 ::lexical line item ::lcode eng
 ::lexical little by little ::lcode eng
 ::lexical long-term ::lcode eng
@@ -852,7 +851,6 @@
 ::lexical mid-term ::lcode eng
 ::lexical modern-day ::lcode eng
 ::lexical mom-and-pop ::lcode eng
-::lexical more than ::lcode eng
 ::lexical mother-in-law ::lcode eng ::plural mothers-in-law
 ::lexical no-brainer ::lcode eng
 ::lexical o'clock ::lcode eng
