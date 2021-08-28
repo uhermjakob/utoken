@@ -4,19 +4,27 @@
 ::markup-attach - ::group True ::comment hyphen
 ::markup-attach – ::group True ::comment en-dash
 ::markup-attach — ::group True ::comment em-dash
-::markup-attach : ::except auto-attach
-::markup-attach ' ::group True ::paired-delimiter True
+::markup-attach .. ::group True
+::markup-attach : ::except @: ::comment @: handled by auto-attach left for :
+::markup-attach ' ::paired-delimiter True
+::markup-attach '' ::paired-delimiter True
+::markup-attach ''' ::paired-delimiter True
+::markup-attach '''' ::paired-delimiter True
 ::markup-attach " ::paired-delimiter True
+::markup-attach "" ::paired-delimiter True
+::markup-attach """ ::paired-delimiter True
+::markup-attach """" ::paired-delimiter True
 ::markup-attach _ ::paired-delimiter True
 ::markup-attach * ::paired-delimiter True
 ::markup-attach ~ ::paired-delimiter True
 
 ::auto-attach / ::side both
-::auto-attach · ::side both ::comment middle dot
+# ::auto-attach · ::side both ::comment middle dot
 
+::auto-attach : ::side left
 ::auto-attach ” ::side left ::comment right double quotation mark
 ::auto-attach ’ ::side left ::group True ::comment right single quotation mark
-::auto-attach . ::side left ::group True
+::auto-attach . ::side left
 ::auto-attach … ::side left ::group True
 ::auto-attach ! ::side left ::group True
 ::auto-attach ? ::side left ::group True
@@ -100,3 +108,17 @@
 ::auto-attach ¥ ::side right ::right-context \d
 ::auto-attach ₹ ::side right ::right-context \d
 ::auto-attach ฿ ::side right ::right-context \d
+::auto-attach A$ ::side right ::right-context \d
+::auto-attach C$ ::side right ::right-context \d
+::auto-attach HK$ ::side right ::right-context \d
+::auto-attach NT$ ::side right ::right-context \d
+::auto-attach NZ$ ::side right ::right-context \d
+::auto-attach S$ ::side right ::right-context \d
+::auto-attach US$ ::side right ::right-context \d
+::auto-attach RMB ::side right ::right-context \d
+
+::auto-attach th ::side left ::left-context \d ::lcode eng ::example 20th
+::auto-attach st ::side left ::left-context 1 ::lcode eng
+::auto-attach nd ::side left ::left-context 2 ::lcode eng
+::auto-attach rd ::side left ::left-context 3 ::lcode eng
+::auto-attach s ::side left ::left-context 0  ::example 1950s
