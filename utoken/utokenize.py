@@ -273,7 +273,7 @@ class Tokenizer:
         self.lang_code: Optional[str] = lang_code
         self.n_lines_tokenized = 0
         self.tok_dict = util.ResourceDict()
-        self.detok_dict = util.DetokenizationDict()
+        self.detok_resource = util.DetokenizationResource()
         self.current_orig_s: Optional[str] = None
         self.current_s: Optional[str] = None
         self.profile = None
@@ -289,10 +289,11 @@ class Tokenizer:
         self.tok_dict.load_resource(os.path.join(data_dir, f'tok-resource.txt'))
         # Load any other tokenization resource entries, for the time being just English
         for lcode in ['eng']:
-            if lcode is not lang_code:
+            if lcode != lang_code:
                 self.tok_dict.load_resource(os.path.join(data_dir, f'tok-resource-{lcode}.txt'), lang_code=lcode)
         # Load detokenization resource entries, for proper mt-tokenization, e.g. @...@
-        self.detok_dict.load_resource(os.path.join(data_dir, f'detok-resource.txt'))
+        self.detok_resource.load_resource(os.path.join(data_dir, f'detok-resource.txt'))
+        self.detok_resource.build_markup_attach_re()
 
     @staticmethod
     def default_data_dir() -> str:
@@ -363,18 +364,68 @@ class Tokenizer:
                 self.char_type_vector_dict[char] \
                     = self.char_type_vector_dict.get(char, 0) | self.char_is_modifier
 
-    def add_any_mt_tok_delimiter(self, token: str, start_offset: int, end_offset: int) -> str:
+    def open_or_close_paired_delimiter(self, _token: str, left_context: str, right_context: str) -> Optional[str]:
+        """Tests whether a non-directional paired delimiter such as apostrophe or quotation mark is
+        more of an open delimiter (at the beginning of a word) or a close delimiter (at the end of a word)."""
+        if self.re_ends_w_letter_or_digit.match(left_context):
+            close_score = 10
+        elif self.re_ends_w_letter_or_digit_in_token.match(left_context):
+            close_score = 5
+        else:
+            close_score = 0
+        if self.re_starts_w_letter_or_digit.match(right_context):
+            open_score = 10
+        elif self.re_starts_w_letter_or_digit_in_token.match(right_context):
+            open_score = 5
+        else:
+            open_score = 0
+        if open_score > close_score:
+            return 'open'
+        elif close_score > open_score:
+            return 'close'
+        else:
+            return None
+
+    def add_any_mt_tok_delimiter(self, token: str, start_offset: int, end_offset: int, lang_code: Optional[str]) -> str:
         """In MT-tokenization mode, adds @ before and after certain punctuation so facilitate later detokenization."""
-        if token in ['-']:
+        attach_tag = self.detok_resource.attach_tag  # typically "@" to mark up (e.g. @-@) for later detokenization.
+        if self.detok_resource.markup_attach_re.match(token):
             if current_s := self.current_s:
-                # left_context = current_s[:start_offset]
-                # right_context = current_s[end_offset:]
-                # token0 = token
-                if not (start_offset and current_s[start_offset-1].isspace()):
-                    token = "@" + token
-                if not ((end_offset < len(current_s)) and current_s[end_offset].isspace()):
-                    token = token + "@"
-                # log.info(f'add@: {left_context} :: {token0} :: {right_context} => {token}')
+                left_context = current_s[:start_offset]
+                right_context = current_s[end_offset:]
+                orig_token = token
+                paired_delimiter = False
+                valid_detokenization_entry = None
+                shortened_token = token
+                if token != '' and token == len(token) * token[0]:  # all chars in token are the same
+                    while len(token) >= 2 and not self.detok_resource.markup_attach.get(shortened_token, None):
+                        shortened_token = shortened_token[:-1]
+                for detokenization_entry in self.detok_resource.markup_attach.get(shortened_token, []):
+                    group_necessary = token != shortened_token
+                    if detokenization_entry.detokenization_entry_fulfills_conditions(token, left_context,
+                                                                                     right_context, lang_code,
+                                                                                     group_necessary):
+                        valid_detokenization_entry = detokenization_entry
+                        if detokenization_entry.paired_delimiter:
+                            paired_delimiter = True
+                            break
+                if valid_detokenization_entry:
+                    if paired_delimiter:
+                        open_or_close = self.open_or_close_paired_delimiter(token, left_context, right_context)
+                        if open_or_close == 'open':
+                            token = token + attach_tag
+                        elif open_or_close == 'close':
+                            token = attach_tag + token
+                        else:
+                            paired_delimiter = False
+                    if not paired_delimiter:
+                        if self.re_ends_w_non_whitespace.match(left_context):
+                            token = attach_tag + token
+                        if self.re_starts_w_non_whitespace.match(right_context):
+                            token = token + attach_tag
+                    if token in valid_detokenization_entry.exception_list:
+                        token = orig_token
+                    # log.info(f'add@: {left_context} :: {orig_token} :: {right_context} => {token}')
         return token
 
     def rec_tok(self, token_surfs: List[str], start_positions: List[int], s: str, offset: int,
@@ -399,7 +450,7 @@ class Tokenizer:
             offset2 = offset + start_position
             offset3 = offset + end_position
             if self.mt_tok_p:
-                token_surf = self.add_any_mt_tok_delimiter(token_surf, offset2, offset3)
+                token_surf = self.add_any_mt_tok_delimiter(token_surf, offset2, offset3, lang_code)
             if pre := s[position:start_position]:
                 if i == 0 and kwargs.get('left_done', False):
                     tokenizations.append(self.next_tok(calling_function, pre, chart, ht, lang_code, line_id, offset1))
@@ -729,23 +780,6 @@ class Tokenizer:
                 return False
         return True
 
-    re_letters_only = regex.compile(r'\P{L}')
-
-    def adjust_capitalization(self, s: str, orig_s) -> str:
-        """Adjust capitalization of s according to orig_s. Example: if s=will orig_s=Wo then return Will"""
-        if s == orig_s:
-            return s
-        else:
-            if self.re_letters_only.sub('', s) == (orig_s_letters := self.re_letters_only.sub('', orig_s)):
-                return s
-            elif (len(orig_s_letters) >= 1) and orig_s_letters[0].isupper():
-                if (len(orig_s_letters) >= 2) and orig_s_letters[1].isupper():
-                    return s.upper()
-                else:
-                    return s.capitalize()
-            else:
-                return s
-
     re_space = re.compile(r'\s+')
 
     def map_contraction(self, orig_token: str, contraction_source: str, contraction_target: str,
@@ -766,11 +800,11 @@ class Tokenizer:
                 start_positions.append(start_position)
                 start_position += orig_token_len
                 target_token = target_tokens[i]
-                adjusted_target_token = self.adjust_capitalization(target_token, orig_token_elem)
-                tokens.append(adjusted_target_token)
+                case_adjusted_target_token = util.adjust_capitalization(target_token, orig_token_elem)
+                tokens.append(case_adjusted_target_token)
             return tokens, orig_tokens, start_positions
         elif (' ' not in contraction_source) and (' ' not in contraction_target):
-            return [self.adjust_capitalization(contraction_target, orig_token)], [orig_token], [orig_start_position]
+            return [util.adjust_capitalization(contraction_target, orig_token)], [orig_token], [orig_start_position]
         else:
             tokens1 = []
             tokens2 = []
@@ -795,7 +829,7 @@ class Tokenizer:
                     orig_token_elem = token[len(token)-token_elem_len:]
                     # log.info(f'insert token-e: {token_elem} orig_tokens: {orig_token_elem} '
                     #          f'start_positions: {token_elem_start_position}')
-                    tokens2.insert(0, self.adjust_capitalization(token_elem, orig_token_elem))
+                    tokens2.insert(0, util.adjust_capitalization(token_elem, orig_token_elem))
                     orig_tokens2.insert(0, orig_token_elem)
                     start_positions2.insert(0, token_elem_start_position)
                     end_position -= token_elem_len
@@ -814,7 +848,7 @@ class Tokenizer:
                     orig_token_elem = token[:token_elem_len]
                     # log.info(f'insert token-s: {token_elem} orig_tokens: {orig_token_elem} '
                     #          f'start_positions: {token_elem_start_position}')
-                    tokens1.append(self.adjust_capitalization(token_elem, orig_token_elem))
+                    tokens1.append(util.adjust_capitalization(token_elem, orig_token_elem))
                     orig_tokens1.append(orig_token_elem)
                     start_positions1.append(token_elem_start_position)
                     start_position += token_elem_len
@@ -830,7 +864,7 @@ class Tokenizer:
                     # For multiple remaining mismatching target_elements, consider a separate case below.
                     # log.info(f'insert token-w: {target} orig_tokens: {token} '
                     #          f'start_positions: {start_position}')
-                    tokens1.append(self.adjust_capitalization(target, token))
+                    tokens1.append(util.adjust_capitalization(target, token))
                     orig_tokens1.append(token)
                     start_positions1.append(start_position)
                     token = ""
@@ -843,13 +877,17 @@ class Tokenizer:
     re_starts_w_modifier = regex.compile(r'\pM')
     re_starts_w_letter = regex.compile(r'\pL')
     re_starts_w_letter_or_digit = regex.compile(r'(\pL|\d)')
+    re_starts_w_letter_or_digit_in_token = regex.compile(r'\S*(\pL|\d)')
     re_starts_w_single_letter = regex.compile(r'\pL\pM*(?!\pL)')
     re_starts_w_dashed_digit = regex.compile(r'[-−–]?\d')
     re_starts_w_single_s = regex.compile(r's(?!\pL|\d)', flags=regex.IGNORECASE)
+    re_starts_w_non_whitespace = regex.compile(r'\S')
     re_ends_w_letter = regex.compile(r'.*\pL\pM*$')          # including any modifiers
     re_ends_w_apostrophe = regex.compile(r".*['‘’]$")
     re_ends_w_letter_or_digit = regex.compile(r'.*(\pL\pM*|\d)$')
+    re_ends_w_letter_or_digit_in_token = regex.compile(r'.*(\pL\pM*|\d)\S*$')
     re_ends_w_letter_plus_period = regex.compile(r'.*\pL\pM*\.$')
+    re_ends_w_non_whitespace = regex.compile(r'.*\S$')
 
     def resource_entry_fulfills_general_context_conditions(self, token_candidate: str,
                                                            _left_context: str, right_context: str) -> bool:
