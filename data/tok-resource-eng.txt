@@ -1,72 +1,72 @@
-::contraction ain't ::target is n't ::lcode eng
-::contraction aint ::target is n't ::lcode eng ::char-split 2,2
-::contraction arenot ::target are not ::lcode eng
+::contraction ain't ::target is n't ::lcode eng ::nonstandard True
+::contraction aint ::target is n't ::lcode eng ::char-split 2,2 ::substandard True
+::contraction arenot ::target are not ::lcode eng ::substandard True
 ::contraction aren't ::target are n't ::lcode eng
-::contraction arent ::target are n't ::lcode eng
+::contraction arent ::target are n't ::lcode eng ::substandard True
 ::contraction cannot ::target can not ::lcode eng
 ::contraction can't ::target can n't ::lcode eng
-::contraction cant ::target can n't ::lcode eng
-::contraction c'mon ::target come on ::lcode eng
-::contraction couldnot ::target could not ::lcode eng
+::contraction cant ::target can n't ::lcode eng ::substandard True
+::contraction c'mon ::target come on ::lcode eng ::nonstandard True
+::contraction couldnot ::target could not ::lcode eng ::substandard True
 ::contraction couldn't ::target could n't ::lcode eng
 ::contraction couldnt ::target could n't ::lcode eng
-::contraction didnot ::target did not ::lcode eng
+::contraction didnot ::target did not ::lcode eng ::substandard True
 ::contraction didn't ::target did n't ::lcode eng
-::contraction didnt ::target did n't ::lcode eng
-::contraction doesnot ::target does not ::lcode eng
+::contraction didnt ::target did n't ::lcode eng ::substandard True
+::contraction doesnot ::target does not ::lcode eng ::substandard True
 ::contraction doesn't ::target does n't ::lcode eng
-::contraction doesnt ::target does n't ::lcode eng
-::contraction donot ::target do not ::lcode eng
+::contraction doesnt ::target does n't ::lcode eng ::substandard True
+::contraction donot ::target do not ::lcode eng ::substandard True
 ::contraction don't ::target do n't ::lcode eng
-::contraction dont ::target do n't ::lcode eng
-::contraction hadnot ::target had not ::lcode eng
+::contraction dont ::target do n't ::lcode eng ::substandard True ::lcode-not fra
+::contraction hadnot ::target had not ::lcode eng ::substandard True
 ::contraction hadn't ::target had n't ::lcode eng
-::contraction hadnt ::target had n't ::lcode eng
-::contraction hasnot ::target has not ::lcode eng
+::contraction hadnt ::target had n't ::lcode eng ::substandard True
+::contraction hasnot ::target has not ::lcode eng ::substandard True
 ::contraction hasn't ::target has n't ::lcode eng
-::contraction hasnt ::target has n't ::lcode eng
-::contraction havenot ::target have not ::lcode eng
+::contraction hasnt ::target has n't ::lcode eng ::substandard True
+::contraction havenot ::target have not ::lcode eng ::substandard True
 ::contraction haven't ::target have n't ::lcode eng
-::contraction havent ::target have n't ::lcode eng
+::contraction havent ::target have n't ::lcode eng ::substandard True
 ::contraction havn't ::target have n't ::lcode eng
 ::contraction I'm ::target I 'm ::lcode eng
-::contraction isnot ::target is not ::lcode eng
+::contraction isnot ::target is not ::lcode eng ::substandard True
 ::contraction isn't ::target is n't ::lcode eng
-::contraction isnt ::target is n't ::lcode eng
+::contraction isnt ::target is n't ::lcode eng ::substandard True
 ::contraction let's ::target let 's ::lcode eng
 ::contraction let's ::target let 's ::lcode eng
-::contraction mightnot ::target might not ::lcode eng
+::contraction mightnot ::target might not ::lcode eng ::substandard True
 ::contraction mightn't ::target might n't ::lcode eng
-::contraction mustnot ::target must not ::lcode eng
+::contraction mustnot ::target must not ::lcode eng ::substandard True
 ::contraction mustn't ::target must n't ::lcode eng
-::contraction mustnt ::target must n't ::lcode eng
-::contraction neednot ::target need not ::lcode eng
+::contraction mustnt ::target must n't ::lcode eng ::substandard True
+::contraction neednot ::target need not ::lcode eng ::substandard True
 ::contraction needn't ::target need n't ::lcode eng
-::contraction shallnot ::target shall not ::lcode eng
+::contraction shallnot ::target shall not ::lcode eng ::substandard True
 ::contraction shan't ::target shall n't ::lcode eng
-::contraction shant ::target shall n't ::lcode eng
-::contraction shouldnot ::target should not ::lcode eng
+::contraction shant ::target shall n't ::lcode eng ::substandard True
+::contraction shouldnot ::target should not ::lcode eng ::substandard True
 ::contraction shouldn't ::target should n't ::lcode eng
-::contraction shouldnt ::target should n't ::lcode eng
-::contraction 'tis ::target it is ::lcode eng
-::contraction 'tisn't ::target it is n't ::lcode eng
-::contraction 'twas ::target it was ::lcode eng
-::contraction 'twasn't ::target it was n't ::lcode eng
-::contraction wasnot ::target was not ::lcode eng
+::contraction shouldnt ::target should n't ::lcode eng ::substandard True
+::contraction 'tis ::target it is ::lcode eng ::nonstandard True
+::contraction 'tisn't ::target it is n't ::lcode eng ::nonstandard True
+::contraction 'twas ::target it was ::lcode eng ::nonstandard True
+::contraction 'twasn't ::target it was n't ::lcode eng ::nonstandard True
+::contraction wasnot ::target was not ::lcode eng ::substandard True
 ::contraction wasn't ::target was n't ::lcode eng
-::contraction wasnt ::target was n't ::lcode eng
-::contraction werenot ::target were not ::lcode eng
+::contraction wasnt ::target was n't ::lcode eng ::substandard True
+::contraction werenot ::target were not ::lcode eng ::substandard True
 ::contraction weren't ::target were n't ::lcode eng
 ::contraction werent ::target were n't ::lcode eng
-::contraction willnot ::target will not ::lcode eng
+::contraction willnot ::target will not ::lcode eng ::substandard True
 ::contraction won't ::target will n't ::lcode eng
-::contraction wont ::target will n't ::lcode eng ::char-split 2,2
-::contraction wouldnot ::target would not ::lcode eng
+::contraction wont ::target will n't ::lcode eng ::char-split 2,2 ::substandard True
+::contraction wouldnot ::target would not ::lcode eng ::substandard True
 ::contraction wouldn't ::target would n't ::lcode eng
-::contraction wouldnt ::target would n't ::lcode eng
-::contraction y'all ::target you all ::lcode eng
-::contraction y'know ::target you know ::lcode eng
-::contraction y're ::target you 're ::lcode eng
+::contraction wouldnt ::target would n't ::lcode eng ::substandard True
+::contraction y'all ::target you all ::lcode eng ::nonstandard True
+::contraction y'know ::target you know ::lcode eng ::nonstandard True
+::contraction y're ::target you 're ::lcode eng ::substandard True
 
 ::repair e.g ::target e.g. ::lcode eng ::right-context-not \s*[.] ::problem missing period
 ::repair etc ::target etc. ::lcode eng ::right-context-not \s*[.] ::problem missing period
@@ -554,20 +554,21 @@
 
 ::lexical c' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::example C'est la vie.
 ::lexical d' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::example Coeur d'Alene
+::lexical l' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::example l'amour
 ::lexical n' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::left-context-not ['’‘]
 ::lexical qu' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra
 ::lexical s' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra
 
-::lexical 'd ::lcode eng ::tag DECONTRACTION-L
-::lexical 'em ::lcode eng ::tag DECONTRACTION-L
-::lexical l' ::lcode eng ::tag DECONTRACTION-L
-::lexical 'll ::lcode eng ::tag DECONTRACTION-L
-::lexical 'm ::lcode eng ::tag DECONTRACTION-L
-::lexical n't ::lcode eng ::tag DECONTRACTION-L
-::lexical 're ::lcode eng ::tag DECONTRACTION-L
-::lexical 're ::lcode eng ::tag DECONTRACTION-L
-::lexical 's ::lcode eng ::tag DECONTRACTION-L
-::lexical 've ::lcode eng ::tag DECONTRACTION-L
+::lexical 'd ::lcode eng ::tag DECONTRACTION-R  ::example I'd like a beer.
+::lexical 'em ::lcode eng ::tag DECONTRACTION-R  ::example Tell'em to go home.
+::lexical 'll ::lcode eng ::tag DECONTRACTION-R  ::example We'll see.
+::lexical 'm ::lcode eng ::tag DECONTRACTION-R  ::example I'm hungry. Take'm away.
+::lexical n't ::lcode eng ::tag DECONTRACTION-R  ::example He doesn't know.
+::lexical 're ::lcode eng ::tag DECONTRACTION-R  ::example They're gone.
+::lexical 's ::lcode eng ::tag DECONTRACTION-R  ::example It's John's dog.
+::lexical 've ::lcode eng ::tag DECONTRACTION-R  ::example They've never complained.
+
+::lexical 'n' ::lcode eng ::tag DECONTRACTION-B  ::example Bush'n'Cheney
 
 ::lexical dalai lama ::lcode eng ::etym-lcode bod ::comment Tibetan
 
@@ -899,7 +900,7 @@
 ::lexical wild-type ::lcode eng
 ::lexical win-win ::lcode eng
 ::lexical wishy-washy ::lcode eng
-::lexical X-ray ::lcode eng ::inflections X-rays
+::lexical X-ray ::lcode eng ::plural +s
 ::lexical yo-yo ::lcode eng
 
 ::misspelling accomodate ::target accommodate ::lcode eng ::suffix-variations e/ed;es;ing;ion;ions
