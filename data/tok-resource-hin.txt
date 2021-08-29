@@ -95,4 +95,6 @@
 ::abbrev श्री. ::lcode hin ::eng Mr.
 ::abbrev सं. ::exp संस्कृत ::lcode hin ::eng Sanskrit
 ::abbrev स्त्री. ::exp स्त्रीलिंग ::lcode hin ::eng feminine
+::abbrev 3डी ::lcode hin ::eng 3D
+
 
