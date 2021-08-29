@@ -287,6 +287,7 @@
 
 ::abbrev CD ::exp compact disc ::case-sensitive True
 ::abbrev CD-ROM ::exp compact disc read-only memory
+::abbrev COP21 ::exp United Nations Climate Change Conference ::comment conference of the parties, 21st century ::alt-spelling COP-21
 ::abbrev CPU ::exp central processing unit
 ::abbrev 2D ::exp two-dimensional ::case-sensitive True
 ::abbrev 3D ::exp three-dimensional ::case-sensitive True
