@@ -598,8 +598,8 @@ class Tokenizer:
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_xml = re.compile(r'(.*?)'
-                        r'(@?</?[a-z][-_:a-z0-9]*(?:\s+[a-z][-_:a-z0-9]*="[^"]*")*\s*/?>@?|'  # open tag
-                        r'<\$[-_a-z0-9]+\$>|'                                                 # close tag
+                        r'(@?</?[a-z][-_:a-z0-9]*(?:\s+[a-z][-_:a-z0-9]*="[^"]*")*\s*/?>@?|'  # open/close tag
+                        r'<\$[-_a-z0-9]+\$>|'                                                 # <$BlogBacklinkAuthor$>
                         r'<!--.*?-->)'                                                        # comment tag
                         r'(.*)$',
                         flags=re.IGNORECASE)
