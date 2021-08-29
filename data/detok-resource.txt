@@ -1,29 +1,27 @@
 
 ::attach-tag @
 
-::markup-attach - ::group True ::comment hyphen
+::markup-attach - ::group True ::comment hyphen-minus
 ::markup-attach – ::group True ::comment en-dash
 ::markup-attach — ::group True ::comment em-dash
 ::markup-attach .. ::group True
-::markup-attach : ::except @: ::comment @: handled by auto-attach left for :
-::markup-attach ' ::paired-delimiter True
-::markup-attach '' ::paired-delimiter True
-::markup-attach ''' ::paired-delimiter True
-::markup-attach '''' ::paired-delimiter True
-::markup-attach " ::paired-delimiter True
-::markup-attach "" ::paired-delimiter True
-::markup-attach """ ::paired-delimiter True
-::markup-attach """" ::paired-delimiter True
+::markup-attach :
+::markup-attach ' ::paired-delimiter True ::group True
+::markup-attach " ::paired-delimiter True ::group True
+::markup-attach ‘’ ::paired-delimiter True ::comment left+right single quotation mark
+::markup-attach ` ::paired-delimiter True ::comment grave accent, sometimes used as quote
+::markup-attach ‘ ::paired-delimiter True ::group True ::comment left single quotation mark
+::markup-attach ’ ::paired-delimiter True ::group True ::comment right single quotation mark
+::markup-attach “ ::paired-delimiter True ::comment left double quotation mark
+::markup-attach ” ::paired-delimiter True ::comment right double quotation mark
 ::markup-attach _ ::paired-delimiter True
 ::markup-attach * ::paired-delimiter True
 ::markup-attach ~ ::paired-delimiter True
+::markup-attach &quot; ::paired-delimiter True ::comment unnormalized quotation mark
 
 ::auto-attach / ::side both
 # ::auto-attach · ::side both ::comment middle dot
 
-::auto-attach : ::side left
-::auto-attach ” ::side left ::comment right double quotation mark
-::auto-attach ’ ::side left ::group True ::comment right single quotation mark
 ::auto-attach . ::side left
 ::auto-attach … ::side left ::group True
 ::auto-attach ! ::side left ::group True
@@ -80,9 +78,7 @@
 ::auto-attach ® ::side left
 ::auto-attach ™ ::side left
 
-::auto-attach “ ::side right ::comment left double quotation mark
 ::auto-attach „ ::side right
-::auto-attach ‘ ::side right ::group True ::comment left single quotation mark
 ::auto-attach ( ::side right
 ::auto-attach { ::side right
 ::auto-attach « ::side right
@@ -122,3 +118,9 @@
 ::auto-attach nd ::side left ::left-context 2 ::lcode eng
 ::auto-attach rd ::side left ::left-context 3 ::lcode eng
 ::auto-attach s ::side left ::left-context 0  ::example 1950s
+
+::auto-attach वां ::side left ::left-context \d ::lcode hin ::comment ordinal partical ("th")
+::auto-attach वीं ::side left ::left-context \d ::lcode hin ::comment ordinal partical ("th")
+::auto-attach वींं ::side left ::left-context \d ::lcode hin ::comment ordinal partical ("th")
+::auto-attach वें ::side left ::left-context \d ::lcode hin ::comment ordinal partical ("th")
+::auto-attach वाँ ::side left ::left-context \d ::lcode hin ::comment ordinal partical ("th")
