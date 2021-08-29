@@ -319,6 +319,7 @@
 ::abbrev Rt.Hon. ::exp Right Honorable ::lcode eng ::sem-class pre-name-title
 ::abbrev Sen. ::exp Senator ::lcode eng ::sem-class pre-name-title
 ::abbrev Sens. ::exp Senators ::lcode eng ::sem-class pre-name-title
+::abbrev Smt. ::exp Shrimati ::lcode eng ::sem-class pre-name-title ::comment Indian equivalent of Mrs.
 ::abbrev Spt. ::exp Superintendent ::lcode eng ::sem-class pre-name-title
 ::abbrev Sr. ::exp Senior ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev St. ::exp Street; Saint; Strait ::lcode eng ::sem-class pre-name-title ::case-sensitive True ::left-context-not 1 ::comment 1st
@@ -409,7 +410,7 @@
 
 ::abbrev et al. ::exp et alii; et aliae; and others ::lcode eng ::etym-lcode lat
 
-::abbrev 24/7 ::exp 24 hours a day, 7 days a week ::lcode eng
+::abbrev 24/7 ::exp 24 hours a day, 7 days a week ::lcode eng ::alt-spelling 24-7; 24x7
 ::abbrev AAM ::exp air-to-air missile ::lcode eng
 ::abbrev AC ::exp air conditioning ::lcode eng
 ::abbrev AC ::exp alternating current ::lcode eng
@@ -798,7 +799,7 @@
 ::lexical attorney-at-law ::lcode eng ::plural attorneys-at-law
 ::lexical 403(b) ::lcode eng
 ::lexical 457(b) ::lcode eng
-::lexical badass ::lcode eng ::alt-spelling bad-ass;bad ass
+::lexical badass ::lcode eng ::alt-spelling bad-ass; bad ass
 ::lexical big-time ::lcode eng
 ::lexical blue-collar ::lcode eng
 ::lexical Blu-ray ::lcode eng
@@ -836,7 +837,7 @@
 ::lexical in due course ::lcode eng
 ::lexical in-law ::lcode eng ::plural in-laws
 ::lexical inside out ::lcode eng
-::lexical jackshit ::lcode eng ::alt-spelling jack-shit;jack shit
+::lexical jackshit ::lcode eng ::alt-spelling jack-shit; jack shit
 ::lexical 401(k) ::lcode eng
 ::lexical 510(k) ::lcode eng ::comment US Food and Drug Administration (FDA) clearance process (low bar)
 ::lexical know-how ::lcode eng
