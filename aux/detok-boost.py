@@ -23,7 +23,7 @@ if __name__ == "__main__":
             line = re.sub(r' ([$]|US$|RMB) (\d)', r' \1\2', line)
             line = regex.sub(r'(\pL) ([:]) ', r'\1\2 ', line)
             line = re.sub(r' ([(]) ', r' \1', line)
-            line = re.sub(r' ([.,;)]|!+|\?+) ', r'\1 ', line)
+            line = re.sub(r' ([.,;।)]|!+|\?+) ', r'\1 ', line)
             line = re.sub(r' (can) (not) ', r' \1\2 ', line, flags=re.IGNORECASE)
             line = re.sub(r"\b(are|ca|could|did|do|does|had|has|have|is|sha|should|was|were|wo|would) ?n['’]?t\b",
                           r"\1n't", line, flags=re.IGNORECASE)
