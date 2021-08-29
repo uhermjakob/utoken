@@ -56,7 +56,7 @@ optional arguments:
                         First token is line ID (and will be exempt from any tokenization)
   -v, --verbose         write change log etc. to STDERR
   -c, --chart           build annotation chart, even without annotation output
-  --mt                  MT-style output with @ added to certain punctuation
+  --mt                  MT-style output with @ added to certain punctuation to support detokenization
   --version             show program's version number and exit
 ```
 
