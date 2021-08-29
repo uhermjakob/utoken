@@ -97,6 +97,10 @@ class Detokenizer:
                 return case_adjusted_contraction
         return None
 
+    re_ends_w_open_xml_tag = re.compile(r'.*<[a-z][-_:a-z0-9]*(?:\s+[a-z][-_:a-z0-9]*="[^"]*")*\s*>@?$',
+                                        flags=re.IGNORECASE)
+    re_starts_w_close_xml_tag = re.compile(r'</[a-z][-_a-z0-9]*>', flags=re.IGNORECASE)
+
     def detokenize_string(self, s: str, lang_code: Optional[str], _line_id: Optional[str]) -> str:
         markup_attach_re = self.detok_resource.markup_attach_re
         attach_tag = self.detok_resource.attach_tag
@@ -121,7 +125,7 @@ class Detokenizer:
             if next_token:
                 two_tokens = ' '.join((token, next_token))
                 if contraction := self.token_contraction(two_tokens, lang_code):
-                    log.info(f'Contraction: {two_tokens} -> {contraction}')
+                    # log.info(f'Contraction: {two_tokens} -> {contraction}')
                     tokens[i:i+2] = [contraction]
                     next_i = i
                     continue
@@ -129,7 +133,9 @@ class Detokenizer:
             # Add space between tokens with certain exceptions.
             if ((not eliminate_space_based_on_previous_token)
                     and (not (token_is_marked_up and token.startswith(attach_tag)))
-                    and (not self.token_auto_attaches_to_left(token, prev_token, next_token, lang_code))):
+                    and (not self.token_auto_attaches_to_left(token, prev_token, next_token, lang_code))
+                    and (not self.re_starts_w_close_xml_tag.match(token))
+                    and (not self.re_ends_w_open_xml_tag.match(result))):
                 result += ' '
             # Add the token, stripped of any attach_tag
             result += token.strip(attach_tag) if token_is_marked_up else token
