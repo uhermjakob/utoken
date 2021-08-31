@@ -2,7 +2,7 @@
 
 """Script calls tokenizer(s), reformatters, visualizers for testing.
    Sample call: utoken-test.py -i amr-general-corpus.eng.txt
-   Sample call: utoken-test.py -i set1
+   Sample call: utoken-test.py -i set1 -cv
    Sample call: utoken-test.py -i set2 -cv
 """
 
