@@ -133,7 +133,7 @@ class Detokenizer:
             # Add space between tokens with certain exceptions.
             if ((not eliminate_space_based_on_previous_token)
                     and (not (token_is_marked_up and token.startswith(attach_tag)))
-                    and (not self.token_auto_attaches_to_left(token, prev_token, next_token, lang_code))
+                    and (not self.token_auto_attaches_to_left(token, result, next_token, lang_code))
                     and (not self.re_starts_w_close_xml_tag.match(token))
                     and (not self.re_ends_w_open_xml_tag.match(result))):
                 result += ' '
