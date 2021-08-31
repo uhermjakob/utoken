@@ -97,7 +97,7 @@ class Detokenizer:
                 return case_adjusted_contraction
         return None
 
-    re_ends_w_open_xml_tag = re.compile(r'.*<[a-z][-_:a-z0-9]*(?:\s+[a-z][-_:a-z0-9]*="[^"]*")*\s*>@?$',
+    re_ends_w_open_xml_tag = re.compile(r'.*<[a-z][-_:a-z0-9]*(?:\s+[a-z][-_:a-z0-9]*="[^"]*")*\s*>$',
                                         flags=re.IGNORECASE)
     re_starts_w_close_xml_tag = re.compile(r'</[a-z][-_a-z0-9]*>', flags=re.IGNORECASE)
 
