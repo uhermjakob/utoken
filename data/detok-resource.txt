@@ -73,7 +73,8 @@
 ::auto-attach ‰ ::side left ::left-context \d
 ::auto-attach ‱ ::side left ::left-context \d
 ::auto-attach ٪ ::side left ::left-context \d ::comment Arabic percent sign
-::auto-attach + ::side left ::left-context \d[%‰kK]?
+::auto-attach + ::side left ::left-context \d\s?[%‰kK]?
+::auto-attach ° ::side left ::left-context \d
 ::auto-attach © ::side left
 ::auto-attach ® ::side left
 ::auto-attach ™ ::side left
