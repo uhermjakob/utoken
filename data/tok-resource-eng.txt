@@ -75,8 +75,8 @@
 ::repair U.K ::target U.K. ::lcode eng ::right-context-not \s*[.] ::problem missing period
 ::repair U.N ::target U.N. ::lcode eng ::right-context-not \s*[.] ::problem missing period
 ::repair U.S ::target U.S. ::lcode eng ::right-context-not \s*[.] ::problem missing period
+::repair H. E. ::target H.E. ::lcode eng ::right-context-not \s*[.] ::problem spurious space
 
-::repair ai n't ::target is n't ::lcode eng ::problem previous tokenizer
 ::repair ca n't ::target can n't ::lcode eng ::problem previous tokenizer
 ::repair sha n't ::target shall n't ::lcode eng ::problem previous tokenizer
 ::repair wo n't ::target will n't ::lcode eng ::problem previous tokenizer
@@ -99,6 +99,7 @@
 
 ::abbrev Co. ::exp Company ::lcode eng ::sem-class company-type ::left-context \s
 ::abbrev Corp. ::exp Corporation ::lcode eng ::sem-class company-type
+::abbrev GmbH ::exp Gesellschaft mit beschränkter Haftung ::sem-class company-type
 ::abbrev Inc. ::exp Incorporated ::lcode eng ::sem-class company-type
 ::abbrev LLC ::exp Limited Liability Company ::lcode eng ::sem-class company-type
 ::abbrev Ltd. ::exp Limited ::lcode eng ::sem-class company-type
@@ -295,6 +296,7 @@
 ::abbrev H.E. ::exp His Excellency; Her Excellency ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev H.M. ::exp His Majesty; Her Majesty ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev Hon. ::exp Honorable ::lcode eng ::sem-class pre-name-title ::case-sensitive True
+::abbrev Hon’ble ::exp Honorable ::lcode eng ::sem-class pre-name-title
 ::abbrev Hr. ::exp Herr; Mister ::lcode eng ::sem-class pre-name-title ::case-sensitive True
 ::abbrev Ing. ::exp Ingenieur; Ingeniero ::lcode eng ::sem-class pre-name-title
 ::abbrev Insp. ::exp Inspector ::lcode eng ::sem-class pre-name-title
@@ -391,7 +393,10 @@
 ::abbrev fl. oz. ::exp fluid ounce ::lcode eng ::sem-class unit-of-measurement
 ::abbrev fl.oz. ::exp fluid ounce ::lcode eng ::sem-class unit-of-measurement
 ::abbrev h ::exp hour ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
+::abbrev hr ::exp hour ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True
+::abbrev hr. ::exp hour ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True
 ::abbrev hrs ::exp hour ::lcode eng ::sem-class unit-of-measurement
+::abbrev hrs. ::exp hour ::lcode eng ::sem-class unit-of-measurement
 ::abbrev lb ::exp pound ::lcode eng ::sem-class unit-of-measurement
 ::abbrev lb. ::exp pound ::lcode eng ::sem-class unit-of-measurement
 ::abbrev lbs ::exp pounds ::lcode eng ::sem-class unit-of-measurement
@@ -400,7 +405,10 @@
 ::abbrev mph ::exp miles per hour ::lcode eng ::sem-class unit-of-measurement
 ::abbrev mph ::exp mile per hour ::lcode eng ::sem-class unit-of-measurement
 ::abbrev mSv/hr ::exp millisievert per hour ::lcode eng ::sem-class unit-of-measurement
-::abbrev sq. mi. ::exp square mile; square miles ::lcode eng ::sem-class unit-of-measurement
+::abbrev oz. ::exp ounce ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True
+::abbrev sq. mi. ::exp square mile; square miles ::lcode eng ::sem-class unit-of-measurement ::alt-spelling sqm.
+::abbrev yd. ::exp yard ::lcode eng ::sem-class unit-of-measurement
+::abbrev yds. ::exp yard ::lcode eng ::sem-class unit-of-measurement
 ::abbrev yr. ::exp year ::lcode eng ::sem-class unit-of-measurement
 ::abbrev yrs. ::exp years ::lcode eng ::sem-class unit-of-measurement
 ::abbrev μSv/hr ::exp microsievert per hour ::lcode eng ::sem-class unit-of-measurement
@@ -431,11 +439,15 @@
 ::abbrev ATM ::exp automated teller machine ::lcode eng
 ::abbrev Av. ::exp Avenue ::lcode eng
 ::abbrev Ave. ::exp Avenue ::lcode eng
+::abbrev avg. ::exp average ::lcode eng
 ::abbrev B&B ::exp bed and breakfast ::lcode eng
 ::abbrev B.C. ::exp before Christ ::lcode eng
+::abbrev B.Ed. ::exp Bachelor of Education ::lcode eng
+::abbrev B.Sc. ::exp Bachelor of Science ::lcode eng
 ::abbrev b/c ::exp because ::lcode eng
 ::abbrev bd ::exp bluray disc ::lcode eng
 ::abbrev bldg. ::exp building ::lcode eng
+::abbrev Blvd. ::exp Boulevard ::lcode eng
 ::abbrev bro ::exp brother ::lcode eng
 ::abbrev bros. ::exp brothers ::lcode eng
 ::abbrev B.S. ::exp bullshit ::lcode eng
@@ -453,6 +465,7 @@
 ::abbrev DD ::exp dear daughter ::lcode eng
 ::abbrev DDoS ::exp distributed denial of service ::lcode eng
 ::abbrev decr. ::exp decrease ::lcode eng
+::abbrev Dept. ::exp Department ::lcode eng
 ::abbrev DH ::exp dear husband ::lcode eng
 ::abbrev DS ::exp dear son ::lcode eng
 ::abbrev DW ::exp dear wife ::lcode eng
@@ -465,7 +478,9 @@
 ::abbrev etc. ::exp et cetera; and other things ::lcode eng ::misspelling etc .; e.t.c.; e.t.c; et c.
 ::abbrev exec ::exp executive ::lcode eng ::inflections execs
 ::abbrev Flr. ::exp floor ::lcode eng
+::abbrev Ft. ::exp Fort ::lcode eng  ::case-sensitive True
 ::abbrev gov't ::exp government ::lcode eng
+::abbrev govt. ::exp government ::lcode eng
 ::abbrev gov'ts ::exp governments ::lcode eng
 ::abbrev gr8 ::exp great ::lcode eng
 ::abbrev hosp. ::exp hospital ::lcode eng
@@ -491,6 +506,7 @@
 ::abbrev misc. ::exp miscellaneous ::lcode eng
 ::abbrev MM ::exp multiple myeloma ::lcode eng ::case-sensitive True
 ::abbrev m/o ::exp month old ::lcode eng
+::abbrev MoU ::exp memorandum of understanding ::case-sensitive True ::plural +s
 ::abbrev MP ::exp member of parliament ::lcode eng ::country UK
 ::abbrev MP ::exp military police ::lcode eng
 ::abbrev Mt. ::exp Mount ::lcode eng ::case-sensitive True
@@ -505,7 +521,7 @@
 ::abbrev PC ::exp personal computer ::lcode eng
 ::abbrev PC ::exp politically correct ::lcode eng
 ::abbrev P/E ::exp price-to-earnings [ratio] ::lcode eng
-::abbrev Ph.D. ::exp doctor of philosophy ::lcode eng
+::abbrev Ph.D. ::exp doctor of philosophy ::lcode eng ::alt-spelling PhD; Ph. D.
 ::abbrev pic ::exp picture ::lcode eng
 ::abbrev p.m. ::exp post meridiem ::lcode eng
 ::abbrev POW ::exp prisoner of war ::lcode eng
@@ -514,7 +530,7 @@
 ::abbrev Q-tip ::lcode eng ::inflections Q-tips
 ::abbrev R&B ::exp rythm and blues ::lcode eng
 ::abbrev R&D ::exp research and development ::lcode eng
-::abbrev Ret. ::exp Retired ::lcode eng
+::abbrev Ret. ::exp Retired ::lcode eng ::alt-spelling Retd.
 ::abbrev Rt. ::exp Right ::lcode eng
 ::abbrev RPG ::exp rocket-propelled grenade ::lcode eng
 ::abbrev r/w ::exp read/write ::lcode eng
@@ -531,7 +547,9 @@
 ::abbrev TV ::exp television ::lcode eng
 ::abbrev ?4u ::exp question for you ::lcode eng
 ::abbrev u/c ::exp upper case ::lcode eng
-::abbrev v. ::exp versus; von ::lcode eng
+::abbrev v. ::exp versus; von ::lcode eng ::left-context-not ::case-sensitive True
+::abbrev V.  ::lcode eng ::left-context-not \p{Lu}\.\s* ::case-sensitive True
+::abbrev viz. ::lcode eng ::comment British, "in other words"
 ::abbrev vs. ::exp versus ::lcode eng
 ::abbrev W3 ::exp World Wide Web ::lcode eng
 ::abbrev w/ ::exp with ::lcode eng ::right-context-not \S
@@ -807,6 +825,7 @@
 ::lexical by all means ::lcode eng
 ::lexical by and large ::lcode eng
 ::lexical case by case ::lcode eng ::alt-spelling +hyphen
+::lexical catch-22 ::lcode eng
 ::lexical commander-in-chief ::lcode eng ::plural commanders-in-chief
 ::lexical cutting-edge ::lcode eng
 ::lexical daughter-in-law ::lcode eng ::plural daughters-in-law
@@ -861,7 +880,8 @@
 ::lexical once upon a time ::lcode eng
 ::lexical one by one ::lcode eng
 ::lexical one-night stand ::lcode eng
-::lexical one-on-one ::lcode eng
+::lexical one-on-one ::lcode eng ::alt-spelling 1-on-1
+::lexical one-to-one ::lcode eng ::alt-spelling 1-to-1
 ::lexical on-site ::lcode eng
 ::lexical on the fly ::lcode eng ::alt-spelling +hyphen
 ::lexical op-ed ::lcode eng
