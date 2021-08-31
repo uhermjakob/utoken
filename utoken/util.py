@@ -430,12 +430,13 @@ class DetokenizationContractionEntry(DetokenizationEntry):
 
 class DetokenizationResource:
     def __init__(self):
-        self.attach_tag = '@'
+        self.attach_tag = '@'  # default
         self.auto_attach_left = defaultdict(list)
         self.auto_attach_right = defaultdict(list)
         self.markup_attach = defaultdict(list)
-        self.markup_attach_re_elements = []
-        self.markup_attach_re = None
+        self.markup_attach_re_elements = set()
+        self.markup_attach_re_string = None
+        self.markup_attach_re = None   # compiled regular expression
         self.contraction_dict = defaultdict(list)
 
     def load_resource(self, filename: str, lang_codes: Optional[List[str]] = None) -> None:
@@ -534,7 +535,7 @@ class DetokenizationResource:
                             if except_s := slot_value_in_double_colon_del_list(line, 'except'):
                                 detokenization_entry.exception_list = re.split(r'\s+', except_s)
                             self.markup_attach[lc_s].append(detokenization_entry)
-                            self.markup_attach_re_elements.append(re.escape(lc_s) + ('+' if group else ''))
+                            self.markup_attach_re_elements.add(re.escape(lc_s) + ('+' if group else ''))
                         elif head_slot == 'attach_tag':
                             self.attach_tag = s
                         elif head_slot == 'contraction':
@@ -590,12 +591,17 @@ class DetokenizationResource:
         except OSError:
             log.warning(f'Could not open general resource file {filename}')
 
-    def build_markup_attach_re(self) -> None:
+    def build_markup_attach_re(self, tok: Optional = None) -> None:
         """After all detok resources are loaded, compile markup_attach_re from markup_attach_re_elements."""
         attach_tag = self.attach_tag
-        regex_string = '^' + attach_tag + '?(?:' + '|'.join(self.markup_attach_re_elements) + ')' + attach_tag + '?$'
-        # log.info(f"markup_attach_re: {regex_string}")
-        self.markup_attach_re = re.compile(regex_string)
+        if tok:
+            tok.char_type_vector_dict[attach_tag] = tok.char_type_vector_dict.get(attach_tag, 0) \
+                                                    | tok.char_is_attach_tag
+        self.markup_attach_re_elements.update('/')  # for robustness
+        regex_string_core = attach_tag + '?(?:' + '|'.join(self.markup_attach_re_elements) + ')' + attach_tag + '?'
+        self.markup_attach_re_string = '(?:' + regex_string_core + '|' +  attach_tag + attach_tag + ')'
+        # log.info(f"markup_attach_re: {self.markup_attach_re_string}")
+        self.markup_attach_re = re.compile('^' + self.markup_attach_re_string + '$')
 
 
 def slot_value_in_double_colon_del_list(line: str, slot: str, default: Optional = None) -> str:
