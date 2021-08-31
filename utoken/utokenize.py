@@ -294,6 +294,15 @@ class Tokenizer:
         # Load detokenization resource entries, for proper mt-tokenization, e.g. @...@
         self.detok_resource.load_resource(os.path.join(data_dir, f'detok-resource.txt'))
         self.detok_resource.build_markup_attach_re()
+        optional_attach_tag = self.detok_resource.attach_tag + '?'
+        core_re = '(?:' + '|'.join(self.detok_resource.markup_attach_re_elements) + ')'
+        self.re_mt_punct_preserve = regex.compile(r'(.*?)'
+                                                  r'(?<!\S)'      # negative lookbehind
+                                                  r'(' + optional_attach_tag + core_re + optional_attach_tag + ')'
+                                                  r'(?!\S)'       # negative lookahead
+                                                  r'(.*)$',
+                                                  flags=regex.IGNORECASE)
+        # log.info(f're_mt_punct_preserve: {self.re_mt_punct_preserve}')
 
     @staticmethod
     def default_data_dir() -> str:
@@ -701,16 +710,16 @@ class Tokenizer:
                 return self.rec_tok_m3(m3, s, offset, token_type, line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    re_number = regex.compile(r'(.*?)'                                # excludes integers
-                              r'(?<![-−–+.,]|\d)'                     # negative lookbehind
-                              r'([-−–+]?'                             # plus/minus sign
-                              r'(?:\d{1,3}(?:,\d\d\d)+(?:\.\d+)?|'    # Western style, e.g. 12,345,678.90
-                              r'\d{1,2}(?:,\d\d)*,\d\d\d(?:\.\d+)?|'  # Indian style, e.g. 1,23,45,678.90
-                              r'\d+\.\d+))'                           # floating point, e.g. 12345678.90
-                              r'(?![.,]?\d)'                          # negative lookahead
+    re_number = regex.compile(r'(.*?)'                                  # excludes integers
+                              r'(?<![-−–+,]|\PL\.|\d[%\']?)'            # negative lookbehind
+                              r'([-−–+]?'                               # plus/minus sign
+                              r'(?:\d{1,3}(?:,\d\d\d)+(?:\.\d+)?|'      # Western style, e.g. 12,345,678.90
+                              r'\d{1,2}(?:,\d\d)*,\d\d\d(?:\.\d+)?|'    # Indian style, e.g. 1,23,45,678.90
+                              r'\d+\.\d+))'                             # floating point, e.g. 12345678.90
+                              r'(?![.,]?\d)'                            # negative lookahead
                               r'(.*)')
     re_number2 = regex.compile(r'(.*?)'                                 # excludes integers
-                               r'(?<![-−–+.,:]|\d)'                     # negative lookbehind
+                               r'(?<![-−–+,:]|\PL\.|\d[%\']?)'          # negative lookbehind
                                r'([-−–+]?'                              # plus/minus sign
                                r'(?:\d{1,3}(?:\.\d\d\d)+(?:,\d+)?|'     # Western style, e.g. 12.345.678,90
                                r'\d{1,2}(?:\.\d\d)*\.\d\d\d(?:,\d+)?|'  # Indian style, e.g. 1.23.45.678,90
@@ -718,10 +727,10 @@ class Tokenizer:
                                r'(?![.,]?\d)'                           # negative lookahead
                                r'(.*)')
     re_integer = regex.compile(r'(.*?)'
-                               r'(?<![-−–+.]|\d[,.]?|\pL\pM*)'        # negative lookbehind (stricter: no letters)
-                               r'([-−–+]?'                            # plus/minus sign
-                               r'\d+)'                                # plain integer, e.g. 12345678
-                               r'(?![-−–.,]?\d)'                      # negative lookahead
+                               r'(?<![-−–+]|\PL\.|\d[,.%\']?|\pL\pM*)'  # negative lookbehind (stricter: no letters)
+                               r'([-−–+]?'                              # plus/minus sign
+                               r'\d+)'                                  # plain integer, e.g. 12345678
+                               r'(?![-−–.,]?\d)'                        # negative lookahead
                                r'(.*)')
 
     def tokenize_numbers(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
@@ -1142,8 +1151,11 @@ class Tokenizer:
 
     def tokenize_mt_punctuation(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                                 line_id: Optional[str] = None, offset: int = 0) -> str:
-        """This tokenization step currently splits of dashes in certain contexts."""
+        """This tokenization step preserves MT-puncutation (e.g. @-@) and splits of dashes in certain contexts."""
         this_function = self.tokenize_mt_punctuation
+        if self.lv & self.char_is_at_sign:
+            if m3 := self.re_mt_punct_preserve.match(s):
+                return self.rec_tok_m3(m3, s, offset, 'PUNCT-MT', line_id, chart, lang_code, ht, this_function)
         if m3 := self.re_mt_punct.match(s):
             return self.rec_tok_m3(m3, s, offset, 'DASH', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
