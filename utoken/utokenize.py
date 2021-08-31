@@ -264,6 +264,8 @@ class Tokenizer:
         self.char_is_modifier = bit_vector
         bit_vector = bit_vector << 1
         self.char_is_digit = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_attach_tag = bit_vector
         self.char_is_dash_or_digit = self.char_is_dash | self.char_is_digit
         self.range_init_char_type_vector_dict()
         self.chart_p: bool = False
@@ -293,12 +295,10 @@ class Tokenizer:
                 self.tok_dict.load_resource(os.path.join(data_dir, f'tok-resource-{lcode}.txt'), lang_code=lcode)
         # Load detokenization resource entries, for proper mt-tokenization, e.g. @...@
         self.detok_resource.load_resource(os.path.join(data_dir, f'detok-resource.txt'))
-        self.detok_resource.build_markup_attach_re()
-        optional_attach_tag = self.detok_resource.attach_tag + '?'
-        core_re = '(?:' + '|'.join(self.detok_resource.markup_attach_re_elements) + ')'
+        self.detok_resource.build_markup_attach_re(self)
         self.re_mt_punct_preserve = regex.compile(r'(.*?)'
                                                   r'(?<!\S)'      # negative lookbehind
-                                                  r'(' + optional_attach_tag + core_re + optional_attach_tag + ')'
+                                                  r'(' + self.detok_resource.markup_attach_re_string + ')'
                                                   r'(?!\S)'       # negative lookahead
                                                   r'(.*)$',
                                                   flags=regex.IGNORECASE)
@@ -607,9 +607,9 @@ class Tokenizer:
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_xml = re.compile(r'(.*?)'
-                        r'(@?</?[a-z][-_:a-z0-9]*(?:\s+[a-z][-_:a-z0-9]*="[^"]*")*\s*/?>@?|'  # open/close tag
-                        r'<\$[-_a-z0-9]+\$>|'                                                 # <$BlogBacklinkAuthor$>
-                        r'<!--.*?-->)'                                                        # comment tag
+                        r'(</?[a-z][-_:a-z0-9]*(?:\s+[a-z][-_:a-z0-9]*="[^"]*")*\s*/?>|'    # open/close tag
+                        r'<\$[-_a-z0-9]+\$>|'                                               # <$BlogBacklinkAuthor$>
+                        r'<!--.*?-->)'                                                      # comment tag
                         r'(.*)$',
                         flags=re.IGNORECASE)
     re_BBCode = re.compile(r'(.*?)'
@@ -1153,7 +1153,7 @@ class Tokenizer:
                                 line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step preserves MT-puncutation (e.g. @-@) and splits of dashes in certain contexts."""
         this_function = self.tokenize_mt_punctuation
-        if self.lv & self.char_is_at_sign:
+        if self.lv & self.char_is_attach_tag:
             if m3 := self.re_mt_punct_preserve.match(s):
                 return self.rec_tok_m3(m3, s, offset, 'PUNCT-MT', line_id, chart, lang_code, ht, this_function)
         if m3 := self.re_mt_punct.match(s):
