@@ -6,6 +6,7 @@ Written by Ulf Hermjakob, USC/ISI
 # -*- encoding: utf-8 -*-
 from collections import defaultdict
 import logging as log
+from pathlib import Path
 import re
 import regex
 import sys
@@ -205,7 +206,7 @@ class ResourceDict:
 
     re_comma_space = re.compile(r',\s*')
 
-    def load_resource(self, filename: str, lang_code: Optional[str] = None) -> None:
+    def load_resource(self, filename: Path, lang_code: Optional[str] = None) -> None:
         """Loads abbreviations, contractions etc. for tokenization.
         Example input file: data/tok-resource-eng.txt"""
         try:
@@ -225,7 +226,7 @@ class ResourceDict:
                         if re.match(r'^\uFEFF?\s*(?:#.*)?$', line):  # ignore empty or comment line
                             continue
                         # Check whether cost file line is well-formed. Following call will output specific warnings.
-                        valid = double_colon_del_list_validation(line, str(line_number), filename,
+                        valid = double_colon_del_list_validation(line, str(line_number), str(filename),
                                                                  valid_slots=['abbrev',
                                                                               'alt-spelling',
                                                                               'case-sensitive',
@@ -439,7 +440,7 @@ class DetokenizationResource:
         self.markup_attach_re = None   # compiled regular expression
         self.contraction_dict = defaultdict(list)
 
-    def load_resource(self, filename: str, lang_codes: Optional[List[str]] = None) -> None:
+    def load_resource(self, filename: Path, lang_codes: Optional[List[str]] = None) -> None:
         """Loads detokenization resources such as auto-attach, markup-attach etc.
         Example input file: data/detok-resource.txt
         This file is also loaded and by the tokenizer to produce appropriate mt-style @...@ tokens."""
@@ -460,7 +461,7 @@ class DetokenizationResource:
                         if re.match(r'::(repair|punct-split|abbrev|misspelling)\b', line):
                             continue  # In tok-resources, only ::contraction entries are relevant.
                         # Check whether cost file line is well-formed. Following call will output specific warnings.
-                        valid = double_colon_del_list_validation(line, str(line_number), filename,
+                        valid = double_colon_del_list_validation(line, str(line_number), str(filename),
                                                                  valid_slots=['alt-spelling',
                                                                               'attach-tag',
                                                                               'auto-attach',
@@ -599,7 +600,7 @@ class DetokenizationResource:
                                                     | tok.char_is_attach_tag
         self.markup_attach_re_elements.update('/')  # for robustness
         regex_string_core = attach_tag + '?(?:' + '|'.join(self.markup_attach_re_elements) + ')' + attach_tag + '?'
-        self.markup_attach_re_string = '(?:' + regex_string_core + '|' +  attach_tag + attach_tag + ')'
+        self.markup_attach_re_string = '(?:' + regex_string_core + '|' + attach_tag + attach_tag + ')'
         # log.info(f"markup_attach_re: {self.markup_attach_re_string}")
         self.markup_attach_re = re.compile('^' + self.markup_attach_re_string + '$')
 

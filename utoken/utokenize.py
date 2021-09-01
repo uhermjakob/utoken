@@ -14,8 +14,7 @@ import datetime
 import functools
 import json
 import logging as log
-import os
-# from pathlib import Path
+from pathlib import Path
 import pstats
 import re
 import regex
@@ -173,7 +172,7 @@ class Chart:
 
 
 class Tokenizer:
-    def __init__(self, lang_code: Optional[str] = None, data_dir: Optional[str] = None):
+    def __init__(self, lang_code: Optional[str] = None, data_dir: Optional[Path] = None):
         # Ordered list of tokenization steps
         self.tok_step_functions = [self.normalize_characters,
                                    self.tokenize_xmls,
@@ -286,15 +285,15 @@ class Tokenizer:
             data_dir = self.default_data_dir()
         # Load tokenization resource entries for language specified by 'lang_code'
         if lang_code:
-            self.tok_dict.load_resource(os.path.join(data_dir, f'tok-resource-{lang_code}.txt'), lang_code=lang_code)
+            self.tok_dict.load_resource(data_dir / f'tok-resource-{lang_code}.txt', lang_code=lang_code)
         # Load language-independent tokenization resource entries
-        self.tok_dict.load_resource(os.path.join(data_dir, f'tok-resource.txt'))
+        self.tok_dict.load_resource(data_dir / f'tok-resource.txt')
         # Load any other tokenization resource entries, for the time being just English
         for lcode in ['eng']:
             if lcode != lang_code:
-                self.tok_dict.load_resource(os.path.join(data_dir, f'tok-resource-{lcode}.txt'), lang_code=lcode)
+                self.tok_dict.load_resource(data_dir / f'tok-resource-{lcode}.txt', lang_code=lcode)
         # Load detokenization resource entries, for proper mt-tokenization, e.g. @...@
-        self.detok_resource.load_resource(os.path.join(data_dir, f'detok-resource.txt'))
+        self.detok_resource.load_resource(data_dir / f'detok-resource.txt')
         self.detok_resource.build_markup_attach_re(self)
         self.re_mt_punct_preserve = regex.compile(r'(.*?)'
                                                   r'(?<!\S)'      # negative lookbehind
@@ -305,9 +304,8 @@ class Tokenizer:
         # log.info(f're_mt_punct_preserve: {self.re_mt_punct_preserve}')
 
     @staticmethod
-    def default_data_dir() -> str:
-        src_dir = os.path.dirname(os.path.realpath(__file__))
-        return os.path.join(src_dir, "data")
+    def default_data_dir() -> Path:
+        return Path(__file__).parent / "data"
 
     def range_init_char_type_vector_dict(self) -> None:
         # Deletable control characters,
@@ -482,8 +480,8 @@ class Tokenizer:
     re_starts_w_plus_minus = re.compile(r'[-−–+]')
     re_ends_in_digit_plus = re.compile(r'.*\d[%\']?$')
 
-    def m3_to_3s_w_adjustment(self, m3: Match[str], s: str, offset: int, token_type: str, line_id: str,
-                              chart: Optional[Chart]) -> [str, str, str]:
+    def m3_to_3s_w_adjustment(self, m3: Match[str], _s: str, offset: int, token_type: str, _line_id: str,
+                              _chart: Optional[Chart]) -> [str, str, str]:
         """Make adjustments based on fuller context."""
         pre_token, token, post_token = m3.group(1, 2, 3)
         current_s = self.current_s  # full sentence
@@ -1321,7 +1319,7 @@ def main():
                         version=f'%(prog)s {__version__} last modified: {last_mod_date}')
     args = parser.parse_args()
     lang_code = args.lc
-    data_dir = args.data_directory
+    data_dir = Path(args.data_directory) if args.data_directory else None
     tok = Tokenizer(lang_code=lang_code, data_dir=data_dir)
     tok.chart_p = bool(args.annotation_file) or bool(args.chart)
     tok.simple_tok_p = bool(args.simple)

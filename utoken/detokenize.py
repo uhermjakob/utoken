@@ -10,7 +10,7 @@ When using STDIN and/or STDOUT, if might be necessary, particularly for older ve
 import argparse
 import datetime
 import logging as log
-import os
+from pathlib import Path
 import re
 import sys
 from typing import Optional, TextIO
@@ -21,7 +21,7 @@ log.basicConfig(level=log.INFO)
 
 
 class Detokenizer:
-    def __init__(self, lang_code: Optional[str] = None, data_dir: Optional[str] = None):
+    def __init__(self, lang_code: Optional[str] = None, data_dir: Optional[Path] = None):
         self.number_of_lines = 0
         self.lang_code: Optional[str] = lang_code
         lang_codes = [lang_code] if lang_code else []
@@ -30,16 +30,16 @@ class Detokenizer:
             data_dir = self.default_data_dir()
         self.detok_resource = util.DetokenizationResource()
         # Load detokenization resource entries
-        self.detok_resource.load_resource(os.path.join(data_dir, f'detok-resource.txt'))
+        self.detok_resource.load_resource(data_dir / f'detok-resource.txt')
         # Load tokenization resource entries for language specified by 'lang_code' (to harvest a few contractions)
         if lang_code:
-            self.detok_resource.load_resource(os.path.join(data_dir, f'tok-resource-{lang_code}.txt'), lang_codes)
+            self.detok_resource.load_resource(data_dir / f'tok-resource-{lang_code}.txt', lang_codes)
         # Load language-independent tokenization resource entries
-        self.detok_resource.load_resource(os.path.join(data_dir, f'tok-resource.txt'))
+        self.detok_resource.load_resource(data_dir / f'tok-resource.txt')
         # Load any other tokenization resource entries, for the time being just English
         for lcode in ['eng']:
             if lcode != lang_code:
-                self.detok_resource.load_resource(os.path.join(data_dir, f'tok-resource-{lcode}.txt'), lang_codes)
+                self.detok_resource.load_resource(data_dir / f'tok-resource-{lcode}.txt', lang_codes)
         # Now that all resource files have been loaded, form regex for all marked-up attachment elements
         self.detok_resource.build_markup_attach_re()
         attach_tag = self.detok_resource.attach_tag
@@ -49,9 +49,8 @@ class Detokenizer:
         self.non_whitespace_re = re.compile(r'\s*(\S+)(.*)$')
 
     @staticmethod
-    def default_data_dir() -> str:
-        src_dir = os.path.dirname(os.path.realpath(__file__))
-        return os.path.join(src_dir, "data")
+    def default_data_dir() -> Path:
+        return Path(__file__).parent / "data"
 
     def tokens_in_tokenized_string(self, s: str):
         tokens = []
@@ -184,7 +183,7 @@ def main():
                         version=f'%(prog)s {__version__} last modified: {last_mod_date}')
     args = parser.parse_args()
     lang_code = args.lc
-    data_dir = args.data_directory
+    data_dir = Path(args.data_directory) if args.data_directory else None
     detok = Detokenizer(lang_code=lang_code, data_dir=data_dir)
     detok.first_token_is_line_id_p = bool(args.first_token_is_line_id)
 
