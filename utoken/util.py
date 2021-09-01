@@ -696,7 +696,7 @@ def increment_dict_count(ht: dict, key: str, increment=1) -> int:
     return ht[key]
 
 
-def join_tokens(tokens: List[str]):
+def join_tokens(tokens: List[str]) -> str:
     """Join tokens with space, ignoring empty tokens"""
     return ' '.join([token for token in tokens if token != ''])
 
