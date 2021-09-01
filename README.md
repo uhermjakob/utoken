@@ -33,7 +33,7 @@ _The ouput below is in the more human-friendly annotation format. Default format
 ### Usage
 ```
 utokenize.py [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-a ANNOTATION-FILENAME] [--annotation_format ANNOTATION_FORMAT]
-             [-p PROFILE-FILENAME] [--profile_scope PROFILE_SCOPE] [-d DATA_DIRECTORY] [--lc LANGUAGE-CODE] [-f] [-v] [-c] [--mt]
+             [-p PROFILE-FILENAME] [--profile_scope PROFILE_SCOPE] [-d DATA_DIRECTORY] [--lc LANGUAGE-CODE] [-f] [-v] [--simple]
              [--version]
 optional arguments:
   -h, --help            show this help message and exit
@@ -55,8 +55,7 @@ optional arguments:
   -f, --first_token_is_line_id
                         First token is line ID (and will be exempt from any tokenization)
   -v, --verbose         write change log etc. to STDERR
-  -c, --chart           build annotation chart, even without annotation output
-  --mt                  MT-style output with @ added to certain punctuation to support detokenization
+  --simple              prevent MT-style output (e.g. @-@). Note: can degrade any detokinzation
   --version             show program's version number and exit
 ```
 
