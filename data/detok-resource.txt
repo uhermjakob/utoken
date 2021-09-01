@@ -4,6 +4,8 @@
 ::markup-attach - ::group True ::comment hyphen-minus
 ::markup-attach – ::group True ::comment en-dash
 ::markup-attach — ::group True ::comment em-dash
+::markup-attach + ::group True ::comment particularly if left-context \d\s?[%‰kK]?
+
 ::markup-attach .. ::group True
 ::markup-attach :
 ::markup-attach ' ::paired-delimiter True ::group True
@@ -73,7 +75,6 @@
 ::auto-attach ‰ ::side left ::left-context \d
 ::auto-attach ‱ ::side left ::left-context \d
 ::auto-attach ٪ ::side left ::left-context \d ::comment Arabic percent sign
-::auto-attach + ::side left ::left-context \d\s?[%‰kK]?
 ::auto-attach ° ::side left ::left-context \d
 ::auto-attach © ::side left
 ::auto-attach ® ::side left
