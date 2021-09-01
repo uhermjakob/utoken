@@ -406,7 +406,8 @@
 ::abbrev mph ::exp mile per hour ::lcode eng ::sem-class unit-of-measurement
 ::abbrev mSv/hr ::exp millisievert per hour ::lcode eng ::sem-class unit-of-measurement
 ::abbrev oz. ::exp ounce ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True
-::abbrev sq. mi. ::exp square mile; square miles ::lcode eng ::sem-class unit-of-measurement ::alt-spelling sqm.
+::abbrev sqm. ::exp square meter; square meters ::lcode eng ::sem-class unit-of-measurement
+::abbrev sq. mi. ::exp square mile; square miles ::lcode eng ::sem-class unit-of-measurement
 ::abbrev yd. ::exp yard ::lcode eng ::sem-class unit-of-measurement
 ::abbrev yds. ::exp yard ::lcode eng ::sem-class unit-of-measurement
 ::abbrev yr. ::exp year ::lcode eng ::sem-class unit-of-measurement
