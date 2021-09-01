@@ -268,6 +268,7 @@ class Tokenizer:
         self.char_is_attach_tag = bit_vector
         self.char_is_dash_or_digit = self.char_is_dash | self.char_is_digit
         self.range_init_char_type_vector_dict()
+        self.chart_p: bool = False
         self.simple_tok_p: bool = False  # simple tokenization: no MT-markup such as @-@
         self.first_token_is_line_id_p: bool = False
         self.verbose: bool = False
@@ -1231,7 +1232,7 @@ class Tokenizer:
                 # If not, some digit-specific tokenization steps can be skipped to improve run-time.
                 self.lv = self.lv | char_type_vector
         # Initialize chart.
-        chart = Chart(s, line_id)
+        chart = Chart(s, line_id) if self.chart_p else None
         # Call the first tokenization step function, which then recursively call all other tokenization step functions.
         s = self.next_tok(None, s, chart, ht, lang_code, line_id)
         self.n_lines_tokenized += 1
@@ -1295,6 +1296,8 @@ def main():
     parser.add_argument('-f', '--first_token_is_line_id', action='count', default=0,
                         help='First token is line ID (and will be exempt from any tokenization)')
     parser.add_argument('-v', '--verbose', action='count', default=0, help='write change log etc. to STDERR')
+    parser.add_argument('-c', '--chart', action='count', default=0,
+                        help='build annotation chart, even without annotation output')
     parser.add_argument('--simple', action='count', default=0,
                         help='prevent MT-style output (e.g. @-@). Note: can degrade any detokinzation')
     parser.add_argument('--version', action='version',
@@ -1303,6 +1306,7 @@ def main():
     lang_code = args.lc
     data_dir = args.data_directory
     tok = Tokenizer(lang_code=lang_code, data_dir=data_dir)
+    tok.chart_p = bool(args.annotation_file) or bool(args.chart)
     tok.simple_tok_p = bool(args.simple)
     tok.first_token_is_line_id_p = bool(args.first_token_is_line_id)
     tok.profile_scope = args.profile_scope  # e.g. None or 'tokenize_according_to_resource_entries'
@@ -1330,6 +1334,8 @@ def main():
             log_info += f'  Output: {args.output.name}'
         if args.annotation_file:
             log_info += f'  Annotation: {args.annotation_file.name}'
+        if tok.chart_p:
+            log_info += f'  Chart to be built: {tok.chart_p}'
         if tok.simple_tok_p:
             log_info += f'  Simple tokenization (no @-@ etc.): {tok.simple_tok_p}'
         if lang_code:
