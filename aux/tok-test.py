@@ -60,18 +60,13 @@ if __name__ == "__main__":
                 lang_code = None
             if lang_code:
                 utokenize_system_call_args.extend(['--lc', lang_code])
-            if args.compare:
-                utokenize_system_call_args.append('--mt')
-                mt_clause = 'mt.'
-            else:
-                mt_clause = ''
             if (core_filename.startswith('Bible') and '-woid.' not in core_filename)\
                     or filename in ('test.mal.txt', 'test1.eng.txt'):
                 utokenize_system_call_args.append('-f')
             input_filename = os.path.join(test_dir, filename)
-            output_filename = os.path.join(test_dir, 'utoken-out', f'{core_filename}.{mt_clause}tok')
-            json_annotation_filename = os.path.join(test_dir, 'utoken-out', f'{core_filename}.{mt_clause}json')
-            dcln_annotation_filename = os.path.join(test_dir, 'utoken-out', f'{core_filename}.{mt_clause}dcln')
+            output_filename = os.path.join(test_dir, 'utoken-out', f'{core_filename}.tok')
+            json_annotation_filename = os.path.join(test_dir, 'utoken-out', f'{core_filename}.json')
+            dcln_annotation_filename = os.path.join(test_dir, 'utoken-out', f'{core_filename}.dcln')
             utokenize_system_call_args.extend(['-i', input_filename])
             utokenize_system_call_args.extend(['-o', output_filename])
             utokenize_system_call_args.extend(['-a', json_annotation_filename])
