@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """This script de-tokenizes a few things, so that there is less clutter (fewer differences) in comparison
-with detokenize. Usage: detok-boost.py < STDIN > STDOUT. Suitable for --b1/b2 in colot-mt-diff.pl"""
+with detokenize. Usage: boost-detok.py < STDIN > STDOUT. Suitable for --b1/b2 in colot-mt-diff.pl"""
 
 import re
 import regex

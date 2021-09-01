@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """This script re-tokenizes a few things, so that there is less clutter (fewer differences) in comparison
-with utoken. Usage: tok-boost.py < STDIN > STDOUT. Suitable for --b1/b2 in colot-mt-diff.pl"""
+with utoken. Usage: boost-tok.py < STDIN > STDOUT. Suitable for -b in colot-mt-diff.pl"""
 
 import re
 import sys
