@@ -109,32 +109,34 @@ if __name__ == "__main__":
                     sys.stderr.write(f"{command} ...\n")
                     subprocess.run(command, shell=True)
 
-                ref_clause = None
+                ref_file_s = None
+                ref_legend_s = None
                 if lang_code and lang_code != 'eng':
                     english_filename = re.sub(r'\.[a-z]{3}\.txt$', '.eng.txt', input_filename)
                     sys.stderr.write(f"**** {input_filename} to {english_filename}\n")
                     if os.path.isfile(english_filename):
-                        ref_clause = f' -ref {input_filename} -ref2 {english_filename}' \
-                                     f' -ref-legends {lang_code}.txt eng.txt'
-                if not ref_clause:
-                    ref_clause = f' -ref {input_filename} -ref-legend {lang_code}.txt'
+                        ref_file_s = f' {input_filename} {english_filename}'
+                        ref_legend_s = f' {lang_code}.txt eng.txt'
+                if not ref_file_s:
+                    ref_file_s = f' {input_filename}'
+                    ref_legend_s = f' {lang_code}.txt'
                 sacremoses_viz_filename = os.path.join(public_test_data_dir, 'viz',
                                                        f'{core_filename}.sacrem-utoken-diff.html')
-                command = f'color-mt-diffs.pl {sacremoses_filename} {output_filename}' \
-                          f' -legends sacrem utoken{ref_clause}' \
-                          f' -out {sacremoses_viz_filename}'
+                command = f'color-mt-diffs.pl {sacremoses_filename} {output_filename}{ref_file_s}' \
+                          f' -l sacrem utoken{ref_legend_s}' \
+                          f' -o {sacremoses_viz_filename}'
                 sys.stderr.write(f"{command} ...\n")
                 sys.stderr.write(f"color-mt-diffs.pl sacremoses {input_filename}"
                                  f" -out {sacremoses_viz_filename} ...\n")
                 subprocess.run(command, shell=True)
                 old_ulf_tokenizer_viz_filename = os.path.join(public_test_data_dir, 'viz',
                                                               f'{core_filename}.old-u-t-utoken-diff.html')
-                command = f'color-mt-diffs.pl {old_ulf_tokenizer_filename} {output_filename}' \
-                          f' -legends old-u-t utoken{ref_clause}' \
-                          f' -out {old_ulf_tokenizer_viz_filename}'
+                command = f'color-mt-diffs.pl {old_ulf_tokenizer_filename} {output_filename}{ref_file_s}' \
+                          f' -l old-u-t utoken{ref_legend_s}' \
+                          f' -o {old_ulf_tokenizer_viz_filename}'
                 sys.stderr.write(f"{command} ...\n")
                 sys.stderr.write(f"color-mt-diffs.pl old ulf-tokenizer {input_filename}"
-                                 f" -out {old_ulf_tokenizer_viz_filename} ...\n")
+                                 f" -o {old_ulf_tokenizer_viz_filename} ...\n")
                 subprocess.run(command, shell=True)
         else:
             sys.stderr.write(f"Ignoring filename {filename}, because it does not end in '.txt'\n")
