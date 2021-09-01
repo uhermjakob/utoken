@@ -479,10 +479,23 @@ class Tokenizer:
             tokenizations.append(calling_function(post, chart, ht, lang_code, line_id, offset+position))
         return util.join_tokens(tokenizations)
 
-    # def m3_to_3s_w_adjustment(self, m3: Match[str], s: str, offset: int, token_type: str, line_id: str,
-    #                           chart: Optional[Chart]) -> [str, str, str]:
-    #     pre_token, token, post_token = m3.group(1, 2, 3)  # HHERE
-    #     return [pre_token, token, post_token]
+    re_starts_w_plus_minus = re.compile(r'[-−–+]')
+    re_ends_in_digit_plus = re.compile(r'.*\d[%\']?$')
+
+    def m3_to_3s_w_adjustment(self, m3: Match[str], s: str, offset: int, token_type: str, line_id: str,
+                              chart: Optional[Chart]) -> [str, str, str]:
+        """Make adjustments based on fuller context."""
+        pre_token, token, post_token = m3.group(1, 2, 3)
+        current_s = self.current_s  # full sentence
+        if token_type == 'NUMBER' and self.re_starts_w_plus_minus.match(token):
+            token_start_position = offset + len(pre_token)
+            left_context = current_s[:token_start_position]
+            if self.re_ends_in_digit_plus.match(left_context):
+                # log.info(f'm3_to_3s_w_adjustment {token_type} {offset} {left_context} :: {token}')
+                # +/- not part of number (as sign) after all, but rather range/addition: 3.5%-5.5% or 4+5
+                pre_token += token[:1]
+                token = token[1:]
+        return [pre_token, token, post_token]
 
     def rec_tok_m3(self, m3: Match[str], s: str, offset: int,
                    token_type: str, line_id: str, chart: Optional[Chart],
@@ -491,7 +504,8 @@ class Tokenizer:
         The name 'm3' refers to the three groups it expects in the match object:
         (1) pre-token (2) token and (3) post-token.
         Method computes token-surf and start-position, then calls rec_tok."""
-        pre_token, token, post_token = m3.group(1, 2, 3)
+        # Original: pre_token, token, post_token = m3.group(1, 2, 3)
+        pre_token, token, post_token = self.m3_to_3s_w_adjustment(m3, s, offset, token_type, line_id, chart)
         start_position = len(pre_token)
         end_position = start_position + len(token)
         token_surf = s[start_position:end_position]  # in case that the regex match operates on a mapped string
@@ -1194,7 +1208,7 @@ class Tokenizer:
         else:
             return 'MISC-B'
 
-    def tokenize_main(self, s: str, chart: Chart, _ht: dict, _lang_code: Optional[str] = None,
+    def tokenize_main(self, s: str, chart: Chart, _ht: dict, lang_code: Optional[str] = None,
                       line_id: Optional[str] = None, offset: int = 0) -> str:
         """This is the final tokenization step that tokenizes the remaining string by spaces."""
         tokens = []
@@ -1206,11 +1220,14 @@ class Tokenizer:
             if char.isspace():
                 if start_index is not None:
                     token_surf = s[start_index:index]
+                    token_start = offset+start_index
+                    token_end = offset+index
+                    if not self.simple_tok_p:
+                        token_surf = self.add_any_mt_tok_delimiter(token_surf, token_start, token_end, lang_code)
                     tokens.append(token_surf)
                     if chart:
                         new_token = Token(token_surf, str(line_id), self.basic_token_type(token_surf),
-                                          ComplexSpan([SimpleSpan(offset+start_index, offset+index,
-                                                                  vm=chart.vertex_map)]))
+                                          ComplexSpan([SimpleSpan(token_start, token_end, vm=chart.vertex_map)]))
                         chart.register_token(new_token)
                     start_index = None
             elif start_index is None:
