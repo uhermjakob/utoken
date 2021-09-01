@@ -307,7 +307,7 @@ class Tokenizer:
     @staticmethod
     def default_data_dir() -> str:
         src_dir = os.path.dirname(os.path.realpath(__file__))
-        return os.path.join(src_dir, "../data")
+        return os.path.join(src_dir, "data")
 
     def range_init_char_type_vector_dict(self) -> None:
         # Deletable control characters,
