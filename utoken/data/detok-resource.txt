@@ -4,7 +4,7 @@
 ::markup-attach - ::group True ::comment hyphen-minus
 ::markup-attach – ::group True ::comment en-dash
 ::markup-attach — ::group True ::comment em-dash
-::markup-attach + ::group True ::comment left-context \d\s?[%‰kK]?
+::markup-attach + ::group True ::comment originally auto-attach w/ left-context \d\s?[%‰kK]?
 
 ::markup-attach .. ::group True
 ::markup-attach :
