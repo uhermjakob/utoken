@@ -81,6 +81,8 @@
 ::punct-split / ::side both ::left-context -\d+ ::right-context \d+-
 ::punct-split ~ ::side both ::left-context \pL\pM* ::right-context \pL
 ::punct-split . ::side both ::left-context (?:\p{Ll}\p{Ll}|\d|[IVXL]+) ::right-context \p{Lu}\p{Ll}
+::punct-split ؟ ::side both ::comment Arabic question mark
+::punct-split ؛ ::side both ::comment Arabic semicolon
 
 # split off punctuation from start of token
 ::punct-split ' ::side start ::group True
@@ -99,6 +101,7 @@
 ::punct-split , ::side start
 ::punct-split • ::side start
 ::punct-split · ::side start
+::punct-split ، ::side start
 
 # split off punctuation from end of token
 ::punct-split ' ::side end ::group True
@@ -113,11 +116,9 @@
 ::punct-split ⁈ ::side end
 ::punct-split ⁉ ::side end
 ::punct-split ‽ ::side end
-::punct-split ؟ ::side end
 ::punct-split ، ::side end
 ::punct-split , ::side end
 ::punct-split ; ::side end ::left-context-not &(?:amp|apos|gt|lt|nbsp|quot|#\d+|#x[0-9A-F]+)  # XML tags, e.g. &#x234;
-::punct-split ؛ ::side end
 ::punct-split ！ ::side end
 ::punct-split ; ::side end
 ::punct-split ？ ::side end
@@ -648,7 +649,7 @@
 ::lexical 5′ ::token-category symbol ::comment 5 prime (to mark end in DNA sequences)
 ::lexical 8-) ::token-category symbol ::comment large eyes emoji
 ::lexical :( ::token-category symbol ::comment sad emoji
-::lexical :) ::token-category symbol ::comment smiley emoji
+::lexical :) ::token-category symbol ::comment smiley emoji ::alt-spelling :)); :))); :)))); :))))); :)))))); :))))))); :)))))))); :))))))))); :)))))))))); :))))))))))); :))))))))))))
 ::lexical :-) ::token-category symbol ::comment smiley emoticon
 ::lexical :--) ::token-category symbol ::comment smiley long nose emoticon
 ::lexical :/ ::token-category symbol
