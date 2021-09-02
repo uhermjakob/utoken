@@ -179,6 +179,7 @@ class Tokenizer:
                                    self.tokenize_urls,
                                    self.tokenize_emails,
                                    self.tokenize_filenames,
+                                   self.tokenize_symbol_group,
                                    self.tokenize_hashtags_and_handles,
                                    self.tokenize_abbreviation_patterns,
                                    self.tokenize_according_to_resource_entries,
@@ -238,7 +239,11 @@ class Tokenizer:
         bit_vector = 1
         self.char_is_deletable_control_character = bit_vector
         bit_vector = bit_vector << 1
+        self.char_is_variation_selector = bit_vector
+        bit_vector = bit_vector << 1
         self.char_is_non_standard_space = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_zwnj = bit_vector  # zero width non-joiner U+200C
         bit_vector = bit_vector << 1
         self.char_is_surrogate = bit_vector
         bit_vector = bit_vector << 1
@@ -263,6 +268,8 @@ class Tokenizer:
         self.char_is_modifier = bit_vector
         bit_vector = bit_vector << 1
         self.char_is_digit = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_miscellaneous_symbol = bit_vector
         bit_vector = bit_vector << 1
         self.char_is_attach_tag = bit_vector
         self.char_is_dash_or_digit = self.char_is_dash | self.char_is_digit
@@ -315,12 +322,16 @@ class Tokenizer:
                                 [0x00AD],                  # soft hyphen
                                 [0x0640],                  # Arabic tatweel
                                 range(0x200E, 0x2010),     # direction marks
-                                range(0xFE00, 0xFE10),     # variation selectors 1-16
-                                [0xFEFF],                  # byte order mark, zero width no-break space
-                                range(0xE0100, 0xE01F0)):  # variation selectors 17-256
+                                [0xFEFF]):                 # byte order mark, zero width no-break space
             char = chr(code_point)
             self.char_type_vector_dict[char] \
                 = self.char_type_vector_dict.get(char, 0) | self.char_is_deletable_control_character
+        # Variation selectors
+        for code_point in chain(range(0xFE00, 0xFE10),     # variation selectors 1-16
+                                range(0xE0100, 0xE01F0)):  # variation selectors 17-256
+            char = chr(code_point)
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_variation_selector
         # Surrogate
         for code_point in range(0xDC80, 0xDD00):
             char = chr(code_point)
@@ -332,6 +343,12 @@ class Tokenizer:
             char = chr(code_point)
             self.char_type_vector_dict[char] \
                 = self.char_type_vector_dict.get(char, 0) | self.char_is_non_standard_space
+        # Miscellaneous symbols
+        for code_point in chain(range(0x2190, 0x2C00),     # Arrows, Math, Boxes, Geometric, Miscellaneous Symbols
+                                range(0x1F300, 0x1F650)):  # Miscellaneous Symbols and Pictographs, Emoticons
+            char = chr(code_point)
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_miscellaneous_symbol
         # Ampersand
         self.char_type_vector_dict['&'] \
             = self.char_type_vector_dict.get('&', 0) | self.char_is_ampersand
@@ -350,6 +367,9 @@ class Tokenizer:
         # At sign
         self.char_type_vector_dict['['] \
             = self.char_type_vector_dict.get('[', 0) | self.char_is_left_square_bracket
+        # Zero width non-joiner
+        self.char_type_vector_dict['\u200C'] \
+            = self.char_type_vector_dict.get('\u200C', 0) | self.char_is_zwnj
         # Apostrophe (incl. right single quotation mark)
         for char in "'’":
             self.char_type_vector_dict[char] \
@@ -615,11 +635,18 @@ class Tokenizer:
                 else:
                     char = s[i]
                     if self.char_type_vector_dict.get(char, 0) & self.char_is_deletable_control_character:
-                        s = s.replace(char, '')
+                        s = s[:i] + s[i+1:]  # remove i-th character from s
                     elif self.char_type_vector_dict.get(char, 0) & self.char_is_non_standard_space:
                         s = s.replace(char, ' ')
             if chart:
                 s = chart.s
+        # Remove zero width non-joiner from beginning/end of words (but keep inside words).
+        if self.lv & self.char_is_zwnj:
+            s = re.sub(r'(\u200C)\u200C+', r'\1', s)  # remove consecutive duplicates
+            s = re.sub(r'^\u200C', '', s)
+            s = re.sub(r'\u200C$', '', s)
+            s = re.sub(r'\u200C(\s)', r'\1', s)
+            s = re.sub(r'(\s)\u200C', r'\1', s)
         self.current_s = s
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
@@ -713,7 +740,7 @@ class Tokenizer:
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_hashtags_and_handles = regex.compile(r'(|.*?[ .,;()\[\]{}\'])'
-                                            r'([#@]\pL\pM*(?:\pL\pM*|\d|[_])*(?:\pL\pM*|\d))'
+                                            r'([#@](?:\pL\pM*|\d|[_\u200C])+)'
                                             r'(?![.]?(?:\pL|\d))'
                                             r'(.*)$', flags=regex.IGNORECASE)
 
@@ -1186,6 +1213,30 @@ class Tokenizer:
         this_function = self.tokenize_post_punct
         if m3 := self.re_integer2.match(s):
             return self.rec_tok_m3(m3, s, offset, 'NUMBER-2', line_id, chart, lang_code, ht, this_function)
+        return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
+
+    def tokenize_symbol_group(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
+                              line_id: Optional[str] = None, offset: int = 0) -> str:
+        """This tokenization step handles groups such as dingbats."""
+        this_function = self.tokenize_symbol_group
+        if self.lv & self.char_is_miscellaneous_symbol:
+            len_s = len(s)
+            start_position = None
+            for i in range(0, len_s):
+                char_type_vector = self.char_type_vector_dict.get(s[i], 0)
+                if char_type_vector & self.char_is_miscellaneous_symbol:
+                    if start_position is None:
+                        start_position = i
+                elif char_type_vector & self.char_is_variation_selector:
+                    continue
+                elif start_position is not None:  # found end of symbol group
+                    token_candidate = s[start_position:i]
+                    return self.rec_tok([token_candidate], [start_position], s, offset, 'SYMBOL', line_id,
+                                        chart, lang_code, ht, this_function, [token_candidate], left_done=True)
+            if start_position is not None:
+                token_candidate = s[start_position:]
+                return self.rec_tok([token_candidate], [start_position], s, offset, 'SYMBOL', line_id,
+                                    chart, lang_code, ht, this_function, [token_candidate], left_done=True)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_contains_letter = regex.compile(r'.*\pL')
