@@ -126,3 +126,17 @@
 ::auto-attach वींं ::side left ::left-context \d ::lcode hin ::comment ordinal partical ("th")
 ::auto-attach वें ::side left ::left-context \d ::lcode hin ::comment ordinal partical ("th")
 ::auto-attach वाँ ::side left ::left-context \d ::lcode hin ::comment ordinal partical ("th")
+
+::auto-attach гг ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+::auto-attach г ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+::auto-attach м ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+::auto-attach мм ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+::auto-attach см ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+::auto-attach дм ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+::auto-attach л ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+::auto-attach км ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+::auto-attach га ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+::auto-attach кг ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+::auto-attach т ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+::auto-attach мг ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+::auto-attach гг ::side left ::left-context \d ::lcode rus ::comment ordinal partical ("th")
