@@ -1,0 +1,30 @@
+::abbrev ர. ::lcode tam ::eng Rs.
+::abbrev திரு. ::lcode tam ::eng Mr.
+::abbrev ஏ. ::lcode tam ::token-category phonetics ::eng A.
+::abbrev பீ. ::lcode tam ::token-category phonetics ::eng B.
+::abbrev சீ. ::lcode tam ::token-category phonetics ::eng C.
+::abbrev டீ. ::lcode tam ::token-category phonetics ::eng D.
+::abbrev ஈ. ::lcode tam ::token-category phonetics ::eng E.
+::abbrev எஃப். ::lcode tam ::token-category phonetics ::eng F.
+::abbrev ஜீ. ::lcode tam ::token-category phonetics ::eng G.
+::abbrev எச். ::lcode tam ::token-category phonetics ::eng H.
+::abbrev ஹெச். ::lcode tam ::token-category phonetics ::eng H.
+::abbrev ஐ. ::lcode tam ::token-category phonetics ::eng I.
+::abbrev ஜே. ::lcode tam ::token-category phonetics ::eng J.
+::abbrev ஜை. ::lcode tam ::token-category phonetics ::eng J.
+::abbrev கே. ::lcode tam ::token-category phonetics ::eng K.
+::abbrev எல். ::lcode tam ::token-category phonetics ::eng L.
+::abbrev எம். ::lcode tam ::token-category phonetics ::eng M.
+::abbrev என். ::lcode tam ::token-category phonetics ::eng N.
+::abbrev ஓ. ::lcode tam ::token-category phonetics ::eng O.
+::abbrev ப்பீ. ::lcode tam ::token-category phonetics ::eng P.
+::abbrev கியூ. ::lcode tam ::token-category phonetics ::eng Q.
+::abbrev ஆர். ::lcode tam ::token-category phonetics ::eng R.
+::abbrev எஸ். ::lcode tam ::token-category phonetics ::eng S.
+::abbrev ட்டீ. ::lcode tam ::token-category phonetics ::eng T.
+::abbrev யூ. ::lcode tam ::token-category phonetics ::eng U.
+::abbrev வீ. ::lcode tam ::token-category phonetics ::eng V.
+::abbrev டபிள்-யூ. ::lcode tam ::token-category phonetics ::eng W.
+::abbrev எக்ஸ். ::lcode tam ::token-category phonetics ::eng X.
+::abbrev வை. ::lcode tam ::token-category phonetics ::eng Y.
+::abbrev செட். ::lcode tam ::token-category phonetics ::eng Z.

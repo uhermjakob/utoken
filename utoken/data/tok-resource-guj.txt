@@ -1,0 +1,64 @@
+::abbrev રૂ. ::lcode guj ::eng Rs.
+::abbrev ડો. ::lcode guj ::eng Dr.
+::abbrev ડૉ. ::lcode guj ::eng Dr.
+::abbrev શ્રી. ::lcode guj ::eng Mr.
+::abbrev એ. ::lcode guj ::token-category phonetics ::eng A.
+::abbrev બી. ::lcode guj ::token-category phonetics ::eng B.
+::abbrev સી. ::lcode guj ::token-category phonetics ::eng C.
+::abbrev ડી. ::lcode guj ::token-category phonetics ::eng D.
+::abbrev ઇ. ::lcode guj ::token-category phonetics ::eng E.
+::abbrev એફ. ::lcode guj ::token-category phonetics ::eng F.
+::abbrev જી. ::lcode guj ::token-category phonetics ::eng G.
+::abbrev એચ. ::lcode guj ::token-category phonetics ::eng H.
+::abbrev આઈ. ::lcode guj ::token-category phonetics ::eng I.
+::abbrev જે. ::lcode guj ::token-category phonetics ::eng J.
+::abbrev કે. ::lcode guj ::token-category phonetics ::eng K.
+::abbrev એલ. ::lcode guj ::token-category phonetics ::eng L.
+::abbrev એમ. ::lcode guj ::token-category phonetics ::eng M.
+::abbrev એન. ::lcode guj ::token-category phonetics ::eng N.
+::abbrev ઓ. ::lcode guj ::token-category phonetics ::eng O.
+::abbrev પી. ::lcode guj ::token-category phonetics ::eng P.
+::abbrev ક્યૂ. ::lcode guj ::token-category phonetics ::eng Q.
+::abbrev આર. ::lcode guj ::token-category phonetics ::eng R.
+::abbrev એસ. ::lcode guj ::token-category phonetics ::eng S.
+::abbrev ટી. ::lcode guj ::token-category phonetics ::eng T.
+::abbrev યુ. ::lcode guj ::token-category phonetics ::eng U.
+::abbrev વી. ::lcode guj ::token-category phonetics ::eng V.
+::abbrev ડબલ્યુ. ::lcode guj ::token-category phonetics ::eng W.
+::abbrev એક્સ. ::lcode guj ::token-category phonetics ::eng X.
+::abbrev વાય. ::lcode guj ::token-category phonetics ::eng Y.
+::abbrev ઝેડ. ::lcode guj ::token-category phonetics ::eng Z.
+::abbrev ક. ::lcode guj ::token-category consonant
+::abbrev ખ. ::lcode guj ::token-category consonant
+::abbrev ગ. ::lcode guj ::token-category consonant
+::abbrev ઘ. ::lcode guj ::token-category consonant
+::abbrev ઙ. ::lcode guj ::token-category consonant
+::abbrev ચ. ::lcode guj ::token-category consonant
+::abbrev છ. ::lcode guj ::token-category consonant
+::abbrev જ. ::lcode guj ::token-category consonant
+::abbrev ઝ. ::lcode guj ::token-category consonant
+::abbrev ઞ. ::lcode guj ::token-category consonant
+::abbrev ટ. ::lcode guj ::token-category consonant
+::abbrev ઠ. ::lcode guj ::token-category consonant
+::abbrev ડ. ::lcode guj ::token-category consonant
+::abbrev ઢ. ::lcode guj ::token-category consonant
+::abbrev ણ. ::lcode guj ::token-category consonant
+::abbrev ત. ::lcode guj ::token-category consonant
+::abbrev થ. ::lcode guj ::token-category consonant
+::abbrev દ. ::lcode guj ::token-category consonant
+::abbrev ધ. ::lcode guj ::token-category consonant
+::abbrev ન. ::lcode guj ::token-category consonant
+::abbrev પ. ::lcode guj ::token-category consonant
+::abbrev ફ. ::lcode guj ::token-category consonant
+::abbrev બ. ::lcode guj ::token-category consonant
+::abbrev ભ. ::lcode guj ::token-category consonant
+::abbrev મ. ::lcode guj ::token-category consonant
+::abbrev ય. ::lcode guj ::token-category consonant
+::abbrev ર. ::lcode guj ::token-category consonant
+::abbrev લ. ::lcode guj ::token-category consonant
+::abbrev ળ. ::lcode guj ::token-category consonant
+::abbrev વ. ::lcode guj ::token-category consonant
+::abbrev શ. ::lcode guj ::token-category consonant
+::abbrev ષ. ::lcode guj ::token-category consonant
+::abbrev સ. ::lcode guj ::token-category consonant
+::abbrev હ. ::lcode guj ::token-category consonant

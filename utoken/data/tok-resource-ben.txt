@@ -1,0 +1,27 @@
+::abbrev ড. ::lcode ben ::eng Dr.
+::abbrev এ. ::lcode ben ::token-category phonetics ::eng A.
+::abbrev বি. ::lcode ben ::token-category phonetics ::eng B.
+::abbrev সি. ::lcode ben ::token-category phonetics ::eng C.
+::abbrev ডি. ::lcode ben ::token-category phonetics ::eng D.
+::abbrev ই. ::lcode ben ::token-category phonetics ::eng E.
+::abbrev এফ. ::lcode ben ::token-category phonetics ::eng F.
+::abbrev জি. ::lcode ben ::token-category phonetics ::eng G.
+::abbrev এইচ. ::lcode ben ::token-category phonetics ::eng H.
+::abbrev আম. ::lcode ben ::token-category phonetics ::eng I.
+::abbrev জে. ::lcode ben ::token-category phonetics ::eng J.
+::abbrev কে. ::lcode ben ::token-category phonetics ::eng K.
+::abbrev এল. ::lcode ben ::token-category phonetics ::eng L.
+::abbrev এম. ::lcode ben ::token-category phonetics ::eng M.
+::abbrev এন. ::lcode ben ::token-category phonetics ::eng N.
+::abbrev হে. ::lcode ben ::token-category phonetics ::eng O.
+::abbrev পি. ::lcode ben ::token-category phonetics ::eng P.
+::abbrev কিউ. ::lcode ben ::token-category phonetics ::eng Q.
+::abbrev আর. ::lcode ben ::token-category phonetics ::eng R.
+::abbrev এস. ::lcode ben ::token-category phonetics ::eng S.
+::abbrev টি. ::lcode ben ::token-category phonetics ::eng T.
+::abbrev ইউ. ::lcode ben ::token-category phonetics ::eng U.
+::abbrev ভি. ::lcode ben ::token-category phonetics ::eng V.
+::abbrev ডব্লু. ::lcode ben ::token-category phonetics ::eng W.
+::abbrev এক্স. ::lcode ben ::token-category phonetics ::eng X.
+::abbrev ওয়াই. ::lcode ben ::token-category phonetics ::eng Y.
+::abbrev জেড. ::lcode ben ::token-category phonetics ::eng Z.

@@ -1,0 +1,72 @@
+::abbrev रु. ::lcode mar ::eng Rs.
+::abbrev डॉ. ::lcode mar ::eng Dr.
+::abbrev डा. ::lcode mar ::eng Dr.
+::abbrev श्री. ::lcode mar ::eng Mr.
+::abbrev ए. ::lcode mar ::token-category phonetics ::eng A.
+::abbrev ऐ. ::lcode mar ::token-category phonetics ::eng A.
+::abbrev बी. ::lcode mar ::token-category phonetics ::eng B.
+::abbrev सी. ::lcode mar ::token-category phonetics ::eng C.
+::abbrev डी. ::lcode mar ::token-category phonetics ::eng D.
+::abbrev ई. ::lcode mar ::token-category phonetics ::eng E.
+::abbrev ऐफ. ::lcode mar ::token-category phonetics ::eng F.
+::abbrev एफ. ::lcode mar ::token-category phonetics ::eng F.
+::abbrev जी. ::lcode mar ::token-category phonetics ::eng G.
+::abbrev ऐच. ::lcode mar ::token-category phonetics ::eng H.
+::abbrev एच. ::lcode mar ::token-category phonetics ::eng H.
+::abbrev आइ. ::lcode mar ::token-category phonetics ::eng I.
+::abbrev जे. ::lcode mar ::token-category phonetics ::eng J.
+::abbrev के. ::lcode mar ::token-category phonetics ::eng K.
+::abbrev ऐल. ::lcode mar ::token-category phonetics ::eng L.
+::abbrev एल. ::lcode mar ::token-category phonetics ::eng L.
+::abbrev ऐम. ::lcode mar ::token-category phonetics ::eng M.
+::abbrev एम. ::lcode mar ::token-category phonetics ::eng M.
+::abbrev ऐन. ::lcode mar ::token-category phonetics ::eng N.
+::abbrev एन. ::lcode mar ::token-category phonetics ::eng N.
+::abbrev ओ. ::lcode mar ::token-category phonetics ::eng O.
+::abbrev पी. ::lcode mar ::token-category phonetics ::eng P.
+::abbrev क्यू. ::lcode mar ::token-category phonetics ::eng Q.
+::abbrev आर. ::lcode mar ::token-category phonetics ::eng R.
+::abbrev ऐस. ::lcode mar ::token-category phonetics ::eng S.
+::abbrev एस. ::lcode mar ::token-category phonetics ::eng S.
+::abbrev टी. ::lcode mar ::token-category phonetics ::eng T.
+::abbrev यू. ::lcode mar ::token-category phonetics ::eng U.
+::abbrev वी. ::lcode mar ::token-category phonetics ::eng V.
+::abbrev डब्ल्यू. ::lcode mar ::token-category phonetics ::eng W.
+::abbrev ऐक्स. ::lcode mar ::token-category phonetics ::eng X.
+::abbrev एक्स. ::lcode mar ::token-category phonetics ::eng X.
+::abbrev वाय. ::lcode mar ::token-category phonetics ::eng Y.
+::abbrev वाई. ::lcode mar ::token-category phonetics ::eng Y.
+::abbrev ज़ैड. ::lcode mar ::token-category phonetics ::eng Z.
+::abbrev क. ::lcode mar ::token-category consonant
+::abbrev ख. ::lcode mar ::token-category consonant
+::abbrev ग. ::lcode mar ::token-category consonant
+::abbrev घ. ::lcode mar ::token-category consonant
+::abbrev ङ. ::lcode mar ::token-category consonant
+::abbrev च. ::lcode mar ::token-category consonant
+::abbrev छ. ::lcode mar ::token-category consonant
+::abbrev ज. ::lcode mar ::token-category consonant
+::abbrev झ. ::lcode mar ::token-category consonant
+::abbrev ञ. ::lcode mar ::token-category consonant
+::abbrev ट. ::lcode mar ::token-category consonant
+::abbrev ठ. ::lcode mar ::token-category consonant
+::abbrev ड. ::lcode mar ::token-category consonant
+::abbrev ढ. ::lcode mar ::token-category consonant
+::abbrev ण. ::lcode mar ::token-category consonant
+::abbrev त. ::lcode mar ::token-category consonant
+::abbrev थ. ::lcode mar ::token-category consonant
+::abbrev द. ::lcode mar ::token-category consonant
+::abbrev ध. ::lcode mar ::token-category consonant
+::abbrev न. ::lcode mar ::token-category consonant
+::abbrev प. ::lcode mar ::token-category consonant
+::abbrev फ. ::lcode mar ::token-category consonant
+::abbrev ब. ::lcode mar ::token-category consonant
+::abbrev भ. ::lcode mar ::token-category consonant
+::abbrev म. ::lcode mar ::token-category consonant
+::abbrev य. ::lcode mar ::token-category consonant
+::abbrev र. ::lcode mar ::token-category consonant
+::abbrev ल. ::lcode mar ::token-category consonant
+::abbrev व. ::lcode mar ::token-category consonant
+::abbrev श. ::lcode mar ::token-category consonant
+::abbrev ष. ::lcode mar ::token-category consonant
+::abbrev स. ::lcode mar ::token-category consonant
+::abbrev ह. ::lcode mar ::token-category consonant
