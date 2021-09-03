@@ -1,0 +1,27 @@
+::abbrev দা. ::lcode mni ::eng Dr.
+::abbrev এ. ::lcode mni ::token-category phonetics ::eng A.
+::abbrev বি. ::lcode mni ::token-category phonetics ::eng B.
+::abbrev সি. ::lcode mni ::token-category phonetics ::eng C.
+::abbrev ডি. ::lcode mni ::token-category phonetics ::eng D.
+::abbrev ই. ::lcode mni ::token-category phonetics ::eng E.
+::abbrev এফ. ::lcode mni ::token-category phonetics ::eng F.
+::abbrev জি. ::lcode mni ::token-category phonetics ::eng G.
+::abbrev এইচ. ::lcode mni ::token-category phonetics ::eng H.
+::abbrev আম. ::lcode mni ::token-category phonetics ::eng I.
+::abbrev জে. ::lcode mni ::token-category phonetics ::eng J.
+::abbrev কে. ::lcode mni ::token-category phonetics ::eng K.
+::abbrev এল. ::lcode mni ::token-category phonetics ::eng L.
+::abbrev এম. ::lcode mni ::token-category phonetics ::eng M.
+::abbrev এন. ::lcode mni ::token-category phonetics ::eng N.
+::abbrev হে. ::lcode mni ::token-category phonetics ::eng O.
+::abbrev পি. ::lcode mni ::token-category phonetics ::eng P.
+::abbrev কিউ. ::lcode mni ::token-category phonetics ::eng Q.
+::abbrev আর. ::lcode mni ::token-category phonetics ::eng R.
+::abbrev এস. ::lcode mni ::token-category phonetics ::eng S.
+::abbrev টি. ::lcode mni ::token-category phonetics ::eng T.
+::abbrev ইউ. ::lcode mni ::token-category phonetics ::eng U.
+::abbrev ভি. ::lcode mni ::token-category phonetics ::eng V.
+::abbrev ডব্লু. ::lcode mni ::token-category phonetics ::eng W.
+::abbrev এক্স. ::lcode mni ::token-category phonetics ::eng X.
+::abbrev ওয়াই. ::lcode mni ::token-category phonetics ::eng Y.
+::abbrev জেড. ::lcode mni ::token-category phonetics ::eng Z.

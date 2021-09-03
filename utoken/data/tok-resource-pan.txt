@@ -1,0 +1,62 @@
+::abbrev ਡਾ. ::lcode pan ::eng Dr.
+::abbrev ਪ੍ਰੋ. ::lcode pan ::eng Dr.
+::abbrev ਸ੍ਰੀ. ::lcode pan ::eng Mr.
+::abbrev ਏ. ::lcode pan ::token-category phonetics ::eng A.
+::abbrev ਬੀ. ::lcode pan ::token-category phonetics ::eng B.
+::abbrev ਸੀ. ::lcode pan ::token-category phonetics ::eng C.
+::abbrev ਡੀ. ::lcode pan ::token-category phonetics ::eng D.
+::abbrev ਈ. ::lcode pan ::token-category phonetics ::eng E.
+::abbrev ਐੱਫ. ::lcode pan ::token-category phonetics ::eng F.
+::abbrev ਜੀ. ::lcode pan ::token-category phonetics ::eng G.
+::abbrev ਐਚ. ::lcode pan ::token-category phonetics ::eng H.
+::abbrev ਆਈ. ::lcode pan ::token-category phonetics ::eng I.
+::abbrev ਜੇ. ::lcode pan ::token-category phonetics ::eng J.
+::abbrev ਕੇ. ::lcode pan ::token-category phonetics ::eng K.
+::abbrev ਐਲ. ::lcode pan ::token-category phonetics ::eng L.
+::abbrev ਐੱਮ. ::lcode pan ::token-category phonetics ::eng M.
+::abbrev ਐੱਨ. ::lcode pan ::token-category phonetics ::eng N.
+::abbrev ਓ. ::lcode pan ::token-category phonetics ::eng O.
+::abbrev ਪੀ. ::lcode pan ::token-category phonetics ::eng P.
+::abbrev ਕੀਓ. ::lcode pan ::token-category phonetics ::eng Q.
+::abbrev ਆਰ. ::lcode pan ::token-category phonetics ::eng R.
+::abbrev ਐੱਸ. ::lcode pan ::token-category phonetics ::eng S.
+::abbrev ਸ. ::lcode pan ::token-category phonetics ::eng S.
+::abbrev ਟੀ. ::lcode pan ::token-category phonetics ::eng T.
+::abbrev ਯੂ. ::lcode pan ::token-category phonetics ::eng U.
+::abbrev ਵੀ. ::lcode pan ::token-category phonetics ::eng V.
+::abbrev ਡਬਲਿਊ. ::lcode pan ::token-category phonetics ::eng W.
+::abbrev ਐਕ੍ਸ. ::lcode pan ::token-category phonetics ::eng X.
+::abbrev ਵਾਈ. ::lcode pan ::token-category phonetics ::eng Y.
+::abbrev ਜ਼ੈਡ. ::lcode pan ::token-category phonetics ::eng Z.
+::abbrev ਕ. ::lcode pan ::token-category consonant
+::abbrev ਖ. ::lcode pan ::token-category consonant
+::abbrev ਗ. ::lcode pan ::token-category consonant
+::abbrev ਘ. ::lcode pan ::token-category consonant
+::abbrev ਙ. ::lcode pan ::token-category consonant
+::abbrev ਚ. ::lcode pan ::token-category consonant
+::abbrev ਛ. ::lcode pan ::token-category consonant
+::abbrev ਜ. ::lcode pan ::token-category consonant
+::abbrev ਝ. ::lcode pan ::token-category consonant
+::abbrev ਞ. ::lcode pan ::token-category consonant
+::abbrev ਟ. ::lcode pan ::token-category consonant
+::abbrev ਠ. ::lcode pan ::token-category consonant
+::abbrev ਡ. ::lcode pan ::token-category consonant
+::abbrev ਢ. ::lcode pan ::token-category consonant
+::abbrev ਣ. ::lcode pan ::token-category consonant
+::abbrev ਤ. ::lcode pan ::token-category consonant
+::abbrev ਥ. ::lcode pan ::token-category consonant
+::abbrev ਦ. ::lcode pan ::token-category consonant
+::abbrev ਧ. ::lcode pan ::token-category consonant
+::abbrev ਨ. ::lcode pan ::token-category consonant
+::abbrev ਪ. ::lcode pan ::token-category consonant
+::abbrev ਫ. ::lcode pan ::token-category consonant
+::abbrev ਬ. ::lcode pan ::token-category consonant
+::abbrev ਭ. ::lcode pan ::token-category consonant
+::abbrev ਮ. ::lcode pan ::token-category consonant
+::abbrev ਯ. ::lcode pan ::token-category consonant
+::abbrev ਰ. ::lcode pan ::token-category consonant
+::abbrev ਲ. ::lcode pan ::token-category consonant
+::abbrev ਵ. ::lcode pan ::token-category consonant
+::abbrev ੜ. ::lcode pan ::token-category consonant
+::abbrev ਸ. ::lcode pan ::token-category consonant
+::abbrev ਹ. ::lcode pan ::token-category consonant
