@@ -1,0 +1,996 @@
+::contraction ain't ::target ai n't ::lcode eng
+::contraction aren't ::target are n't ::lcode eng
+::contraction cannot ::target can not ::lcode eng
+::contraction can't ::target can n't ::lcode eng
+::contraction c'mon ::target come on ::lcode eng ::nonstandard True
+::contraction couldn't ::target could n't ::lcode eng
+::contraction couldnt ::target could n't ::lcode eng
+::contraction didn't ::target did n't ::lcode eng
+::contraction doesn't ::target does n't ::lcode eng
+::contraction don't ::target do n't ::lcode eng
+::contraction hadn't ::target had n't ::lcode eng
+::contraction hasn't ::target has n't ::lcode eng
+::contraction haven't ::target have n't ::lcode eng
+::contraction havn't ::target have n't ::lcode eng
+::contraction I'm ::target I 'm ::lcode eng
+::contraction isn't ::target is n't ::lcode eng
+::contraction let's ::target let 's ::lcode eng
+::contraction let's ::target let 's ::lcode eng
+::contraction mightn't ::target might n't ::lcode eng
+::contraction mustn't ::target must n't ::lcode eng
+::contraction needn't ::target need n't ::lcode eng
+::contraction shan't ::target shall n't ::lcode eng
+::contraction shouldn't ::target should n't ::lcode eng
+::contraction wasn't ::target was n't ::lcode eng
+::contraction weren't ::target were n't ::lcode eng
+::contraction werent ::target were n't ::lcode eng
+::contraction won't ::target will n't ::lcode eng
+::contraction wouldn't ::target would n't ::lcode eng
+
+::repair e.g ::target e.g. ::lcode eng ::right-context-not \s*[.] ::problem missing period
+::repair etc ::target etc. ::lcode eng ::right-context-not \s*[.] ::problem missing period
+::repair E.U ::target E.U. ::lcode eng ::right-context-not \s*[.] ::problem missing period
+::repair i.e ::target i.e. ::lcode eng ::right-context-not \s*[.] ::problem missing period
+::repair U.K ::target U.K. ::lcode eng ::right-context-not \s*[.] ::problem missing period
+::repair U.N ::target U.N. ::lcode eng ::right-context-not \s*[.] ::problem missing period
+::repair U.S ::target U.S. ::lcode eng ::right-context-not \s*[.] ::problem missing period
+::repair H. E. ::target H.E. ::lcode eng ::right-context-not \s*[.] ::problem spurious space
+
+::repair ca n't ::target can n't ::lcode eng ::problem previous tokenizer
+::repair sha n't ::target shall n't ::lcode eng ::problem previous tokenizer
+::repair wo n't ::target will n't ::lcode eng ::problem previous tokenizer
+
+::punct-split / ::side both ::lcode eng ::right-context (?:day|gallon|hour|hr|min|minute|month|sec|second|week|wk|yr)\b
+::punct-split 'n' ::side both ::lcode eng ::left-context \pL\pM*\pL\pM* ::right-context \pL\pM*\pL
+
+::abbrev DNA ::exp deoxyribonucleic acid ::lcode eng ::sem-class biomedical
+::abbrev dna ::exp deoxyribonucleic acid ::lcode eng ::sem-class biomedical
+::abbrev pvc ::exp polyvinyl chloride ::lcode eng ::sem-class biomedical
+::abbrev RNA ::exp ribonucleic acid ::lcode eng ::sem-class biomedical
+::abbrev rna ::exp ribonucleic acid ::lcode eng ::sem-class biomedical
+::abbrev Ser ::exp serine ::lcode eng ::sem-class biomedical
+::abbrev Tg ::exp transgenic ::lcode eng ::sem-class biomedical
+::abbrev tg ::exp transgenic ::lcode eng ::sem-class biomedical
+::abbrev WT ::exp wild-type ::lcode eng ::sem-class biomedical
+::abbrev wt ::exp wild-type ::lcode eng ::sem-class biomedical
+
+::abbrev LA ::exp Los Angeles ::lcode eng ::sem-class city ::case-sensitive True
+
+::abbrev Co. ::exp Company ::lcode eng ::sem-class company-type ::left-context \s
+::abbrev Corp. ::exp Corporation ::lcode eng ::sem-class company-type
+::abbrev GmbH ::exp Gesellschaft mit beschränkter Haftung ::sem-class company-type
+::abbrev Inc. ::exp Incorporated ::lcode eng ::sem-class company-type
+::abbrev LLC ::exp Limited Liability Company ::lcode eng ::sem-class company-type
+::abbrev Ltd. ::exp Limited ::lcode eng ::sem-class company-type
+::abbrev N.V. ::exp Naamloze vennootschap ::lcode eng ::sem-class company-type
+::abbrev S.p.A. ::exp Società per Azioni; joint-stock company ::lcode eng ::sem-class company-type ::misspelling S.p . A.;
+
+::abbrev art. ::exp article ::lcode eng ::sem-class corpus-component
+::abbrev arts. ::exp articles ::lcode eng ::sem-class corpus-component
+::abbrev chap. ::exp chapter ::lcode eng ::sem-class corpus-component
+::abbrev chaps. ::exp chapters ::lcode eng ::sem-class corpus-component
+::abbrev Fig. ::exp figure ::lcode eng ::sem-class corpus-component
+::abbrev fig. ::exp figure ::lcode eng ::sem-class corpus-component
+::abbrev No. ::exp number ::lcode eng ::sem-class corpus-component ::case-sensitive True ::right-context \s*\d
+::abbrev Nos. ::exp numbers ::lcode eng ::sem-class corpus-component ::case-sensitive True ::right-context \s*\d
+::abbrev Nr. ::exp number ::lcode eng ::sem-class corpus-component
+::abbrev op. ::exp opus ::lcode eng ::sem-class corpus-component ::case-sensitive True ::left-context-not [.] ::right-context \s*\d
+::abbrev p. ::exp page ::lcode eng ::sem-class corpus-component ::case-sensitive True ::left-context-not [.] ::right-context \s*\d
+::abbrev para. ::exp paragraph ::lcode eng ::sem-class corpus-component
+::abbrev paras. ::exp paragraphs ::lcode eng ::sem-class corpus-component
+::abbrev pp. ::exp pages ::lcode eng ::sem-class corpus-component ::case-sensitive True ::left-context-not [.] ::right-context \s*\d
+::abbrev sect. ::exp section ::lcode eng ::sem-class corpus-component
+::abbrev sects. ::exp sections ::lcode eng ::sem-class corpus-component
+::abbrev vol. ::exp volume ::lcode eng ::sem-class corpus-component
+::abbrev vols. ::exp volumes ::lcode eng ::sem-class corpus-component
+
+::abbrev AF ::exp Afghanistan ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev AL ::exp Albania ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev AT ::exp Austria ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev AU ::exp Australia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev BA ::exp Bosnia and Herzegovina ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev BD ::exp Bangladesh ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev BE ::exp Belgium ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev BG ::exp Bulgaria ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev BR ::exp Brazil ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev CA ::exp Canada ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev CG ::exp Republic of Congo ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev CH ::exp Switzerland ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev CN ::exp China ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev CR ::exp Costa Rica ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev CU ::exp Cuba ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev CV ::exp Cape Verde ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev DE ::exp Germany ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev DK ::exp Denmark ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev DZ ::exp Algeria ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev EE ::exp Estonia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev EG ::exp Egypt ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev ES ::exp Spain ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev FR ::exp France ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev GB ::exp Great Britain, United Kingdom ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev GE ::exp Georgia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev GH ::exp Ghana ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev HK ::exp Hong Kong ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev HN ::exp Honduras ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev HR ::exp Croatia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev ID ::exp Indonesia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev IL ::exp Israel ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev IN ::exp India ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev IQ ::exp Iraq ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev IR ::exp Iran ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev IT ::exp Italy ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev JO ::exp Jordan ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev JP ::exp Japan ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev KE ::exp Kenya ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev KG ::exp Kyrgyzstan ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev KH ::exp Cambodia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev KP ::exp Democratic People's Republic of Korea ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev KP ::exp North Korea ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev KR ::exp Republic of Korea ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev KR ::exp South Korea ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev KZ ::exp Kazakhstan ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev LA ::exp Laos ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev LY ::exp Libya ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev LY ::exp Libyan Arab Jamahiriya ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev MA ::exp Morocco ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev MC ::exp Monaco ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev MK ::exp North Macedonia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev MK ::exp Former Yugoslav Republic of Macedonia ::lcode eng ::sem-class country-code
+::abbrev MM ::exp Myanmar ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev MR ::exp Mauritania ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev MX ::exp Mexico ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev MY ::exp Malaysia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev NI ::exp Nicaragua ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev NL ::exp Netherlands ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev PA ::exp Panama ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev PE ::exp Peru ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev PH ::exp Philippines ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev PK ::exp Pakistan ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev PS ::exp Palestine ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev PS ::exp Palestine ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev QA ::exp Qatar ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev RO ::exp Romania ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev RU ::exp Russia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev RU ::exp Russian Federation ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev SA ::exp Saudi Arabia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev SE ::exp Sweden ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev SG ::exp Singapore ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev SK ::exp Slovakia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev SY ::exp Syria ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev TH ::exp Thailand ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev TJ ::exp Tajikistan ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev TM ::exp Turkmenistan ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev TN ::exp Tunisia ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev TW ::exp Taiwan ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev TZ ::exp Tanzania ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev UA ::exp Ukraine ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev UK ::exp United Kingdom; Great Britain; Britain ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev US ::exp United States; United States of America ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev UZ ::exp Uzbekistan ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev VN ::exp Vietnam; Viet Nam ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev YE ::exp Yemen ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev ZA ::exp South Africa ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev ZW ::exp Zimbabwe ::lcode eng ::sem-class country-code ::case-sensitive True
+
+::abbrev Kes. ::exp Kenyan Shilling ::lcode eng ::sem-class currency-unit
+::abbrev kr. ::exp krone ::lcode eng ::sem-class currency-unit
+::abbrev Ks. ::exp kyats ::lcode eng ::sem-class currency-unit
+::abbrev KSh. ::exp Kenyan Shilling ::lcode eng ::sem-class currency-unit
+::abbrev NZD ::exp New Zealand dollar ::lcode eng ::sem-class currency-unit
+::abbrev RMB ::exp renminbi ::lcode eng ::sem-class currency-unit
+::abbrev Rs. ::exp rupees ::lcode eng ::sem-class currency-unit
+::abbrev USD ::exp United States dollar ::lcode eng ::sem-class currency-unit
+
+::abbrev D-Day ::exp Normandy landings ::lcode eng ::sem-class event
+::abbrev V-E Day ::exp Victory in Europe Day ::lcode eng ::sem-class event ::alt-spelling VE Day; VE-Day
+::abbrev WW1 ::exp World War I ::lcode eng ::sem-class event
+::abbrev WW2 ::exp World War II ::lcode eng ::sem-class event
+::abbrev WWI ::exp World War I ::lcode eng ::sem-class event
+::abbrev WWII ::exp World War II ::lcode eng ::sem-class event
+
+::abbrev B.P. ::exp blood pressure ::lcode eng ::sem-class medical
+::abbrev flu ::exp influenza ::lcode eng ::sem-class medical
+::abbrev s.c. ::exp subcutaneous ::lcode eng ::sem-class medical ::case-sensitive True
+::abbrev s.d. ::exp stable disease ::lcode eng ::sem-class medical
+
+::abbrev USMC ::exp United States Marine Corps ::lcode eng ::sem-class military
+
+::abbrev Adm. ::exp Admiral ::lcode eng ::sem-class military-rank
+::abbrev Brig. ::exp Brigadier ::lcode eng ::sem-class military-rank
+::abbrev Brig.Gen. ::exp Brigadier General ::lcode eng ::sem-class military-rank ::alt-spelling Brig.-Gen.; Brig. Gen.
+::abbrev Capt. ::exp Captain ::lcode eng ::sem-class military-rank
+::abbrev Cmdr. ::exp Commander ::lcode eng ::sem-class military-rank
+::abbrev Col. ::exp Colonel ::lcode eng ::sem-class military-rank
+::abbrev Comdr. ::exp Commander ::lcode eng ::sem-class military-rank
+::abbrev Cpl. ::exp Corporal ::lcode eng ::sem-class military-rank
+::abbrev Cpt. ::exp Captain ::lcode eng ::sem-class military-rank
+::abbrev Ens. ::exp Ensign ::lcode eng ::sem-class military-rank
+::abbrev Gen. ::exp General ::lcode eng ::sem-class military-rank
+::abbrev Lt. ::exp Lieutenant ::lcode eng ::sem-class military-rank ::case-sensitive True
+::abbrev Lt.Col. ::exp Lieutenant Colonel ::lcode eng ::sem-class military-rank ::alt-spelling Lt.-Col.; Lt. Col.
+::abbrev Lt.Gen. ::exp Lieutenant General ::lcode eng ::sem-class military-rank ::alt-spelling Lt.-Gen.; Lt. Gen.
+::abbrev Maj. ::exp Major ::lcode eng ::sem-class military-rank
+::abbrev Maj.Gen. ::exp Major General ::lcode eng ::sem-class military-rank ::alt-spelling Maj.-Gen.; Maj. Gen.
+::abbrev Pfc. ::exp Private First Class ::lcode eng ::sem-class military-rank
+::abbrev PV1 ::exp Private ::lcode eng ::sem-class military-rank
+::abbrev PV2 ::exp Private Second Class ::lcode eng ::sem-class military-rank
+::abbrev Pvt. ::exp Private ::lcode eng ::sem-class military-rank
+::abbrev 1SG ::exp First Sergeant ::lcode eng ::sem-class military-rank
+::abbrev Sgt. ::exp Sergeant ::lcode eng ::sem-class military-rank
+
+::abbrev Apr. ::exp April ::lcode eng ::sem-class month-of-the-year
+::abbrev Aug. ::exp August ::lcode eng ::sem-class month-of-the-year
+::abbrev Dec. ::exp December ::lcode eng ::sem-class month-of-the-year
+::abbrev Feb. ::exp February ::lcode eng ::sem-class month-of-the-year
+::abbrev Febr. ::exp February ::lcode eng ::sem-class month-of-the-year
+::abbrev Jan. ::exp January ::lcode eng ::sem-class month-of-the-year
+::abbrev Jul. ::exp July ::lcode eng ::sem-class month-of-the-year
+::abbrev Jun. ::exp June ::lcode eng ::sem-class month-of-the-year
+::abbrev Mar. ::exp March ::lcode eng ::sem-class month-of-the-year ::case-sensitive True
+::abbrev Nov. ::exp November ::lcode eng ::sem-class month-of-the-year
+::abbrev Oct. ::exp October ::lcode eng ::sem-class month-of-the-year
+::abbrev Sep. ::exp September ::lcode eng ::sem-class month-of-the-year
+::abbrev Sept. ::exp September ::lcode eng ::sem-class month-of-the-year
+
+::abbrev ISS ::exp International Space Station ::lcode eng ::sem-class object
+
+::abbrev ADL ::exp Anti-Defamation League ::lcode eng ::sem-class organization
+::abbrev NCRI ::exp National Council of Resistance of Iran ::lcode eng ::sem-class organization
+::abbrev OWS ::exp Occupy Wall Street ::lcode eng ::sem-class organization
+
+::abbrev BNP ::exp British National Party ::lcode eng ::sem-class political-party
+::abbrev GOP ::exp Republic Party; Grand Old Party ::lcode eng ::sem-class political-party ::country US
+::abbrev PKK ::exp Kurdistan Workers' Party ::lcode eng ::sem-class political-party
+
+::abbrev Amb. ::exp Ambassador ::lcode eng ::sem-class pre-name-title
+::abbrev Asst. ::exp Assistant ::lcode eng ::sem-class pre-name-title
+::abbrev Br. ::exp Brother ::lcode eng ::sem-class pre-name-title ::case-sensitive True
+::abbrev Cllr. ::exp Councillor ::lcode eng ::sem-class pre-name-title
+::abbrev Dr. ::exp Doctor ::lcode eng ::sem-class pre-name-title
+::abbrev Drs. ::exp Doctors ::lcode eng ::sem-class pre-name-title
+::abbrev Eng. ::exp Engineer ::lcode eng ::sem-class pre-name-title
+::abbrev Fr. ::exp Father; Frau; Mrs. ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
+::abbrev Frl. ::exp Fräulein; Misses ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
+::abbrev Gov. ::exp Governor ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
+::abbrev H.E. ::exp His Excellency; Her Excellency ::sem-class pre-name-title ::left-context-not [.]
+::abbrev H.M. ::exp His Majesty; Her Majesty ::sem-class pre-name-title ::left-context-not [.]
+::abbrev Hon. ::exp Honorable ::lcode eng ::sem-class pre-name-title ::case-sensitive True
+::abbrev Hon’ble ::exp Honorable ::lcode eng ::sem-class pre-name-title
+::abbrev Hr. ::exp Herr; Mister ::lcode eng ::sem-class pre-name-title ::case-sensitive True
+::abbrev Ing. ::exp Ingenieur; Ingeniero ::lcode eng ::sem-class pre-name-title
+::abbrev Insp. ::exp Inspector ::lcode eng ::sem-class pre-name-title
+::abbrev Ir. ::exp Ingenieur ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
+::abbrev Jr. ::exp Junior ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
+::abbrev Messrs. ::exp Messieurs ::lcode eng ::sem-class pre-name-title
+::abbrev Mlle. ::exp Mademoiselle; Miss ::lcode eng ::sem-class pre-name-title
+::abbrev Mlles. ::exp Mesdemoiselles ::lcode eng ::sem-class pre-name-title
+::abbrev Mme. ::exp Madame; Mrs. ::lcode eng ::sem-class pre-name-title
+::abbrev Mmes. ::exp Mesdames ::lcode eng ::sem-class pre-name-title
+::abbrev Mr. ::exp Mister ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
+::abbrev Mrs. ::exp Misses ::lcode eng ::sem-class pre-name-title
+::abbrev Ms. ::lcode eng ::sem-class pre-name-title ::case-sensitive True ::left-context-not [.]
+::abbrev Msgr. ::exp Monsignor ::lcode eng ::sem-class pre-name-title
+::abbrev Pres. ::exp President ::lcode eng ::sem-class pre-name-title
+::abbrev Prof. ::exp Professor ::lcode eng ::sem-class pre-name-title
+::abbrev Rep. ::exp Representative ::lcode eng ::sem-class pre-name-title ::case-sensitive True
+::abbrev Reps. ::exp Representatives ::lcode eng ::sem-class pre-name-title
+::abbrev Rev. ::exp Reverend ::lcode eng ::sem-class pre-name-title ::case-sensitive True
+::abbrev Rt Hon. ::exp Right Honorable ::lcode eng ::sem-class pre-name-title
+::abbrev Rt. Hon. ::exp Right Honorable ::lcode eng ::sem-class pre-name-title
+::abbrev Rt.Hon. ::exp Right Honorable ::lcode eng ::sem-class pre-name-title
+::abbrev Sen. ::exp Senator ::lcode eng ::sem-class pre-name-title
+::abbrev Sens. ::exp Senators ::lcode eng ::sem-class pre-name-title
+::abbrev Smt. ::exp Shrimati ::lcode eng ::sem-class pre-name-title ::comment Indian equivalent of Mrs.
+::abbrev Spt. ::exp Superintendent ::lcode eng ::sem-class pre-name-title
+::abbrev Sr. ::exp Senior ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
+::abbrev St. ::exp Street; Saint; Strait ::lcode eng ::sem-class pre-name-title ::case-sensitive True ::left-context-not 1 ::comment 1st
+::abbrev Sup. ::exp Superintendent ::lcode eng ::sem-class pre-name-title
+::abbrev Supt. ::exp Superintendent ::lcode eng ::sem-class pre-name-title
+
+::abbrev Ala. ::exp Alabama ::lcode eng ::sem-class state ::country United States
+::abbrev Ariz. ::exp Arizona ::lcode eng ::sem-class state ::country United States
+::abbrev Ark. ::exp Arkansas ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev Calif. ::exp California ::lcode eng ::sem-class state ::country United States
+::abbrev Colo. ::exp Colorado ::lcode eng ::sem-class state ::country United States
+::abbrev Conn. ::exp Connecticut ::lcode eng ::sem-class state ::country United States
+::abbrev D.C. ::exp District of Columbia ::lcode eng ::sem-class state ::country United States
+::abbrev Del. ::exp Delaware ::lcode eng ::sem-class state ::country United States
+::abbrev Fla. ::exp Florida ::lcode eng ::sem-class state ::country United States
+::abbrev Ga. ::exp Georgia ::lcode eng ::sem-class state ::country United States
+::abbrev Ill. ::exp Illinois ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev Ind. ::exp Indiana ::lcode eng ::sem-class state ::country United States
+::abbrev Kans. ::exp Kansas ::lcode eng ::sem-class state ::country United States
+::abbrev Ks. ::exp Kansas ::lcode eng ::sem-class state ::country United States
+::abbrev Ky. ::exp Kentucky ::lcode eng ::sem-class state ::country United States
+::abbrev La. ::exp Louisiana ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev Mass. ::exp Massachusetts ::lcode eng ::sem-class state ::country United States
+::abbrev Md. ::exp Maryland ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev Mich. ::exp Michigan ::lcode eng ::sem-class state ::country United States
+::abbrev Minn. ::exp Minnesota ::lcode eng ::sem-class state ::country United States
+::abbrev Miss. ::exp Mississippi ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev Mo. ::exp Missouri ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev Mont. ::exp Montana ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev N.C. ::exp North Carolina ::lcode eng ::sem-class state ::country United States
+::abbrev N.D. ::exp North Dakota ::lcode eng ::sem-class state ::country United States
+::abbrev Nebr. ::exp Nebraska ::lcode eng ::sem-class state ::country United States
+::abbrev Nev. ::exp Nevada ::lcode eng ::sem-class state ::country United States
+::abbrev N.H. ::exp New Hampshire ::lcode eng ::sem-class state ::country United States
+::abbrev N.J. ::exp New Jersey ::lcode eng ::sem-class state ::country United States
+::abbrev N.M. ::exp New Mexico ::lcode eng ::sem-class state ::country United States
+::abbrev N.Y. ::exp New York ::lcode eng ::sem-class state ::country United States
+::abbrev Okla. ::exp Oklahoma ::lcode eng ::sem-class state ::country United States
+::abbrev Ore. ::exp Oregon ::lcode eng ::sem-class state ::country United States
+::abbrev Pa. ::exp Pennsylvania ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev P.R. ::exp Puerto Rico ::lcode eng ::sem-class state ::country United States
+::abbrev R.I. ::exp Rhode Island ::lcode eng ::sem-class state ::country United States
+::abbrev S.C. ::exp South Carolina ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev S.D. ::exp South Dakota ::lcode eng ::sem-class state ::country United States
+::abbrev Tenn. ::exp Tennessee ::lcode eng ::sem-class state ::country United States
+::abbrev Tex. ::exp Texas ::lcode eng ::sem-class state ::country United States
+::abbrev Va. ::exp Virginia ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev V.I. ::exp Virgin Islands ::lcode eng ::sem-class state ::country United States
+::abbrev Vt. ::exp Vermont ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev Wash. ::exp Washington ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev Wis. ::exp Wisconsin ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev W.Va. ::exp West Virginia ::lcode eng ::sem-class state ::country United States
+::abbrev Wyo. ::exp Wyoming ::lcode eng ::sem-class state ::country United States
+
+::abbrev CA ::exp California ::lcode eng ::sem-class state-code ::country United States ::case-sensitive True
+::abbrev DC ::exp District of Columbia ::lcode eng ::sem-class state-code ::country United States
+::abbrev GA ::exp Georgia ::lcode eng ::sem-class state-code ::country United States
+::abbrev NY ::exp New York ::lcode eng ::sem-class state-code ::country United States
+::abbrev TX ::exp Texas ::lcode eng ::sem-class state-code ::country United States
+
+::abbrev JI ::exp Jemaah Islamiyah ::lcode eng ::sem-class terrorist-organization ::case-sensitive True
+
+::abbrev CFE ::exp Conventional Forces in Europe ::lcode eng ::sem-class treaty
+::abbrev NAFTA ::exp North American Free Trade Agreement ::lcode eng ::sem-class treaty
+::abbrev NPT ::exp Non-Proliferation Treaty ::lcode eng ::sem-class treaty
+
+::abbrev d. ::exp day ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
+::abbrev fl oz ::exp fluid ounce ::lcode eng ::sem-class unit-of-measurement
+::abbrev fl. oz. ::exp fluid ounce ::lcode eng ::sem-class unit-of-measurement
+::abbrev fl.oz. ::exp fluid ounce ::lcode eng ::sem-class unit-of-measurement
+::abbrev h ::exp hour ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
+::abbrev hr ::exp hour ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True
+::abbrev hr. ::exp hour ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True
+::abbrev hrs ::exp hour ::lcode eng ::sem-class unit-of-measurement
+::abbrev hrs. ::exp hour ::lcode eng ::sem-class unit-of-measurement
+::abbrev lb ::exp pound ::lcode eng ::sem-class unit-of-measurement
+::abbrev lb. ::exp pound ::lcode eng ::sem-class unit-of-measurement
+::abbrev lbs ::exp pounds ::lcode eng ::sem-class unit-of-measurement
+::abbrev lbs. ::exp pounds ::lcode eng ::sem-class unit-of-measurement
+::abbrev min ::exp minute ::lcode eng ::sem-class unit-of-measurement
+::abbrev mph ::exp miles per hour ::lcode eng ::sem-class unit-of-measurement
+::abbrev mph ::exp mile per hour ::lcode eng ::sem-class unit-of-measurement
+::abbrev mSv/hr ::exp millisievert per hour ::lcode eng ::sem-class unit-of-measurement
+::abbrev oz. ::exp ounce ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True
+::abbrev sqm. ::exp square meter; square meters ::lcode eng ::sem-class unit-of-measurement
+::abbrev sq. mi. ::exp square mile; square miles ::lcode eng ::sem-class unit-of-measurement
+::abbrev yd. ::exp yard ::lcode eng ::sem-class unit-of-measurement
+::abbrev yds. ::exp yard ::lcode eng ::sem-class unit-of-measurement
+::abbrev yr. ::exp year ::lcode eng ::sem-class unit-of-measurement
+::abbrev yrs. ::exp years ::lcode eng ::sem-class unit-of-measurement
+::abbrev μSv/hr ::exp microsievert per hour ::lcode eng ::sem-class unit-of-measurement
+
+::abbrev A-bomb ::exp atomic bomb ::lcode eng ::sem-class weapon ::inflections A-bombs; A-bombing; A-bombed
+::abbrev SA/LW ::exp small arms and light weapons ::lcode eng ::sem-class weapon
+
+::abbrev et al. ::exp et alii; et aliae; and others ::lcode eng ::etym-lcode lat
+
+::abbrev 24/7 ::exp 24 hours a day, 7 days a week ::lcode eng ::alt-spelling 24-7; 24x7
+::abbrev AAM ::exp air-to-air missile ::lcode eng
+::abbrev AC ::exp air conditioning ::lcode eng
+::abbrev AC ::exp alternating current ::lcode eng
+::abbrev a/c ::exp air conditioning; account current ::lcode eng
+::abbrev A.D. ::exp anno Domini ::lcode eng
+::abbrev ad ::exp advertisement ::lcode eng
+::abbrev adj. ::exp adjective ::lcode eng
+::abbrev adv. ::exp adverb ::lcode eng
+::abbrev A&E ::exp accident and emergency department ::lcode eng
+::abbrev A.F.P. ::exp Agence France-Presse ::lcode eng ::misspelling A. F. P.; A. F. P
+::abbrev a2k ::exp able to know ::lcode eng
+::abbrev a/k/a ::exp also known as ::lcode eng
+::abbrev al. ::exp alii ::lcode eng ::case-sensitive True
+::abbrev a.m. ::exp ante meridiem ::lcode eng
+::abbrev approx. ::exp approximately ::lcode eng
+::abbrev Apt. ::exp apartment ::lcode eng ::case-sensitive True
+::abbrev asap ::exp as soon as possible ::lcode eng
+::abbrev ATM ::exp automated teller machine ::lcode eng
+::abbrev Av. ::exp Avenue ::lcode eng
+::abbrev Ave. ::exp Avenue ::lcode eng
+::abbrev avg. ::exp average ::lcode eng
+::abbrev B&B ::exp bed and breakfast ::lcode eng
+::abbrev B.C. ::exp before Christ ::lcode eng
+::abbrev B.Ed. ::exp Bachelor of Education ::lcode eng
+::abbrev B.Sc. ::exp Bachelor of Science ::lcode eng
+::abbrev b/c ::exp because ::lcode eng
+::abbrev bd ::exp bluray disc ::lcode eng
+::abbrev bldg. ::exp building ::lcode eng
+::abbrev Blvd. ::exp Boulevard ::lcode eng
+::abbrev bro ::exp brother ::lcode eng
+::abbrev bros. ::exp brothers ::lcode eng
+::abbrev B.S. ::exp bullshit ::lcode eng
+::abbrev b/w ::exp black and white; between ::lcode eng
+::abbrev 'cause ::exp because ::lcode eng
+::abbrev CCTV ::exp closed-circuit television ::lcode eng
+::abbrev CEO ::exp chief executive officer ::lcode eng
+::abbrev CEO ::exp chief executive officer ::lcode eng
+::abbrev cf. ::exp confer; compare ::lcode eng
+::abbrev CFO ::exp chief financial officer ::lcode eng
+::abbrev c/o ::exp care of ::lcode eng
+::abbrev cont'd ::exp continued ::lcode eng
+::abbrev CS ::exp computer science ::lcode eng
+::abbrev cul8r ::exp see you later ::lcode eng
+::abbrev DD ::exp dear daughter ::lcode eng
+::abbrev DDoS ::exp distributed denial of service ::lcode eng
+::abbrev decr. ::exp decrease ::lcode eng
+::abbrev Dept. ::exp Department ::lcode eng
+::abbrev DH ::exp dear husband ::lcode eng
+::abbrev DS ::exp dear son ::lcode eng
+::abbrev DW ::exp dear wife ::lcode eng
+::abbrev ed. ::exp editor ::lcode eng
+::abbrev e'er ::exp ever ::lcode eng
+::abbrev eff'd ::exp fucked ::lcode eng
+::abbrev e.g. ::exp exempli gratia; for example ::lcode eng
+::abbrev e-mail ::exp electronic mail ::lcode eng ::plural +s
+::abbrev EMT ::exp epithelial-mesenchymal transition ::lcode eng
+::abbrev etc. ::exp et cetera; and other things ::lcode eng ::misspelling etc .; e.t.c.; e.t.c; et c.
+::abbrev exec ::exp executive ::lcode eng ::inflections execs
+::abbrev Flr. ::exp floor ::lcode eng
+::abbrev Ft. ::exp Fort ::lcode eng  ::case-sensitive True
+::abbrev gov't ::exp government ::lcode eng
+::abbrev govt. ::exp government ::lcode eng
+::abbrev gov'ts ::exp governments ::lcode eng
+::abbrev gr8 ::exp great ::lcode eng
+::abbrev hosp. ::exp hospital ::lcode eng
+::abbrev ICBM ::exp intercontinental ballistic missile ::lcode eng
+::abbrev i.e. ::exp id est; that is; in other words ::lcode eng
+::abbrev IED ::exp improvised explosive device ::lcode eng
+::abbrev incr. ::exp increase ::lcode eng
+::abbrev int'l ::exp international ::lcode eng
+::abbrev i/o ::exp input/output ::lcode eng
+::abbrev IP ::exp intellectual property ::lcode eng ::case-sensitive True
+::abbrev IP ::exp internet protocol ::lcode eng ::case-sensitive True
+::abbrev IT ::exp information technology ::lcode eng ::case-sensitive True
+::abbrev j/k ::exp just kidding ::lcode eng
+::abbrev k9 ::exp canine ::lcode eng
+::abbrev l/c ::exp lower case ::lcode eng
+::abbrev lib ::exp liberal ::lcode eng
+::abbrev lol ::exp laughing out loud ::lcode eng
+::abbrev l8r ::exp later ::lcode eng
+::abbrev ma'am ::exp madam ::lcode eng
+::abbrev mag ::exp magazine ::lcode eng
+::abbrev math ::exp mathematics ::lcode eng
+::abbrev maths ::exp mathematics ::lcode eng
+::abbrev misc. ::exp miscellaneous ::lcode eng
+::abbrev MM ::exp multiple myeloma ::lcode eng ::case-sensitive True
+::abbrev m/o ::exp month old ::lcode eng
+::abbrev MoU ::exp memorandum of understanding ::case-sensitive True ::plural +s
+::abbrev MP ::exp member of parliament ::lcode eng ::country UK
+::abbrev MP ::exp military police ::lcode eng
+::abbrev Mt. ::exp Mount ::lcode eng ::case-sensitive True
+::abbrev n/a ::exp not available; not applicable ::lcode eng
+::abbrev nat'l ::exp national ::lcode eng
+::abbrev ne'er ::exp never ::lcode eng
+::abbrev NGO ::exp non-governmental organization ::lcode eng
+::abbrev o/b/o ::exp on behalf of; or best offer ::lcode eng
+::abbrev o'er ::exp over ::lcode eng
+::abbrev OP ::exp original poster ::lcode eng
+::abbrev o/p ::exp original poster ::lcode eng
+::abbrev PC ::exp personal computer ::lcode eng
+::abbrev PC ::exp politically correct ::lcode eng
+::abbrev P/E ::exp price-to-earnings [ratio] ::lcode eng
+::abbrev Ph.D. ::exp doctor of philosophy ::lcode eng ::alt-spelling PhD; Ph. D.
+::abbrev pic ::exp picture ::lcode eng
+::abbrev p.m. ::exp post meridiem ::lcode eng
+::abbrev POW ::exp prisoner of war ::lcode eng
+::abbrev p.s. ::exp post scriptum ::lcode eng
+::abbrev Q&A ::exp question and answer ::lcode eng
+::abbrev Q-tip ::lcode eng ::inflections Q-tips
+::abbrev R&B ::exp rythm and blues ::lcode eng
+::abbrev R&D ::exp research and development ::lcode eng
+::abbrev Ret. ::exp Retired ::lcode eng ::alt-spelling Retd.
+::abbrev Rt. ::exp Right ::lcode eng
+::abbrev RPG ::exp rocket-propelled grenade ::lcode eng
+::abbrev r/w ::exp read/write ::lcode eng
+::abbrev sci-fi ::exp science fiction ::lcode eng
+::abbrev S.E. ::exp standard error ::lcode eng
+::abbrev s/he ::exp she or he ::lcode eng
+::abbrev sis ::exp sister ::lcode eng
+::abbrev S&L ::exp savings and loan ::lcode eng
+::abbrev s/n ::exp sin numero (without number) ::lcode eng
+::abbrev Sq. ::exp Square ::lcode eng
+::abbrev Ste. ::exp suite ::lcode eng ::case-sensitive True
+::abbrev TCP/IP ::exp Transmission Control Protocol/Internet Protocol ::lcode eng
+::abbrev tl;dr ::exp too long, didn't read ::lcode eng
+::abbrev TV ::exp television ::lcode eng
+::abbrev ?4u ::exp question for you ::lcode eng
+::abbrev u/c ::exp upper case ::lcode eng
+::abbrev v. ::exp versus; von ::lcode eng ::left-context-not ::case-sensitive True
+::abbrev V.  ::lcode eng ::left-context-not \p{Lu}\.\s* ::case-sensitive True
+::abbrev viz. ::lcode eng ::comment British, "in other words"
+::abbrev vs. ::exp versus ::lcode eng
+::abbrev W3 ::exp World Wide Web ::lcode eng
+::abbrev w/ ::exp with ::lcode eng ::right-context-not \S
+::abbrev w/c ::exp wheelchair; week commencing ::lcode eng
+::abbrev w/e ::exp whatever; weekend ::lcode eng
+::abbrev w/i ::exp within ::lcode eng
+::abbrev WMD ::exp weapons of mass destruction ::lcode eng
+::abbrev w/o ::exp without ::lcode eng
+::abbrev w/r/t ::exp with respect to ::lcode eng
+::abbrev y/o ::exp year old ::lcode eng
+
+::lexical brigadier general ::lcode eng ::sem-class military-rank ::plural +s
+::lexical colonel general ::lcode eng ::sem-class military-rank ::plural +s
+::lexical general of the army ::lcode eng ::sem-class military-rank ::plural generals of the army
+::lexical lieutenant colonel ::lcode eng ::sem-class military-rank ::plural +s
+::lexical lieutenant general ::lcode eng ::sem-class military-rank ::plural +s
+::lexical major general ::lcode eng ::sem-class military-rank ::plural +s
+::lexical private first class ::lcode eng ::sem-class military-rank
+
+::lexical M&M's ::lcode eng ::sem-class product ::alt-spelling M&Ms
+
+::lexical c' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::example C'est la vie.
+::lexical d' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::example Coeur d'Alene
+::lexical l' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::example l'amour
+::lexical n' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::left-context-not ['’‘]
+::lexical qu' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra
+::lexical s' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra
+
+::lexical 'd ::lcode eng ::tag DECONTRACTION-R  ::example I'd like a beer.
+::lexical 'em ::lcode eng ::tag DECONTRACTION-R  ::example Tell'em to go home.
+::lexical 'll ::lcode eng ::tag DECONTRACTION-R  ::example We'll see.
+::lexical 'm ::lcode eng ::tag DECONTRACTION-R  ::example I'm hungry. Take'm away.
+::lexical n't ::lcode eng ::tag DECONTRACTION-R  ::example He doesn't know.
+::lexical 're ::lcode eng ::tag DECONTRACTION-R  ::example They're gone.
+::lexical 's ::lcode eng ::tag DECONTRACTION-R  ::example It's John's dog.
+::lexical 've ::lcode eng ::tag DECONTRACTION-R  ::example They've never complained.
+
+::lexical 'n' ::lcode eng ::tag DECONTRACTION-B  ::example Bush'n'Cheney
+
+::lexical dalai lama ::lcode eng ::etym-lcode bod ::comment Tibetan
+
+::lexical doppelgänger ::lcode eng ::etym-lcode deu
+::lexical Führer ::lcode eng ::etym-lcode deu
+::lexical gemütlich ::lcode eng ::etym-lcode deu
+::lexical Gemütlichkeit ::lcode eng ::etym-lcode deu
+::lexical Götterdämmerung ::lcode eng ::etym-lcode deu
+::lexical lagerstätte ::lcode eng ::etym-lcode deu ::plural lagerstätten
+::lexical Sängerfest ::lcode eng ::etym-lcode deu
+::lexical Sturm und Drang ::lcode eng ::etym-lcode deu
+::lexical über ::lcode eng ::etym-lcode deu
+::lexical Überfremdung ::lcode eng ::etym-lcode deu
+::lexical Übermensch ::lcode eng ::etym-lcode deu ::plural Übermenschen
+::lexical Völkerwanderung ::lcode eng ::etym-lcode deu
+
+::lexical aide-de-camp ::lcode eng ::etym-lcode fra ::plural aides-de-camp
+::lexical à la carte ::lcode eng ::etym-lcode fra
+::lexical à la mode ::lcode eng ::etym-lcode fra
+::lexical apéritif ::lcode eng ::etym-lcode fra ::plural +s
+::lexical attaché ::lcode eng ::etym-lcode fra ::plural +s
+::lexical au naturel ::lcode eng ::etym-lcode fra
+::lexical au pair ::lcode eng ::etym-lcode fra ::plural +s
+::lexical avant-garde ::lcode eng ::etym-lcode fra ::plural +s
+::lexical bête noire ::lcode eng ::etym-lcode fra ::plural bêtes noires
+::lexical blasé ::lcode eng ::etym-lcode fra
+::lexical bon appétit ::lcode eng ::etym-lcode fra
+::lexical bon voyage ::lcode eng ::etym-lcode fra
+::lexical café ::lcode eng ::etym-lcode fra ::plural +s
+::lexical café au lait ::lcode eng ::etym-lcode fra ::plural cafés au lait
+::lexical canapé ::lcode eng ::etym-lcode fra ::plural +s
+::lexical carte blanche ::lcode eng ::etym-lcode fra
+::lexical cause célèbre ::lcode eng ::etym-lcode fra
+::lexical chaise longue ::lcode eng ::etym-lcode fra ::plural chaises longues
+::lexical chargé d'affaires ::lcode eng ::etym-lcode fra ::plural chargés d'affaires
+::lexical chef d'œuvre ::lcode eng ::etym-lcode fra ::plural chefs d'œuvre
+::lexical cliché ::lcode eng ::etym-lcode fra ::plural +s
+::lexical communiqué ::lcode eng ::etym-lcode fra ::plural +s
+::lexical coup de grâce ::lcode eng ::etym-lcode fra ::plural coups de grâce
+::lexical coup d'état ::lcode eng ::etym-lcode fra ::plural coups d'état
+::lexical crème brûlée ::lcode eng ::etym-lcode fra ::plural crèmes brûlées
+::lexical crème fraîche ::lcode eng ::etym-lcode fra
+::lexical crêpe ::lcode eng ::etym-lcode fra ::plural +s
+::lexical cul-de-sac ::lcode eng ::etym-lcode fra ::plural culs-de-sac
+::lexical déjà vu ::lcode eng ::etym-lcode fra
+::lexical de rigueur ::lcode eng ::etym-lcode fra
+::lexical double entendre ::lcode eng ::etym-lcode fra
+::lexical émigré ::lcode eng ::etym-lcode fra ::plural +s ::alt-spelling emigré
+::lexical en banc ::lcode eng ::etym-lcode fra
+::lexical en bloc ::lcode eng ::etym-lcode fra
+::lexical en garde ::lcode eng ::etym-lcode fra
+::lexical en masse ::lcode eng ::etym-lcode fra
+::lexical en passant ::lcode eng ::etym-lcode fra
+::lexical en suite ::lcode eng ::etym-lcode fra
+::lexical entrée ::lcode eng ::etym-lcode fra ::plural +s
+::lexical exposé ::lcode eng ::etym-lcode fra ::plural +s
+::lexical fait accompli ::lcode eng ::etym-lcode fra ::plural faits accomplis
+::lexical faux pas ::lcode eng ::etym-lcode fra
+::lexical femme fatale ::lcode eng ::etym-lcode fra ::plural femmes fatales
+::lexical fiancé ::lcode eng ::etym-lcode fra ::plural +s
+::lexical fiancée ::lcode eng ::etym-lcode fra ::plural +s
+::lexical haute couture ::lcode eng ::etym-lcode fra
+::lexical Honi soit qui mal y pense ::lcode eng ::etym-lcode fra
+::lexical hors d'œuvre ::lcode eng ::etym-lcode fra
+::lexical laissez-faire ::lcode eng ::etym-lcode fra
+::lexical lèse majesté ::lcode eng ::etym-lcode fra
+::lexical maître d' ::lcode eng ::etym-lcode fra
+::lexical Mardi gras ::lcode eng ::etym-lcode fra
+::lexical ménage à trois ::lcode eng ::etym-lcode fra
+::lexical naïve ::lcode eng ::etym-lcode fra
+::lexical née ::lcode eng ::etym-lcode fra
+::lexical negligée ::lcode eng ::etym-lcode fra ::plural +s
+::lexical nom de guerre ::lcode eng ::etym-lcode fra ::plural noms de guerre
+::lexical nom de plume ::lcode eng ::etym-lcode fra ::plural noms de plume
+::lexical nouveau riche ::lcode eng ::etym-lcode fra ::plural nouveaux riches
+::lexical outré ::lcode eng ::etym-lcode fra
+::lexical par avion ::lcode eng ::etym-lcode fra
+::lexical par excellence ::lcode eng ::etym-lcode fra
+::lexical pas de deux ::lcode eng ::etym-lcode fra
+::lexical passé ::lcode eng ::etym-lcode fra
+::lexical précis ::lcode eng ::etym-lcode fra
+::lexical première ::lcode eng ::etym-lcode fra
+::lexical prêt-à-porter ::lcode eng ::etym-lcode fra
+::lexical prix fixe ::lcode eng ::etym-lcode fra
+::lexical protégé ::lcode eng ::etym-lcode fra ::plural +s
+::lexical protégée ::lcode eng ::etym-lcode fra ::plural +s
+::lexical raison d'être ::lcode eng ::etym-lcode fra
+::lexical répondez s'il-vous-plaît ::lcode eng ::etym-lcode fra
+::lexical résumé ::lcode eng ::etym-lcode fra ::plural +s
+::lexical risqué ::lcode eng ::etym-lcode fra
+::lexical sauté ::lcode eng ::etym-lcode fra
+::lexical savoir faire ::lcode eng ::etym-lcode fra
+::lexical savoir vivre ::lcode eng ::etym-lcode fra
+::lexical séance ::lcode eng ::etym-lcode fra ::plural +s
+::lexical soirée ::lcode eng ::etym-lcode fra ::plural +s
+::lexical tableau vivant ::lcode eng ::etym-lcode fra ::plural tableaux vivants
+::lexical tant mieux ::lcode eng ::etym-lcode fra
+::lexical tête-à-tête ::lcode eng ::etym-lcode fra
+::lexical touché ::lcode eng ::etym-lcode fra
+::lexical tour de force ::lcode eng ::etym-lcode fra
+::lexical tout le monde ::lcode eng ::etym-lcode fra
+::lexical trompe-l'œil ::lcode eng ::etym-lcode fra
+::lexical vis-à-vis ::lcode eng ::etym-lcode fra ::alt-spelling vis-a-vis
+::lexical voilà ::lcode eng ::etym-lcode fra
+::lexical voir dire ::lcode eng ::etym-lcode fra ::plural +s
+
+::lexical hoi polloi ::lcode eng ::etym-lcode grc
+
+::lexical bar mitzvah ::lcode eng ::etym-lcode heb ::plural b'nai mitzvah
+::lexical bat mitzvah ::lcode eng ::etym-lcode heb ::plural b'not mitzvah
+
+::lexical al dente ::lcode eng ::etym-lcode ita
+::lexical al fresco ::lcode eng ::etym-lcode ita
+::lexical lingua franca ::lcode eng ::etym-lcode ita
+::lexical sotto voce ::lcode eng ::etym-lcode ita
+::lexical terra cotta ::lcode eng ::etym-lcode ita
+
+::lexical daimyō ::lcode eng ::etym-lcode jpn
+::lexical shabu shabu ::lcode eng ::etym-lcode jpn
+::lexical wabi-sabi ::lcode eng ::etym-lcode jpn
+
+::lexical ad hoc ::lcode eng ::etym-lcode lat
+::lexical ad hominem ::lcode eng ::etym-lcode lat
+::lexical ad lib ::lcode eng ::etym-lcode lat
+::lexical ad libitum ::lcode eng ::etym-lcode lat
+::lexical ad nauseam ::lcode eng ::etym-lcode lat
+::lexical alma mater ::lcode eng ::etym-lcode lat
+::lexical alter ego ::lcode eng ::etym-lcode lat
+::lexical anno domini ::lcode eng ::etym-lcode lat
+::lexical ante bellum ::lcode eng ::etym-lcode lat
+::lexical a posteriori ::lcode eng ::etym-lcode lat
+::lexical a priori ::lcode eng ::etym-lcode lat
+::lexical bona fide ::lcode eng ::etym-lcode lat
+::lexical carpe diem ::lcode eng ::etym-lcode lat
+::lexical casus belli ::lcode eng ::etym-lcode lat
+::lexical caveat emptor ::lcode eng ::etym-lcode lat
+::lexical ceteris paribus ::lcode eng ::etym-lcode lat
+::lexical coitus interruptus ::lcode eng ::etym-lcode lat
+::lexical corpus delicti ::lcode eng ::etym-lcode lat ::plural corpora delicti
+::lexical curriculum vitae ::lcode eng ::etym-lcode lat
+::lexical de facto ::lcode eng ::etym-lcode lat
+::lexical de jure ::lcode eng ::etym-lcode lat
+::lexical deus ex machina ::lcode eng ::etym-lcode lat
+::lexical e pluribus unum ::lcode eng ::etym-lcode lat
+::lexical et alia ::lcode eng ::etym-lcode lat
+::lexical et cetera ::lcode eng ::etym-lcode lat
+::lexical ex gratia ::lcode eng ::etym-lcode lat
+::lexical ex libris ::lcode eng ::etym-lcode lat
+::lexical ex officio ::lcode eng ::etym-lcode lat
+::lexical ex post facto ::lcode eng ::etym-lcode lat
+::lexical habeas corpus ::lcode eng ::etym-lcode lat
+::lexical in absentia ::lcode eng ::etym-lcode lat
+::lexical in camera ::lcode eng ::etym-lcode lat
+::lexical in curia ::lcode eng ::etym-lcode lat
+::lexical in extremis ::lcode eng ::etym-lcode lat
+::lexical in flagrante ::lcode eng ::etym-lcode lat
+::lexical in flagrante delicto ::lcode eng ::etym-lcode lat
+::lexical in loco parentis ::lcode eng ::etym-lcode lat
+::lexical in memoriam ::lcode eng ::etym-lcode lat
+::lexical in pectore ::lcode eng ::etym-lcode lat
+::lexical in re ::lcode eng ::etym-lcode lat
+::lexical in situ ::lcode eng ::etym-lcode lat
+::lexical inter alia ::lcode eng ::etym-lcode lat
+::lexical in toto ::lcode eng ::etym-lcode lat
+::lexical in utero ::lcode eng ::etym-lcode lat
+::lexical in vitro ::lcode eng ::etym-lcode lat
+::lexical in vivo ::lcode eng ::etym-lcode lat
+::lexical ipso facto ::lcode eng ::etym-lcode lat
+::lexical mea culpa ::lcode eng ::etym-lcode lat
+::lexical mens rea ::lcode eng ::etym-lcode lat
+::lexical modus operandi ::lcode eng ::etym-lcode lat
+::lexical non sequitur ::lcode eng ::etym-lcode lat
+::lexical nota bene ::lcode eng ::etym-lcode lat
+::lexical per annum ::lcode eng ::etym-lcode lat
+::lexical per capita ::lcode eng ::etym-lcode lat
+::lexical per curiam ::lcode eng ::etym-lcode lat
+::lexical per diem ::lcode eng ::etym-lcode lat
+::lexical per se ::lcode eng ::etym-lcode lat
+::lexical persona non grata ::lcode eng ::etym-lcode lat ::plural personae non gratae
+::lexical post mortem ::lcode eng ::etym-lcode lat
+::lexical post partum ::lcode eng ::etym-lcode lat
+::lexical post scriptum ::lcode eng ::etym-lcode lat
+::lexical prima facie ::lcode eng ::etym-lcode lat
+::lexical pro bono ::lcode eng ::etym-lcode lat
+::lexical pro forma ::lcode eng ::etym-lcode lat
+::lexical pro tempore ::lcode eng ::etym-lcode lat
+::lexical quid pro quo ::lcode eng ::etym-lcode lat
+::lexical quod erat demonstrandum ::lcode eng ::etym-lcode lat
+::lexical semper fidelis ::lcode eng ::etym-lcode lat
+::lexical sine qua non ::lcode eng ::etym-lcode lat
+::lexical stare decisis ::lcode eng ::etym-lcode lat
+::lexical status quo ::lcode eng ::etym-lcode lat
+::lexical status quo ante bellum ::lcode eng ::etym-lcode lat
+::lexical sub judice ::lcode eng ::etym-lcode lat
+::lexical sub poena ::lcode eng ::etym-lcode lat
+::lexical sui generis ::lcode eng ::etym-lcode lat
+::lexical tabula rasa ::lcode eng ::etym-lcode lat
+::lexical tempus fugit ::lcode eng ::etym-lcode lat
+::lexical terra firma ::lcode eng ::etym-lcode lat
+::lexical verbatim ::lcode eng ::etym-lcode lat
+::lexical vice versa ::lcode eng ::etym-lcode lat
+
+::lexical piña colada ::lcode eng ::etym-lcode spa ::plural piña coladas
+::lexical piñata ::lcode eng ::etym-lcode spa ::plural +s
+::lexical quinceañera ::lcode eng ::etym-lcode spa ::plural +s
+
+::lexical mazel tov ::lcode eng ::etym-lcode yid
+::lexical oy vey ::lcode eng ::etym-lcode yid
+
+::lexical chin chin ::lcode eng ::etym-lcode zho
+::lexical chop suey ::lcode eng ::etym-lcode zho
+::lexical chow mein ::lcode eng ::etym-lcode zho
+::lexical dim sum ::lcode eng ::etym-lcode zho
+::lexical feng shui ::lcode eng ::etym-lcode zho
+::lexical kung fu ::lcode eng ::etym-lcode zho
+::lexical shih tzu ::lcode eng ::etym-lcode zho
+::lexical yin yang ::lcode eng ::etym-lcode zho
+
+::lexical 401(a) ::lcode eng
+::lexical affirmative action ::lcode eng
+::lexical air conditioner ::lcode eng ::plural +s
+::lexical air conditioning ::lcode eng
+::lexical all in all ::lcode eng
+::lexical A-ok ::lcode eng
+::lexical as a matter of fact ::lcode eng
+::lexical attorney at law ::lcode eng ::plural attorneys at law
+::lexical attorney-at-law ::lcode eng ::plural attorneys-at-law
+::lexical 403(b) ::lcode eng
+::lexical 457(b) ::lcode eng
+::lexical badass ::lcode eng ::alt-spelling bad-ass; bad ass
+::lexical big-time ::lcode eng
+::lexical blue-collar ::lcode eng
+::lexical Blu-ray ::lcode eng
+::lexical brother-in-law ::lcode eng ::plural brothers-in-law
+::lexical by all means ::lcode eng
+::lexical by and large ::lcode eng
+::lexical case by case ::lcode eng ::alt-spelling +hyphen
+::lexical catch-22 ::lcode eng
+::lexical commander-in-chief ::lcode eng ::plural commanders-in-chief
+::lexical cutting-edge ::lcode eng
+::lexical daughter-in-law ::lcode eng ::plural daughters-in-law
+::lexical d'oh ::lcode eng
+::lexical due process ::lcode eng
+::lexical every now and then ::lcode eng
+::lexical face-to-face ::lcode eng
+::lexical far and away ::lcode eng
+::lexical father-in-law ::lcode eng ::plural fathers-in-law
+::lexical f-bomb ::lcode eng ::plural +s
+::lexical first of all ::lcode eng
+::lexical for all intents and purposes ::lcode eng
+::lexical full-scale ::lcode eng
+::lexical full-time ::lcode eng
+::lexical grade point average ::lcode eng ::plural +s
+::lexical grass-roots of the army ::lcode eng ::alt-spelling grass-root
+::lexical hand in hand ::lcode eng
+::lexical hat-trick ::lcode eng
+::lexical heart attack ::lcode eng
+::lexical high-end ::lcode eng
+::lexical high school ::lcode eng ::plural +s ::alt-spelling +hyphen
+::lexical high-tech ::lcode eng
+::lexical hip-hop ::lcode eng
+::lexical hit and run ::lcode eng ::alt-spelling +hyphen
+::lexical hook, line and sinker ::lcode eng
+::lexical hot dog ::lcode eng ::plural +s
+::lexical in-depth ::lcode eng
+::lexical in due course ::lcode eng
+::lexical in-law ::lcode eng ::plural in-laws
+::lexical inside out ::lcode eng
+::lexical jackshit ::lcode eng ::alt-spelling jack-shit; jack shit
+::lexical 401(k) ::lcode eng
+::lexical 510(k) ::lcode eng ::comment US Food and Drug Administration (FDA) clearance process (low bar)
+::lexical know-how ::lcode eng
+::lexical large-scale ::lcode eng
+::lexical last-ditch ::lcode eng
+::lexical line item ::lcode eng
+::lexical little by little ::lcode eng
+::lexical long-term ::lcode eng
+::lexical low-key ::lcode eng
+::lexical lump sum ::lcode eng
+::lexical middle school ::lcode eng ::plural +s
+::lexical mid-term ::lcode eng
+::lexical modern-day ::lcode eng
+::lexical mom-and-pop ::lcode eng
+::lexical mother-in-law ::lcode eng ::plural mothers-in-law
+::lexical no-brainer ::lcode eng
+::lexical o'clock ::lcode eng
+::lexical of course ::lcode eng
+::lexical off the cuff ::lcode eng ::alt-spelling +hyphen
+::lexical once and for all ::lcode eng
+::lexical once upon a time ::lcode eng
+::lexical one by one ::lcode eng
+::lexical one-night stand ::lcode eng
+::lexical one-on-one ::lcode eng ::alt-spelling 1-on-1
+::lexical one-to-one ::lcode eng ::alt-spelling 1-to-1
+::lexical on-site ::lcode eng
+::lexical on the fly ::lcode eng ::alt-spelling +hyphen
+::lexical op-ed ::lcode eng
+::lexical parent-in-law ::lcode eng ::plural parents-in-law
+::lexical part-time ::lcode eng
+::lexical powers that be ::lcode eng
+::lexical rank and file ::lcode eng ::alt-spelling +hyphen
+::lexical real estate ::lcode eng ::alt-spelling +hyphen
+::lexical real-time ::lcode eng
+::lexical riff-raff ::lcode eng
+::lexical rock'n'roll ::lcode eng
+::lexical same-sex ::lcode eng
+::lexical science-fiction ::lcode eng
+::lexical self-righteous ::lcode eng
+::lexical short-term ::lcode eng
+::lexical sister-in-law ::lcode eng ::plural sisters-in-law
+::lexical small-scale ::lcode eng
+::lexical smart-ass ::lcode eng ::alt-spelling smart ass; smartass; smart-a$$; smart a$$; smarta$$
+::lexical so-called ::lcode eng
+::lexical son-in-law ::lcode eng ::plural sons-in-law
+::lexical son of a bitch ::lcode eng ::plural sons of bitches
+::lexical state-of-the-art ::lcode eng
+::lexical stir-fry ::lcode eng
+::lexical subprime ::lcode eng ::alt-spelling sub-prime
+::lexical teeny-weeny ::lcode eng
+::lexical think-tank ::lcode eng
+::lexical tight end ::lcode eng
+::lexical time and again ::lcode eng
+::lexical tit for tat ::lcode eng ::alt-spelling +hyphen
+::lexical tongue-in-cheek ::lcode eng
+::lexical top-of-the-line ::lcode eng
+::lexical T-shirt ::lcode eng ::plural +s
+::lexical white-collar ::lcode eng
+::lexical wide receiver ::lcode eng ::plural +s
+::lexical wild-type ::lcode eng
+::lexical win-win ::lcode eng
+::lexical wishy-washy ::lcode eng
+::lexical X-ray ::lcode eng ::plural +s
+::lexical yo-yo ::lcode eng
+
+::misspelling accomodate ::target accommodate ::lcode eng ::suffix-variations e/ed;es;ing;ion;ions
+::misspelling accross ::target across ::lcode eng
+::misspelling acheive ::target achieve ::lcode eng ::suffix-variations e/ed;es;ing;ement;ements
+::misspelling agressive ::target aggressive ::lcode eng ::suffix-variations ive/ion;ions;or;ors
+::misspelling apparant ::target apparent ::lcode eng ::suffix-variations ly
+::misspelling appearence ::target appearance ::lcode eng
+::misspelling arguement ::target argument ::lcode eng ::suffix-variations s
+::misspelling assasinate ::target assassinate ::lcode eng ::suffix-variations e/ed;es;ing;ion;ions
+::misspelling basicly ::target basically ::lcode eng
+::misspelling begining ::target beginning ::lcode eng ::suffix-variations s
+::misspelling beleive ::target believe ::lcode eng ::suffix-variations e/ed;es;ing
+::misspelling belive ::target believe ::lcode eng ::suffix-variations e/ed;es;ing
+::misspelling bizzare ::target bizarre ::lcode eng
+::misspelling buisness ::target business ::lcode eng ::suffix-variations es
+::misspelling calender ::target calendar ::lcode eng ::suffix-variations s
+::misspelling Carribean ::target Carribbean ::lcode eng
+::misspelling cemetary ::target cemetery ::lcode eng ::suffix-variations y/ies
+::misspelling chauffer ::target chauffeur ::lcode eng ::suffix-variations s
+::misspelling collegue ::target colleague ::lcode eng ::suffix-variations s
+::misspelling comming ::target coming ::lcode eng
+::misspelling commitee ::target committee ::lcode eng ::suffix-variations s
+::misspelling completly ::target completely ::lcode eng
+::misspelling concious ::target conscious ::lcode eng ::suffix-variations ly
+::misspelling curiousity ::target curiosity ::lcode eng
+::misspelling definately ::target definitely ::lcode eng
+::misspelling dilemna ::target dilemma ::lcode eng ::suffix-variations s
+::misspelling dissapear ::target disappear ::lcode eng ::suffix-variations s;ed;ing
+::misspelling dissapoint ::target disappoint ::lcode eng ::suffix-variations s;ed;ing
+::misspelling ecstacy ::target ecstasy ::lcode eng
+::misspelling embarass ::target embarrass ::lcode eng ::suffix-variations ed;es;ing;ment;ments
+::misspelling enviroment ::target environment ::lcode eng
+::misspelling existance ::target existence ::lcode eng
+::misspelling familar ::target familiar ::lcode eng
+::misspelling Farenheit ::target Fahrenheit ::lcode eng
+::misspelling finaly ::target finally ::lcode eng
+::misspelling florescent ::target fluorescent ::lcode eng
+::misspelling foriegn ::target foreign ::lcode eng ::suffix-variations er;ers
+::misspelling forseeable ::target foreseeable ::lcode eng
+::misspelling fourty ::target forty ::lcode eng
+::misspelling foward ::target forward ::lcode eng
+::misspelling freind ::target friend ::lcode eng ::suffix-variations s
+::misspelling futher ::target further ::lcode eng
+::misspelling gaurd ::target guard ::lcode eng ::suffix-variations s;ed;ing
+::misspelling glamourous ::target glamorous ::lcode eng
+::misspelling goverment ::target government ::lcode eng ::suffix-variations s
+::misspelling happend ::target happened ::lcode eng
+::misspelling harrass ::target harass ::lcode eng ::suffix-variations ed;es;ing;ment;ments
+::misspelling honourary ::target honorary ::lcode eng
+::misspelling humourous ::target humorous ::lcode eng ::suffix-variations ly
+::misspelling idiosyncracy ::target idiosyncrasy ::lcode eng
+::misspelling immediatly ::target immediately ::lcode eng
+::misspelling incidently ::target incidentally ::lcode eng
+::misspelling independance ::target independence ::lcode eng
+::misspelling independant ::target independent ::lcode eng ::suffix-variations ly
+::misspelling interupt ::target interrupt ::lcode eng ::suffix-variations s;ed;ing;ion;ions
+::misspelling irresistable ::target irresistible ::lcode eng
+::misspelling jist ::target gist ::lcode eng
+::misspelling knowlege ::target knowledge ::lcode eng
+::misspelling liase ::target liaise ::lcode eng
+::misspelling liason ::target liaison ::lcode eng
+::misspelling lollypop ::target lollipop ::lcode eng ::suffix-variations s
+::misspelling millenium ::target millennium ::lcode eng ::suffix-variations um/a
+::misspelling mispell ::target misspell ::lcode eng ::suffix-variations ed;s;ing;ings
+::misspelling neccessary ::target necessary ::lcode eng ::suffix-variations y/ily
+::misspelling noticable ::target noticeable ::lcode eng ::suffix-variations le/ly
+::misspelling ocassion ::target occasion ::lcode eng ::suffix-variations s
+::misspelling occassion ::target occasion ::lcode eng ::suffix-variations s
+::misspelling occurance ::target occurrence ::lcode eng ::suffix-variations s
+::misspelling occured ::target occurred ::lcode eng
+::misspelling occurence ::target occurrence ::lcode eng ::suffix-variations s
+::misspelling occuring ::target occurring ::lcode eng
+::misspelling occurrance ::target occurrence ::lcode eng ::suffix-variations s
+::misspelling pavillion ::target pavilion ::lcode eng ::suffix-variations s
+::misspelling peice ::target piece ::lcode eng ::suffix-variations s
+::misspelling persistant ::target persistent ::lcode eng ::suffix-variations ly
+::misspelling pharoah ::target pharaoh ::lcode eng
+::misspelling politican ::target politician ::lcode eng ::suffix-variations s
+::misspelling Portugese ::target Portuguese ::lcode eng
+::misspelling posession ::target possession ::lcode eng ::suffix-variations s
+::misspelling prefered ::target preferred ::lcode eng
+::misspelling prefering ::target preferred ::lcode eng
+::misspelling propoganda ::target propaganda ::lcode eng
+::misspelling publically ::target publicly ::lcode eng
+::misspelling realy ::target really ::lcode eng
+::misspelling recieve ::target receive ::lcode eng ::suffix-variations e/ed;es;ing
+::misspelling refered ::target referred ::lcode eng ::suffix-variations ed/ing
+::misspelling religous ::target religious ::lcode eng ::suffix-variations ly
+::misspelling rember ::target remember ::lcode eng ::suffix-variations ed;s;ing
+::misspelling remeber ::target remember ::lcode eng ::suffix-variations ed;s;ing
+::misspelling resistence ::target resistance ::lcode eng ::suffix-variations s
+::misspelling seige ::target siege ::lcode eng
+::misspelling sence ::target sense ::lcode eng ::suffix-variations s
+::misspelling seperate ::target separate ::lcode eng ::suffix-variations ly
+::misspelling succesful ::target successful ::lcode eng
+::misspelling supercede ::target supersede ::lcode eng ::suffix-variations e/ed;es;ing
+::misspelling suprise ::target surprise ::lcode eng
+::misspelling tatoo ::target tattoo ::lcode eng
+::misspelling tendancy ::target tendency ::lcode eng ::suffix-variations y/ies
+::misspelling therefor ::target therefore ::lcode eng
+::misspelling threshhold ::target threshold ::lcode eng
+::misspelling tommorow ::target tomorrow ::lcode eng
+::misspelling tommorrow ::target tomorrow ::lcode eng
+::misspelling tomorow ::target tomorrow ::lcode eng
+::misspelling tounge ::target tongue ::lcode eng
+::misspelling truely ::target truly ::lcode eng
+::misspelling unforseen ::target unforeseen ::lcode eng
+::misspelling unfortunatly ::target unfortunately ::lcode eng
+::misspelling untill ::target until ::lcode eng
+::misspelling whereever ::target wherever ::lcode eng
+::misspelling wich ::target which ::lcode eng
+::misspelling wierd ::target weird ::lcode eng
+
