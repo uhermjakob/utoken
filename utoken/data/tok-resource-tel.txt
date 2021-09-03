@@ -1,0 +1,29 @@
+::abbrev ర. ::lcode tel ::eng Rs.
+::abbrev శ్రీ. ::lcode tel ::eng Mr.
+::abbrev ఎ. ::lcode tel ::token-category phonetics ::eng A.
+::abbrev బి. ::lcode tel ::token-category phonetics ::eng B.
+::abbrev సి. ::lcode tel ::token-category phonetics ::eng C.
+::abbrev డి. ::lcode tel ::token-category phonetics ::eng D.
+::abbrev ఇ. ::lcode tel ::token-category phonetics ::eng E.
+::abbrev ఎఫ్. ::lcode tel ::token-category phonetics ::eng F.
+::abbrev జి. ::lcode tel ::token-category phonetics ::eng G.
+::abbrev హెచ్‌. ::lcode tel ::token-category phonetics ::eng H.
+::abbrev ఐ. ::lcode tel ::token-category phonetics ::eng I.
+::abbrev జె. ::lcode tel ::token-category phonetics ::eng J.
+::abbrev కె. ::lcode tel ::token-category phonetics ::eng K.
+::abbrev ఎల్. ::lcode tel ::token-category phonetics ::eng L.
+::abbrev ఎం. ::lcode tel ::token-category phonetics ::eng M.
+::abbrev ఎమ్. ::lcode tel ::token-category phonetics ::eng M.
+::abbrev ఎన్. ::lcode tel ::token-category phonetics ::eng N.
+::abbrev ఓ. ::lcode tel ::token-category phonetics ::eng O.
+::abbrev పి. ::lcode tel ::token-category phonetics ::eng P.
+::abbrev క్యూ. ::lcode tel ::token-category phonetics ::eng Q.
+::abbrev ఆర్. ::lcode tel ::token-category phonetics ::eng R.
+::abbrev ఎస్. ::lcode tel ::token-category phonetics ::eng S.
+::abbrev టి. ::lcode tel ::token-category phonetics ::eng T.
+::abbrev యు. ::lcode tel ::token-category phonetics ::eng U.
+::abbrev వి. ::lcode tel ::token-category phonetics ::eng V.
+::abbrev డబ్ల్యూ. ::lcode tel ::token-category phonetics ::eng W.
+::abbrev ఎక్స్. ::lcode tel ::token-category phonetics ::eng X.
+::abbrev వై. ::lcode tel ::token-category phonetics ::eng Y.
+::abbrev జెడ్. ::lcode tel ::token-category phonetics ::eng Z.
