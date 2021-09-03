@@ -1,0 +1,315 @@
+::abbrev a. ::exp aikštė ::lcode lit
+::abbrev a.d. ::exp abonentinė dėžutė ::lcode lit
+::abbrev a.k. ::exp asmens kodas ::lcode lit
+::abbrev A.V. ::exp antspaudo vieta ::lcode lit
+::abbrev adv. ::exp advokatas ::lcode lit
+::abbrev air. ::exp airiškai ::lcode lit
+::abbrev akad. ::exp akademikas ::lcode lit
+::abbrev aklg. ::exp akligatvis ::lcode lit
+::abbrev akt. ::exp aktorius ::lcode lit
+::abbrev al. ::exp alėja ::lcode lit
+::abbrev amer. ::exp amerikanizmas ::lcode lit
+::abbrev anat. ::exp anatomija ::lcode lit
+::abbrev angl. ::exp angliskai ::lcode lit
+::abbrev Antr. ::lcode lit
+::abbrev aps. ::exp apskritis ::lcode lit
+::abbrev apskr. ::exp apskritis ::lcode lit
+::abbrev apyg. ::exp apygarda ::lcode lit
+::abbrev arab. ::exp arabų ::lcode lit
+::abbrev archeol. ::lcode lit
+::abbrev archit. ::lcode lit
+::abbrev asist. ::exp asistentas ::lcode lit
+::abbrev asm. ::exp asmens kodas ::lcode lit
+::abbrev asm. ::exp asmuo ::lcode lit
+::abbrev asm.k. ::exp asmens kodas ::lcode lit
+::abbrev asmv. ::exp asmenvardis ::lcode lit
+::abbrev astr. ::exp astronomija ::lcode lit
+::abbrev atsak. ::exp atsakingasis ::lcode lit
+::abbrev atsisk. ::exp atsiskaitomoji ::lcode lit
+::abbrev austral. ::exp australiškai ::lcode lit
+::abbrev aut. ::exp automobilis ::lcode lit
+::abbrev aut. ::exp autorius ::lcode lit
+::abbrev av. ::exp aviacija ::lcode lit
+::abbrev avd. ::exp asmenvardis ::lcode lit
+::abbrev b.k. ::exp banko kodas ::lcode lit
+::abbrev Bal. ::lcode lit
+::abbrev bažn. ::lcode lit
+::abbrev bdv. ::exp būdvardis ::lcode lit
+::abbrev bibl. ::exp Biblija ::lcode lit
+::abbrev biol. ::exp biologija ::lcode lit
+::abbrev Birž. ::lcode lit
+::abbrev bkl. ::exp bakalauras ::lcode lit
+::abbrev bot. ::exp botanika ::lcode lit
+::abbrev brt. ::exp burtai; burtažodis ::lcode lit
+::abbrev brus. ::exp baltarusių ::lcode lit
+::abbrev bt. ::exp butas ::lcode lit
+::abbrev buh. ::exp buhalterija ::lcode lit
+::abbrev buv. ::exp buvęs ::lcode lit
+::abbrev chem. ::exp chemija ::lcode lit
+::abbrev col. ::exp collectivum ::lcode lit
+::abbrev con. ::lcode lit
+::abbrev conj. ::exp conjunctivus; jungtukas ::lcode lit
+::abbrev d. ::exp diena ::lcode lit
+::abbrev dab. ::exp dabartine ::lcode lit
+::abbrev dail. ::exp dailininkas ::lcode lit
+::abbrev dek. ::exp dekanas ::lcode lit
+::abbrev dgs. ::exp daugiskaita ::lcode lit
+::abbrev dial. ::exp dialektizmas ::lcode lit
+::abbrev dipl. ::lcode lit
+::abbrev dir. ::exp direktorius ::lcode lit
+::abbrev dirig. ::exp dirigentas ::lcode lit
+::abbrev dktv. ::exp daiktavardis ::lcode lit
+::abbrev doc. ::exp docentas ::lcode lit
+::abbrev Dr. ::exp daktaras (mokslų) ::lcode lit
+::abbrev drp. ::exp durpynas ::lcode lit
+::abbrev Dz. ::exp Džonas ::lcode lit
+::abbrev dš. ::exp dešinysis ::lcode lit
+::abbrev Dž. ::exp Džonas ::lcode lit
+::abbrev džn. ::exp dažnai ::lcode lit
+::abbrev dėst. ::exp dėstytojas ::lcode lit
+::abbrev egz. ::exp egzempliorius ::lcode lit
+::abbrev eil. ::exp eilutė ::lcode lit
+::abbrev ekon. ::exp ekonomika ::lcode lit
+::abbrev el. ::exp elektra; elektroninis ::lcode lit
+::abbrev Em. ::exp Eminencija ::lcode lit
+::abbrev esam. ::exp esamasis laikas ::lcode lit
+::abbrev etc. ::lcode lit
+::abbrev euf. ::exp eufemizmas ::lcode lit
+::abbrev ež. ::exp ežeras ::lcode lit
+::abbrev fak. ::exp fakultetas ::lcode lit
+::abbrev faks. ::exp faksas ::lcode lit
+::abbrev fam. ::exp familiariai ::lcode lit
+::abbrev farm. ::exp farmacija ::lcode lit
+::abbrev filol. ::exp filologija ::lcode lit
+::abbrev filos. ::exp filosofija ::lcode lit
+::abbrev fin. ::exp finansai ::lcode lit
+::abbrev fiz. ::exp fizika ::lcode lit
+::abbrev fiziol. ::exp fiziologija ::lcode lit
+::abbrev flk. ::exp folkloras ::lcode lit
+::abbrev fon. ::exp fonetika ::lcode lit
+::abbrev fot. ::exp fotografija ::lcode lit
+::abbrev g. ::exp gimes ::lcode lit
+::abbrev Geg. ::lcode lit
+::abbrev gen. ::exp generolas ::lcode lit
+::abbrev geod. ::exp geodezija ::lcode lit
+::abbrev geogr. ::lcode lit
+::abbrev geol. ::exp geologija ::lcode lit
+::abbrev geom. ::exp geometrija ::lcode lit
+::abbrev Gerb. ::exp Gerbiamasis ::lcode lit
+::abbrev gim. ::exp gimes ::lcode lit
+::abbrev glžk. ::lcode lit
+::abbrev gr. ::exp graikų ::lcode lit
+::abbrev gram. ::lcode lit
+::abbrev Gruod. ::lcode lit
+::abbrev gv. ::exp gyvenvietė ::lcode lit
+::abbrev gyd. ::exp gydytojas ::lcode lit
+::abbrev habil. ::lcode lit
+::abbrev her. ::exp heraldika ::lcode lit
+::abbrev hidr. ::exp hidrotechnika ::lcode lit
+::abbrev ind. ::exp Indų ::lcode lit
+::abbrev insp. ::exp inspektorius ::lcode lit
+::abbrev inž. ::exp inžinierius ::lcode lit
+::abbrev iron. ::exp ironiškai ::lcode lit
+::abbrev isp. ::exp ispanų ::lcode lit
+::abbrev ist. ::exp istorija ::lcode lit
+::abbrev istor. ::exp istorija ::lcode lit
+::abbrev it. ::exp italų ::lcode lit
+::abbrev jap. ::exp japonų ::lcode lit
+::abbrev juok. ::exp juokaujamai ::lcode lit
+::abbrev Just. ::lcode lit
+::abbrev jūr. ::exp jūrininkystė ::lcode lit
+::abbrev k.a. ::exp kaip antai ::lcode lit
+::abbrev kalb. ::exp kalbotyra ::lcode lit
+::abbrev kand. ::exp kandidatas ::lcode lit
+::abbrev kar. ::exp karyba ::lcode lit
+::abbrev kas. ::exp kasyba ::lcode lit
+::abbrev kat. ::exp katedra ::lcode lit
+::abbrev Ketv. ::lcode lit
+::abbrev kin. ::exp kinematografija ::lcode lit
+::abbrev kl. ::exp klasė ::lcode lit
+::abbrev klaus. ::exp klausiamasis ::lcode lit
+::abbrev kln. ::exp kalnas ::lcode lit
+::abbrev kn. ::exp knyga ::lcode lit
+::abbrev knyg. ::exp knyginis ::lcode lit
+::abbrev kom. ::exp komercija ::lcode lit
+::abbrev komp. ::exp kompiuteris ::lcode lit
+::abbrev koresp. ::exp korespondentas ::lcode lit
+::abbrev kosm. ::exp kosmonautika ::lcode lit
+::abbrev Kov. ::lcode lit
+::abbrev kpt. ::exp kapitonas ::lcode lit
+::abbrev kr. ::exp kairysis ::lcode lit
+::abbrev Kr. ::exp Kristų ::lcode lit
+::abbrev kt. ::exp kitas ::lcode lit
+::abbrev kul. ::exp kulinarija ::lcode lit
+::abbrev kun. ::exp kunigas ::lcode lit
+::abbrev kuop. ::exp kuopine ::lcode lit
+::abbrev kyš. ::exp kyšulys ::lcode lit
+::abbrev l. ::exp laikas ::lcode lit
+::abbrev l.e.p. ::exp laikinai einantis pareigas ::lcode lit
+::abbrev Lapkr. ::lcode lit
+::abbrev Liep. ::lcode lit
+::abbrev lingv. ::exp lingvistika ::lcode lit
+::abbrev lit. ::exp literatūrinis ::lcode lit
+::abbrev log. ::exp logika ::lcode lit
+::abbrev lot. ::exp lotynų ::lcode lit
+::abbrev ltn. ::exp leitenantas ::lcode lit
+::abbrev m. ::exp menesis; miestas ::lcode lit
+::abbrev m.e. ::exp mūsų eros ::lcode lit
+::abbrev m.m. ::exp mokslo metai ::lcode lit
+::abbrev malon. ::exp malonus ::lcode lit
+::abbrev mat. ::exp matematika ::lcode lit
+::abbrev maž. ::exp mažybinis ::lcode lit
+::abbrev med. ::exp medicina ::lcode lit
+::abbrev medž. ::exp medžioklė ::lcode lit
+::abbrev men. ::exp menas ::lcode lit
+::abbrev menk. ::exp menkinamai ::lcode lit
+::abbrev metal. ::exp metalurgija ::lcode lit
+::abbrev meteor. ::lcode lit
+::abbrev mgnt. ::exp magistrantas ::lcode lit
+::abbrev mgr. ::exp magistras ::lcode lit
+::abbrev min. ::exp mineralogija ::lcode lit
+::abbrev mit. ::exp mitologija ::lcode lit
+::abbrev mjr. ::exp majoras ::lcode lit
+::abbrev mln. ::exp milijonas ::lcode lit
+::abbrev mlrd. ::exp milijardas ::lcode lit
+::abbrev mok. ::exp mokinys; mokyklinis ::lcode lit
+::abbrev moksl. ::exp mokslinis ::lcode lit
+::abbrev mokyt. ::exp mokytojas ::lcode lit
+::abbrev mot. ::exp moteris ::lcode lit
+::abbrev ms. ::exp mįslė ::lcode lit
+::abbrev mst. ::exp miestas ::lcode lit
+::abbrev mstl. ::exp miestelis ::lcode lit
+::abbrev muz. ::exp muzikinis ::lcode lit
+::abbrev mėn. ::exp menesis ::lcode lit
+::abbrev n. ::exp naujasis ::lcode lit
+::abbrev neig. ::exp neigiamasis ::lcode lit
+::abbrev neol. ::exp neologizmas ::lcode lit
+::abbrev niek. ::exp niekinamai ::lcode lit
+::abbrev nkt. ::exp nekaitomas ::lcode lit
+::abbrev No. ::lcode lit ::right-context \s*\d
+::abbrev nr. ::exp numeris ::lcode lit
+::abbrev ntk. ::exp neteiktinas ::lcode lit
+::abbrev ofic. ::exp oficialus ::lcode lit
+::abbrev opt. ::exp optika ::lcode lit
+::abbrev orig. ::exp original ::lcode lit
+::abbrev p. ::exp pietūs; ponas ::lcode lit
+::abbrev p.d. ::exp pašto dėžutė ::lcode lit
+::abbrev p.m.e. ::exp prieš mūsų erą ::lcode lit
+::abbrev pan. ::exp ir panašiai ::lcode lit
+::abbrev pan. ::exp panašiai ::lcode lit
+::abbrev parl. ::exp parlamentas ::lcode lit
+::abbrev pat. ::exp patarlė ::lcode lit
+::abbrev pav. ::exp paveikslas ::lcode lit
+::abbrev pavad. ::exp pavaduotojas ::lcode lit
+::abbrev paž. ::exp pažodžiui ::lcode lit
+::abbrev Penkt. ::lcode lit
+::abbrev pirm. ::exp pirmininkas ::lcode lit
+::abbrev pl. ::exp plentas ::lcode lit
+::abbrev plg. ::exp palygink ::lcode lit
+::abbrev plk. ::exp pulkininkas; pelkė ::lcode lit
+::abbrev Pn. ::lcode lit
+::abbrev poet. ::exp poetizmas ::lcode lit
+::abbrev poez. ::exp poezija ::lcode lit
+::abbrev poligr. ::exp poligrafija ::lcode lit
+::abbrev polit. ::exp politika ::lcode lit
+::abbrev ppr. ::exp paprastai ::lcode lit
+::abbrev pr. ::exp prancūzų; prūsų; prospektas ::lcode lit
+::abbrev pr.Kr. ::exp prieš Kristų ::lcode lit
+::abbrev pranc. ::exp prancūzų; prūsų ::lcode lit
+::abbrev prek. ::exp prekyba ::lcode lit
+::abbrev priet. ::exp prietaras ::lcode lit
+::abbrev prk. ::exp perkeltine ::lcode lit
+::abbrev Prof. ::exp profesorius ::lcode lit
+::abbrev prok. ::exp prokuroras ::lcode lit
+::abbrev prot. ::exp protokolas ::lcode lit
+::abbrev prs. ::exp persona; asmuo ::lcode lit
+::abbrev psich. ::exp psichologija ::lcode lit
+::abbrev psn. ::exp pasenęs žodis ::lcode lit
+::abbrev pss. ::exp pusiasalis ::lcode lit
+::abbrev pvz. ::exp pavyzdžiui ::lcode lit
+::abbrev pšt. ::exp paštas ::lcode lit
+::abbrev r. ::exp rajonas; rytai ::lcode lit
+::abbrev rad. ::exp radiotechnika ::lcode lit
+::abbrev red. ::exp redaktorius ::lcode lit
+::abbrev rel. ::exp religija ::lcode lit
+::abbrev ret. ::exp retai ::lcode lit
+::abbrev Rugpj. ::lcode lit
+::abbrev Rugs. ::lcode lit
+::abbrev rus. ::exp rusų ::lcode lit
+::abbrev rš. ::exp raštų kalbos ::lcode lit
+::abbrev Saus. ::lcode lit
+::abbrev sav. ::exp savivaldybė ::lcode lit
+::abbrev saviv. ::exp savivaldybė ::lcode lit
+::abbrev Sekm. ::lcode lit
+::abbrev sekr. ::exp sekretorius ::lcode lit
+::abbrev sen. ::exp senasis; seniūnija; seniūnas ::lcode lit
+::abbrev sk. ::exp skaityk; skyrius ::lcode lit
+::abbrev skg. ::exp skersgatvis ::lcode lit
+::abbrev skv. ::exp skveras ::lcode lit
+::abbrev skyr. ::exp skyrius ::lcode lit
+::abbrev sl. ::exp slengas; slavų ::lcode lit
+::abbrev sov. ::exp sovietinis ::lcode lit
+::abbrev sp. ::exp spauda; spaustuvė ::lcode lit
+::abbrev Spal. ::lcode lit
+::abbrev spec. ::exp specialistas; specialus ::lcode lit
+::abbrev sport. ::lcode lit
+::abbrev sr. ::exp sritis ::lcode lit
+::abbrev st. ::exp stotis ::lcode lit
+::abbrev stat. ::exp statyba ::lcode lit
+::abbrev str. ::exp straipsnis ::lcode lit
+::abbrev stud. ::exp studentas ::lcode lit
+::abbrev sudurt. ::exp sudurtinis ::lcode lit
+::abbrev sutr. ::exp sutrumpintas ::lcode lit
+::abbrev suv. ::exp suvalkiečių ::lcode lit
+::abbrev sąs. ::exp sąsiuvinis ::lcode lit
+::abbrev sąsk. ::exp sąskaita ::lcode lit
+::abbrev t.p. ::exp ir taip pat ::lcode lit
+::abbrev t.t. ::exp ir taip toliau ::lcode lit
+::abbrev t.y. ::exp tai yra ::lcode lit
+::abbrev teatr. ::lcode lit
+::abbrev tech. ::lcode lit
+::abbrev techn. ::exp technika ::lcode lit
+::abbrev teig. ::exp teigiamas ::lcode lit
+::abbrev teis. ::exp teisė ::lcode lit
+::abbrev tekst. ::exp tekstilė ::lcode lit
+::abbrev tel. ::exp telefonas ::lcode lit
+::abbrev teol. ::exp teologija ::lcode lit
+::abbrev tir. ::exp tiražas ::lcode lit
+::abbrev Treč. ::lcode lit
+::abbrev tūkst. ::exp tūkstantis ::lcode lit
+::abbrev up. ::exp upė ::lcode lit
+::abbrev upl. ::exp upelis ::lcode lit
+::abbrev v. ::exp tik vyriškosios; vakarai ::lcode lit
+::abbrev vad. ::exp vadinamasis ::lcode lit
+::abbrev vaik. ::exp vaikų ::lcode lit
+::abbrev vart. ::exp vartojama ::lcode lit
+::abbrev Vas. ::lcode lit
+::abbrev ved. ::exp vedėjas ::lcode lit
+::abbrev vet. ::exp veterinarija ::lcode lit
+::abbrev vid. ::exp vidurinis ::lcode lit
+::abbrev virš. ::exp viršininkas; viršaitis ::lcode lit
+::abbrev vksm. ::exp veiksmažodis ::lcode lit
+::abbrev vlsč. ::exp valsčius ::lcode lit
+::abbrev vns. ::exp vienaskaita ::lcode lit
+::abbrev vok. ::exp vokiečių ::lcode lit
+::abbrev vs. ::exp viensėdis ::lcode lit
+::abbrev vt. ::exp vietininkas ::lcode lit
+::abbrev vtv. ::exp vietovardis ::lcode lit
+::abbrev vulg. ::exp vulgariai ::lcode lit
+::abbrev vv. ::exp vietovardis ::lcode lit
+::abbrev vyr. ::exp vyriausiasis; vyras ::lcode lit
+::abbrev vyresn. ::exp vyresnysis ::lcode lit
+::abbrev zool. ::exp zoologija ::lcode lit
+::abbrev š. ::exp šiaurė ::lcode lit
+::abbrev š.m. ::exp šių metų ::lcode lit
+::abbrev ž.ū. ::exp žemės ūkis ::lcode lit
+::abbrev šach. ::exp šachmatai ::lcode lit
+::abbrev Šešt. ::lcode lit
+::abbrev šiaur. ::lcode lit
+::abbrev škot. ::exp škotiškai ::lcode lit
+::abbrev įl. ::exp įlanka ::lcode lit
+::abbrev žml. ::exp žemėlapis ::lcode lit
+::abbrev Įn. ::exp įnagininkas ::lcode lit
+::abbrev šnek. ::exp šnekamoji; šnekamosios ::lcode lit
+::abbrev žr. ::exp žiūrėk ::lcode lit
+::abbrev įv.reikšm. ::exp įvairiomis reikšmėmis ::lcode lit

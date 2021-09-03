@@ -1,0 +1,28 @@
+::abbrev Dr. ::lcode hun
+::abbrev Prof. ::lcode hun
+::abbrev Szt. ::lcode hun
+::abbrev St. ::lcode hun
+::abbrev kb. ::lcode hun
+::abbrev vö. ::lcode hun
+::abbrev pl. ::lcode hun
+::abbrev ca. ::lcode hun
+::abbrev min. ::lcode hun
+::abbrev max. ::lcode hun
+::abbrev ún. ::lcode hun
+::abbrev db. ::lcode hun
+::abbrev d.e. ::lcode hun
+::abbrev du. ::lcode hun
+::abbrev tel. ::lcode hun
+::abbrev fax. ::lcode hun
+::abbrev jan. ::lcode hun ::right-context \s*\d
+::abbrev feb. ::lcode hun ::right-context \s*\d
+::abbrev márc. ::lcode hun ::right-context \s*\d
+::abbrev ápr. ::lcode hun ::right-context \s*\d
+::abbrev máj. ::lcode hun ::right-context \s*\d
+::abbrev jún. ::lcode hun ::right-context \s*\d
+::abbrev júl. ::lcode hun ::right-context \s*\d
+::abbrev aug. ::lcode hun ::right-context \s*\d
+::abbrev szept. ::lcode hun ::right-context \s*\d
+::abbrev okt. ::lcode hun ::right-context \s*\d
+::abbrev nov. ::lcode hun ::right-context \s*\d
+::abbrev dec. ::lcode hun ::right-context \s*\d

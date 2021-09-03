@@ -1,0 +1,13 @@
+::abbrev Uacht. ::lcode gle
+::abbrev Dr. ::lcode gle
+::abbrev B.Arch. ::lcode gle
+::abbrev m.sh. ::lcode gle
+::abbrev Co. ::lcode gle
+::abbrev Cf. ::lcode gle
+::abbrev cf. ::lcode gle
+::abbrev i.e. ::lcode gle
+::abbrev r. ::lcode gle
+::abbrev Chr. ::lcode gle
+::abbrev lch. ::lcode gle ::right-context \s*\d
+::abbrev lgh. ::lcode gle ::right-context \s*\d
+::abbrev uimh. ::lcode gle ::right-context \s*\d
