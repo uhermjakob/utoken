@@ -1,0 +1,27 @@
+::abbrev ড. ::lcode asm ::eng Dr.
+::abbrev এ. ::lcode asm ::token-category phonetics ::eng A.
+::abbrev বি. ::lcode asm ::token-category phonetics ::eng B.
+::abbrev সি. ::lcode asm ::token-category phonetics ::eng C.
+::abbrev ডি. ::lcode asm ::token-category phonetics ::eng D.
+::abbrev ই. ::lcode asm ::token-category phonetics ::eng E.
+::abbrev এফ. ::lcode asm ::token-category phonetics ::eng F.
+::abbrev জি. ::lcode asm ::token-category phonetics ::eng G.
+::abbrev এইচ. ::lcode asm ::token-category phonetics ::eng H.
+::abbrev আম. ::lcode asm ::token-category phonetics ::eng I.
+::abbrev জে. ::lcode asm ::token-category phonetics ::eng J.
+::abbrev কে. ::lcode asm ::token-category phonetics ::eng K.
+::abbrev এল. ::lcode asm ::token-category phonetics ::eng L.
+::abbrev এম. ::lcode asm ::token-category phonetics ::eng M.
+::abbrev এন. ::lcode asm ::token-category phonetics ::eng N.
+::abbrev হে. ::lcode asm ::token-category phonetics ::eng O.
+::abbrev পি. ::lcode asm ::token-category phonetics ::eng P.
+::abbrev কিউ. ::lcode asm ::token-category phonetics ::eng Q.
+::abbrev আর. ::lcode asm ::token-category phonetics ::eng R.
+::abbrev এস. ::lcode asm ::token-category phonetics ::eng S.
+::abbrev টি. ::lcode asm ::token-category phonetics ::eng T.
+::abbrev ইউ. ::lcode asm ::token-category phonetics ::eng U.
+::abbrev ভি. ::lcode asm ::token-category phonetics ::eng V.
+::abbrev ডব্লু. ::lcode asm ::token-category phonetics ::eng W.
+::abbrev এক্স. ::lcode asm ::token-category phonetics ::eng X.
+::abbrev ওয়াই. ::lcode asm ::token-category phonetics ::eng Y.
+::abbrev জেড. ::lcode asm ::token-category phonetics ::eng Z.
