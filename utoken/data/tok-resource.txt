@@ -460,12 +460,14 @@
 ::lexical Chick-fil-A ::sem-class company
 ::lexical eBay ::sem-class company
 ::lexical GlaxoSmithKline ::sem-class company
+::lexical HarperCollins ::sem-class company
 ::lexical Hewlett-Packard ::sem-class company
 ::lexical K-Mart ::sem-class company
 ::lexical MasterCard ::sem-class company
 ::lexical McDonalds ::sem-class company
 ::lexical MetroPCS ::sem-class company
 ::lexical PanAm ::sem-class company
+::lexical PricewaterhouseCoopers ::exp Washington Post ::sem-class company
 ::lexical StubHub ::sem-class company
 ::lexical T-Mobile ::sem-class company
 ::lexical Walmart ::sem-class company ::alt-spelling Wal-Mart; WalMart
