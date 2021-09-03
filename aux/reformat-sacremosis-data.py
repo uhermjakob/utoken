@@ -17,6 +17,10 @@ if __name__ == "__main__":
         line_number += 1
         prev_comment = comment
         comment = None
+        exp = None
+        if m3 := regex.match(r'(.*?)\s+::exp\s+(\S.*?\S)(\s+::.*|\s*)$', line):
+            exp = m3.group(2)
+            line = m3.group(1) + m3.group(3)
         if regex.match(r'\s*$', line):
             section_name = None
         elif m := regex.match(r'#\s*(consonants|phonetics)', line):
@@ -26,6 +30,8 @@ if __name__ == "__main__":
         elif m2 := regex.match(r'((?:\pL|\d).*?)(\s+#.*|\s*)$', line):
             abbreviation = m2.group(1) + '.'
             out = f'::abbrev {abbreviation}'
+            if exp:
+                out += f' ::exp {exp}'
             if lcode:
                 out += f' ::lcode {lcode}'
             if section_name == 'consonants':
