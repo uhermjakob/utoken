@@ -1,0 +1,1986 @@
+::abbrev Cв. ::lcode rus
+::abbrev Cвв. ::lcode rus
+::abbrev Iв. ::lcode rus
+::abbrev Iвв. ::lcode rus
+::abbrev Lв. ::lcode rus
+::abbrev Lвв. ::lcode rus
+::abbrev Mв. ::lcode rus
+::abbrev Mвв. ::lcode rus
+::abbrev NB ::exp нотабене ::lcode rus
+::abbrev P.S. ::exp постскриптум ::lcode rus
+::abbrev Vв. ::lcode rus
+::abbrev Vвв. ::lcode rus
+::abbrev Xв. ::lcode rus
+::abbrev Xвв. ::lcode rus
+::abbrev А. ::lcode rus
+::abbrev абл. ::exp аблатив ::lcode rus
+::abbrev абс. ::exp абсолютный ::lcode rus
+::abbrev абх. ::exp абхазский ::lcode rus
+::abbrev а·в ::exp ампер-виток ::lcode rus
+::abbrev авар. ::exp аварский ::lcode rus
+::abbrev авг. ::exp август, августовский ::lcode rus
+::abbrev а-во ::exp агентство ::lcode rus
+::abbrev австр. ::exp австрийский ::lcode rus
+::abbrev австрал. ::exp австралийский ::lcode rus
+::abbrev авт. ::exp автономный ::lcode rus
+::abbrev авт.л. ::exp авторский лист ::lcode rus
+::abbrev агр. ::exp агроном, агрономический; аграрный ::lcode rus
+::abbrev адж. ::exp аджарский ::lcode rus
+::abbrev адм. ::exp адмирал; административный ::lcode rus
+::abbrev адм.-терр. ::exp административно-территориальный ::lcode rus
+::abbrev адыг. ::exp адыгейский, адыгский ::lcode rus
+::abbrev а.е. ::exp астрономическая единица ::lcode rus
+::abbrev а.е.д. ::exp астрономическая единица длины ::lcode rus
+::abbrev а.е.м. ::exp атомная единица массы ::lcode rus
+::abbrev азерб. ::exp азербайджанский ::lcode rus
+::abbrev азиат. ::exp азиатский ::lcode rus
+::abbrev акад. ::exp академик, академия ::lcode rus
+::abbrev акк. ::exp аккузатив ::lcode rus
+::abbrev акц. ::exp акционерный ::lcode rus
+::abbrev а.л. ::exp авторский лист ::lcode rus
+::abbrev а/л ::exp атомный ледокол ::lcode rus
+::abbrev алб. ::exp албанский ::lcode rus
+::abbrev алг. ::exp алгебра; алгебраический ::lcode rus
+::abbrev алгебр. ::exp алгебраический ::lcode rus
+::abbrev алж. ::exp алжирский ::lcode rus
+::abbrev алт. ::exp алтайский ::lcode rus
+::abbrev алф. ::exp алфавитный ::lcode rus
+::abbrev альм. ::exp альманах ::lcode rus
+::abbrev альп. ::exp альпийский ::lcode rus
+::abbrev а/м ::exp автомашина ::lcode rus
+::abbrev ам ::exp аттометр ::lcode rus
+::abbrev амер. ::exp американский ::lcode rus
+::abbrev анат. ::exp анатомический ::lcode rus
+::abbrev англ. ::exp английский ::lcode rus
+::abbrev ангол. ::exp ангольский ::lcode rus
+::abbrev аннот. ::exp аннотация, аннотированный ::lcode rus
+::abbrev антич. ::exp античный ::lcode rus
+::abbrev а/о ::exp акционерное общество; автономный округ, автономная область ::lcode rus
+::abbrev а/п ::exp аэропорт ::lcode rus
+::abbrev ап. ::exp апостол ::lcode rus
+::abbrev апп. ::exp апостолы ::lcode rus
+::abbrev апр. ::exp апрель, апрельский ::lcode rus
+::abbrev ар. ::exp арабский ::lcode rus
+::abbrev араб. ::exp арабский ::lcode rus
+::abbrev арам. ::exp арамейский ::lcode rus
+::abbrev аргент. ::exp аргентинский ::lcode rus
+::abbrev арифм. ::exp арифметика, арифметический ::lcode rus
+::abbrev арм. ::exp армянский ::lcode rus
+::abbrev арт. ::exp артиллерия, артиллерийский; артист ::lcode rus
+::abbrev арх. ::exp архив, архивный ::lcode rus
+::abbrev арх. ::exp археология, археологический ::lcode rus
+::abbrev арх. ::exp архипелаг ::lcode rus
+::abbrev арх. ::exp архитектор, архитектурный ::lcode rus
+::abbrev археол. ::exp археология, археологический ::lcode rus
+::abbrev архиеп ::exp архиепископ ::lcode rus
+::abbrev архим. ::exp архимандрит ::lcode rus
+::abbrev архип. ::exp архипелаг ::lcode rus
+::abbrev архит. ::exp архитектор, архитектурный ::lcode rus
+::abbrev а/с ::exp административная служба ::lcode rus
+::abbrev асб ::exp апостильб ::lcode rus
+::abbrev а·сек ::exp ампер-секунда ::lcode rus
+::abbrev асс. ::exp ассистент ::lcode rus
+::abbrev ассир. ::exp ассирийский ::lcode rus
+::abbrev астр. ::exp астрономический ::lcode rus
+::abbrev а/т ::exp автотранспорт ::lcode rus
+::abbrev ат ::exp атмосфера техническая ::lcode rus
+::abbrev ат. ::exp атомный ::lcode rus
+::abbrev ата ::exp атмосфера абсолютная ::lcode rus
+::abbrev ати ::exp атмосфера избыточная ::lcode rus
+::abbrev ат.м. ::exp атомная масса ::lcode rus
+::abbrev атм ::exp атмосфера физическая ::lcode rus
+::abbrev атм. ::exp атмосферный ::lcode rus
+::abbrev афг. ::exp афганский ::lcode rus
+::abbrev афр. ::exp африканский ::lcode rus
+::abbrev ацет.ч. ::exp ацетильное число ::lcode rus
+::abbrev а·ч ::exp ампер-час ::lcode rus
+::abbrev а/я ::exp абонентный ящик ::lcode rus
+::abbrev Б ::exp бел ::lcode rus
+::abbrev Б. ::exp Большой ::lcode rus
+::abbrev б ::exp байт ::lcode rus
+::abbrev б. ::exp балка; больной; бухта; бывший ::lcode rus
+::abbrev бал. ::exp балка; балет ::lcode rus
+::abbrev балк. ::exp балкарский ::lcode rus
+::abbrev балт. ::exp балтийский ::lcode rus
+::abbrev бар. ::exp барак ::lcode rus
+::abbrev барр. ::exp баррель ::lcode rus
+::abbrev басс. ::exp бассейн ::lcode rus
+::abbrev бат-н ::exp батальон ::lcode rus
+::abbrev бат-н ::exp батальон ::lcode rus
+::abbrev башк. ::exp башкирский ::lcode rus
+::abbrev б.г. ::exp без указания года ::lcode rus
+::abbrev безв. ::exp безводный ::lcode rus
+::abbrev безл. ::exp безличный ::lcode rus
+::abbrev белорус. ::exp белорусский ::lcode rus
+::abbrev бельг. ::exp бельгийский ::lcode rus
+::abbrev бер. ::exp берег ::lcode rus
+::abbrev бесср. ::exp бессребреник ::lcode rus
+::abbrev бессрр. ::exp бессребреники ::lcode rus
+::abbrev бзн ::exp бензин ::lcode rus
+::abbrev б.и. ::exp без указания издательства ::lcode rus
+::abbrev библ. ::exp библейский; библиографический, библиография; библиотечный ::lcode rus
+::abbrev б.или м. ::exp более или менее ::lcode rus
+::abbrev биогр. ::exp биографический ::lcode rus
+::abbrev биол. ::exp биологический ::lcode rus
+::abbrev бирм. ::exp бирманский ::lcode rus
+::abbrev бит/с. ::exp бит в секунду ::lcode rus
+::abbrev Бк ::exp беккерель ::lcode rus
+::abbrev б-ка ::exp библиотека ::lcode rus
+::abbrev Бл.В. ::exp Ближний Восток ::lcode rus
+::abbrev Бл.Восток ::exp Ближний Восток ::lcode rus
+::abbrev блгв. ::exp благоверный ::lcode rus
+::abbrev блгвв. ::exp благоверные ::lcode rus
+::abbrev блж. ::exp блаженный ::lcode rus
+::abbrev блр. ::exp белорусский ::lcode rus
+::abbrev б.м. ::exp без указания места ::lcode rus
+::abbrev б.м.и г. ::exp без указания места и года ::lcode rus
+::abbrev б-н ::exp батальон ::lcode rus
+::abbrev бол. ::exp болото ::lcode rus
+::abbrev болг. ::exp болгарский ::lcode rus
+::abbrev болив. ::exp боливийский ::lcode rus
+::abbrev больн. ::exp больной ::lcode rus
+::abbrev больн. ::exp больница ::lcode rus
+::abbrev бот. ::exp ботаника, ботанический ::lcode rus
+::abbrev б/п ::exp без переплета; беспартийный ::lcode rus
+::abbrev бр. ::exp братья (при фамилии); брутто ::lcode rus
+::abbrev браз. ::exp бразильский ::lcode rus
+::abbrev брет. ::exp бретонский ::lcode rus
+::abbrev брит. ::exp британский ::lcode rus
+::abbrev б/у ::exp бывший в употреблении ::lcode rus
+::abbrev буд. ::exp будущее время ::lcode rus
+::abbrev букв. ::exp буквально, буквальный ::lcode rus
+::abbrev бул. ::exp бульвар ::lcode rus
+::abbrev бульв. ::lcode rus
+::abbrev бум. ::exp бумажный ::lcode rus
+::abbrev бум. л. ::exp бумажный лист ::lcode rus
+::abbrev бурж. ::exp буржуазный ::lcode rus
+::abbrev бурят. ::exp бурятский ::lcode rus
+::abbrev бут. ::exp бутылка ::lcode rus
+::abbrev бух. ::exp бухта ::lcode rus
+::abbrev б.ц. ::exp без указания цены ::lcode rus
+::abbrev б-ца ::exp больница ::lcode rus
+::abbrev б.ч. ::exp большая часть, большей частью ::lcode rus
+::abbrev б-чка ::exp библиотечка ::lcode rus
+::abbrev быв. ::exp бывший ::lcode rus
+::abbrev бюдж. ::exp бюджетный ::lcode rus
+::abbrev бюлл. ::exp бюллетень ::lcode rus
+::abbrev В. ::exp Верхний; восток; винительный  ::lcode rus
+::abbrev В. ::exp винительный падеж ::lcode rus
+::abbrev в. ::exp верста ::lcode rus
+::abbrev в. ::exp век ::lcode rus
+::abbrev в. ::exp вечер ::lcode rus
+::abbrev в. ::exp винительный падеж ::lcode rus
+::abbrev в. ::exp восточный ::lcode rus
+::abbrev в. ::exp выпуск ::lcode rus
+::abbrev в. ::exp век ::lcode rus
+::abbrev в. ::exp вечер ::lcode rus
+::abbrev в. ::exp винительный падеж ::lcode rus
+::abbrev в. ::exp восточный ::lcode rus
+::abbrev в. ::exp выпуск ::lcode rus
+::abbrev В·А ::exp вольт-ампер ::lcode rus
+::abbrev вал. ::exp валентность ::lcode rus
+::abbrev Вб ::exp вебер ::lcode rus
+::abbrev Вб·м ::exp вебер-метр ::lcode rus
+::abbrev в.(В.) ::exp великий (Великий) ::lcode rus
+::abbrev вв. ::exp века ::lcode rus
+::abbrev в-во ::exp вещество ::lcode rus
+::abbrev в.д. ::exp восточная долгота ::lcode rus
+::abbrev вдп. ::exp водопад ::lcode rus
+::abbrev вдхр. ::exp водохранилище ::lcode rus
+::abbrev вед. ::exp ведомственный; ведущий ::lcode rus
+::abbrev вел. (Вел.) ::exp великий (Великий) ::lcode rus
+::abbrev вел. (Вел.) ::exp великий (Великий) ::lcode rus
+::abbrev венг. ::exp венгерский ::lcode rus
+::abbrev венесуэл. ::exp венесуэльский ::lcode rus
+::abbrev верх. ::exp верхний ::lcode rus
+::abbrev вес.ч. ::exp весовая часть ::lcode rus
+::abbrev вет. ::exp ветеринарный ::lcode rus
+::abbrev веч. ::exp вечер ::lcode rus
+::abbrev веч. ::exp вечерний; вечерня ::lcode rus
+::abbrev веч. ::exp вечер ::lcode rus
+::abbrev вид ::exp (глагола) ::lcode rus
+::abbrev визант. ::exp византийский ::lcode rus
+::abbrev вин. ::exp винительный падеж ::lcode rus
+::abbrev вин. ::exp винительный падеж ::lcode rus
+::abbrev вкз. ::exp вокзал ::lcode rus
+::abbrev вкл. ::exp вкладка; вклейка; включение ::lcode rus
+::abbrev вкл. ::exp включая, включительно ::lcode rus
+::abbrev вкл. ::exp включая, включительно ::lcode rus
+::abbrev вкл.л. ::exp вкладной лист ::lcode rus
+::abbrev включ. ::exp включая, включительно ::lcode rus
+::abbrev включ. ::exp включая, включительно ::lcode rus
+::abbrev в.к.т. ::exp верхняя критическая температура ::lcode rus
+::abbrev вл. ::exp владение (здание) ::lcode rus
+::abbrev влк. ::exp вулкан ::lcode rus
+::abbrev в.-луж. ::exp верхнелужицкий ::lcode rus
+::abbrev вм. ::exp вместо ::lcode rus
+::abbrev вмц. ::exp великомученица ::lcode rus
+::abbrev вмцц. ::exp великомученицы ::lcode rus
+::abbrev вмч. ::exp великомученик ::lcode rus
+::abbrev вмчч. ::exp великомученики ::lcode rus
+::abbrev внеш. ::exp внешний ::lcode rus
+::abbrev в.н.с. ::exp ведущий научный сотрудник ::lcode rus
+::abbrev внутр. ::exp внутренний ::lcode rus
+::abbrev в/о ::exp вечернее отделение ::lcode rus
+::abbrev вод.ст. ::exp водяной столб ::lcode rus
+::abbrev воен. ::exp военный ::lcode rus
+::abbrev возв. ::exp возвышенность ::lcode rus
+::abbrev возд. ::exp воздушный ::lcode rus
+::abbrev вок. ::exp вокальный ::lcode rus
+::abbrev вол. ::exp волость ::lcode rus
+::abbrev воскр. ::exp воскресенье ::lcode rus
+::abbrev воскр. ::exp воскресенье ::lcode rus
+::abbrev в осн. ::exp в основном ::lcode rus
+::abbrev вост. ::exp восточный ::lcode rus
+::abbrev вост. ::exp восточный ::lcode rus
+::abbrev вост.-европ. ::exp восточноевропейский ::lcode rus
+::abbrev восх. ::exp восход ::lcode rus
+::abbrev в/п ::exp в переплете ::lcode rus
+::abbrev вп. ::exp впадина ::lcode rus
+::abbrev вр. ::exp врач; время ::lcode rus
+::abbrev В·с ::exp вольт-секунда ::lcode rus
+::abbrev в/с ::exp высший сорт ::lcode rus
+::abbrev вс. ::exp воскресенье ::lcode rus
+::abbrev вс. ::exp воскресенье ::lcode rus
+::abbrev в ср. ::exp в среднем ::lcode rus
+::abbrev вступ. ::exp вступительный ::lcode rus
+::abbrev Вт ::exp ватт ::lcode rus
+::abbrev вт. ::exp вторник ::lcode rus
+::abbrev Вт·с ::exp ватт-секунда ::lcode rus
+::abbrev Вт·ч ::exp ватт-час ::lcode rus
+::abbrev в т.ч. ::exp в том числе ::lcode rus
+::abbrev в.ч. ::exp весовая часть ::lcode rus
+::abbrev в.ч. ::exp весовая часть ::lcode rus
+::abbrev в.ч. ::exp войсковая часть ::lcode rus
+::abbrev в/ч ::exp войсковая часть ::lcode rus
+::abbrev выкл. ::exp выключение ::lcode rus
+::abbrev вып. ::exp выпуск ::lcode rus
+::abbrev вып. ::exp выпуск ::lcode rus
+::abbrev вып.дан. ::exp выпускные данные ::lcode rus
+::abbrev выс. ::exp выселки; высота ::lcode rus
+::abbrev вых.дан. ::exp выходные данные ::lcode rus
+::abbrev вьетн. ::exp вьетнамский ::lcode rus
+::abbrev Г ::exp грамм-сила; генри ::lcode rus
+::abbrev г ::exp грамм ::lcode rus
+::abbrev г. ::exp год; гора ::lcode rus
+::abbrev г. ::exp госпожа ::lcode rus
+::abbrev г. ::exp господин ::lcode rus
+::abbrev г. ::exp город ::lcode rus
+::abbrev г. ::exp год; гора ::lcode rus
+::abbrev г. ::exp город ::lcode rus
+::abbrev г. ::exp господин ::lcode rus
+::abbrev г. ::exp господин ::lcode rus
+::abbrev г. ::exp госпожа ::lcode rus
+::abbrev г. ::exp господин ::lcode rus
+::abbrev г. ::exp город ::lcode rus
+::abbrev га ::exp гектар ::lcode rus
+::abbrev гав. ::exp гавань ::lcode rus
+::abbrev газ. ::exp газета, газетный; газовый ::lcode rus
+::abbrev гал. ::exp галантерейный ::lcode rus
+::abbrev гар. ::exp гараж ::lcode rus
+::abbrev Гб ::exp гильберт ::lcode rus
+::abbrev Гб ::exp гигабайт ::lcode rus
+::abbrev Гбайт ::exp гигабайт ::lcode rus
+::abbrev Гбайт/с. ::exp гигабайт в секунду ::lcode rus
+::abbrev Гбит ::exp гигабит ::lcode rus
+::abbrev Гбит/с. ::exp гигабит в секунду ::lcode rus
+::abbrev ГВ ::exp гировертикаль; горизонт воды ::lcode rus
+::abbrev гв. ::exp гвардия, гвардейский ::lcode rus
+::abbrev гватем. ::exp гватемальский ::lcode rus
+::abbrev гвин. ::exp гвинейский ::lcode rus
+::abbrev гВт ::exp гектоватт ::lcode rus
+::abbrev гВт·ч ::exp гектоватт-час ::lcode rus
+::abbrev гг ::exp гектограмм ::lcode rus
+::abbrev гг. ::exp годы; горы ::lcode rus
+::abbrev гг. ::exp господа ::lcode rus
+::abbrev гг. ::exp города ::lcode rus
+::abbrev гг. ::exp годы; горы ::lcode rus
+::abbrev гг. ::exp города ::lcode rus
+::abbrev гг. ::exp господа ::lcode rus
+::abbrev гг. ::exp господа ::lcode rus
+::abbrev гг. ::exp господа ::lcode rus
+::abbrev гг. ::exp города ::lcode rus
+::abbrev ГГц ::exp генри-герц ::lcode rus
+::abbrev г-да ::exp господа ::lcode rus
+::abbrev г-да ::exp господа ::lcode rus
+::abbrev г-да ::exp господа ::lcode rus
+::abbrev г-да ::exp господа ::lcode rus
+::abbrev ген. ::exp генерал; генеральный; генитив ::lcode rus
+::abbrev ген.л. ::exp генерал-лейтенант ::lcode rus
+::abbrev ген.-лейт. ::exp генерал-лейтенант ::lcode rus
+::abbrev ген.м. ::exp генерал-майор ::lcode rus
+::abbrev ген.п. ::exp генерал-полковник ::lcode rus
+::abbrev ген.-полк. ::exp генерал-полковник ::lcode rus
+::abbrev геогр. ::exp география, географический ::lcode rus
+::abbrev геод. ::exp геодезия, геодезический ::lcode rus
+::abbrev геол. ::exp геология, геологический ::lcode rus
+::abbrev геом. ::exp геометрия, геометрический ::lcode rus
+::abbrev герм. ::exp германский ::lcode rus
+::abbrev г-жа ::exp госпожа ::lcode rus
+::abbrev г-жа ::exp госпожа ::lcode rus
+::abbrev г·К ::exp грамм-кельвин ::lcode rus
+::abbrev гл ::exp гектолитр ::lcode rus
+::abbrev гл. ::exp глава; главный; глагол; глубина ::lcode rus
+::abbrev гл.обр. ::exp главным образом ::lcode rus
+::abbrev гм ::exp гектометр ::lcode rus
+::abbrev г·моль ::exp грамм-моль ::lcode rus
+::abbrev г-н ::exp господин ::lcode rus
+::abbrev г-н ::exp господин ::lcode rus
+::abbrev г-н ::exp господин ::lcode rus
+::abbrev г-н ::exp господин ::lcode rus
+::abbrev г.н.с. ::exp главный научный сотрудник ::lcode rus
+::abbrev г/о ::exp городское отделение ::lcode rus
+::abbrev год. ::exp годовой, годичный ::lcode rus
+::abbrev голл. ::exp голландский ::lcode rus
+::abbrev гор. ::exp город ::lcode rus
+::abbrev гор. ::exp город ::lcode rus
+::abbrev гор. ::exp городской; горячий ::lcode rus
+::abbrev гор. ::exp город ::lcode rus
+::abbrev гос. ::exp государственный ::lcode rus
+::abbrev гос-во ::exp государство ::lcode rus
+::abbrev госп. ::exp госпиталь ::lcode rus
+::abbrev госп. ::exp госпиталь ::lcode rus
+::abbrev ГПа ::exp генри-паскаль ::lcode rus
+::abbrev гпз ::exp гектопьеза ::lcode rus
+::abbrev г.прох. ::exp горный проход ::lcode rus
+::abbrev г·Р ::exp грамм-рентген ::lcode rus
+::abbrev г-р ::exp генератор ::lcode rus
+::abbrev гр. ::exp граф; графа; группа ::lcode rus
+::abbrev гр. ::exp градус ::lcode rus
+::abbrev гр. ::exp греческий ::lcode rus
+::abbrev гр. ::exp гражданка ::lcode rus
+::abbrev гр. ::exp гражданин ::lcode rus
+::abbrev гр. ::exp градус ::lcode rus
+::abbrev гр. ::exp греческий ::lcode rus
+::abbrev гр. ::exp гражданка ::lcode rus
+::abbrev гр. ::exp гражданин ::lcode rus
+::abbrev гр. ::exp гражданин ::lcode rus
+::abbrev грав. ::exp гравюра ::lcode rus
+::abbrev град. ::exp градус ::lcode rus
+::abbrev град. ::exp градус ::lcode rus
+::abbrev гражд. ::exp гражданский ::lcode rus
+::abbrev грамм. ::exp граммофонный; грамматика, грамматический ::lcode rus
+::abbrev греч. ::exp греческий ::lcode rus
+::abbrev греч. ::exp греческий ::lcode rus
+::abbrev гр-ка ::exp гражданка ::lcode rus
+::abbrev гр-ка ::exp гражданка ::lcode rus
+::abbrev гр-н ::exp гражданин ::lcode rus
+::abbrev гр-н ::exp гражданин ::lcode rus
+::abbrev гр-н ::exp гражданин ::lcode rus
+::abbrev гр-не ::exp граждане ::lcode rus
+::abbrev гр-не ::exp граждане ::lcode rus
+::abbrev гр-не ::exp граждане ::lcode rus
+::abbrev груз. ::exp грузинский ::lcode rus
+::abbrev Гс ::exp гаусс ::lcode rus
+::abbrev гс ::exp грамм-сила ::lcode rus
+::abbrev г·см ::exp грамм-сантиметр ::lcode rus
+::abbrev гсп. ::exp госпиталь ::lcode rus
+::abbrev гсп. ::exp госпиталь ::lcode rus
+::abbrev гс·см ::exp грамм-сила-сантиметр ::lcode rus
+::abbrev Гс·Э ::exp гаусс-эрстед ::lcode rus
+::abbrev губ. ::exp губерния, губернский ::lcode rus
+::abbrev г/х ::exp газоход ::lcode rus
+::abbrev Гц ::exp герц ::lcode rus
+::abbrev г-ца ::exp гостиница ::lcode rus
+::abbrev ГэВ ::exp гигаэлектронвольт ::lcode rus
+::abbrev г·экв ::exp грамм-эквивалент ::lcode rus
+::abbrev Д ::exp диоптрия ::lcode rus
+::abbrev Д ::exp диоптрия ::lcode rus
+::abbrev Д. ::exp дательный падеж ::lcode rus
+::abbrev Д. ::exp дательный падеж ::lcode rus
+::abbrev д ::exp деци… ::lcode rus
+::abbrev д ::exp дюйм ::lcode rus
+::abbrev д ::exp дюйм ::lcode rus
+::abbrev д. ::exp дательный падеж ::lcode rus
+::abbrev д. ::exp действие (при цифре); день; долгота; доля; дом ::lcode rus
+::abbrev д. ::exp деревня ::lcode rus
+::abbrev д. ::exp дательный падеж ::lcode rus
+::abbrev д. ::exp деревня ::lcode rus
+::abbrev даг. ::exp дагестанский ::lcode rus
+::abbrev дат. ::exp дательный падеж ::lcode rus
+::abbrev дат. ::exp датский ::lcode rus
+::abbrev дат. ::exp дательный падеж ::lcode rus
+::abbrev дБ ::exp децибел ::lcode rus
+::abbrev д.б.н. ::exp доктор биологических наук ::lcode rus
+::abbrev Д.В. ::exp Дальний Восток ::lcode rus
+::abbrev Д. Восток ::exp Дальний Восток ::lcode rus
+::abbrev дв.ч. ::exp двойственное число ::lcode rus
+::abbrev дг ::exp дециграмм ::lcode rus
+::abbrev д.г.-м.н. ::exp доктор геолого-минералогических наук ::lcode rus
+::abbrev д.г.н. ::exp доктор географических наук ::lcode rus
+::abbrev деепр. ::exp деепричастие ::lcode rus
+::abbrev деж. ::exp дежурный ::lcode rus
+::abbrev действ. ::exp действительный ::lcode rus
+::abbrev дек. ::exp декабрь, декабрьский; декада ::lcode rus
+::abbrev ден. ::exp денежный ::lcode rus
+::abbrev деп. ::exp департамент; депутат ::lcode rus
+::abbrev дер. ::exp деревня ::lcode rus
+::abbrev дер. ::exp деревня ::lcode rus
+::abbrev дес. ::exp десант; десятина; десяток; десятичный ::lcode rus
+::abbrev дес.л. ::exp десертная ложка ::lcode rus
+::abbrev дет. ::exp деталь ::lcode rus
+::abbrev Дж ::exp джоуль ::lcode rus
+::abbrev Дж·с ::exp джоуль-секунда ::lcode rus
+::abbrev д-з ::exp диагноз ::lcode rus
+::abbrev диак. ::exp диакон ::lcode rus
+::abbrev диал. ::exp диалектный ::lcode rus
+::abbrev диам. ::exp диаметр ::lcode rus
+::abbrev див. ::exp дивизия ::lcode rus
+::abbrev див-н ::exp дивизион ::lcode rus
+::abbrev див-н ::exp дивизион ::lcode rus
+::abbrev диз. ::exp дизель ::lcode rus
+::abbrev д.и.н. ::exp доктор исторических наук ::lcode rus
+::abbrev дин ::exp дина ::lcode rus
+::abbrev дин ::exp дина ::lcode rus
+::abbrev дин·см ::exp дин-сантиметр ::lcode rus
+::abbrev дир. ::exp директор; дирижер ::lcode rus
+::abbrev дир. ::exp директор; дирижер ::lcode rus
+::abbrev д.иск. ::exp доктор искусствоведения ::lcode rus
+::abbrev дисс. ::exp диссертация ::lcode rus
+::abbrev дист. ::exp дистанция; дистиллированный ::lcode rus
+::abbrev дифф. ::exp дифференциал, дифференциальный ::lcode rus
+::abbrev Д/к ::exp Дворец культуры, Дом культуры ::lcode rus
+::abbrev дкг ::exp декаграмм ::lcode rus
+::abbrev дкл ::exp декалитр ::lcode rus
+::abbrev дкм ::exp декаметр ::lcode rus
+::abbrev дл ::exp децилитр ::lcode rus
+::abbrev дл. ::exp длина ::lcode rus
+::abbrev дм ::exp дюйм ::lcode rus
+::abbrev дм ::exp дециметр ::lcode rus
+::abbrev дм ::exp дюйм ::lcode rus
+::abbrev дм. ::lcode rus
+::abbrev д.м.н. ::exp доктор медицинских наук ::lcode rus
+::abbrev д.н. ::exp доктор наук ::lcode rus
+::abbrev дн ::exp дивизион ::lcode rus
+::abbrev дн ::exp дина ::lcode rus
+::abbrev дн ::exp дивизион ::lcode rus
+::abbrev дн ::exp дина ::lcode rus
+::abbrev д.о. ::exp дом отдыха ::lcode rus
+::abbrev д/о ::exp дом отдыха ::lcode rus
+::abbrev д/о ::exp дневное отделение ::lcode rus
+::abbrev доб. ::exp добавление, добавочный ::lcode rus
+::abbrev добр. ::exp добровольный ::lcode rus
+::abbrev док. ::exp документальный ::lcode rus
+::abbrev док. ::exp документ ::lcode rus
+::abbrev док-т ::exp документ ::lcode rus
+::abbrev докт. ::exp доктор ::lcode rus
+::abbrev докт. ::exp доктор ::lcode rus
+::abbrev дол. ::exp долина ::lcode rus
+::abbrev долл. ::exp доллар ::lcode rus
+::abbrev доп. ::exp дополнение, дополненный, дополнительный; допустимый ::lcode rus
+::abbrev доц. ::exp доцент ::lcode rus
+::abbrev д.п. ::exp дачный поселок ::lcode rus
+::abbrev дптр ::exp диоптрия ::lcode rus
+::abbrev дптр ::exp диоптрия ::lcode rus
+::abbrev д-р ::exp директор; дирижер ::lcode rus
+::abbrev д-р ::exp доктор ::lcode rus
+::abbrev д-р ::exp дебаркадер ::lcode rus
+::abbrev д-р ::exp директор; дирижер ::lcode rus
+::abbrev д-р ::exp доктор ::lcode rus
+::abbrev др. ::exp древний; другой; дробь ::lcode rus
+::abbrev драм. ::exp драматический ::lcode rus
+::abbrev др.-англ. ::exp древнеанглийский ::lcode rus
+::abbrev др.-в.-н. ::exp древневерхненемецкий ::lcode rus
+::abbrev др.-в.-нем. ::exp древневерхненемецкий ::lcode rus
+::abbrev др.-герм. ::exp древнегерманский ::lcode rus
+::abbrev др.-гр. ::exp древнегреческий ::lcode rus
+::abbrev др.-греч. ::exp древнегреческий ::lcode rus
+::abbrev др.-евр. ::exp древнееврейский ::lcode rus
+::abbrev др.-инд. ::exp древнеиндийский ::lcode rus
+::abbrev др.-н.-нем. ::exp древненижненемецкий ::lcode rus
+::abbrev др.-рус. ::exp древнерусский ::lcode rus
+::abbrev д/с ::exp детский сад ::lcode rus
+::abbrev д.т.н. ::exp доктор технических наук ::lcode rus
+::abbrev дубл. ::exp дубликат, дублированный ::lcode rus
+::abbrev д/ф ::exp документальный фильм ::lcode rus
+::abbrev д.ф.-м.н. ::exp доктор физико-математических наук ::lcode rus
+::abbrev д.ф.н. ::exp доктор филологических наук, доктор философских наук ::lcode rus
+::abbrev д.х.н. ::exp доктор химических наук ::lcode rus
+::abbrev д.ч. ::exp действительный член ::lcode rus
+::abbrev д/э ::exp дизель-электроход ::lcode rus
+::abbrev д/эх ::exp дизель-электроход ::lcode rus
+::abbrev д/я ::exp детские ясли; для ясности ::lcode rus
+::abbrev Е. ::lcode rus
+::abbrev е. ::lcode rus
+::abbrev евр. ::exp еврейский ::lcode rus
+::abbrev евр. ::exp европейский ::lcode rus
+::abbrev европ. ::exp европейский ::lcode rus
+::abbrev егип. ::exp египетский ::lcode rus
+::abbrev ед. ::exp единица ::lcode rus
+::abbrev ед. ::exp единственное число ::lcode rus
+::abbrev ед. ::exp единственное число ::lcode rus
+::abbrev ед.изм. ::exp единица измерения ::lcode rus
+::abbrev ед.измер. ::exp единица измерения ::lcode rus
+::abbrev ед.хр. ::exp единица хранения ::lcode rus
+::abbrev ед.ч. ::exp единственное число ::lcode rus
+::abbrev ед.ч. ::exp единственное число ::lcode rus
+::abbrev ежедн. ::exp ежедневный ::lcode rus
+::abbrev ежемес. ::exp ежемесячный ::lcode rus
+::abbrev еженед. ::exp еженедельный ::lcode rus
+::abbrev Е.И.В. ::exp Его (Ее) Императорское Величество (в старых текстах) ::lcode rus
+::abbrev емк. ::exp емкость ::lcode rus
+::abbrev еп. ::exp епископ ::lcode rus
+::abbrev епп. ::exp епископы ::lcode rus
+::abbrev ефр. ::exp ефрейтор ::lcode rus
+::abbrev Ж. ::lcode rus
+::abbrev ж. ::exp жидкость, жидкий ::lcode rus
+::abbrev ж. ::exp женский ::lcode rus
+::abbrev ж. ::exp жители ::lcode rus
+::abbrev ж. ::exp женский ::lcode rus
+::abbrev ж. ::exp жители ::lcode rus
+::abbrev ж.д. ::exp железная дорога ::lcode rus
+::abbrev ж.-д. ::exp железнодорожный ::lcode rus
+::abbrev ж/д ::exp железная дорога ::lcode rus
+::abbrev ж/д ::exp железнодорожный ::lcode rus
+::abbrev жен. ::exp женский ::lcode rus
+::abbrev жен. ::exp женский ::lcode rus
+::abbrev жит. ::exp жители ::lcode rus
+::abbrev жит. ::exp жители ::lcode rus
+::abbrev журн. ::exp журнал ::lcode rus
+::abbrev З. ::exp запад ::lcode rus
+::abbrev з. ::exp запад ::lcode rus
+::abbrev з. ::exp западный ::lcode rus
+::abbrev з. ::exp золотник ::lcode rus
+::abbrev з. ::exp западный ::lcode rus
+::abbrev з. ::exp золотник ::lcode rus
+::abbrev з.а. ::exp заслуженный артист ::lcode rus
+::abbrev з.а. ::exp заслуженный артист ::lcode rus
+::abbrev зав. ::exp заведующий ::lcode rus
+::abbrev загл. ::exp заглавие ::lcode rus
+::abbrev заимств. ::exp заимствованный ::lcode rus
+::abbrev зак. ::exp заказ ::lcode rus
+::abbrev зал. ::exp залив ::lcode rus
+::abbrev зам. ::exp заместитель ::lcode rus
+::abbrev зап. ::exp западный ::lcode rus
+::abbrev зап. ::exp записки ::lcode rus
+::abbrev зап. ::exp западный ::lcode rus
+::abbrev зап.-европ. ::exp западноевропейский ::lcode rus
+::abbrev заруб. ::exp зарубежный ::lcode rus
+::abbrev засл. ::exp заслуженный ::lcode rus
+::abbrev засл.арт. ::exp заслуженный артист ::lcode rus
+::abbrev засл.арт. ::exp заслуженный артист ::lcode rus
+::abbrev заст. ::exp застава ::lcode rus
+::abbrev зат. ::exp затон ::lcode rus
+::abbrev зах. ::exp заход ::lcode rus
+::abbrev зач. ::exp зачет, зачтено (оценка) ::lcode rus
+::abbrev зв. ::exp звезда, звездный; звонок ::lcode rus
+::abbrev зв. ::exp звательный падеж, звательная форма ::lcode rus
+::abbrev зват. ::exp звательный падеж, звательная форма ::lcode rus
+::abbrev з-д ::exp завод ::lcode rus
+::abbrev з.д. ::exp западная долгота ::lcode rus
+::abbrev з.д.и. ::exp заслуженный деятель искусств ::lcode rus
+::abbrev з.д.н. ::exp заслуженный деятель науки ::lcode rus
+::abbrev зем. ::exp земельный ::lcode rus
+::abbrev зен. ::exp зенитный ::lcode rus
+::abbrev з.к. ::exp заключенный (первоначально: заключенный каналоармеец) ::lcode rus
+::abbrev з/к ::exp заключенный (первоначально: заключенный каналоармеец) ::lcode rus
+::abbrev з.м.с. ::exp заслуженный мастер спорта ::lcode rus
+::abbrev зн. ::exp знак ::lcode rus
+::abbrev зн. ::exp значение ::lcode rus
+::abbrev знач. ::exp значение ::lcode rus
+::abbrev з/о ::exp заочное отделение ::lcode rus
+::abbrev зол. ::exp золотник ::lcode rus
+::abbrev зол. ::exp золото, золотой ::lcode rus
+::abbrev зол. ::exp золотник ::lcode rus
+::abbrev з/п ::exp здравпункт ::lcode rus
+::abbrev зпт ::exp запятая (в телеграммах) ::lcode rus
+::abbrev И. ::exp именительный падеж ::lcode rus
+::abbrev И. ::exp именительный падеж ::lcode rus
+::abbrev Й. ::lcode rus
+::abbrev и. ::exp именительный падеж ::lcode rus
+::abbrev и. ::exp именительный падеж ::lcode rus
+::abbrev игум. ::exp игумен ::lcode rus
+::abbrev и др. ::exp и другие ::lcode rus
+::abbrev и.-е. ::exp индоевропейский ::lcode rus
+::abbrev иером. ::exp иеромонах ::lcode rus
+::abbrev изб. ::exp избыточный ::lcode rus
+::abbrev избр. ::exp избранное, избранные ::lcode rus
+::abbrev Изв. ::exp Известия ::lcode rus
+::abbrev изв. ::exp известен ::lcode rus
+::abbrev изд. ::exp издание, издатель, изданный, издавать(ся) ::lcode rus
+::abbrev изд-во ::exp издательство ::lcode rus
+::abbrev изм. ::exp изменение, измененный ::lcode rus
+::abbrev изр. ::exp израильский ::lcode rus
+::abbrev икс-ед. ::exp икс-единица ::lcode rus
+::abbrev илл. ::exp иллюстрация, иллюстратор ::lcode rus
+::abbrev и.л.с. ::exp индикаторная лошадиная сила ::lcode rus
+::abbrev им. ::exp именительный падеж ::lcode rus
+::abbrev им. ::exp имени ::lcode rus
+::abbrev им. ::exp именительный падеж ::lcode rus
+::abbrev имп. ::exp император, императрица, императорский; импульс, импульсный ::lcode rus
+::abbrev ин. ::exp иностранный ::lcode rus
+::abbrev ин. ::exp иностранный ::lcode rus
+::abbrev инв. ::exp инвентарный ::lcode rus
+::abbrev ингуш. ::exp ингушский ::lcode rus
+::abbrev инд. ::exp индийский ::lcode rus
+::abbrev индонез. ::exp индонезийский ::lcode rus
+::abbrev инж. ::exp инженер, инженерный ::lcode rus
+::abbrev иностр. ::exp иностранный ::lcode rus
+::abbrev иностр. ::exp иностранный ::lcode rus
+::abbrev инст. ::exp институт ::lcode rus
+::abbrev инст. ::exp институт ::lcode rus
+::abbrev инстр. ::exp инструмент, инструментальный ::lcode rus
+::abbrev инсц. ::exp инсценировка ::lcode rus
+::abbrev ин-т ::exp институт ::lcode rus
+::abbrev ин-т ::exp институт ::lcode rus
+::abbrev инт. ::exp интеграл, интегральный; интендант, интендантский ::lcode rus
+::abbrev инф. ::exp инфекционный; инфинитив ::lcode rus
+::abbrev ин.ч. ::exp иностранный член ::lcode rus
+::abbrev и.о. ::exp исполняющий обязанности; имя и отчество ::lcode rus
+::abbrev и пр. ::exp и прочие, и прочее ::lcode rus
+::abbrev и проч. ::exp и прочие, и прочее ::lcode rus
+::abbrev ирак. ::exp иракский ::lcode rus
+::abbrev иран. ::exp иранский ::lcode rus
+::abbrev ирл. ::exp ирландский ::lcode rus
+::abbrev ирон. ::exp иронический ::lcode rus
+::abbrev иск-во ::exp искусство ::lcode rus
+::abbrev исл. ::exp исландский ::lcode rus
+::abbrev Исп. ::lcode rus
+::abbrev исп. ::exp испанский; исповедник ::lcode rus
+::abbrev испр. ::exp исправление, исправленный ::lcode rus
+::abbrev иссл. ::exp исследование, исследовал ::lcode rus
+::abbrev ист. ::exp источник ::lcode rus
+::abbrev ист. ::exp исторический ::lcode rus
+::abbrev истор. ::exp исторический ::lcode rus
+::abbrev исх. ::exp исходный ::lcode rus
+::abbrev ит. ::exp итальянский ::lcode rus
+::abbrev итал. ::exp итальянский ::lcode rus
+::abbrev и т.д. ::exp и так далее ::lcode rus
+::abbrev и т.д. и т.п. ::exp и так далее и тому подобное ::lcode rus
+::abbrev и т.п. ::exp и тому подобное, и тому подобные ::lcode rus
+::abbrev К. ::lcode rus
+::abbrev к. ::exp колодец; кишлак ::lcode rus
+::abbrev к. ::exp кандидат ::lcode rus
+::abbrev к. ::exp комната ::lcode rus
+::abbrev к. ::exp копейка ::lcode rus
+::abbrev к. ::exp корпус ::lcode rus
+::abbrev к. ::exp кислота ::lcode rus
+::abbrev к. ::exp кандидат ::lcode rus
+::abbrev к. ::exp комната ::lcode rus
+::abbrev к. ::exp копейка ::lcode rus
+::abbrev к. ::exp корпус ::lcode rus
+::abbrev к. ::exp кислота ::lcode rus
+::abbrev каб. ::exp кабардинский ::lcode rus
+::abbrev кабард. ::exp кабардинский ::lcode rus
+::abbrev каб.-балк. ::exp кабардино-балкарский ::lcode rus
+::abbrev кав. ::exp кавалерия, кавалерийский ::lcode rus
+::abbrev кавк. ::exp кавказский ::lcode rus
+::abbrev каз. ::exp казарма; казахский; казачий ::lcode rus
+::abbrev кал ::exp калория ::lcode rus
+::abbrev калм. ::exp калмыцкий ::lcode rus
+::abbrev кан. ::exp канал ::lcode rus
+::abbrev кан. ::exp канадский ::lcode rus
+::abbrev канад. ::exp канадский ::lcode rus
+::abbrev канд. ::exp кандидат ::lcode rus
+::abbrev канд. ::exp кандидат ::lcode rus
+::abbrev кап. ::exp капитан ::lcode rus
+::abbrev кар ::exp карат ::lcode rus
+::abbrev кар. ::exp карельский ::lcode rus
+::abbrev кар. ::exp карельский ::lcode rus
+::abbrev каракалп. ::exp каракалпакский ::lcode rus
+::abbrev карел. ::exp карельский ::lcode rus
+::abbrev карел. ::exp карельский ::lcode rus
+::abbrev кат. ::exp катализатор, каталитический ::lcode rus
+::abbrev кат. ::exp католический ::lcode rus
+::abbrev катол. ::exp католический ::lcode rus
+::abbrev Кб ::exp килобайт ::lcode rus
+::abbrev кб ::exp кабельтов ::lcode rus
+::abbrev кб. ::exp кубический ::lcode rus
+::abbrev кб. ::exp кубический ::lcode rus
+::abbrev Кбайт ::exp килобайт ::lcode rus
+::abbrev Кбайт/с. ::exp килобайт в секунду ::lcode rus
+::abbrev Кбар ::exp килобар ::lcode rus
+::abbrev Кбит ::exp килобит ::lcode rus
+::abbrev Кбит/с. ::exp килобит в секунду ::lcode rus
+::abbrev к.б.н. ::exp кандидат биологических наук ::lcode rus
+::abbrev Кбод ::exp килобод ::lcode rus
+::abbrev кВ ::exp киловольт ::lcode rus
+::abbrev кв. ::exp квадрат, квадратный; квартал; квартира ::lcode rus
+::abbrev кВА ::exp киловольт-ампер ::lcode rus
+::abbrev кВт ::exp киловатт ::lcode rus
+::abbrev кВт·ч ::exp киловатт-час ::lcode rus
+::abbrev кг ::exp килограмм ::lcode rus
+::abbrev кг. ::exp кегль ::lcode rus
+::abbrev кг·К ::exp килограмм-кельвин ::lcode rus
+::abbrev кг·м ::exp килограмм-метр ::lcode rus
+::abbrev к.г.-м.н. ::exp кандидат геолого-минералогических наук ::lcode rus
+::abbrev кг·моль ::exp килограмм-моль ::lcode rus
+::abbrev кг·м/с ::exp килограмм-метр в секунду ::lcode rus
+::abbrev к.г.н. ::exp кандидат географических наук ::lcode rus
+::abbrev кгс ::exp килограмм-сила ::lcode rus
+::abbrev кгс·м ::exp килограмм-сила-метр ::lcode rus
+::abbrev кгс·с ::exp килограмм-сила-секунда ::lcode rus
+::abbrev кГц ::exp килогерц ::lcode rus
+::abbrev кд ::exp кандела ::lcode rus
+::abbrev кДж ::exp килоджоуль ::lcode rus
+::abbrev кд/лк ::exp кандела на люкс ::lcode rus
+::abbrev кд·с ::exp кандела-секунда ::lcode rus
+::abbrev к.-ж. ::exp киножурнал ::lcode rus
+::abbrev к/ж ::exp киножурнал ::lcode rus
+::abbrev к-з ::exp колхоз ::lcode rus
+::abbrev к-з ::exp колхоз ::lcode rus
+::abbrev Ки ::exp кюри ::lcode rus
+::abbrev к.и.н. ::exp кандидат исторических наук ::lcode rus
+::abbrev кирг. ::exp киргизский ::lcode rus
+::abbrev к.иск. ::exp кандидат искусствоведения ::lcode rus
+::abbrev кит. ::exp китайский ::lcode rus
+::abbrev ккал ::exp килокалория ::lcode rus
+::abbrev Кл ::exp кулон ::lcode rus
+::abbrev к.-л. ::exp какой-либо ::lcode rus
+::abbrev кл ::exp килолитр ::lcode rus
+::abbrev кл. ::exp класс; ключ ::lcode rus
+::abbrev клк ::exp килолюкс ::lcode rus
+::abbrev клк·с ::exp килолюкс-секунда ::lcode rus
+::abbrev Кл·м ::exp кулон-метр ::lcode rus
+::abbrev клм ::exp килолюмен ::lcode rus
+::abbrev клм·ч ::exp килолюмен-час ::lcode rus
+::abbrev клх ::exp колхоз ::lcode rus
+::abbrev клх ::exp колхоз ::lcode rus
+::abbrev к/м ::exp короткометражный ::lcode rus
+::abbrev км ::exp километр ::lcode rus
+::abbrev км. ::lcode rus
+::abbrev км² ::exp квадратный километр ::lcode rus
+::abbrev к.м.н. ::exp кандидат медицинских наук ::lcode rus
+::abbrev кмоль ::exp киломоль ::lcode rus
+::abbrev км/с ::exp километр в секунду ::lcode rus
+::abbrev км/ч ::exp километр в час ::lcode rus
+::abbrev к.н. ::exp кандидат наук ::lcode rus
+::abbrev к.-н. ::exp какой-нибудь ::lcode rus
+::abbrev кН ::exp килоньютон ::lcode rus
+::abbrev кн. ::exp книга; князь ::lcode rus
+::abbrev кн-во ::exp княжество ::lcode rus
+::abbrev книжн. ::exp книжное ::lcode rus
+::abbrev кол ::exp колебание ::lcode rus
+::abbrev кол. ::lcode rus
+::abbrev кол-во ::exp количество ::lcode rus
+::abbrev колич. ::exp количественный ::lcode rus
+::abbrev колон. ::exp колониальный ::lcode rus
+::abbrev кОм ::exp килоом ::lcode rus
+::abbrev ком. ::exp командир ::lcode rus
+::abbrev ком. ::exp командир ::lcode rus
+::abbrev комм. ::exp коммутатор ::lcode rus
+::abbrev комн. ::exp комната ::lcode rus
+::abbrev комн. ::exp комната ::lcode rus
+::abbrev комп. ::exp композитор, композиция ::lcode rus
+::abbrev кон. ::exp конец (при дате) ::lcode rus
+::abbrev конгр. ::exp конгресс ::lcode rus
+::abbrev конф. ::exp конференция ::lcode rus
+::abbrev конц. ::exp концентрированный ::lcode rus
+::abbrev кооп. ::exp кооператив, кооперативный ::lcode rus
+::abbrev коп. ::exp копейка ::lcode rus
+::abbrev коп. ::exp копейка ::lcode rus
+::abbrev кор. ::exp корейский ::lcode rus
+::abbrev кор-во ::exp королевство ::lcode rus
+::abbrev корп. ::exp корпус ::lcode rus
+::abbrev корп. ::exp корпус ::lcode rus
+::abbrev корр. ::exp корреспондент, корреспондентский ::lcode rus
+::abbrev корр/сч ::exp корреспондентский счет ::lcode rus
+::abbrev корр/сч ::exp корреспондентский счет ::lcode rus
+::abbrev котл. ::exp котловина ::lcode rus
+::abbrev коэфф. ::exp коэффициент ::lcode rus
+::abbrev кПа ::exp килопаскаль ::lcode rus
+::abbrev к-р ::exp командир ::lcode rus
+::abbrev к-р ::exp командир ::lcode rus
+::abbrev кр. ::exp край; критический; краткий; крупный ::lcode rus
+::abbrev к-ра ::exp контора ::lcode rus
+::abbrev креп. ::exp крепость ::lcode rus
+::abbrev крест. ::exp крестьянский ::lcode rus
+::abbrev крест-во ::exp крестьянство ::lcode rus
+::abbrev крист. ::exp кристаллический ::lcode rus
+::abbrev кр.ф. ::exp краткая форма ::lcode rus
+::abbrev к-рый ::exp который ::lcode rus
+::abbrev к/ст ::exp киностудия ::lcode rus
+::abbrev к/сч ::exp корреспондентский счет ::lcode rus
+::abbrev к/сч ::exp корреспондентский счет ::lcode rus
+::abbrev к-т ::exp комбинат; комитет; концерт ::lcode rus
+::abbrev к.т. ::exp комнатная температура, критическая температура ::lcode rus
+::abbrev к/т ::exp кинотеатр ::lcode rus
+::abbrev кт ::exp килотонна ::lcode rus
+::abbrev к-та ::exp кислота ::lcode rus
+::abbrev к-та ::exp кислота ::lcode rus
+::abbrev к.т.н. ::exp кандидат технических наук ::lcode rus
+::abbrev к-ты ::exp кислоты ::lcode rus
+::abbrev куб. ::exp кубический ::lcode rus
+::abbrev куб. ::exp кубический ::lcode rus
+::abbrev культ. ::exp культура ::lcode rus
+::abbrev кур. ::exp курорт ::lcode rus
+::abbrev кург. ::exp курган(ы) ::lcode rus
+::abbrev курс. ::exp курсив ::lcode rus
+::abbrev к/ф ::exp кинофильм ::lcode rus
+::abbrev к.ф.-м.н. ::exp кандидат физико-математических наук ::lcode rus
+::abbrev к.ф.н. ::exp кандидат филологических наук, кандидат философских наук ::lcode rus
+::abbrev к.х.н. ::exp кандидат химических наук ::lcode rus
+::abbrev к-ция ::exp концентрация ::lcode rus
+::abbrev кэВ ::exp килоэлектронвольт ::lcode rus
+::abbrev Л. ::lcode rus
+::abbrev л ::exp литр ::lcode rus
+::abbrev л. ::exp лицо ::lcode rus
+::abbrev л. ::exp лист ::lcode rus
+::abbrev л. ::exp лист ::lcode rus
+::abbrev лаб. ::exp лаборатория, лабораторный ::lcode rus
+::abbrev лаг. ::exp лагуна; лагерь ::lcode rus
+::abbrev лат. ::exp латинский ::lcode rus
+::abbrev лат. ::exp латышский ::lcode rus
+::abbrev лат. ::exp латышский ::lcode rus
+::abbrev лат. ::exp латышский ::lcode rus
+::abbrev лат.-амер. ::exp латиноамериканский ::lcode rus
+::abbrev латв. ::exp латвийский ::lcode rus
+::abbrev л·атм. ::exp литр-атмосфера ::lcode rus
+::abbrev латыш. ::exp латышский ::lcode rus
+::abbrev латыш. ::exp латышский ::lcode rus
+::abbrev латыш. ::exp латышский ::lcode rus
+::abbrev Лб ::exp ламберт ::lcode rus
+::abbrev л.-гв. ::exp лейб-гвардия ::lcode rus
+::abbrev л.д. ::exp лист(ы) дела ::lcode rus
+::abbrev лев. ::exp левый ::lcode rus
+::abbrev ледн. ::exp ледник(и) ::lcode rus
+::abbrev лейт. ::exp лейтенант ::lcode rus
+::abbrev лейт. ::exp лейтенант ::lcode rus
+::abbrev лек. ::exp лекарственный ::lcode rus
+::abbrev ленингр. ::exp ленинградский ::lcode rus
+::abbrev леч. ::exp лечебный ::lcode rus
+::abbrev либер. ::exp либерийский ::lcode rus
+::abbrev либр. ::exp либретто ::lcode rus
+::abbrev лингв. ::exp лингвистический ::lcode rus
+::abbrev лит. ::exp литературный; литовский; литургия ::lcode rus
+::abbrev лит-ведение ::exp литературоведение ::lcode rus
+::abbrev лит-ра ::exp литература ::lcode rus
+::abbrev лиц. ::lcode rus
+::abbrev л/к ::exp ледокол ::lcode rus
+::abbrev лк ::exp люкс ::lcode rus
+::abbrev лк·с ::exp люкс-секунда ::lcode rus
+::abbrev лл. ::exp листы ::lcode rus
+::abbrev лл. ::exp листы ::lcode rus
+::abbrev лм ::exp люмен ::lcode rus
+::abbrev лм·с ::exp люмен-секунда ::lcode rus
+::abbrev лм·ч ::exp люмен-час ::lcode rus
+::abbrev лок. ::exp локатив ::lcode rus
+::abbrev л.р. ::exp левая рука ::lcode rus
+::abbrev л.с. ::exp лошадиная сила ::lcode rus
+::abbrev л/с ::exp личный состав ::lcode rus
+::abbrev л.с.ч. ::exp лошадиная сила — час ::lcode rus
+::abbrev л-т ::exp лейтенант ::lcode rus
+::abbrev л-т ::exp лейтенант ::lcode rus
+::abbrev Лтд. ::exp (англ. Limited) общество с ограниченной ответственностью ::lcode rus
+::abbrev лтш. ::exp латышский ::lcode rus
+::abbrev лтш. ::exp латышский ::lcode rus
+::abbrev лтш. ::exp латышский ::lcode rus
+::abbrev луж. ::exp лужицкий ::lcode rus
+::abbrev М. ::exp Малый; Москва ::lcode rus
+::abbrev м ::exp метр ::lcode rus
+::abbrev м ::exp милли… ::lcode rus
+::abbrev м. ::exp местечко; метро; море; мост; мыс ::lcode rus
+::abbrev м. ::exp масштаб ::lcode rus
+::abbrev м. ::exp минута ::lcode rus
+::abbrev м. ::exp мужской ::lcode rus
+::abbrev м. ::exp майор ::lcode rus
+::abbrev м. ::exp масштаб ::lcode rus
+::abbrev м. ::exp минута ::lcode rus
+::abbrev м. ::exp майор ::lcode rus
+::abbrev м. ::exp мужской ::lcode rus
+::abbrev МE ::exp международная единица ::lcode rus
+::abbrev МE ::exp массовая единица ::lcode rus
+::abbrev мА ::exp миллиампер ::lcode rus
+::abbrev маг. ::exp магазин; магистр ::lcode rus
+::abbrev магн. ::exp магнитный ::lcode rus
+::abbrev макед. ::exp македонский ::lcode rus
+::abbrev макс. ::exp максимальный ::lcode rus
+::abbrev максим. ::exp максимальный ::lcode rus
+::abbrev маньч. ::exp маньчжурский ::lcode rus
+::abbrev мар. ::exp марийский ::lcode rus
+::abbrev марок. ::exp марокканский ::lcode rus
+::abbrev мат. ::exp математика, математический ::lcode rus
+::abbrev мат. ::exp материальный ::lcode rus
+::abbrev матем. ::exp математика, математический ::lcode rus
+::abbrev матер. ::exp материальный ::lcode rus
+::abbrev маш. ::exp машинный, машиностроительный ::lcode rus
+::abbrev Мб ::exp мегабайт ::lcode rus
+::abbrev м-б ::exp масштаб ::lcode rus
+::abbrev м-б ::exp масштаб ::lcode rus
+::abbrev м.б. ::exp может быть ::lcode rus
+::abbrev м/б ::exp мясной бульон ::lcode rus
+::abbrev мб ::exp миллибар ::lcode rus
+::abbrev Мбайт ::exp мегабайт ::lcode rus
+::abbrev Мбайт/с. ::exp мегабайт в секунду ::lcode rus
+::abbrev Мбар ::exp мегабар ::lcode rus
+::abbrev Мбит ::exp мегабит ::lcode rus
+::abbrev Мбит/с. ::exp мегабит в секунду ::lcode rus
+::abbrev Мбод ::exp мегабод ::lcode rus
+::abbrev МВ ::exp милливольт ::lcode rus
+::abbrev м.в. ::exp молекулярный вес ::lcode rus
+::abbrev м-во ::exp министерство ::lcode rus
+::abbrev МВт ::exp мегаватт ::lcode rus
+::abbrev мВт ::exp милливатт ::lcode rus
+::abbrev МВт·ч ::exp мегаватт-час ::lcode rus
+::abbrev Мг ::exp мегаграмм ::lcode rus
+::abbrev м.г. ::exp милостивый государь ::lcode rus
+::abbrev м.г. ::exp милостивый государь (в старых текстах) ::lcode rus
+::abbrev мГ ::exp метр-генри; миллигенри ::lcode rus
+::abbrev мг ::exp миллиграмм ::lcode rus
+::abbrev мг. ::lcode rus
+::abbrev мгс ::exp миллиграмм-сила ::lcode rus
+::abbrev МГц ::exp мегагерц ::lcode rus
+::abbrev МДж ::exp мегаджоуль ::lcode rus
+::abbrev Мдс ::exp магнитодвижущая сила ::lcode rus
+::abbrev ме ::exp массовая единица ::lcode rus
+::abbrev мед. ::exp медицинский ::lcode rus
+::abbrev мед.ч. ::exp медное число; медицинская часть ::lcode rus
+::abbrev межд. ::exp междометие ::lcode rus
+::abbrev междом. ::exp междометие ::lcode rus
+::abbrev междунар. ::exp международный ::lcode rus
+::abbrev мекс. ::exp мексиканский ::lcode rus
+::abbrev мес. ::exp месяц ::lcode rus
+::abbrev мес. ::exp месяц ::lcode rus
+::abbrev мест. ::exp местоимение ::lcode rus
+::abbrev местоим. ::exp местоимение ::lcode rus
+::abbrev мет. ::exp металл, металлический ::lcode rus
+::abbrev мех. ::exp механический ::lcode rus
+::abbrev мин. ::exp минута ::lcode rus
+::abbrev мин. ::exp министр ::lcode rus
+::abbrev мин. ::exp минута ::lcode rus
+::abbrev мин. ::exp минимальный ::lcode rus
+::abbrev мин. ::exp министерство ::lcode rus
+::abbrev мин. ::exp минимальный ::lcode rus
+::abbrev мин-во ::exp министерство ::lcode rus
+::abbrev мин-во ::exp министерство ::lcode rus
+::abbrev минер. ::exp минеральный ::lcode rus
+::abbrev миним. ::exp минимальный ::lcode rus
+::abbrev миним. ::exp минимальный ::lcode rus
+::abbrev мир. ::exp мировой ::lcode rus
+::abbrev митр. ::exp митрополит ::lcode rus
+::abbrev миф. ::exp мифология, мифологический ::lcode rus
+::abbrev мифол. ::exp мифология, мифологический ::lcode rus
+::abbrev м·К ::exp метр-кельвин ::lcode rus
+::abbrev мк ::exp микрон ::lcode rus
+::abbrev мкА ::exp микроампер ::lcode rus
+::abbrev Мкал ::exp мегакалория ::lcode rus
+::abbrev мкВ ::exp микровольт ::lcode rus
+::abbrev мкВт ::exp микроватт ::lcode rus
+::abbrev мкГ ::exp микрогенри ::lcode rus
+::abbrev мкг ::exp микрограмм ::lcode rus
+::abbrev мккюри ::exp микрокюри ::lcode rus
+::abbrev мкл ::exp микролитр ::lcode rus
+::abbrev мкм ::exp микрометр ::lcode rus
+::abbrev мкмк ::exp микромикрон ::lcode rus
+::abbrev мкОм ::exp микроом ::lcode rus
+::abbrev мкОм·м ::exp микроом-метр ::lcode rus
+::abbrev мкПа ::exp микропаскаль ::lcode rus
+::abbrev мкР ::exp микрорентген ::lcode rus
+::abbrev мкр-н ::exp микрорайон ::lcode rus
+::abbrev Мкс ::exp максвелл ::lcode rus
+::abbrev мкс ::exp микросекунда ::lcode rus
+::abbrev мкФ ::exp микрофарад ::lcode rus
+::abbrev мкюри ::exp милликюри ::lcode rus
+::abbrev мл ::exp миллилитр ::lcode rus
+::abbrev мл. ::exp младший ::lcode rus
+::abbrev млб ::exp миллиламберт ::lcode rus
+::abbrev Млк ::exp мегалюкс ::lcode rus
+::abbrev Млк·с ::exp мегалюкс-секунда ::lcode rus
+::abbrev млн ::exp миллион ::lcode rus
+::abbrev млн. ::lcode rus
+::abbrev млрд ::exp миллиард ::lcode rus
+::abbrev млрд. ::lcode rus
+::abbrev м-ль ::exp мадемуазель ::lcode rus
+::abbrev Мм ::exp мегаметр ::lcode rus
+::abbrev м-м ::exp мадам ::lcode rus
+::abbrev мм ::exp миллиметр ::lcode rus
+::abbrev мм. ::lcode rus
+::abbrev мм вод.ст. ::exp миллиметр водяного столба ::lcode rus
+::abbrev мм.гг. ::exp милостивые государи (в старых текстах) ::lcode rus
+::abbrev мм.гг. ::exp милостивые государи ::lcode rus
+::abbrev м. миля ::exp морская миля ::lcode rus
+::abbrev ммк ::exp миллимикрон ::lcode rus
+::abbrev м·мм ::exp метр-миллиметр ::lcode rus
+::abbrev мм рт.ст. ::exp миллиметр ртутного столба ::lcode rus
+::abbrev мН ::exp миллиньютон ::lcode rus
+::abbrev мн. ::exp много, многие ::lcode rus
+::abbrev мн. ::exp множественное число ::lcode rus
+::abbrev мн-к ::exp многоугольник ::lcode rus
+::abbrev многокр. ::exp многократный глагол ::lcode rus
+::abbrev м.н.с. ::exp младший научный сотрудник ::lcode rus
+::abbrev мн.ч. ::exp множественное число ::lcode rus
+::abbrev моб. ::exp мобилизационный ::lcode rus
+::abbrev мокт ::exp миллиоктава ::lcode rus
+::abbrev мол. ::exp молекулярный ::lcode rus
+::abbrev мол.в. ::exp молекулярный вес ::lcode rus
+::abbrev молд. ::exp молдавский ::lcode rus
+::abbrev мол.м. ::exp молекулярная масса ::lcode rus
+::abbrev моль·К ::exp моль-кельвин ::lcode rus
+::abbrev Мом ::exp мегаом ::lcode rus
+::abbrev мон. ::exp монастырь ::lcode rus
+::abbrev монг. ::exp монгольский ::lcode rus
+::abbrev мор. ::exp морской ::lcode rus
+::abbrev морд. ::exp мордовский ::lcode rus
+::abbrev моск. ::exp московский ::lcode rus
+::abbrev м.п. ::exp место печати ::lcode rus
+::abbrev МПа ::exp мегапаскаль ::lcode rus
+::abbrev м·Па ::exp метр-паскаль ::lcode rus
+::abbrev мПа ::exp миллипаскаль ::lcode rus
+::abbrev мпз ::exp миллипьеза ::lcode rus
+::abbrev Мпк ::exp мегапиксел ::lcode rus
+::abbrev м-р ::exp майор ::lcode rus
+::abbrev м-р ::exp мистер ::lcode rus
+::abbrev м-р ::exp майор ::lcode rus
+::abbrev м.р. ::exp малорастворимый ::lcode rus
+::abbrev мР ::exp миллирентген ::lcode rus
+::abbrev м·рад ::exp метр-радиан ::lcode rus
+::abbrev мрг ::exp мириаграмм ::lcode rus
+::abbrev мрм ::exp мириаметр ::lcode rus
+::abbrev м-с ::exp миссис ::lcode rus
+::abbrev м.с. ::exp мастер спорта ::lcode rus
+::abbrev м/с ::exp медицинская сестра, медицинская служба; метр в секунду ::lcode rus
+::abbrev мс ::exp миллисекунда ::lcode rus
+::abbrev мс ::exp миллисекунда ::lcode rus
+::abbrev мсб ::exp миллистильб ::lcode rus
+::abbrev мсек ::exp миллисекунда ::lcode rus
+::abbrev мсек ::exp миллисекунда ::lcode rus
+::abbrev м.сп. ::exp метиловый спирт ::lcode rus
+::abbrev м·ср ::exp метр-стерадиан ::lcode rus
+::abbrev мТВ ::exp морской тропический воздух ::lcode rus
+::abbrev муж. ::exp мужской ::lcode rus
+::abbrev муж. ::exp мужской ::lcode rus
+::abbrev муз. ::exp музей; музыка, музыкальный ::lcode rus
+::abbrev муниц. ::exp муниципальный ::lcode rus
+::abbrev мусульм. ::exp мусульманский ::lcode rus
+::abbrev м/ф ::exp мультфильм ::lcode rus
+::abbrev мф ::exp миллифот; микрофильм ::lcode rus
+::abbrev м-ц ::exp месяц ::lcode rus
+::abbrev м-ц ::exp месяц ::lcode rus
+::abbrev мц. ::exp мученица ::lcode rus
+::abbrev мцц. ::exp мученицы ::lcode rus
+::abbrev мч. ::exp мученик ::lcode rus
+::abbrev мчч. ::exp мученики ::lcode rus
+::abbrev МэВ ::exp мегаэлектронвольт ::lcode rus
+::abbrev Н ::exp ньютон ::lcode rus
+::abbrev Н. ::exp Нижний, Новый ::lcode rus
+::abbrev н ::exp нано… ::lcode rus
+::abbrev н.а. ::exp народный артист ::lcode rus
+::abbrev наб. ::exp набережная ::lcode rus
+::abbrev наг. ::exp нагорье ::lcode rus
+::abbrev наз. ::exp называемый ::lcode rus
+::abbrev назв. ::exp название ::lcode rus
+::abbrev наиб. ::exp наибольший, наиболее ::lcode rus
+::abbrev наим. ::exp наименьший, наименее; наименование ::lcode rus
+::abbrev накл. ::exp накладная; наклонение ::lcode rus
+::abbrev напр. ::exp например ::lcode rus
+::abbrev нар. ::exp народный ::lcode rus
+::abbrev нар.арт. ::exp народный артист ::lcode rus
+::abbrev нар.арт. ::exp народный артист ::lcode rus
+::abbrev нас. ::exp население ::lcode rus
+::abbrev наст. ::exp настоящий; настоящее время ::lcode rus
+::abbrev науч. ::exp научный ::lcode rus
+::abbrev нац. ::exp национальный ::lcode rus
+::abbrev нач. ::exp начало, начато (при дате); начальник; начальный ::lcode rus
+::abbrev н/б ::exp не был (в списках) ::lcode rus
+::abbrev нб ::exp не был (в списках) ::lcode rus
+::abbrev н.в.э. ::exp нормальный водородный эквивалент ::lcode rus
+::abbrev н/Д ::exp (Ростов) на-Дону ::lcode rus
+::abbrev негр. ::exp негритянский ::lcode rus
+::abbrev нед. ::exp неделя ::lcode rus
+::abbrev неизв. ::exp неизвестный ::lcode rus
+::abbrev неизм. ::exp неизменяемое (слово) ::lcode rus
+::abbrev нек-рый ::exp некоторый ::lcode rus
+::abbrev нем. ::exp немецкий ::lcode rus
+::abbrev неодуш. ::exp неодушевленный ::lcode rus
+::abbrev неопр. ::exp неопределенная форма ::lcode rus
+::abbrev непал. ::exp непальский ::lcode rus
+::abbrev неперех. ::exp непереходный (глагол) ::lcode rus
+::abbrev нер-во ::exp неравенство ::lcode rus
+::abbrev неск. ::exp несколько ::lcode rus
+::abbrev нескл. ::exp несклоняемое (слово) ::lcode rus
+::abbrev несов. ::exp несовершенный вид ::lcode rus
+::abbrev не сохр. ::exp не сохранился ::lcode rus
+::abbrev неуд. ::exp неудовлетворительно (оценка) ::lcode rus
+::abbrev н.-и. ::exp научно-исследовательский ::lcode rus
+::abbrev нидерл. ::exp нидерландский ::lcode rus
+::abbrev ниж. ::exp нижний ::lcode rus
+::abbrev низм. ::exp низменность ::lcode rus
+::abbrev н.к.т. ::exp нижняя критическая температура ::lcode rus
+::abbrev н.к.э. ::exp нормальный каломельный электрод ::lcode rus
+::abbrev н.-луж. ::exp нижнелужицкий ::lcode rus
+::abbrev Н·м ::exp ньютон-метр ::lcode rus
+::abbrev нм ::exp нанометр ::lcode rus
+::abbrev н.о. ::exp национальный округ ::lcode rus
+::abbrev н/о ::exp на обороте ::lcode rus
+::abbrev н/об ::exp на обороте ::lcode rus
+::abbrev нов. ::exp новый ::lcode rus
+::abbrev новогреч. ::exp новогреческий ::lcode rus
+::abbrev новозел. ::exp новозеландский ::lcode rus
+::abbrev ном. ::lcode rus
+::abbrev норв. ::exp норвежский ::lcode rus
+::abbrev норм. ::exp нормальный ::lcode rus
+::abbrev нояб. ::exp ноябрь, ноябрьский ::lcode rus
+::abbrev Нп ::exp непер ::lcode rus
+::abbrev Н·с ::exp ньютон-секунда ::lcode rus
+::abbrev н.с. ::exp научный сотрудник ::lcode rus
+::abbrev н.с. ::exp новый стиль ::lcode rus
+::abbrev н/с ::exp несоленый ::lcode rus
+::abbrev нс ::exp наносекунда ::lcode rus
+::abbrev н.с.г. ::exp нижняя строительная горизонталь ::lcode rus
+::abbrev н.ст. ::exp новый стиль ::lcode rus
+::abbrev н.-т. ::exp научно-технический ::lcode rus
+::abbrev нт ::exp нит ::lcode rus
+::abbrev н.э. ::exp наша (новая) эра ::lcode rus
+::abbrev О. ::lcode rus
+::abbrev о. ::exp отец (церк.) ::lcode rus
+::abbrev о. ::exp остров ::lcode rus
+::abbrev о. ::exp озеро ::lcode rus
+::abbrev о. ::exp остров ::lcode rus
+::abbrev о. ::exp озеро ::lcode rus
+::abbrev об. ::exp оборот ::lcode rus
+::abbrev об.в. ::exp объемный вес ::lcode rus
+::abbrev об-во ::exp общество ::lcode rus
+::abbrev об-во ::exp общество ::lcode rus
+::abbrev обл. ::exp область, областной; обложка ::lcode rus
+::abbrev обл.ц. ::exp областной центр ::lcode rus
+::abbrev об/мин ::exp оборот в минуту ::lcode rus
+::abbrev обр. ::exp образца; обработка ::lcode rus
+::abbrev обстоят. ::exp обстоятельство ::lcode rus
+::abbrev общ. ::lcode rus
+::abbrev о-в ::exp остров ::lcode rus
+::abbrev о-в ::exp остров ::lcode rus
+::abbrev о-ва ::exp острова ::lcode rus
+::abbrev о-ва ::exp острова ::lcode rus
+::abbrev о-во ::exp общество ::lcode rus
+::abbrev о-во ::exp общество ::lcode rus
+::abbrev овр. ::exp овраг ::lcode rus
+::abbrev огл. ::exp оглавление ::lcode rus
+::abbrev одновр. ::exp одновременный ::lcode rus
+::abbrev одноим. ::exp одноименный ::lcode rus
+::abbrev однокр. ::exp однократный глагол ::lcode rus
+::abbrev одуш. ::exp одушевленный ::lcode rus
+::abbrev оз. ::exp озеро ::lcode rus
+::abbrev оз. ::exp озеро ::lcode rus
+::abbrev ок. ::exp около; океан ::lcode rus
+::abbrev оконч. ::exp окончено (при дате) ::lcode rus
+::abbrev окр. ::exp округ, окружной ::lcode rus
+::abbrev окр.ц. ::exp окружной центр ::lcode rus
+::abbrev окт ::exp октава ::lcode rus
+::abbrev окт. ::exp октябрь, октябрьский ::lcode rus
+::abbrev о.м. ::exp отделение милиции ::lcode rus
+::abbrev о/м ::exp отделение милиции ::lcode rus
+::abbrev Ом·м ::exp ом-метр ::lcode rus
+::abbrev оп. ::exp опись; опера; опус ::lcode rus
+::abbrev оп-та ::exp оперетта ::lcode rus
+::abbrev оптим. ::exp оптимальный ::lcode rus
+::abbrev опубл. ::exp опубликован ::lcode rus
+::abbrev ор. ::exp орудие ::lcode rus
+::abbrev орг. ::exp организационный; органический ::lcode rus
+::abbrev орг-ция ::exp организация ::lcode rus
+::abbrev ориг. ::exp оригинал, оригинальный ::lcode rus
+::abbrev орк. ::exp оркестр ::lcode rus
+::abbrev осет. ::exp осетинский ::lcode rus
+::abbrev осн. ::exp основанный; основа, основной ::lcode rus
+::abbrev ост. ::lcode rus
+::abbrev отв. ::exp ответственный ::lcode rus
+::abbrev ответ. ::exp ответственный ::lcode rus
+::abbrev отд. ::exp отдел; отделение; отдельный ::lcode rus
+::abbrev отеч. ::exp отечественный ::lcode rus
+::abbrev отл. ::exp отлично (оценка) ::lcode rus
+::abbrev отм. ::exp отметка ::lcode rus
+::abbrev отр. ::exp отряд ::lcode rus
+::abbrev отт. ::exp оттиск ::lcode rus
+::abbrev офиц. ::exp официальный ::lcode rus
+::abbrev офс. ::exp офсетный ::lcode rus
+::abbrev оч. ::exp очень ::lcode rus
+::abbrev П. ::exp пуаз ::lcode rus
+::abbrev П. ::exp предложный падеж ::lcode rus
+::abbrev П. ::exp предложный падеж ::lcode rus
+::abbrev п ::exp пьеза ::lcode rus
+::abbrev п ::exp пьеза ::lcode rus
+::abbrev п. ::exp пешка; пико…; полк; пуд ::lcode rus
+::abbrev п. ::exp параграф; пункт ::lcode rus
+::abbrev п. ::exp падеж ::lcode rus
+::abbrev п. ::exp переулок ::lcode rus
+::abbrev п. ::exp поселок ::lcode rus
+::abbrev п. ::exp предложный падеж ::lcode rus
+::abbrev п. ::exp падеж ::lcode rus
+::abbrev п. ::exp переулок ::lcode rus
+::abbrev п. ::exp поселок ::lcode rus
+::abbrev п. ::exp параграф; пункт ::lcode rus
+::abbrev п. ::exp предложный падеж ::lcode rus
+::abbrev Па ::exp паскаль ::lcode rus
+::abbrev п.а. ::exp почтовый адрес ::lcode rus
+::abbrev пад. ::exp падеж ::lcode rus
+::abbrev пад. ::exp падеж ::lcode rus
+::abbrev пакист. ::exp пакистанский ::lcode rus
+::abbrev пал. ::exp палата ::lcode rus
+::abbrev пам. ::exp памятник ::lcode rus
+::abbrev парагв. ::exp парагвайский ::lcode rus
+::abbrev парт. ::exp партийный ::lcode rus
+::abbrev партиз. ::exp партизанский ::lcode rus
+::abbrev Па·с ::exp паскаль-секунда ::lcode rus
+::abbrev пас. ::exp пасека ::lcode rus
+::abbrev пасс. ::exp пассажирский ::lcode rus
+::abbrev пат. ::exp патент ::lcode rus
+::abbrev пат. ::exp патологический ::lcode rus
+::abbrev патол. ::exp патологический ::lcode rus
+::abbrev патр. ::exp патриарх ::lcode rus
+::abbrev Пбайт ::exp петабайт ::lcode rus
+::abbrev п.г.т. ::exp поселок городского типа ::lcode rus
+::abbrev пгт ::exp поселок городского типа ::lcode rus
+::abbrev пед. ::exp педагогический ::lcode rus
+::abbrev пенджаб. ::exp пенджабский ::lcode rus
+::abbrev пер. ::exp переулок ::lcode rus
+::abbrev пер. ::exp перевал; перевел, перевод, переводчик; перевоз; переплет; период ::lcode rus
+::abbrev пер. ::exp переулок ::lcode rus
+::abbrev первонач. ::exp первоначальный ::lcode rus
+::abbrev переим. ::exp переименован ::lcode rus
+::abbrev перем. ::exp переменный ::lcode rus
+::abbrev перен. ::exp переносное (значение) ::lcode rus
+::abbrev перераб. ::lcode rus
+::abbrev перех. ::exp переходный (глагол) ::lcode rus
+::abbrev пер.зв. ::exp переменная звезда ::lcode rus
+::abbrev перс. ::exp персидский ::lcode rus
+::abbrev пес. ::exp песок, песчаный ::lcode rus
+::abbrev петерб. ::exp петербургский ::lcode rus
+::abbrev петрогр. ::exp петроградский ::lcode rus
+::abbrev пех. ::exp пехотный ::lcode rus
+::abbrev печ.л. ::exp печатный лист ::lcode rus
+::abbrev печ.л. ::exp печатный лист ::lcode rus
+::abbrev пещ. ::exp пещера ::lcode rus
+::abbrev п/ж ::exp полужирный (шрифт) ::lcode rus
+::abbrev п/з ::exp пограничная застава ::lcode rus
+::abbrev пз ::exp пьеза ::lcode rus
+::abbrev пз ::exp пьеза ::lcode rus
+::abbrev пищ. ::exp пищевой ::lcode rus
+::abbrev пк ::exp пиксел ::lcode rus
+::abbrev пк ::exp парсек ::lcode rus
+::abbrev пк ::exp парсек ::lcode rus
+::abbrev п.л. ::exp печатный лист ::lcode rus
+::abbrev п.л. ::exp печатный лист ::lcode rus
+::abbrev пл. ::exp платформа (ж.-д.); площадь ::lcode rus
+::abbrev плат. ::exp платиновый ::lcode rus
+::abbrev плем. ::exp племенной ::lcode rus
+::abbrev плод. ::exp плодовый ::lcode rus
+::abbrev плоск. ::exp плоскогорье ::lcode rus
+::abbrev плотн. ::exp плотность ::lcode rus
+::abbrev пн. ::exp понедельник ::lcode rus
+::abbrev п/о ::exp почтовое отделение; производственное объединение ::lcode rus
+::abbrev п/о ::exp подотдел ::lcode rus
+::abbrev п/о ::exp подотдел ::lcode rus
+::abbrev п-ов ::exp полуостров ::lcode rus
+::abbrev пов. ::exp повелительное наклонение; повесть ::lcode rus
+::abbrev пог. м ::exp погонный метр ::lcode rus
+::abbrev погов. ::exp поговорка ::lcode rus
+::abbrev под. ::exp подобный; подъезд ::lcode rus
+::abbrev подп. ::exp подполковник ::lcode rus
+::abbrev пол. ::exp половина ::lcode rus
+::abbrev полигр. ::exp полиграфия, полиграфический ::lcode rus
+::abbrev полинез. ::exp полинезийский ::lcode rus
+::abbrev полит. ::exp политика, политический ::lcode rus
+::abbrev полк. ::exp полковник ::lcode rus
+::abbrev полн. ::exp полный ::lcode rus
+::abbrev пол. ст. ::exp полевой стан ::lcode rus
+::abbrev польск. ::exp польский ::lcode rus
+::abbrev пом. ::exp помещение; помощник ::lcode rus
+::abbrev попер. ::exp поперечный ::lcode rus
+::abbrev пор. ::exp порог, пороги; порошок (лекарство) ::lcode rus
+::abbrev португ. ::exp португальский ::lcode rus
+::abbrev пос. ::exp поселок ::lcode rus
+::abbrev посв. ::exp посвященный, посвящается ::lcode rus
+::abbrev посл. ::exp пословица ::lcode rus
+::abbrev посм. ::exp посмертно ::lcode rus
+::abbrev пост. ::exp постановление; постановка, постановщик; постоянный ::lcode rus
+::abbrev п/отд ::exp подотдел ::lcode rus
+::abbrev п/отд ::exp подотдел ::lcode rus
+::abbrev поч.чл. ::exp почетный член ::lcode rus
+::abbrev п/п ::exp подлинник подписан; полевая почта; по порядку; почтовый перевод; полупроводниковый ::lcode rus
+::abbrev пп. ::exp параграфы; пункты ::lcode rus
+::abbrev пп. ::exp параграфы; пункты ::lcode rus
+::abbrev п.р. ::exp правая рука ::lcode rus
+::abbrev п/р ::exp под руководством ::lcode rus
+::abbrev пр. ::exp премия; проезд; пруд ::lcode rus
+::abbrev пр. ::exp правый ::lcode rus
+::abbrev пр. ::exp пролив ::lcode rus
+::abbrev пр. ::exp проспект ::lcode rus
+::abbrev пр. ::exp правый ::lcode rus
+::abbrev пр. ::exp пролив ::lcode rus
+::abbrev пр. ::exp проспект ::lcode rus
+::abbrev пр. ::exp прочий ::lcode rus
+::abbrev пр. ::exp проспект ::lcode rus
+::abbrev прав. ::exp правый ::lcode rus
+::abbrev прав. ::exp праведный ::lcode rus
+::abbrev прав. ::exp правый ::lcode rus
+::abbrev правосл. ::exp православный ::lcode rus
+::abbrev пр-во ::exp правительство ::lcode rus
+::abbrev пред. ::exp председатель ::lcode rus
+::abbrev пред. ::exp председатель ::lcode rus
+::abbrev предисл. ::exp предисловие ::lcode rus
+::abbrev предл. ::exp предложный падеж ::lcode rus
+::abbrev предл. ::exp предложный падеж ::lcode rus
+::abbrev предс. ::exp председатель ::lcode rus
+::abbrev предс. ::exp председатель ::lcode rus
+::abbrev предст. ::exp представитель ::lcode rus
+::abbrev преим. ::exp преимущественно ::lcode rus
+::abbrev преимущ. ::exp преимущественно ::lcode rus
+::abbrev преп. ::exp преподаватель ::lcode rus
+::abbrev преп. ::exp преподобный ::lcode rus
+::abbrev преп. ::exp преподобный ::lcode rus
+::abbrev пресв. ::exp пресвитер ::lcode rus
+::abbrev прибл. ::exp приблизительно ::lcode rus
+::abbrev прил. ::exp прилагательное ::lcode rus
+::abbrev прил. ::exp приложение ::lcode rus
+::abbrev прилож. ::exp приложение ::lcode rus
+::abbrev прим. ::exp примечание ::lcode rus
+::abbrev примеч. ::exp примечание ::lcode rus
+::abbrev прист. ::exp приставка; пристань ::lcode rus
+::abbrev прич. ::exp причастие ::lcode rus
+::abbrev прмц. ::exp преподобномученица ::lcode rus
+::abbrev прмцц. ::exp преподобномученицы ::lcode rus
+::abbrev прмч. ::exp преподобномученик ::lcode rus
+::abbrev прмчч. ::exp преподобномученики ::lcode rus
+::abbrev пров. ::exp провинция ::lcode rus
+::abbrev прованс. ::exp провансальский ::lcode rus
+::abbrev прогр. ::exp программный ::lcode rus
+::abbrev прод. ::exp продовольственный; продольный ::lcode rus
+::abbrev прож. ::exp проживающий (где) ::lcode rus
+::abbrev произв. ::exp произведение ::lcode rus
+::abbrev произв-во ::exp производство ::lcode rus
+::abbrev происх. ::exp происхождение, происходит ::lcode rus
+::abbrev прол. ::exp пролив ::lcode rus
+::abbrev прол. ::exp пролив ::lcode rus
+::abbrev пром. ::exp промышленный ::lcode rus
+::abbrev пром-сть ::exp промышленность ::lcode rus
+::abbrev прор. ::exp пророк ::lcode rus
+::abbrev просп. ::exp проспект ::lcode rus
+::abbrev просп. ::exp проспект ::lcode rus
+::abbrev просп. ::exp проспект ::lcode rus
+::abbrev прост. ::exp просторечный ::lcode rus
+::abbrev прот. ::exp протоиерей; протока ::lcode rus
+::abbrev прот. ::exp протопресвитер ::lcode rus
+::abbrev противоп. ::exp противоположный ::lcode rus
+::abbrev протопресв. ::exp протопресвитер ::lcode rus
+::abbrev проф. ::exp профессиональный; профессор; профсоюзный ::lcode rus
+::abbrev проч. ::exp прочий ::lcode rus
+::abbrev прош. ::exp прошедшее время ::lcode rus
+::abbrev прп. ::exp преподобный ::lcode rus
+::abbrev прп. ::exp преподобный ::lcode rus
+::abbrev прпп. ::exp преподобные ::lcode rus
+::abbrev прпп. ::exp преподобные ::lcode rus
+::abbrev пр-т ::exp проспект ::lcode rus
+::abbrev пр-т ::exp проспект ::lcode rus
+::abbrev пр-т ::exp проспект ::lcode rus
+::abbrev пр-тие ::exp предприятие ::lcode rus
+::abbrev прям. ::exp прямой (шрифт) ::lcode rus
+::abbrev п/с ::exp паспортный стол ::lcode rus
+::abbrev пс ::exp парсек ::lcode rus
+::abbrev пс ::exp парсек ::lcode rus
+::abbrev пс. ::exp псевдоним ::lcode rus
+::abbrev псевд. ::exp псевдоним ::lcode rus
+::abbrev психол. ::exp психологический ::lcode rus
+::abbrev п-т ::exp пансионат ::lcode rus
+::abbrev пт. ::exp пятница ::lcode rus
+::abbrev п/у ::exp под управлением ::lcode rus
+::abbrev публ. ::exp публикация, публичный ::lcode rus
+::abbrev пФ ::exp пикофарад ::lcode rus
+::abbrev п/х ::exp пароход ::lcode rus
+::abbrev п.ч. ::exp потому что ::lcode rus
+::abbrev п/ш ::exp полушерстяной ::lcode rus
+::abbrev п/я ::exp почтовый ящик ::lcode rus
+::abbrev Р ::exp рентген ::lcode rus
+::abbrev Р. ::exp родительный падеж ::lcode rus
+::abbrev Р. ::exp родительный падеж ::lcode rus
+::abbrev р. ::exp род (грамматический); рота ::lcode rus
+::abbrev р. ::exp родился ::lcode rus
+::abbrev р. ::exp река ::lcode rus
+::abbrev р. ::exp реки ::lcode rus
+::abbrev р. ::exp родительный падеж ::lcode rus
+::abbrev р. ::exp рубль ::lcode rus
+::abbrev р. ::exp родился ::lcode rus
+::abbrev р. ::exp родительный падеж ::lcode rus
+::abbrev р. ::exp река ::lcode rus
+::abbrev р. ::exp рубль ::lcode rus
+::abbrev равн. ::exp равнина ::lcode rus
+::abbrev равноап. ::exp равноапостольный ::lcode rus
+::abbrev равноапп. ::exp равноапостольные ::lcode rus
+::abbrev рад ::exp радиан ::lcode rus
+::abbrev рад/с ::exp радиан в секунду ::lcode rus
+::abbrev раз. ::exp разъезд (ж.-д.) ::lcode rus
+::abbrev разв. ::exp разведка; развалины ::lcode rus
+::abbrev разг. ::exp разговорный ::lcode rus
+::abbrev разд. ::exp раздел ::lcode rus
+::abbrev разл. ::exp различный ::lcode rus
+::abbrev разр. ::exp разряд ::lcode rus
+::abbrev распр. ::exp распространен ::lcode rus
+::abbrev распростр. ::exp распространен ::lcode rus
+::abbrev раст. ::exp растительный ::lcode rus
+::abbrev рац. ::exp рационализаторский ::lcode rus
+::abbrev р-во ::exp равенство ::lcode rus
+::abbrev рд ::exp резерфорд ::lcode rus
+::abbrev рев. ::exp революционный ::lcode rus
+::abbrev револ. ::exp революционный ::lcode rus
+::abbrev рег. ::exp регистр, регистровый ::lcode rus
+::abbrev рег. т ::exp регистровая тонна ::lcode rus
+::abbrev ред. ::exp редактор, редакция, редакционный ::lcode rus
+::abbrev реж. ::exp режиссер ::lcode rus
+::abbrev рез. ::exp резюме ::lcode rus
+::abbrev религ. ::exp религиозный ::lcode rus
+::abbrev реликт. ::exp реликтовый ::lcode rus
+::abbrev рем. ::exp ремонтный ::lcode rus
+::abbrev респ. ::exp республика, республиканский ::lcode rus
+::abbrev реф. ::exp реферат ::lcode rus
+::abbrev рец. ::exp рецензия ::lcode rus
+::abbrev рим. ::exp римский ::lcode rus
+::abbrev рис. ::exp рисунок ::lcode rus
+::abbrev р/л ::exp русский и латинский (шрифт) ::lcode rus
+::abbrev рлк ::exp радлюкс ::lcode rus
+::abbrev р-н ::exp район ::lcode rus
+::abbrev р-ние ::exp растение ::lcode rus
+::abbrev р/о ::exp районное отделение ::lcode rus
+::abbrev род. ::exp родился ::lcode rus
+::abbrev род. ::exp родительный падеж ::lcode rus
+::abbrev род. ::exp родник ::lcode rus
+::abbrev род. ::exp родился ::lcode rus
+::abbrev род. ::exp родительный падеж ::lcode rus
+::abbrev рожд. ::exp рожденная (урожденная); рождение ::lcode rus
+::abbrev ром. ::exp роман; романский ::lcode rus
+::abbrev росс. ::exp российский ::lcode rus
+::abbrev р-р ::exp раствор ::lcode rus
+::abbrev рр. ::exp реки ::lcode rus
+::abbrev р-ры ::exp растворы ::lcode rus
+::abbrev р/с ::exp радиостанция ::lcode rus
+::abbrev р/с ::exp расчетный счет ::lcode rus
+::abbrev р/сч ::exp расчетный счет ::lcode rus
+::abbrev рт.ст. ::exp ртутный столб ::lcode rus
+::abbrev руб. ::exp рубль ::lcode rus
+::abbrev руб. ::exp рубль ::lcode rus
+::abbrev руд. ::exp рудник ::lcode rus
+::abbrev руж. ::exp ружейный ::lcode rus
+::abbrev рук. ::exp рукав; руководитель, руководство ::lcode rus
+::abbrev рукоп. ::exp рукопись, рукописный ::lcode rus
+::abbrev рум. ::exp румынский ::lcode rus
+::abbrev рус. ::exp русский ::lcode rus
+::abbrev руч. ::exp ручей ::lcode rus
+::abbrev РФ ::exp Российская Федерация ::lcode rus
+::abbrev рф ::exp радфот ::lcode rus
+::abbrev Р.Х. ::exp Рождество Христово ::lcode rus
+::abbrev р.ц. ::exp районный центр ::lcode rus
+::abbrev р-ция ::exp реакция ::lcode rus
+::abbrev С. ::exp север ::lcode rus
+::abbrev с. ::exp север ::lcode rus
+::abbrev с. ::exp сажень; село; сорт; сын ::lcode rus
+::abbrev с. ::exp северный ::lcode rus
+::abbrev с. ::exp средний род ::lcode rus
+::abbrev с. ::exp страница ::lcode rus
+::abbrev с. ::exp северный ::lcode rus
+::abbrev с. ::exp средний род ::lcode rus
+::abbrev с. ::exp страница ::lcode rus
+::abbrev сад-во ::exp садоводство ::lcode rus
+::abbrev сальвад. ::exp сальвадорский ::lcode rus
+::abbrev сан. ::exp санаторий; санитарный ::lcode rus
+::abbrev санскр. ::exp санскритский ::lcode rus
+::abbrev сауд. ::exp саудовский ::lcode rus
+::abbrev с/б ::exp с барьерами (бег) ::lcode rus
+::abbrev сб ::exp стильб ::lcode rus
+::abbrev сб. ::exp суббота ::lcode rus
+::abbrev сб. ::exp сборник ::lcode rus
+::abbrev сб-ки ::exp сборники ::lcode rus
+::abbrev С.-В. ::exp северо-восток ::lcode rus
+::abbrev с.-в. ::exp северо-восток ::lcode rus
+::abbrev с.-в. ::exp северо-восточный ::lcode rus
+::abbrev с.-в. ::exp северо-восточный ::lcode rus
+::abbrev св ::exp свеча ::lcode rus
+::abbrev св. ::exp свыше ::lcode rus
+::abbrev св. ::exp святой ::lcode rus
+::abbrev свв. ::exp святые ::lcode rus
+::abbrev св-во ::exp свойство ::lcode rus
+::abbrev св. год ::exp световой год ::lcode rus
+::abbrev своб. ::exp свободный ::lcode rus
+::abbrev с.-вост. ::exp северо-восточный ::lcode rus
+::abbrev с.-вост. ::exp северо-восточный ::lcode rus
+::abbrev свт. ::exp святитель ::lcode rus
+::abbrev свтт. ::exp святители ::lcode rus
+::abbrev свх. ::exp совхоз ::lcode rus
+::abbrev свящ. ::exp священник ::lcode rus
+::abbrev с.г. ::exp сего года ::lcode rus
+::abbrev сг ::exp сантиграмм ::lcode rus
+::abbrev с.-д. ::exp социал-демократ, социал-демократический ::lcode rus
+::abbrev с/д ::exp сеанс для детей ::lcode rus
+::abbrev сев. ::exp северный ::lcode rus
+::abbrev сев. ::exp северный ::lcode rus
+::abbrev сев.-вост. ::exp северо-восточный ::lcode rus
+::abbrev сев.-вост. ::exp северо-восточный ::lcode rus
+::abbrev сев.-зап. ::exp северо-западный ::lcode rus
+::abbrev сев.-зап. ::exp северо-западный ::lcode rus
+::abbrev сек. ::exp секунда ::lcode rus
+::abbrev сек. ::exp секунда ::lcode rus
+::abbrev секр. ::exp секретарь; секретно ::lcode rus
+::abbrev сект. ::exp сектантский ::lcode rus
+::abbrev сел. ::exp селение, сельский ::lcode rus
+::abbrev сем. ::exp семейство ::lcode rus
+::abbrev сент. ::exp сентябрь, сентябрьский ::lcode rus
+::abbrev сер. ::exp серебро, серебряный; середина; серия ::lcode rus
+::abbrev серб. ::exp сербский ::lcode rus
+::abbrev серж. ::exp сержант, сержантский ::lcode rus
+::abbrev сеч. ::exp сечение ::lcode rus
+::abbrev С.-З. ::exp северо-запад ::lcode rus
+::abbrev с.-з. ::exp северо-западный ::lcode rus
+::abbrev с.-з. ::exp северо-запад ::lcode rus
+::abbrev с.-з. ::exp северо-западный ::lcode rus
+::abbrev с.-зап. ::exp северо-западный ::lcode rus
+::abbrev с.-зап. ::exp северо-западный ::lcode rus
+::abbrev сиб. ::exp сибирский ::lcode rus
+::abbrev симм. ::exp симметричный ::lcode rus
+::abbrev симф. ::exp симфония, симфонический ::lcode rus
+::abbrev синд. ::exp синдикат ::lcode rus
+::abbrev синт. ::exp синтетический ::lcode rus
+::abbrev сир. ::exp сирийский ::lcode rus
+::abbrev сист. ::exp система ::lcode rus
+::abbrev ск. ::exp скала, скалы; скорость ::lcode rus
+::abbrev сказ. ::exp сказуемое ::lcode rus
+::abbrev сканд. ::exp скандинавский ::lcode rus
+::abbrev скв. ::exp скважина ::lcode rus
+::abbrev скл. ::exp склад, склады; склонение ::lcode rus
+::abbrev сконч. ::exp скончался ::lcode rus
+::abbrev скр. ::exp скрипка, скрипичный ::lcode rus
+::abbrev сл ::exp сантилитр ::lcode rus
+::abbrev сл. ::exp слабо; слово, слова ::lcode rus
+::abbrev слав. ::exp славянский ::lcode rus
+::abbrev след. ::exp следующий; следовательно ::lcode rus
+::abbrev словац. ::exp словацкий ::lcode rus
+::abbrev словен. ::exp словенский ::lcode rus
+::abbrev СМ ::exp счетная машина ::lcode rus
+::abbrev См ::exp сименс ::lcode rus
+::abbrev с.м. ::exp сего месяца ::lcode rus
+::abbrev см ::exp сантиметр ::lcode rus
+::abbrev см. ::exp смотри ::lcode rus
+::abbrev см·К ::exp сантиметр-кельвин ::lcode rus
+::abbrev сн ::exp стен ::lcode rus
+::abbrev соб.корр. ::exp собственный корреспондент ::lcode rus
+::abbrev собр. ::exp собрание ::lcode rus
+::abbrev собр.соч. ::exp собрание сочинений ::lcode rus
+::abbrev собр.соч. ::exp собрание сочинений ::lcode rus
+::abbrev собств. ::exp собственно, собственный ::lcode rus
+::abbrev сов. ::exp совершенный вид; советский ::lcode rus
+::abbrev совм. ::exp совместно, совместный ::lcode rus
+::abbrev совр. ::exp современный ::lcode rus
+::abbrev сов.секр. ::exp совершенно секретно ::lcode rus
+::abbrev согл. ::exp соглашение; согласен ::lcode rus
+::abbrev соед. ::exp соединение ::lcode rus
+::abbrev сокр. ::exp сокращение, сокращенный ::lcode rus
+::abbrev соотв. ::exp соответственно, соответствующий ::lcode rus
+::abbrev соп. ::exp сопка ::lcode rus
+::abbrev сопр. ::exp сопровождение ::lcode rus
+::abbrev сост. ::exp составитель, составленный ::lcode rus
+::abbrev сотр. ::exp сотрудник ::lcode rus
+::abbrev соц. ::exp социалистический; социальный ::lcode rus
+::abbrev соч. ::exp сочинение, сочинения ::lcode rus
+::abbrev СП ::exp сантипауза ::lcode rus
+::abbrev сп. ::exp спирт ::lcode rus
+::abbrev СПб. ::exp Санкт-Петербург ::lcode rus
+::abbrev спец. ::exp специальный ::lcode rus
+::abbrev спорт. ::exp спортивный ::lcode rus
+::abbrev с/пр ::exp с препятствиями (бег) ::lcode rus
+::abbrev спр. ::exp спряжение ::lcode rus
+::abbrev с.-р. ::exp социалист-революционер, эсер ::lcode rus
+::abbrev ср ::exp стерадиан ::lcode rus
+::abbrev ср. ::exp средний род ::lcode rus
+::abbrev ср. ::exp сравни; среда; средний ::lcode rus
+::abbrev ср. ::exp средний род ::lcode rus
+::abbrev ср.-азиат. ::exp среднеазиатский ::lcode rus
+::abbrev Ср.В. ::exp Средний Восток ::lcode rus
+::abbrev ср.-век. ::exp средневековый ::lcode rus
+::abbrev ср-во ::exp средство ::lcode rus
+::abbrev Ср. Восток ::exp Средний Восток ::lcode rus
+::abbrev ср.вр. ::exp среднее время ::lcode rus
+::abbrev ср.-год. ::exp среднегодовой ::lcode rus
+::abbrev средиз. ::exp средиземноморский ::lcode rus
+::abbrev ср.-стат. ::exp среднестатистический ::lcode rus
+::abbrev с/с ::exp собрание сочинений ::lcode rus
+::abbrev с/с ::exp собрание сочинений ::lcode rus
+::abbrev сс. ::exp страницы ::lcode rus
+::abbrev Ст ::exp стокс ::lcode rus
+::abbrev Ст. ::exp Старый ::lcode rus
+::abbrev ст. ::exp стакан; станция; старший; старшина; старый; статья; степень; столетие; ступень ::lcode rus
+::abbrev ст. ::exp столбец ::lcode rus
+::abbrev ст. ::exp столбец ::lcode rus
+::abbrev стад. ::exp стадион ::lcode rus
+::abbrev стан. ::exp становище ::lcode rus
+::abbrev стат. ::exp статистика, статистический ::lcode rus
+::abbrev стб. ::exp столбец ::lcode rus
+::abbrev стб. ::exp столбец ::lcode rus
+::abbrev стих. ::exp стихотворение ::lcode rus
+::abbrev стихотв. ::exp стихотворный ::lcode rus
+::abbrev ст.л. ::exp столовая ложка ::lcode rus
+::abbrev ст.н.с. ::exp старший научный сотрудник ::lcode rus
+::abbrev стол.л. ::exp столовая ложка ::lcode rus
+::abbrev стр. ::exp страница ::lcode rus
+::abbrev стр. ::exp страницы ::lcode rus
+::abbrev стр. ::exp строка; строение; строящийся ::lcode rus
+::abbrev стр. ::exp страница ::lcode rus
+::abbrev страд. ::exp страдательный ::lcode rus
+::abbrev стр-во ::exp строительство ::lcode rus
+::abbrev ст.с. ::exp старый стиль ::lcode rus
+::abbrev ст.-сл. ::exp старославянский ::lcode rus
+::abbrev ст.-слав. ::exp старославянский ::lcode rus
+::abbrev ст.ст. ::exp старый стиль ::lcode rus
+::abbrev ст.-фр. ::exp старофранцузский ::lcode rus
+::abbrev ст-ца ::exp станица ::lcode rus
+::abbrev сут. ::exp сутки ::lcode rus
+::abbrev суфф. ::exp суффикс ::lcode rus
+::abbrev сущ. ::exp существительное ::lcode rus
+::abbrev с.х. ::exp сельское хозяйство ::lcode rus
+::abbrev с.-х. ::exp сербско-хорватский ::lcode rus
+::abbrev с.-х. ::exp сельскохозяйственный ::lcode rus
+::abbrev с/х ::exp сельскохозяйственный ::lcode rus
+::abbrev сх. ::exp схема ::lcode rus
+::abbrev с.ч. ::exp сего числа ::lcode rus
+::abbrev с/ч ::exp санитарная часть, строевая часть ::lcode rus
+::abbrev сч. ::exp счет ::lcode rus
+::abbrev с.ш. ::exp северная широта ::lcode rus
+::abbrev сщмч. ::exp священномученик ::lcode rus
+::abbrev сщмчч. ::exp священномученики ::lcode rus
+::abbrev Т ::exp тесла ::lcode rus
+::abbrev Т. ::exp творительный падеж ::lcode rus
+::abbrev Т. ::exp творительный падеж ::lcode rus
+::abbrev т ::exp тонна ::lcode rus
+::abbrev т. ::exp творительный падеж ::lcode rus
+::abbrev т. ::exp том ::lcode rus
+::abbrev т. ::exp телефон ::lcode rus
+::abbrev т. ::exp тираж ::lcode rus
+::abbrev т. ::exp товарищ ::lcode rus
+::abbrev т. ::exp точка (в телеграммах) ::lcode rus
+::abbrev т. ::exp тысяча ::lcode rus
+::abbrev т. ::exp творительный падеж ::lcode rus
+::abbrev т. ::exp телефон ::lcode rus
+::abbrev т. ::exp тираж ::lcode rus
+::abbrev т. ::exp товарищ ::lcode rus
+::abbrev т. ::exp товарищ ::lcode rus
+::abbrev т. ::exp том ::lcode rus
+::abbrev т. ::exp точка (в телеграммах) ::lcode rus
+::abbrev т. ::exp тысяча ::lcode rus
+::abbrev таб. ::exp табачный ::lcode rus
+::abbrev табл. ::exp таблица, табличный; таблетка ::lcode rus
+::abbrev тадж. ::exp таджикский ::lcode rus
+::abbrev так наз. ::exp так называемый ::lcode rus
+::abbrev тамил. ::exp тамильский ::lcode rus
+::abbrev танц. ::exp танцевальный ::lcode rus
+::abbrev тар. ::exp тариф ::lcode rus
+::abbrev тат. ::exp татарский ::lcode rus
+::abbrev Тбайт ::exp терабайт ::lcode rus
+::abbrev Тбайт/с. ::exp терабайт в секунду ::lcode rus
+::abbrev тб/х ::exp турбоход ::lcode rus
+::abbrev тв. ::exp творительный падеж ::lcode rus
+::abbrev тв. ::exp твердость, твердый ::lcode rus
+::abbrev тв. ::exp творительный падеж ::lcode rus
+::abbrev т-во ::exp товарищество ::lcode rus
+::abbrev твор. ::exp творительный падеж ::lcode rus
+::abbrev твор. ::exp творительный падеж ::lcode rus
+::abbrev т.г. ::exp текущего года ::lcode rus
+::abbrev т.е. ::exp то есть ::lcode rus
+::abbrev театр. ::exp театральный ::lcode rus
+::abbrev текст. ::exp текстильный ::lcode rus
+::abbrev Тел. ::lcode rus
+::abbrev тел. ::exp телефон ::lcode rus
+::abbrev тел. ::exp телефон ::lcode rus
+::abbrev телегр. ::exp телеграфный ::lcode rus
+::abbrev телеф. ::exp телефонный ::lcode rus
+::abbrev ТЕМ ::exp техническая единица массы ::lcode rus
+::abbrev т.е.м. ::exp техническая единица массы ::lcode rus
+::abbrev теор. ::exp теоретический ::lcode rus
+::abbrev терр. ::exp террикон; территория, территориальный ::lcode rus
+::abbrev тетр. ::exp тетрадь ::lcode rus
+::abbrev тех. ::lcode rus
+::abbrev техн. ::exp технический, техник; техникум ::lcode rus
+::abbrev теч. ::exp течение ::lcode rus
+::abbrev т.ж. ::exp тысяч жителей ::lcode rus
+::abbrev тж. ::exp также; то же ::lcode rus
+::abbrev т.зр. ::exp точка зрения ::lcode rus
+::abbrev тибет. ::exp тибетский ::lcode rus
+::abbrev тип. ::exp типография, типографский ::lcode rus
+::abbrev тир. ::exp тираж ::lcode rus
+::abbrev тир. ::exp тираж ::lcode rus
+::abbrev тит.л. ::exp титульный лист ::lcode rus
+::abbrev т.к. ::exp так как ::lcode rus
+::abbrev т/к ::exp телеканал ::lcode rus
+::abbrev т.кип. ::exp температура кипения, точка кипения ::lcode rus
+::abbrev ткм ::exp тонна-километр ::lcode rus
+::abbrev тлгр. ::exp телеграф ::lcode rus
+::abbrev т.н. ::exp так называемый ::lcode rus
+::abbrev т.наз. ::exp так называемый ::lcode rus
+::abbrev т.о. ::exp таким образом ::lcode rus
+::abbrev т/о ::exp телевизионное объединение; телеграфное отделение ::lcode rus
+::abbrev т.обр. ::exp таким образом ::lcode rus
+::abbrev тов. ::exp товарищ ::lcode rus
+::abbrev тов. ::exp товарищ ::lcode rus
+::abbrev тов. ::exp товарищ ::lcode rus
+::abbrev толщ. ::exp толщина ::lcode rus
+::abbrev торг. ::exp торговый ::lcode rus
+::abbrev т.пл. ::exp температура плавления ::lcode rus
+::abbrev т-р ::exp театр ::lcode rus
+::abbrev тр. ::exp труды ::lcode rus
+::abbrev т-ра ::exp температура ::lcode rus
+::abbrev трансп. ::exp транспортный ::lcode rus
+::abbrev триг. ::exp тригонометрия, тригонометрический ::lcode rus
+::abbrev трил. ::exp трилогия ::lcode rus
+::abbrev тр-к ::exp треугольник ::lcode rus
+::abbrev трлн ::exp триллион ::lcode rus
+::abbrev тс ::exp тонна-сила ::lcode rus
+::abbrev тс·м ::exp тонна-сила-метр ::lcode rus
+::abbrev т/сч ::exp текущий счет ::lcode rus
+::abbrev т/счет ::exp текущий счет ::lcode rus
+::abbrev тт. ::exp тома ::lcode rus
+::abbrev тт. ::exp товарищи ::lcode rus
+::abbrev тт. ::exp товарищи ::lcode rus
+::abbrev тт. ::exp товарищи ::lcode rus
+::abbrev тт. ::exp тома ::lcode rus
+::abbrev тув. ::exp тувинский ::lcode rus
+::abbrev тум. ::exp туманность ::lcode rus
+::abbrev тунн. ::exp туннель ::lcode rus
+::abbrev туп. ::exp тупик ::lcode rus
+::abbrev тур. ::exp турецкий ::lcode rus
+::abbrev туркм. ::exp туркменский ::lcode rus
+::abbrev т/ф ::exp телефильм ::lcode rus
+::abbrev т/х ::exp теплоход ::lcode rus
+::abbrev т.ч. ::exp тысяча человек ::lcode rus
+::abbrev тчк ::exp точка (в телеграммах) ::lcode rus
+::abbrev тчк ::exp точка (в телеграммах) ::lcode rus
+::abbrev тыс. ::exp тысяча ::lcode rus
+::abbrev тыс. ::exp тысячелетие ::lcode rus
+::abbrev тыс. ::exp тысяча ::lcode rus
+::abbrev тюрк. ::exp тюркский ::lcode rus
+::abbrev У. ::lcode rus
+::abbrev у. ::exp уезд, уездный; утро ::lcode rus
+::abbrev ув. ::exp увеличение, увеличенный ::lcode rus
+::abbrev уг. ::exp угол ::lcode rus
+::abbrev уд. ::exp удовлетворительно (оценка) ::lcode rus
+::abbrev уд.в. ::exp удельный вес ::lcode rus
+::abbrev удм. ::exp удмуртский ::lcode rus
+::abbrev удовл. ::exp удовлетворительно (оценка) ::lcode rus
+::abbrev у.е. ::exp условная единица (денежная) ::lcode rus
+::abbrev уз. ::exp узел ::lcode rus
+::abbrev узб. ::exp узбекский ::lcode rus
+::abbrev указ. ::exp указанный ::lcode rus
+::abbrev укр. ::exp украинский ::lcode rus
+::abbrev ул. ::exp улица ::lcode rus
+::abbrev ум. ::exp умер; уменьшение, уменьшенный ::lcode rus
+::abbrev ун-т ::exp университет ::lcode rus
+::abbrev упак. ::exp упаковка ::lcode rus
+::abbrev употр. ::exp употребляется, употребляющийся ::lcode rus
+::abbrev упр. ::exp управляющий ::lcode rus
+::abbrev ур. ::exp уровень; урочище ::lcode rus
+::abbrev ур. ::exp уравнение ::lcode rus
+::abbrev ур. ::exp уравнение ::lcode rus
+::abbrev ур.м. ::exp уровень моря ::lcode rus
+::abbrev ур-ние ::exp уравнение ::lcode rus
+::abbrev ур-ние ::exp уравнение ::lcode rus
+::abbrev урожд. ::exp урожденная ::lcode rus
+::abbrev уругв. ::exp уругвайский ::lcode rus
+::abbrev усл. ::exp условный ::lcode rus
+::abbrev устар. ::exp устарелый, устаревший ::lcode rus
+::abbrev устр-во ::exp устройство ::lcode rus
+::abbrev у.т. ::exp условное топливо ::lcode rus
+::abbrev утр. ::exp утренний; утреня ::lcode rus
+::abbrev уч. ::exp учебный, ученый (прил.) ::lcode rus
+::abbrev уч.-изд.л. ::exp учетно-издательский лист ::lcode rus
+::abbrev уч-к ::exp участок ::lcode rus
+::abbrev уч-ся ::exp учащийся ::lcode rus
+::abbrev уч-ще ::exp училище ::lcode rus
+::abbrev ущ. ::exp ущелье ::lcode rus
+::abbrev Ф ::exp фарад ::lcode rus
+::abbrev ф ::exp фемто…; фот ::lcode rus
+::abbrev ф. ::exp фильм; фонд; форма; фунт, фут ::lcode rus
+::abbrev фак. ::exp факультет ::lcode rus
+::abbrev фак. ::exp факультет ::lcode rus
+::abbrev факс. ::exp факсимиле, факсимильный ::lcode rus
+::abbrev фак-т ::exp факультет ::lcode rus
+::abbrev фак-т ::exp факультет ::lcode rus
+::abbrev фам. ::exp фамилия ::lcode rus
+::abbrev фарм. ::exp фармакология, фармакологический, фармацевтический ::lcode rus
+::abbrev фаш. ::exp фашистский ::lcode rus
+::abbrev февр. ::exp февраль, февральский ::lcode rus
+::abbrev фельдм. ::exp фельдмаршал ::lcode rus
+::abbrev феод. ::exp феодальный ::lcode rus
+::abbrev ферм. ::exp ферментативный ::lcode rus
+::abbrev фиг. ::exp фигура ::lcode rus
+::abbrev физ. ::exp физика, физический ::lcode rus
+::abbrev физ.п.л. ::exp физический печатный лист ::lcode rus
+::abbrev физ-ра ::exp физкультура ::lcode rus
+::abbrev физ.-хим. ::exp физико-химический ::lcode rus
+::abbrev фил. ::exp филиал ::lcode rus
+::abbrev филол. ::exp филологический ::lcode rus
+::abbrev филос. ::exp философский ::lcode rus
+::abbrev фин. ::exp финансовый; финский ::lcode rus
+::abbrev финл. ::exp финляндский ::lcode rus
+::abbrev Ф.И.О. ::exp фамилия, имя, отчество ::lcode rus
+::abbrev ф.и.о. ::exp фамилия, имя, отчество ::lcode rus
+::abbrev фК ::exp фемтокулон ::lcode rus
+::abbrev ф-ка ::exp фабрика ::lcode rus
+::abbrev ф-ла ::exp формула ::lcode rus
+::abbrev флам. ::exp фламандский ::lcode rus
+::abbrev Ф/м ::exp фарад на метр ::lcode rus
+::abbrev ф-но ::exp фортепиано ::lcode rus
+::abbrev ф-но ::exp фортепиано ::lcode rus
+::abbrev фон. ::exp фонетика, фонетический ::lcode rus
+::abbrev фот. ::exp фотография, фотографический ::lcode rus
+::abbrev фотогр. ::exp фотография, фотографический ::lcode rus
+::abbrev фот·с ::exp фот-секунда ::lcode rus
+::abbrev фот·с ::exp фот-секунда ::lcode rus
+::abbrev фот·ч ::exp фот-час ::lcode rus
+::abbrev фот-ч ::exp фот-час ::lcode rus
+::abbrev фп. ::exp фортепиано ::lcode rus
+::abbrev фп. ::exp фортепианный ::lcode rus
+::abbrev фп. ::exp фортепиано ::lcode rus
+::abbrev фр. ::exp франк; фруктовый ::lcode rus
+::abbrev фр. ::exp французский ::lcode rus
+::abbrev франц. ::exp французский ::lcode rus
+::abbrev ф·сек ::exp фот-секунда ::lcode rus
+::abbrev ф·сек ::exp фот-секунда ::lcode rus
+::abbrev ф.ст. ::exp фунт стерлингов ::lcode rus
+::abbrev ф-т ::exp факультет ::lcode rus
+::abbrev ф-т ::exp факультет ::lcode rus
+::abbrev ф-ция ::exp функция ::lcode rus
+::abbrev ф·ч ::exp фот-час ::lcode rus
+::abbrev ф-ч ::exp фот-час ::lcode rus
+::abbrev Х. ::lcode rus
+::abbrev х. ::exp хутор ::lcode rus
+::abbrev хар-ка ::exp характеристика ::lcode rus
+::abbrev х/б ::exp хлопчатобумажный ::lcode rus
+::abbrev х/б ::exp хлопчатобумажный ::lcode rus
+::abbrev Х.в. ::exp Христос воскресе (как надпись на предметах) ::lcode rus
+::abbrev х-во ::exp хозяйство ::lcode rus
+::abbrev х-во ::exp хозяйство ::lcode rus
+::abbrev х.е.м. ::exp химическая единица массы ::lcode rus
+::abbrev хим. ::exp химия, химический ::lcode rus
+::abbrev хир. ::exp хирургия, хирургический ::lcode rus
+::abbrev хл.-бум. ::exp хлопчатобумажный ::lcode rus
+::abbrev хл.-бум. ::exp хлопчатобумажный ::lcode rus
+::abbrev хлф ::exp хлороформ ::lcode rus
+::abbrev хоз. ::exp хозяйственный ::lcode rus
+::abbrev хоз-во ::exp хозяйство ::lcode rus
+::abbrev хоз-во ::exp хозяйство ::lcode rus
+::abbrev хол. ::exp холодный ::lcode rus
+::abbrev холод. ::exp холодильник ::lcode rus
+::abbrev хор. ::exp хорошо (оценка) ::lcode rus
+::abbrev хорв. ::exp хорватский ::lcode rus
+::abbrev хр. ::exp хребет ::lcode rus
+::abbrev христ. ::exp христианский ::lcode rus
+::abbrev хрон. ::exp хронический ::lcode rus
+::abbrev х.с. ::exp ход сообщения ::lcode rus
+::abbrev х/с ::exp художественный сериал ::lcode rus
+::abbrev худ. ::exp художник ::lcode rus
+::abbrev худ. ::exp художественный ::lcode rus
+::abbrev худож. ::exp художественный ::lcode rus
+::abbrev хут. ::exp хутор ::lcode rus
+::abbrev хут. ::exp хутор ::lcode rus
+::abbrev х/ф ::exp художественный фильм ::lcode rus
+::abbrev х.ч. ::exp химически чистый ::lcode rus
+::abbrev х.ч. ::exp хозяйственная часть ::lcode rus
+::abbrev х/ч ::exp хозяйственная часть ::lcode rus
+::abbrev Ц. ::lcode rus
+::abbrev ц ::exp центнер ::lcode rus
+::abbrev ц. ::exp цена; центр; церковь; цифра, цифровой ::lcode rus
+::abbrev цв. ::exp цвет, цветной ::lcode rus
+::abbrev ц/га ::exp центнер на га ::lcode rus
+::abbrev целл. ::exp целлюлозный ::lcode rus
+::abbrev цем. ::exp цементный ::lcode rus
+::abbrev центр. ::exp центральный ::lcode rus
+::abbrev церк. ::exp церковный ::lcode rus
+::abbrev церк.-сл. ::exp церковнославянский ::lcode rus
+::abbrev церк.-слав. ::exp церковнославянский ::lcode rus
+::abbrev ц.н.с. ::exp центральная нервная система ::lcode rus
+::abbrev ц.-сл. ::exp церковнославянский ::lcode rus
+::abbrev Ч. ::lcode rus
+::abbrev ч. ::exp час ::lcode rus
+::abbrev ч. ::exp через; число; чистый ::lcode rus
+::abbrev ч. ::exp часть ::lcode rus
+::abbrev ч. ::exp человек ::lcode rus
+::abbrev чайн.л. ::exp чайная ложка ::lcode rus
+::abbrev чайн.л. ::exp чайная ложка ::lcode rus
+::abbrev час. ::exp часов (род.п.мн.ч.) ::lcode rus
+::abbrev ч/б ::exp черно-белый ::lcode rus
+::abbrev чел. ::exp человек ::lcode rus
+::abbrev чел. ::exp человек ::lcode rus
+::abbrev черк. ::exp черкесский ::lcode rus
+::abbrev черногор. ::exp черногорский ::lcode rus
+::abbrev четв. ::exp четверть ::lcode rus
+::abbrev чеч. ::exp чеченский ::lcode rus
+::abbrev чеш. ::exp чешский ::lcode rus
+::abbrev чил. ::exp чилийский ::lcode rus
+::abbrev числ. ::exp численность ::lcode rus
+::abbrev числ. ::exp числительное ::lcode rus
+::abbrev числит. ::exp числительное ::lcode rus
+::abbrev ч.-к. ::exp член-корреспондент ::lcode rus
+::abbrev ч.л. ::exp чайная ложка ::lcode rus
+::abbrev ч.л. ::exp чайная ложка ::lcode rus
+::abbrev чл. ::exp член ::lcode rus
+::abbrev чл.-корр. ::exp член-корреспондент ::lcode rus
+::abbrev чт. ::exp четверг ::lcode rus
+::abbrev чтв. ::exp четверг ::lcode rus
+::abbrev чув. ::exp чувашский ::lcode rus
+::abbrev чч. ::exp части ::lcode rus
+::abbrev чч. ::exp части ::lcode rus
+::abbrev ч/ш ::exp чистая шерсть, чистошерстяной ::lcode rus
+::abbrev Ш. ::lcode rus
+::abbrev ш. ::exp широта; шоссе ::lcode rus
+::abbrev шах. ::exp шахта ::lcode rus
+::abbrev шв. ::exp шведский ::lcode rus
+::abbrev швед. ::exp шведский ::lcode rus
+::abbrev швейц. ::exp швейцарский ::lcode rus
+::abbrev шилл. ::exp шиллинг ::lcode rus
+::abbrev шир. ::exp ширина ::lcode rus
+::abbrev шк. ::exp школа ::lcode rus
+::abbrev шл. ::exp шлюз ::lcode rus
+::abbrev шосс. ::exp шоссейный ::lcode rus
+::abbrev шотл. ::exp шотландский ::lcode rus
+::abbrev шт. ::exp штат; штольня; штука ::lcode rus
+::abbrev Щ. ::lcode rus
+::abbrev щел. ::exp щелочной ::lcode rus
+::abbrev Ъ. ::lcode rus
+::abbrev Ы. ::lcode rus
+::abbrev Ь. ::lcode rus
+::abbrev Э ::exp эрстед ::lcode rus
+::abbrev э. ::lcode rus
+::abbrev Эбайт ::exp экзабайт ::lcode rus
+::abbrev ЭВ ::exp экваториальный воздух ::lcode rus
+::abbrev эВ ::exp электронвольт ::lcode rus
+::abbrev эВ·см ::exp электронвольт-сантиметр ::lcode rus
+::abbrev э.д.с. ::exp электродвижущая сила ::lcode rus
+::abbrev экв. ::exp экваториальный ::lcode rus
+::abbrev эквив. ::exp эквивалентный ::lcode rus
+::abbrev экз. ::exp экземпляр ::lcode rus
+::abbrev экон. ::exp экономический ::lcode rus
+::abbrev эксп. ::exp экспедиция ::lcode rus
+::abbrev элев. ::exp элеватор ::lcode rus
+::abbrev элект. ::exp электроника, электронный; электротехника, электротехнический ::lcode rus
+::abbrev элем. ::exp элемент ::lcode rus
+::abbrev эл.подст. ::exp электрическая подстанция ::lcode rus
+::abbrev э.л.с. ::exp эффективная лошадиная сила ::lcode rus
+::abbrev эл.ст. ::exp электростанция ::lcode rus
+::abbrev эск. ::exp эскадра, эскадренный; эскадрон ::lcode rus
+::abbrev эским. ::exp эскимосский ::lcode rus
+::abbrev эсп. ::exp эсперанто ::lcode rus
+::abbrev эспер. ::exp эсперанто ::lcode rus
+::abbrev эст. ::exp эстонский ::lcode rus
+::abbrev эф.-масл. ::exp эфирно-масличный ::lcode rus
+::abbrev эш. ::exp эшелон ::lcode rus
+::abbrev Ю. ::exp юг ::lcode rus
+::abbrev ю. ::exp юг ::lcode rus
+::abbrev ю. ::exp южный ::lcode rus
+::abbrev ю. ::exp южный ::lcode rus
+::abbrev Ю.-В. ::exp юго-восток ::lcode rus
+::abbrev ю.-в. ::exp юго-восток ::lcode rus
+::abbrev ю.-в. ::exp юго-восточный ::lcode rus
+::abbrev ю.-вост. ::exp юго-восточный ::lcode rus
+::abbrev юго-вост. ::exp юго-восточный ::lcode rus
+::abbrev юго-зап. ::exp юго-западный ::lcode rus
+::abbrev югосл. ::exp югославский ::lcode rus
+::abbrev юж. ::exp южный ::lcode rus
+::abbrev юж. ::exp южный ::lcode rus
+::abbrev Ю.-З. ::exp юго-запад ::lcode rus
+::abbrev ю.-з. ::exp юго-запад ::lcode rus
+::abbrev ю.-з. ::exp юго-западный ::lcode rus
+::abbrev ю.-зап. ::exp юго-западный ::lcode rus
+::abbrev юр. ::exp юридический ::lcode rus
+::abbrev юридич. ::exp юридический ::lcode rus
+::abbrev ю.ш. ::exp южная широта ::lcode rus
+::abbrev Я. ::lcode rus
+::abbrev яз. ::exp язык ::lcode rus
+::abbrev яз-ние ::exp языкознание ::lcode rus
+::abbrev языч. ::exp языческий ::lcode rus
+::abbrev як. ::exp якутский ::lcode rus
+::abbrev янв. ::exp январь, январский ::lcode rus
+::abbrev яп. ::exp японский ::lcode rus
+::abbrev япон. ::exp японский ::lcode rus
+::abbrev ящ. ::exp ящик ::lcode rus

@@ -41,6 +41,7 @@ if __name__ == "__main__":
         token_category = slot_value_in_double_colon_del_list(line, 'token-category')
         taxon = slot_value_in_double_colon_del_list(line, 'taxon')
         currency_prefix = slot_value_in_double_colon_del_list(line, 'currency-prefix')
+        eng = slot_value_in_double_colon_del_list(line, 'eng')
 
         if line.startswith('::token ') or line.startswith('::misspelling ') or line.startswith('::currency-prefix '):
             if line.startswith('::currency-prefix'):
@@ -123,9 +124,11 @@ if __name__ == "__main__":
                 out += f' ::suffix-variations {suffix_variations}'
             if comment:
                 out += f' ::comment {comment}'
+            if eng:
+                out += f' ::eng {eng}'
             if extras := (slots - {'token', 'lc', 'case-invariant', 'abbreviation-expansion', 'comment',
                                    'add-period-if-missing', 'alt-spelling', 'misspelling', 'misspelling-type',
-                                   'etym-lc', 'suffix-variations', 'norm',
+                                   'etym-lc', 'suffix-variations', 'norm', 'eng',
                                    'named-entity-type', 'plural', 'taxon', 'type', 'currency-prefix',
                                    'left-context', 'left-typed-context', 'right-context', 'right-typed-context'}):
                 log.warning(f'L.{line_number} abbreviation entry has unknown slots: {extras}')

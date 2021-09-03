@@ -1,0 +1,17 @@
+::abbrev පෙ.ව. ::lcode sin ::comment a.m.
+::abbrev ප.ව. ::lcode sin ::comment p.m.
+::abbrev එ.ජ. ::lcode sin ::comment U.S.
+::abbrev එ.ජ.ඇ. ::lcode sin ::comment U.S.A.
+::abbrev ක්‍රි.පූ. ::lcode sin ::comment B.C.
+::abbrev ක්‍රි.ව. ::lcode sin ::comment A.D.
+::abbrev ජන. ::exp ජනවාරි ::lcode sin ::comment Jan.
+::abbrev පෙබ. ::exp පෙබරවාරි ::lcode sin ::comment Feb.
+::abbrev අගෝ. ::exp අගෝස්තු ::lcode sin ::comment Aug.
+::abbrev සැප්. ::exp සැප්තැම්බර් ::lcode sin ::comment Sept.
+::abbrev ඔක්. ::exp ඔක්තෝබර ::lcode sin ::comment Oct.
+::abbrev නොවැ. ::exp නොවැම්බර් ::lcode sin ::comment Nov.
+::abbrev දෙසැ. ::exp දෙසැම්බර් ::lcode sin ::comment Dec.
+::abbrev අඟ. ::exp අඟහරුවාදා ::lcode sin ::comment Tuesday
+::abbrev බ්‍රහස්. ::exp බ්‍රහස්පතින්දා ::lcode sin ::comment Thursday
+::abbrev සිකු. ::exp සිකුරාදා ::lcode sin ::comment Friday
+::abbrev සෙන. ::exp සෙනසුරාදා ::lcode sin ::comment Saturday

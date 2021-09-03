@@ -1,0 +1,282 @@
+::abbrev в. ::exp види; век; весник ::lcode mkd
+::abbrev в.д. ::exp вршител на должност ::lcode mkd
+::abbrev г. ::exp година; господин ::lcode mkd
+::abbrev г.г. ::exp господин господин; господа ::lcode mkd
+::abbrev год. ::exp година ::lcode mkd
+::abbrev ж.р. ::exp женски род ::lcode mkd
+::abbrev л. ::exp лице ::lcode mkd
+::abbrev м.р. ::exp машки род ::lcode mkd
+::abbrev н.е. ::exp наша ера; нова ера ::lcode mkd
+::abbrev о.г. ::exp оваа година ::lcode mkd
+::abbrev о.м. ::exp овој месец ::lcode mkd
+::abbrev с. ::exp село ::lcode mkd
+::abbrev с.р. ::exp среден род ::lcode mkd
+::abbrev т. ::exp точка ::lcode mkd
+::abbrev т.е. ::exp то ест ::lcode mkd
+::abbrev т.н. ::exp таканаречен ::lcode mkd
+::abbrev бр. ::exp број ::lcode mkd
+::abbrev гр. ::exp град ::lcode mkd
+::abbrev др. ::exp другар ::lcode mkd
+::abbrev и др. ::exp и друго ::lcode mkd
+::abbrev и сл. ::exp и слично ::lcode mkd
+::abbrev итн. ::exp и така натаму ::lcode mkd
+::abbrev кн. ::exp книга ::lcode mkd
+::abbrev мн. ::exp множина ::lcode mkd
+::abbrev на пр. ::exp на пример ::lcode mkd
+::abbrev од н.е. ::exp од нашата ера ::lcode mkd
+::abbrev пр. н.е. ::exp пред нашата ера ::lcode mkd
+::abbrev по Хр. ::exp по Христа ::lcode mkd
+::abbrev пр. Хр. ::exp пред Христа ::lcode mkd
+::abbrev св. ::exp свети и свеска ::lcode mkd
+::abbrev сп. ::exp списание; спореди ::lcode mkd
+::abbrev ср. р. ::exp среден род ::lcode mkd
+::abbrev с. ::exp страница ::lcode mkd
+::abbrev стр. ::exp страница ::lcode mkd
+::abbrev ст. ст. ::exp стар стил ::lcode mkd
+::abbrev чл. ::exp член ::lcode mkd
+::abbrev арх. ::exp архитект ::lcode mkd
+::abbrev забел. ::exp забелешка ::lcode mkd
+::abbrev бел. ::exp белешка ::lcode mkd
+::abbrev гимн. ::exp гимназија ::lcode mkd
+::abbrev ден. ::exp денар ::lcode mkd
+::abbrev ген. ::exp генитив ::lcode mkd
+::abbrev дем. ::exp деминутив ::lcode mkd
+::abbrev едн. ::exp еднина ::lcode mkd
+::abbrev ул. ::exp улица ::lcode mkd
+::abbrev инж. ::exp инженер ::lcode mkd
+::abbrev проф. ::exp професор ::lcode mkd
+::abbrev комп. ::exp компаратив ::lcode mkd
+::abbrev синг. ::exp сингулар ::lcode mkd
+::abbrev студ. ::exp студент ::lcode mkd
+::abbrev ак. ::exp акузатив ::lcode mkd
+::abbrev бот. ::exp ботаника ::lcode mkd
+::abbrev вок. ::exp вокатив ::lcode mkd
+::abbrev грам. ::exp граматика ::lcode mkd
+::abbrev дат. ::exp датив ::lcode mkd
+::abbrev им. ::exp именка ::lcode mkd
+::abbrev мат. ::exp математика ::lcode mkd
+::abbrev ном. ::exp номинатив ::lcode mkd
+::abbrev прил. ::exp прилог ::lcode mkd
+::abbrev прид. ::exp придавка ::lcode mkd
+::abbrev сврз. ::exp сврзник ::lcode mkd
+::abbrev физ. ::exp физика ::lcode mkd
+::abbrev хем. ::exp хемија ::lcode mkd
+::abbrev пр.н. ::exp природни науки ::lcode mkd
+::abbrev аугм. ::exp аугментатив ::lcode mkd
+::abbrev геогр. ::exp географија ::lcode mkd
+::abbrev геол. ::exp Геологија ::lcode mkd
+::abbrev истор. ::exp историја ::lcode mkd
+::abbrev литер. ::exp литература ::lcode mkd
+::abbrev митол. ::exp митолошки ::lcode mkd
+::abbrev мит. ::exp митологија ::lcode mkd
+::abbrev неменл. ::exp неменливо ::lcode mkd
+::abbrev поет. ::exp поетски ::lcode mkd
+::abbrev зоол. ::exp зоологија ::lcode mkd
+::abbrev стсл. ::exp старословенски ::lcode mkd
+::abbrev срхр. ::exp српскохрватски ::lcode mkd
+::abbrev пф. ::exp перфективен ::lcode mkd
+::abbrev импф. ::exp имперфективен ::lcode mkd
+::abbrev д-р ::exp доктор ::lcode mkd
+::abbrev м-р ::exp магистер ::lcode mkd
+::abbrev г-ѓа ::exp госпоѓа ::lcode mkd
+::abbrev г-ца ::exp госпоѓица ::lcode mkd
+::abbrev г-н ::exp господин ::lcode mkd
+::abbrev г-ин ::exp господин ::lcode mkd
+::abbrev г-дин ::exp господин ::lcode mkd
+::abbrev г.д. ::exp географска должина ::lcode mkd
+::abbrev г.пр.н.е. ::exp Година пред новата ера ::lcode mkd
+::abbrev г.ш. ::exp географска ширина ::lcode mkd
+::abbrev г/т ::exp грама на тон ::lcode mkd
+::abbrev Гб/с ::exp Гигабајти на секунда ::lcode mkd
+::abbrev глаг. им. ::exp Глаголска именка ::lcode mkd
+::abbrev глаг. прид. ::exp Глаголска придавка ::lcode mkd
+::abbrev Гр.бр.в. ::exp Градежна бруто површина ::lcode mkd
+::abbrev а.н.в. ::exp апсолутна надморска висина ::lcode mkd
+::abbrev Автом. ::exp Автоматски ::lcode mkd
+::abbrev алб. ::exp албански ::lcode mkd
+::abbrev анат. ::exp Анатомија ::lcode mkd
+::abbrev анг. ::exp Англиски ::lcode mkd
+::abbrev англ. ::exp Англиски ::lcode mkd
+::abbrev анест. ::exp анестезија ::lcode mkd
+::abbrev ар-ен-би ::exp Ритам и блуз ::lcode mkd
+::abbrev б.б. ::exp Без број ::lcode mkd
+::abbrev Б2Б ::exp B2B; Business to business ::lcode mkd
+::abbrev биол. ::exp Биологија ::lcode mkd
+::abbrev безл. ::exp Безличен ::lcode mkd
+::abbrev БИБЛ. ::exp бибблиографија ::lcode mkd
+::abbrev Би-би-си ::exp BBC; British Broadcasting Corporation ::lcode mkd
+::abbrev болн. ::exp болница ::lcode mkd
+::abbrev бул. ::exp Булевар ::lcode mkd
+::abbrev В.ф. ::exp Ветеринарен факултет ::lcode mkd
+::abbrev Вер. заед. ::exp Верски заедници ::lcode mkd
+::abbrev вонр. ::exp вонреден ::lcode mkd
+::abbrev д-р т. н. ::exp Доктор на техничките науки ::lcode mkd
+::abbrev д-р. ::exp доктор ::lcode mkd
+::abbrev дан. ::exp Даночен ::lcode mkd
+::abbrev дек. ::exp декември ::lcode mkd
+::abbrev Дет. дом. ::exp Детски дом ::lcode mkd
+::abbrev диј. ::exp дијалектизам ::lcode mkd
+::abbrev дијал. ::exp Дијалектен збор ::lcode mkd
+::abbrev дипл. ::exp Дипломиран ::lcode mkd
+::abbrev дипл. геод. инж. ::exp дипломиран геодетски инженер ::lcode mkd
+::abbrev дипл. град. инж. ::exp дипломиран градежен инженер ::lcode mkd
+::abbrev дипл. ел. инж. ::exp дипломиран електротехнички инженер ::lcode mkd
+::abbrev дипл. инж. арх. ::exp дипломиран инженер - архитект ::lcode mkd
+::abbrev дипл. инж. геол. ::exp дипломиран инженер по геологија ::lcode mkd
+::abbrev дипл. маш. инж. ::exp дипломиран машински инженер ::lcode mkd
+::abbrev Дипл. Пред. ::exp Дипломатски претставништва ::lcode mkd
+::abbrev дир. ::exp директор ::lcode mkd
+::abbrev дистриб ::exp дистрибуција; дистрибутивен ::lcode mkd
+::abbrev егип. ::exp египетски ::lcode mkd
+::abbrev екон. ::exp Економија ::lcode mkd
+::abbrev ел. ::exp Електричен ::lcode mkd
+::abbrev елек. ::exp електротехника ::lcode mkd
+::abbrev Ем-ти-ви ::exp MTV; Music Television ::lcode mkd
+::abbrev ж. женски ::exp род; жител ::lcode mkd
+::abbrev ж. л. ::exp железничка линија ::lcode mkd
+::abbrev жарг. ::exp Жаргонски ::lcode mkd
+::abbrev жел. ст. ::exp Железничка станица ::lcode mkd
+::abbrev Жи-ва ::exp Жито Вардар ::lcode mkd
+::abbrev З. вон ст. ::exp Зграда вон стопанство ::lcode mkd
+::abbrev З. на СВР ::exp Згради на СВР ::lcode mkd
+::abbrev З. на СИЗ ::exp Згради на СИЗ ::lcode mkd
+::abbrev З. на ССНО ::exp Згради за ССНО ::lcode mkd
+::abbrev Заед. ::exp Заеднички ::lcode mkd
+::abbrev зам. ::exp Заменка ::lcode mkd
+::abbrev зам. прид. ::exp Заменска придавка ::lcode mkd
+::abbrev Зб. ::exp Зборник ::lcode mkd
+::abbrev зб. им. ::exp Збирна именка ::lcode mkd
+::abbrev зб. мн. ::exp Збирна множина ::lcode mkd
+::abbrev Згр. во ст. ::exp Зграда во стопанството ::lcode mkd
+::abbrev Згр. СОК ::exp Згради на ЗПП ::lcode mkd
+::abbrev Зем. и шума ::exp Згради во земјоделство и шумарство ::lcode mkd
+::abbrev И-СД ::exp Илинден-Слободни демократи ::lcode mkd
+::abbrev и. г. ::exp истата година ::lcode mkd
+::abbrev иб. ::exp за латински ibidem; исто ибид. ::lcode mkd
+::abbrev избр. мн. ::exp Избројна множина ::lcode mkd
+::abbrev изв. ::exp извик; извори ::lcode mkd
+::abbrev ИЗВ. ::exp извик; извори ::lcode mkd
+::abbrev изд. ::exp издание ::lcode mkd
+::abbrev имперф. ::exp Имперфект ::lcode mkd
+::abbrev Инд. и руд. ::exp Згради во индустрија и рударство ::lcode mkd
+::abbrev инст. ::exp институт ::lcode mkd
+::abbrev Инст. за инф. ::exp Институт за информатика ::lcode mkd
+::abbrev Инст. за мат. ::exp Институт за математика ::lcode mkd
+::abbrev инстал. ::exp инсталиран ::lcode mkd
+::abbrev кат. ::exp катастарски ::lcode mkd
+::abbrev кг/м² ::exp Килограм на квадратен метар ::lcode mkd
+::abbrev кгр. ::exp Килограм ::lcode mkd
+::abbrev кл. ::exp килолитар; клиника ::lcode mkd
+::abbrev км ::exp Километар ::lcode mkd
+::abbrev км/ч. ::exp километри на час ::lcode mkd
+::abbrev км/час ::exp километри на час ::lcode mkd
+::abbrev км² ::exp километар квадратен ::lcode mkd
+::abbrev ком. ::exp комитет ::lcode mkd
+::abbrev Ком. дел. ::exp Зграда во комунална дејност ::lcode mkd
+::abbrev Кор.г.и.з. со зг ::exp Право на користење на градежно изградено земјиште врз кое постои зграда ::lcode mkd
+::abbrev Кор.г.н.з. до од ::exp Право ка користење на градежно неизградено земјиште до одземање ::lcode mkd
+::abbrev Кор.г.н. за изг. ::exp Право на користење на градежно земјиште заради изградба ::lcode mkd
+::abbrev Кор. на заед. згр ::exp Право на користење на заеднички делови од зграда ::lcode mkd
+::abbrev Кор. на заем. во ::exp Право на користење на земјоделско земјиште во општествена сопственост ::lcode mkd
+::abbrev Корист. упр. расп ::exp Право на користење, управување и располагање ::lcode mkd
+::abbrev Л.А. ::exp Лос Анџелес ::lcode mkd
+::abbrev л/сек ::exp литар во секунда ::lcode mkd
+::abbrev лаб. ::exp лабораторија ::lcode mkd
+::abbrev лат. ::exp Латински ::lcode mkd
+::abbrev лит. ::exp литар; литература ::lcode mkd
+::abbrev М-НАВ ::exp Македонски навигации ::lcode mkd
+::abbrev м. ::exp машки род; метар; месност; место ::lcode mkd
+::abbrev м. в. ::exp минатиот век ::lcode mkd
+::abbrev М. ф. ::exp Медицински факултет ::lcode mkd
+::abbrev м.в. ::exp место викано ::lcode mkd
+::abbrev м/сек ::exp метри во секунда ::lcode mkd
+::abbrev м² ::exp Квадратен метар ::lcode mkd
+::abbrev м³ ::exp Кубен метар ::lcode mkd
+::abbrev м³/сек ::exp кубни метри во секунда ::lcode mkd
+::abbrev мак. ::exp македонски јазик ::lcode mkd
+::abbrev Мат. инст. ::exp Математички институт ::lcode mkd
+::abbrev Мат. фак. ::exp Математички факултет ::lcode mkd
+::abbrev Маш. фак. ::exp Машински факултет ::lcode mkd
+::abbrev мг/л ::exp Милиграм на литар ::lcode mkd
+::abbrev Мед. фак. ::exp Медицински факултет ::lcode mkd
+::abbrev Мед. ц. ::exp Медицински центар ::lcode mkd
+::abbrev Мес. заед. ::exp Месна заедница ::lcode mkd
+::abbrev О.К. ::exp Отворен кредит ::lcode mkd
+::abbrev одд. ::exp одделение ::lcode mkd
+::abbrev окт. ::exp октомври ::lcode mkd
+::abbrev Оп.ст. зг ::exp Општествена стамбена зграда ::lcode mkd
+::abbrev опт. сопст. ::exp Општествена сопственост ::lcode mkd
+::abbrev Ост. стоп. ::exp Згради во останато стопанство ::lcode mkd
+::abbrev п-ца ::exp печатница ::lcode mkd
+::abbrev П.з.п. ::exp Површини за заеднички простории ::lcode mkd
+::abbrev п.о. ::exp потполна одговорност; партизански одред ::lcode mkd
+::abbrev П.р.п. ::exp Површина за работни простории ::lcode mkd
+::abbrev П.с.п. ::exp Станбена површина ::lcode mkd
+::abbrev П. ФАХ ::exp Поштенски фах ::lcode mkd
+::abbrev Пенз. дом. ::exp Пензионерски дом ::lcode mkd
+::abbrev перс. ::exp Персонален ::lcode mkd
+::abbrev пи-ар ::exp PR; Public Relations ::lcode mkd
+::abbrev пи-си ::exp PC; personal computer ::lcode mkd
+::abbrev пл. ::exp планина ::lcode mkd
+::abbrev по Хр. ::exp по Христа ::lcode mkd
+::abbrev пол. ::exp Полски јазик ::lcode mkd
+::abbrev полк. ::exp полковник ::lcode mkd
+::abbrev р. ::exp река ::lcode mkd
+::abbrev раков. ::exp раководител ::lcode mkd
+::abbrev рег. ::exp регионализам ::lcode mkd
+::abbrev ред. ::exp редовен ::lcode mkd
+::abbrev реп. ::exp републички ::lcode mkd
+::abbrev Реп. орг. ::exp Републички организации ::lcode mkd
+::abbrev реф. бр. ::exp Референтен број ::lcode mkd
+::abbrev РС-ЛП ::exp Реформски сили-Либерална партија ::lcode mkd
+::abbrev с-ка ::exp Сметка ::lcode mkd
+::abbrev с. ::exp село; секунда ::lcode mkd
+::abbrev с.р. ::exp своерачно ::lcode mkd
+::abbrev С/СОК ::exp Слободен/Софтвер со отворен код ::lcode mkd
+::abbrev СВ. ::exp Свети; свршен глагол ::lcode mkd
+::abbrev св. ::exp Свети; свршен глагол ::lcode mkd
+::abbrev сврз. ::exp Сврзник ::lcode mkd
+::abbrev сев. ::exp северен ::lcode mkd
+::abbrev сек. ::exp секундарен ::lcode mkd
+::abbrev Сем. згр. ::exp Семејна зграда ::lcode mkd
+::abbrev септ. ::exp септември ::lcode mkd
+::abbrev Си-ен-ен ::exp CNN; Cable News Network ::lcode mkd
+::abbrev сигн. ::exp Сигнатура ::lcode mkd
+::abbrev т.ц. ::exp Трговски центар ::lcode mkd
+::abbrev т/ч ::exp тони на час ::lcode mkd
+::abbrev тел. ::exp Телефон ::lcode mkd
+::abbrev Тех. фак. ::exp Технички факултет ::lcode mkd
+::abbrev техн. ::exp технички ::lcode mkd
+::abbrev трансф. ::exp трансформатор ::lcode mkd
+::abbrev тур. ::exp турски ::lcode mkd
+::abbrev у-ес-бе ::exp USB; Universal Serial Bus ::lcode mkd
+::abbrev УСБ ::exp USB; Universal Serial Bus ::lcode mkd
+::abbrev У5МР ::exp Стапка на смртност на деца под петгодишна возраст ::lcode mkd
+::abbrev У KO ::exp Универзитет "Св. Климент Охридски" ::lcode mkd
+::abbrev унив. ::exp универзитет; универзитетски ::lcode mkd
+::abbrev Ф-ка ::exp Фабрика ::lcode mkd
+::abbrev фка ::exp Фабрика ::lcode mkd
+::abbrev Ф1 ::exp Формула 1 ::lcode mkd
+::abbrev Фак. за мат. ::exp Факултет за математика ::lcode mkd
+::abbrev Фарм. ф. ::exp Фармацевтски факултет ::lcode mkd
+::abbrev фев. ::exp февруари ::lcode mkd
+::abbrev фиг. ::exp фигуративно ::lcode mkd
+::abbrev Физ. култ. ::exp Згради за физичка култура и рекреација ::lcode mkd
+::abbrev Филоз. фак. ::exp Филозофски факултет ::lcode mkd
+::abbrev фраз. ::exp фразеологизам ::lcode mkd
+::abbrev ФС/Ц ::exp Флуоресцентна сијалица во вид на цевка ::lcode mkd
+::abbrev ХИВ+ ::exp Верифицирано постоење на ХИВ вирусот во крвта на личноста со адекватните ХИВ тестови ::lcode mkd
+::abbrev ХИВ- ::exp Непостоење на вирусот во крвта на пациентот утврдено со тестовите за ХИВ ::lcode mkd
+::abbrev ХЛА-ДНК ::exp HLA-DNA; human leukocyte antibody Дезоксирибонуклеинска киселина ::lcode mkd
+::abbrev хон. ::exp хонорарен ::lcode mkd
+::abbrev Хрв. ::exp Хрватска ::lcode mkd
+::abbrev ЦД-РОМ ::exp CD-ROM; compact disk read only memory ::lcode mkd
+::abbrev це-де ::exp компакт диск; CD; compact disk ::lcode mkd
+::abbrev цм³ ::exp кубен сантиметар; cm³; cubic centimeter ::lcode mkd
+::abbrev ЦО² ::exp Јаглен диоксид; CO²; carbon dioxide ::lcode mkd
+::abbrev чест. ::exp Честица ::lcode mkd
+::abbrev Шум. фак. ::exp Шумарски факултет ::lcode mkd
+::abbrev проц. ::exp процентов ::lcode mkd
+::misspelling сè ::target сѐ ::lcode mkd
+::misspelling броeло ::target броело ::lcode mkd
+::misspelling ТPАГЕДИЈА ::target ТРАГЕДИЈА ::lcode mkd

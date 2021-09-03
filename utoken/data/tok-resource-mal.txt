@@ -1,13 +1,30 @@
-# Malayalam abbreviations
-
 ::abbrev ഡോ. ::exp ഡോക്ടർ ::lcode mal ::sem-class pre-name-title ::comment Dr.
 ::abbrev പ്രസ്. ::exp പ്രസിഡന്റ് ::lcode mal ::sem-class pre-name-title ::comment Pres.
 ::abbrev പ്രൊഫ. ::exp പ്രൊഫസർ ::lcode mal ::sem-class pre-name-title ::comment Prof.
-
-::abbrev എ. ::lcode mal ::sem-class name-initial ::comment A.
-::abbrev ബി. ::lcode mal ::sem-class name-initial ::comment B.
-::abbrev സി. ::lcode mal ::sem-class name-initial ::comment C.
-::abbrev ഡി. ::lcode mal ::sem-class name-initial ::comment D.
-::abbrev ഇ. ::lcode mal ::sem-class name-initial ::comment E.
-::abbrev എഫ്. ::lcode mal ::sem-class name-initial ::comment F.
-::abbrev ഡബ്ല്യു. ::lcode mal ::sem-class name-initial ::comment W.
+::abbrev ശ്രീ. ::eng Mr.
+::abbrev എ. ::token-category phonetics ::lcode mal ::eng A.
+::abbrev ബി. ::token-category phonetics ::lcode mal ::eng B.
+::abbrev സി. ::token-category phonetics ::lcode mal ::eng C.
+::abbrev ഡി. ::token-category phonetics ::lcode mal ::eng D.
+::abbrev ഇ. ::token-category phonetics ::lcode mal ::eng E.
+::abbrev എഫ്. ::token-category phonetics ::lcode mal ::eng F.
+::abbrev ജി. ::token-category phonetics ::lcode mal ::eng G.
+::abbrev എച്ച്. ::token-category phonetics ::lcode mal ::eng H.
+::abbrev ഐ. ::token-category phonetics ::lcode mal ::eng I.
+::abbrev ജെ. ::token-category phonetics ::lcode mal ::eng J.
+::abbrev കെ. ::token-category phonetics ::lcode mal ::eng K.
+::abbrev എൽ. ::token-category phonetics ::lcode mal ::eng L.
+::abbrev എം. ::token-category phonetics ::lcode mal ::eng M.
+::abbrev എൻ. ::token-category phonetics ::lcode mal ::eng N.
+::abbrev ഒ. ::token-category phonetics ::lcode mal ::eng O.
+::abbrev പി. ::token-category phonetics ::lcode mal ::eng P.
+::abbrev ക്യൂ. ::token-category phonetics ::lcode mal ::eng Q.
+::abbrev ആർ. ::token-category phonetics ::lcode mal ::eng R.
+::abbrev എസ്. ::token-category phonetics ::lcode mal ::eng S.
+::abbrev ടി. ::token-category phonetics ::lcode mal ::eng T.
+::abbrev യു. ::token-category phonetics ::lcode mal ::eng U.
+::abbrev വി. ::token-category phonetics ::lcode mal ::eng V.
+::abbrev ഡബ്ല്യു. ::token-category phonetics ::lcode mal ::eng W.
+::abbrev എക്സ്. ::token-category phonetics ::lcode mal ::eng X.
+::abbrev വൈ. ::token-category phonetics ::lcode mal ::eng Y.
+::abbrev സെഡ്. ::token-category phonetics ::lcode mal ::eng Z.

@@ -1,0 +1,3 @@
+::abbrev ب.م.م ::exp بزرگترین مقسومعلیه مشترک ::lcode fas ::eng greatest common denominator
+::abbrev ھ.ش. ::lcode fas ::eng Persian calendar
+::abbrev ھ.ق. ::lcode fas ::eng Islamic calendar

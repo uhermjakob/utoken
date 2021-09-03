@@ -1,0 +1,38 @@
+::abbrev ರೂ. ::lcode kan ::eng Rs.; rupee
+::abbrev ಕ್ರಿ.ಪೂ ::lcode kan ::comment B.C.
+::abbrev ಕ್ರಿ.ಶ ::lcode kan ::comment A.D.
+::abbrev ಯು.ಪಿ.ಎ. ::lcode kan ::comment UPA (political party)
+::abbrev ಎನ್.ಡಿ.ಎ ::lcode kan ::comment NDA (political party)
+::abbrev ಚ.ಕಿಮಿ ::lcode kan ::comment sq. km
+::abbrev ಚ.ಮೈ. ::lcode kan ::comment sq. mi.
+::abbrev ಡಾ. ::eng Dr. ::lcode kan
+::abbrev ಶ್ರೀ. ::eng Mr. ::lcode kan
+
+::abbrev ಎ. ::token-category phonetics ::eng A. ::lcode kan
+::abbrev ಬಿ. ::token-category phonetics ::eng B. ::lcode kan
+::abbrev ಸಿ. ::token-category phonetics ::eng C. ::lcode kan
+::abbrev ಡಿ. ::token-category phonetics ::eng D. ::lcode kan
+::abbrev ದೇ. ::token-category phonetics ::eng D. ::lcode kan
+::abbrev ಇ. ::token-category phonetics ::eng E. ::lcode kan
+::abbrev ಎಫ್. ::token-category phonetics ::eng F. ::lcode kan
+::abbrev ಜಿ. ::token-category phonetics ::eng G. ::lcode kan
+::abbrev ಹೆಚ್. ::token-category phonetics ::eng H. ::lcode kan
+::abbrev ಎಚ್. ::token-category phonetics ::eng H. ::lcode kan
+::abbrev ಐ. ::token-category phonetics ::eng I. ::lcode kan
+::abbrev ಜೆ. ::token-category phonetics ::eng J. ::lcode kan
+::abbrev ಕೆ. ::token-category phonetics ::eng K. ::lcode kan
+::abbrev ಎಲ್. ::token-category phonetics ::eng L. ::lcode kan
+::abbrev ಎಂ. ::token-category phonetics ::eng M. ::lcode kan
+::abbrev ಎನ್. ::token-category phonetics ::eng N. ::lcode kan
+::abbrev ಒ. ::token-category phonetics ::eng O. ::lcode kan
+::abbrev ಪಿ. ::token-category phonetics ::eng P. ::lcode kan
+::abbrev ಕ್ಯೂ. ::token-category phonetics ::eng Q. ::lcode kan
+::abbrev ಆರ್. ::token-category phonetics ::eng R. ::lcode kan
+::abbrev ಎಸ್. ::token-category phonetics ::eng S. ::lcode kan
+::abbrev ಟಿ. ::token-category phonetics ::eng T. ::lcode kan
+::abbrev ಯು. ::token-category phonetics ::eng U. ::lcode kan
+::abbrev ವಿ. ::token-category phonetics ::eng V. ::lcode kan
+::abbrev ಡಬ್ಲ್ಯೂ. ::token-category phonetics ::eng W. ::lcode kan
+::abbrev ಎಕ್ಸ್. ::token-category phonetics ::eng X. ::lcode kan
+::abbrev ವೈ. ::token-category phonetics ::eng Y. ::lcode kan
+::abbrev ಜೆಡ್. ::token-category phonetics ::eng Z. ::lcode kan

@@ -1,0 +1,148 @@
+::abbrev abr. ::exp abril ::lcode spa
+::abbrev a.C. ::exp antes de Cristo ::lcode spa
+::abbrev a/c. ::lcode spa
+::abbrev adj. ::lcode spa
+::abbrev admón. ::lcode spa
+::abbrev afmo. ::lcode spa
+::abbrev ag. ::exp agosto ::lcode spa
+::abbrev Alc. ::exp Alcalde ::lcode spa
+::abbrev a.m. ::exp antes del mediodía ::lcode spa
+::abbrev apdo. ::exp apartado ::lcode spa
+::abbrev aprox. ::exp aproximadamente ::lcode spa
+::abbrev Av. ::exp Avenida ::lcode spa
+::abbrev Avda. ::exp Avenida ::lcode spa
+::abbrev Bco. ::lcode spa
+::abbrev Bvd. ::exp Boulevard ::lcode spa
+::abbrev c. ::lcode spa
+::abbrev cap. ::exp capítulo ::lcode spa
+::abbrev CC.AA. ::lcode spa
+::abbrev cda. ::exp cucharada ::lcode spa
+::abbrev cdas. ::exp cucharadas ::lcode spa
+::abbrev c.f. ::lcode spa
+::abbrev c.g. ::lcode spa
+::abbrev Cia. ::exp Compañía ::lcode spa
+::abbrev cm. ::lcode spa
+::abbrev Cmro. ::exp Comisario ::lcode spa
+::abbrev Cmte. ::exp Comandante ::lcode spa
+::abbrev Cnel. ::exp Coronel ::lcode spa
+::abbrev Col. ::exp Colonel ::lcode spa
+::abbrev Cptn. ::exp Capitán ::lcode spa
+::abbrev cta. ::lcode spa
+::abbrev D. ::exp Don ::lcode spa
+::abbrev Da. ::exp Doña ::lcode spa
+::abbrev d.C. ::exp después de Cristo ::lcode spa
+::abbrev dcha. ::lcode spa
+::abbrev Dep. ::lcode spa
+::abbrev dic. ::exp diciembre ::lcode spa
+::abbrev Dip. ::exp Diputado ::lcode spa
+::abbrev Dn. ::lcode spa
+::abbrev doc. ::lcode spa
+::abbrev dpto.. ::exp departamento ::lcode spa
+::abbrev Dr. ::exp Doctor ::lcode spa
+::abbrev Dra. ::exp Doctora ::lcode spa
+::abbrev E.E.U.U. ::exp Estados Unidos ::lcode spa
+::abbrev EE.UU. ::exp Estados Unidos ::lcode spa
+::abbrev ej. ::exp ejemplo ::lcode spa
+::abbrev en. ::exp enero ::lcode spa
+::abbrev entlo. ::lcode spa
+::abbrev esq. ::exp esquina ::lcode spa
+::abbrev etc. ::exp etcétera ::lcode spa
+::abbrev Excmo. ::lcode spa
+::abbrev ext. ::exp extensión ::lcode spa
+::abbrev f.c. ::lcode spa
+::abbrev febr. ::exp febrero ::lcode spa
+::abbrev FF.CC. ::lcode spa
+::abbrev fig. ::exp figurado; figura ::lcode spa
+::abbrev Fil. ::lcode spa
+::abbrev Gdor. ::exp Governador ::lcode spa
+::abbrev Gob. ::exp Gobierno ::lcode spa
+::abbrev gr. ::lcode spa
+::abbrev Gral. ::exp General ::lcode spa
+::abbrev grs. ::lcode spa
+::abbrev Hna. ::exp Hermana ::lcode spa
+::abbrev Hnas. ::exp Hermanas ::lcode spa
+::abbrev Hno. ::exp Hermano ::lcode spa
+::abbrev Hnos. ::exp Hermanos ::lcode spa
+::abbrev Ing. ::exp Ingeniero ::lcode spa
+::abbrev izq. ::lcode spa
+::abbrev J.C. ::exp Jesucristo ::lcode spa
+::abbrev JJ.OO. ::exp Juegos Olímpicos ::lcode spa
+::abbrev Jr. ::exp Junior ::lcode spa
+::abbrev jul. ::exp julio ::lcode spa
+::abbrev jun. ::exp junio ::lcode spa
+::abbrev kg. ::lcode spa
+::abbrev km. ::lcode spa
+::abbrev Let. ::lcode spa
+::abbrev Lic. ::exp Licenciado ::lcode spa
+::abbrev mar. ::exp marzo ::lcode spa
+::abbrev mg. ::lcode spa
+::abbrev mm. ::lcode spa
+::abbrev Mr. ::exp Mister ::lcode spa
+::abbrev Msñr. ::exp Monseñor ::lcode spa
+::abbrev Mtra. ::exp Ministra ::lcode spa
+::abbrev Mtro. ::exp Ministro ::lcode spa
+::abbrev N.B. ::lcode spa
+::abbrev NN.UU. Naciones Unidas ::exp ::lcode spa ::eng U.N.
+::abbrev no. ::exp número ::lcode spa
+::abbrev nov. ::exp noviembre ::lcode spa
+::abbrev núm. ::exp número ::lcode spa
+::abbrev Ob. ::exp Obispo ::lcode spa
+::abbrev oct. ::exp octubre ::lcode spa
+::abbrev p. ::lcode spa
+::abbrev p.a. ::lcode spa
+::abbrev pág. ::exp página ::lcode spa
+::abbrev págs. ::exp páginas ::lcode spa
+::abbrev P.D. ::lcode spa
+::abbrev Pdre. ::exp Padre ::lcode spa
+::abbrev Pdta. ::exp Presidenta ::lcode spa
+::abbrev Pdte. ::exp Presidente ::lcode spa
+::abbrev p.ej. ::exp por ejemplo ::lcode spa
+::abbrev p.m. ::exp post meridien ::lcode spa
+::abbrev Prof. ::exp Professor ::lcode spa
+::abbrev Profa. ::exp Professora ::lcode spa
+::abbrev pta. ::exp peseta ::lcode spa
+::abbrev ptas. ::exp pesetas ::lcode spa
+::abbrev Pte. ::exp Presidente ::lcode spa
+::abbrev pto. ::exp punto ::lcode spa
+::abbrev ptos. ::exp puntos ::lcode spa
+::abbrev pts. ::exp pesetas ::lcode spa
+::abbrev P.V.P. ::lcode spa
+::abbrev q.e.g.e. ::lcode spa
+::abbrev q.e.s.m. ::lcode spa
+::abbrev Rte. ::lcode spa
+::abbrev s. ::lcode spa
+::abbrev S.A. ::exp Sociedad Anónima ::lcode spa
+::abbrev S.A.R. ::lcode spa
+::abbrev S.E. ::lcode spa
+::abbrev Sec. ::exp Sección ::lcode spa
+::abbrev Sen. ::exp Senador ::lcode spa
+::abbrev sept. ::exp septiembre ::lcode spa
+::abbrev Sgto. ::exp Sargento ::lcode spa
+::abbrev Sgto.Ay. ::exp Sargento Ayudante ::lcode spa
+::abbrev Sgto.My. ::exp Sargento Mayor ::lcode spa
+::abbrev Sh. ::lcode spa
+::abbrev S.L. ::exp Sociedad Limitada ::lcode spa
+::abbrev Sr. ::exp Señor ::lcode spa
+::abbrev Sra. ::exp Señora ::lcode spa
+::abbrev S.R.C. ::lcode spa
+::abbrev Sres. ::exp Señores ::lcode spa
+::abbrev Srs. ::exp Señores ::lcode spa
+::abbrev Srta. ::exp Señorita ::lcode spa
+::abbrev s.s.s. ::lcode spa
+::abbrev St. ::exp Saint ::lcode spa
+::abbrev Sta. ::exp Santa ::lcode spa
+::abbrev Sto. ::exp Santo ::lcode spa
+::abbrev Tcnl. ::exp Teniente Coronel ::lcode spa
+::abbrev tel. ::exp teléfono ::lcode spa
+::abbrev Tte. ::exp Teniente ::lcode spa
+::abbrev Tte.Pro. ::exp Teniente Primero ::lcode spa
+::abbrev T.V.E. ::lcode spa
+::abbrev Ud. ::exp Usted ::lcode spa
+::abbrev Uds. ::exp Ustedes ::lcode spa
+::abbrev v. ::exp véase ::lcode spa
+::abbrev V.B. ::lcode spa
+::abbrev Vd. ::exp Usted ::lcode spa
+::abbrev Vds. ::exp Ustedes ::lcode spa
+::abbrev V.E. ::lcode spa
+::abbrev vid. ::lcode spa
+::abbrev vol. ::exp volumen ::lcode spa

@@ -1,0 +1,3 @@
+::abbrev ق.م. ::exp قبل الميلاد ::lcode ara ::comment before the birth ::eng B.C.
+::abbrev ب.م. ::exp بعد الميلاد ::lcode ara ::comment after the birth ::eng A.D.
+::abbrev م.ت.ف. ::exp منظمة التحرير الفلسطينية ::lcode ara ::comment Palestine Liberation Organization ::eng PLO

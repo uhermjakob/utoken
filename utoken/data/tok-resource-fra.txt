@@ -1,0 +1,163 @@
+::contraction au ::target à le ::lcode fra
+::contraction aux ::target à les ::lcode fra
+::contraction des ::target des; de les ::lcode fra
+::contraction du ::target de le ::lcode fra
+::contraction s'il ::target si il ::lcode fra
+::contraction s'ils ::target si ils ::lcode fra
+
+::lexical c' ::lcode fra ::tag DECONTRACTION-L ::comment ce
+::lexical d' ::lcode fra ::tag DECONTRACTION-L ::comment de
+::lexical j' ::lcode fra ::tag DECONTRACTION-L ::comment je
+::lexical l' ::lcode fra ::tag DECONTRACTION-L ::comment le, la
+::lexical m' ::lcode fra ::tag DECONTRACTION-L ::comment me
+::lexical n' ::lcode fra ::tag DECONTRACTION-L ::comment ne
+::lexical qu'  ::lcode fra ::tag DECONTRACTION-L ::comment que
+::lexical s' ::lcode fra ::tag DECONTRACTION-L ::comment se
+::lexical t' ::lcode fra ::tag DECONTRACTION-L ::comment te
+
+::lexical -t- ::lcode fra ::tag DECONTRACTION-B  ::example y a-t-il
+
+::abbrev A. ::lcode fra ::case-sensitive True
+::abbrev A.C.N. ::lcode fra
+::abbrev al. ::lcode fra
+::abbrev A.M. ::lcode fra
+::abbrev ann. ::lcode fra
+::abbrev apr. ::lcode fra
+::abbrev art. ::lcode fra ::right-context \s*\d
+::abbrev auj. ::lcode fra
+::abbrev av. ::lcode fra
+::abbrev B. ::lcode fra
+::abbrev b. ::lcode fra ::eng a.
+::abbrev boul. ::lcode fra
+::abbrev B.P. ::lcode fra
+::abbrev C. ::lcode fra
+::abbrev c. ::lcode fra
+::abbrev ca. ::lcode fra
+::abbrev c.-à-d. ::lcode fra
+::abbrev cf. ::lcode fra
+::abbrev chap. ::lcode fra
+::abbrev ch.-l. ::lcode fra
+::abbrev C.N. ::lcode fra
+::abbrev C.N.S. ::lcode fra
+::abbrev contr. ::lcode fra
+::abbrev C.P.I. ::lcode fra
+::abbrev C.Q.F.D. ::lcode fra
+::abbrev C.S. ::lcode fra
+::abbrev D. ::lcode fra
+::abbrev d. ::lcode fra
+::abbrev dir. ::lcode fra
+::abbrev E. ::lcode fra
+::abbrev e. ::lcode fra
+::abbrev éd. ::lcode fra
+::abbrev e.g. ::lcode fra
+::abbrev env. ::lcode fra
+::abbrev etc. ::lcode fra
+::abbrev E.V. ::lcode fra
+::abbrev ex. ::lcode fra
+::abbrev F. ::lcode fra
+::abbrev f. ::lcode fra
+::abbrev fasc. ::lcode fra
+::abbrev fém. ::lcode fra
+::abbrev fig. ::lcode fra
+::abbrev fr. ::lcode fra
+::abbrev G. ::lcode fra
+::abbrev g. ::lcode fra
+::abbrev H. ::lcode fra
+::abbrev h. ::lcode fra
+::abbrev hab. ::lcode fra
+::abbrev I. ::lcode fra
+::abbrev i. ::lcode fra
+::abbrev ibid. ::lcode fra
+::abbrev id. ::lcode fra
+::abbrev i.e. ::lcode fra
+::abbrev inf. ::lcode fra
+::abbrev J. ::lcode fra
+::abbrev j. ::lcode fra
+::abbrev K. ::lcode fra
+::abbrev k. ::lcode fra
+::abbrev L. ::lcode fra
+::abbrev l. ::lcode fra
+::abbrev L.D. ::lcode fra
+::abbrev lib. ::lcode fra
+::abbrev LL.AA. ::lcode fra
+::abbrev LL.AA.II. ::lcode fra
+::abbrev LL.AA.RR. ::lcode fra
+::abbrev LL.AA.SS. ::lcode fra
+::abbrev LL.EE. ::lcode fra
+::abbrev LL.MM. ::lcode fra
+::abbrev LL.MM.II.RR. ::lcode fra
+::abbrev loc.cit. ::lcode fra
+::abbrev M. ::lcode fra
+::abbrev m. ::lcode fra
+::abbrev masc. ::lcode fra
+::abbrev MM. ::lcode fra
+::abbrev ms. ::lcode fra
+::abbrev N. ::lcode fra
+::abbrev n. ::lcode fra
+::abbrev N.B. ::lcode fra
+::abbrev N.D. ::lcode fra
+::abbrev N.D.A. ::lcode fra
+::abbrev N.D.L.R. ::lcode fra
+::abbrev N.D.T. ::lcode fra
+::abbrev NN.SS. ::lcode fra
+::abbrev N.P.A.I. ::lcode fra
+::abbrev n/réf. ::lcode fra
+::abbrev N.S. ::lcode fra
+::abbrev O. ::lcode fra
+::abbrev o. ::lcode fra
+::abbrev P. ::lcode fra
+::abbrev p. ::lcode fra
+::abbrev p.c.c. ::lcode fra
+::abbrev p.ex. ::lcode fra
+::abbrev p.j. ::lcode fra
+::abbrev pl. ::lcode fra
+::abbrev pp. ::lcode fra
+::abbrev P.S. ::lcode fra
+::abbrev Q. ::lcode fra
+::abbrev q. ::lcode fra
+::abbrev R. ::lcode fra
+::abbrev r. ::lcode fra
+::abbrev R.A.S. ::lcode fra
+::abbrev R.I.P. ::lcode fra
+::abbrev R.P. ::lcode fra
+::abbrev R.-V. ::lcode fra
+::abbrev S. ::lcode fra
+::abbrev s. ::lcode fra
+::abbrev S.A. ::lcode fra
+::abbrev S.A.I. ::lcode fra
+::abbrev S.A.R. ::lcode fra
+::abbrev S.A.S. ::lcode fra
+::abbrev S.E. ::lcode fra
+::abbrev sec. ::lcode fra
+::abbrev sect. ::lcode fra
+::abbrev sing. ::lcode fra
+::abbrev S.M. ::lcode fra
+::abbrev S.M.I.R. ::lcode fra
+::abbrev sq. ::lcode fra
+::abbrev sqq. ::lcode fra
+::abbrev S.S. ::lcode fra
+::abbrev SS. ::lcode fra
+::abbrev suiv. ::lcode fra
+::abbrev sup. ::lcode fra
+::abbrev suppl. ::lcode fra
+::abbrev T. ::lcode fra
+::abbrev t. ::lcode fra
+::abbrev tél. ::lcode fra
+::abbrev T.S.V.P. ::lcode fra
+::abbrev U. ::lcode fra
+::abbrev u. ::lcode fra
+::abbrev V. ::lcode fra
+::abbrev v. ::lcode fra
+::abbrev vb. ::lcode fra
+::abbrev vol. ::lcode fra
+::abbrev vs. ::lcode fra
+::abbrev W. ::lcode fra
+::abbrev w. ::lcode fra
+::abbrev X. ::lcode fra
+::abbrev x. ::lcode fra
+::abbrev X.O. ::lcode fra
+::abbrev Y. ::lcode fra
+::abbrev y. ::lcode fra
+::abbrev Z. ::lcode fra
+::abbrev z. ::lcode fra
+::abbrev Z.I. ::lcode fra

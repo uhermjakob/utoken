@@ -1,0 +1,15 @@
+::abbrev կմ² ::lcode hye ::sem-class unit-of-measurement ::alt-spelling կմ2 ::eng km²
+::abbrev անգլ. ::exp անգլերեն ::lcode hye ::eng English
+::abbrev ռուս. ::exp ռուսերեն ::lcode hye ::eng Russian
+::abbrev իտալ. ::exp իտալերեն ::lcode hye ::eng Italian
+::abbrev ֆր. ::exp ֆրանսերեն ::lcode hye ::eng French
+::abbrev գերմ. ::exp գերմաներեն ::lcode hye ::eng German
+::abbrev ադրբ. ::exp Ադրբեջաներեն ::lcode hye ::eng Azerbaijani
+::abbrev ուկր. ::exp ուկրաիներեն ::lcode hye ::eng Ukrainian
+::abbrev թ. ::exp թվականին ::lcode hye ::eng in the year
+::abbrev թթ. ::exp թվականներին ::lcode hye ::eng in the years
+::abbrev ծն. ::exp ծնված ::lcode hye ::eng born
+::abbrev Գր. ::lcode hye ::eng Gr.
+::abbrev ա.մ. ::exp աստղագիտական միավոր ::lcode hye ::eng astronomical unit
+::abbrev դ. ::lcode hye դարում ::eng century
+::abbrev մլրդ. ::exp միլիարդ ::lcode hye ::eng billion
