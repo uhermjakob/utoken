@@ -36,8 +36,8 @@ class Detokenizer:
             self.detok_resource.load_resource(data_dir / f'tok-resource-{lang_code}.txt', lang_codes)
         # Load language-independent tokenization resource entries
         self.detok_resource.load_resource(data_dir / f'tok-resource.txt')
-        # Load any other tokenization resource entries, for the time being just English
-        for lcode in ['eng']:
+        # Load any other tokenization resource entries, for the time being just (global) English
+        for lcode in ['eng-global']:
             if lcode != lang_code:
                 self.detok_resource.load_resource(data_dir / f'tok-resource-{lcode}.txt', lang_codes)
         # Now that all resource files have been loaded, form regex for all marked-up attachment elements
