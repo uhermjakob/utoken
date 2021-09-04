@@ -120,7 +120,8 @@ optional arguments:
 * Filenames: ```Оперплан_каз2015.doc```
 * Numbers: ```-12,345,678.90``` &nbsp; ```१,२३,४५,६७८.९०```
 * Abbreviations: ```Mr.``` &nbsp; ```e.g.``` &nbsp; ```w/o```
-* Lexicon entries with dashes etc.: ```T-shirt``` &nbsp; ```father-in-law``` &nbsp; ```so-called``` &nbsp; ```Port-au-Prince``` &nbsp; &nbsp; ```Xi’an``` &nbsp; <nobr>```'s-Gravenhage```</nobr>
+* Lexicon entries with dashes: ```T-shirt``` &nbsp; ```father-in-law``` &nbsp; ```so-called``` &nbsp; ```Port-au-Prince```
+* Lexicon entries with apostrophe: ```Xi’an``` &nbsp; <nobr>```'s-Gravenhage```</nobr>
 * Hashtags, handles: ```#global_warming``` &nbsp; ```#2``` &nbsp; ```@GermanBeer```
 * Groups of related punctuation: ```???```
 * Groups of emojis and other symbols: ```⚽👍🎉```
