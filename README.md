@@ -88,8 +88,33 @@ optional arguments:
 ### Limitations
 * Currently excluded: no-space scripts like Chinese
 * Substantial set of resource entries (data file) currently for English only
-* Substantial testing so far only for English, Hindi, and to a lesser degree Kazakh and Uyghur
+* Substantial testing so far only for English, Hindi, Farsi and to a lesser degree Kazakh and Uyghur
 
 ### Requirements
 * Python 3.8 or higher
 * regex module (https://pypi.org/project/regex/)
+
+### More topics (click to open)
+<details>
+<summary>What gets split and what not</summary>
+
+### What gets split
+* Contractions: John's → John 's; we've → we 've; can't → can n't; won't → will n't
+* Quantities into number and unit: 5,000km² → 5,000 km²
+* Ordinal numbers into number and ordinal particle: 350th → 350 th
+* Non-lexical hyphenated expressions: peace-loving → peace @-@ loving
+* Name initials: J.S.Bach → J. S. Bach
+ 
+### What stays together
+* XML tags: <a href="http://www.hollywoodbowl.com">
+* URLs: http://www.youtube.com/watch?v=IAaDVOd2sRQ
+* email addresses: а.almukhanov@energo.gov.kz
+* filenames: Оперплан_каз2015.doc
+* Numbers: -12,345.67 &nbsp; १,२३,४५,६७८.९०
+* Abbreviations: Mr. &nbsp; e.g. &nbsp; w/o
+* Lexicon entries with dashes or apostrophes: T-shirt, father-in-law, so-called, Port-au-Prince; Xi’an, 's-Gravenhage
+* Hashtags, handles: #global_warming, #2, @GermanBeer
+* Groups of related punctuation: ???????
+* Groups of emoji and other symbols: 😌❤️
+* Words with an internal _zero width non-joiner_: e.g. Farsi می‌خواهم
+</details>
