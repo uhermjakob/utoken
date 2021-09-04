@@ -120,7 +120,7 @@ optional arguments:
 </details>
 
 <details>
-<summary>Mark-up of certain punctuation (e.g. @-@)</summary>
+<summary>Mark-up of certain punctuation (e.g. @-@) and option --simple</summary>
 
 ### Mark-up of certain punctuation (e.g. @-@)
 For many application such as machine translation, tokenization is important, but should be reversed when producing the final output.
@@ -135,3 +135,16 @@ If later detokenization is not import and you want to suppress any markup with `
   
 Example: ```("Hello,world!")``` &nbsp; Tokenized (simple): ```( " Hello , world ! " )``` &nbsp; Detokenized: ```(" Hello, world! ")```
 </details>
+
+<details>
+<summary>Option --first_token_is_line_id (-f)</summary>
+
+### Option --first_token_is_line_id (-f)
+In some applications, the text to be tokenized is preceded by a sentence ID at the beginning of each line, which should tokenization should not be applied.  
+Option ```--first_token_is_line_id``` or ```-f``` for short, suppresses tokenization of those sentence IDs.
+
+* Example input: ```GEN:1:1	In the beginning, God created the heavens and the earth.```
+* ```utokenize.pl``` tokenization: ```GEN @:@ 1 @:@ 1 In the beginning , God created the heavens and the earth .```
+* ```utokenize.pl -f``` tokenization: ```GEN:1:1 In the beginning , God created the heavens and the earth .```
+</details>
+  
