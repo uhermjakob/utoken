@@ -31,6 +31,9 @@ _The ouput below is in the more human-friendly annotation format. Default format
 ```
 
 ### Usage
+<details>
+<summary>utokenize.py (click to see usage)</summary>
+  
 ```
 utokenize.py [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-a ANNOTATION-FILENAME] [--annotation_format ANNOTATION_FORMAT]
              [-p PROFILE-FILENAME] [--profile_scope PROFILE_SCOPE] [-d DATA_DIRECTORY] [--lc LANGUAGE-CODE] [-f] [-v] [--simple]
@@ -58,8 +61,12 @@ optional arguments:
   --simple              prevent MT-style output (e.g. @-@). Note: can degrade any detokinzation
   --version             show program's version number and exit
 ```
+</details>
 
-```
+<details>
+<summary>detokenize.py (click to see usage)</summary>
+
+  ```
 detokenize.py [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-d DATA_DIRECTORY] [--lc LANGUAGE-CODE] [-f] [-v] [--version]
 optional arguments:
   -h, --help            show this help message and exit
@@ -75,6 +82,7 @@ optional arguments:
   -v, --verbose         write change log etc. to STDERR
   --version             show program's version number and exit
 ```
+</details>
 
 ### Design
 * Written by Ulf Hermjakob, USC Information Sciences Institute, 2021
@@ -94,7 +102,8 @@ optional arguments:
 * Python 3.8 or higher
 * regex module (https://pypi.org/project/regex/) &nbsp; ```import regex```
 
-### More topics (click to open)
+### More topics
+Click on any topic of interest.
 <details>
 <summary>What gets split and what not</summary>
 
