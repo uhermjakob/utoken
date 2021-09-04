@@ -99,11 +99,11 @@ optional arguments:
 <summary>What gets split and what not</summary>
 
 ### What gets split
-* Contractions: John's → John 's; we've → we 've; can't → can n't; won't → will n't
-* Quantities into number and unit: 5,000km² → 5,000 km²
-* Ordinal numbers into number and ordinal particle: 350th → 350 th
-* Non-lexical hyphenated expressions: peace-loving → peace @-@ loving
-* Name initials: J.S.Bach → J. S. Bach
+* Contractions: ```John's``` → ```John``` ```'s```; ```we've``` → ```we``` ```'ve```; ```can't``` → ```can``` ```n't```; ```won't``` → ```will``` ```n't```
+* Quantities into number and unit: ```5,000km²``` → ```5,000``` ```km²```
+* Ordinal numbers into number and ordinal particle: ```350th``` → ```350``` ```th```
+* Non-lexical hyphenated expressions: ```peace-loving``` → ```peace``` ```@-@``` ```loving```
+* Name initials: ```J.S.Bach``` → ```J.``` ```S.``` ```Bach```
  
 ### What stays together
 * XML tags: ```<a href="http://www.hollywoodbowl.com">```
@@ -115,7 +115,7 @@ optional arguments:
 * Lexicon entries with dashes etc.: ```T-shirt``` &nbsp; ```father-in-law``` &nbsp; ```so-called``` &nbsp; ```Port-au-Prince``` &nbsp; &nbsp; ```Xi’an``` &nbsp; ```'s-Gravenhage```
 * Hashtags, handles: ```#global_warming``` &nbsp; ```#2``` &nbsp; ```@GermanBeer```
 * Groups of related punctuation: ```???```
-* Groups of emojis and other symbols: ```👍👍🎉```
+* Groups of emojis and other symbols: ```⚽👍🎉```
 * Words with an internal _zero width non-joiner_: e.g. Farsi ```می‌خواهم```
 </details>
 
