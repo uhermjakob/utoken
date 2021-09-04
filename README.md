@@ -110,12 +110,12 @@ optional arguments:
 * URLs: ```http://www.youtube.com/watch?v=IAaDVOd2sRQ```
 * email ```addresses: а.almukhanov@energo.gov.kz```
 * filenames: ```Оперплан_каз2015.doc```
-* Numbers: ```-12,345.67``` &nbsp; ```१,२३,४५,६७८.९०```
+* Numbers: ```-12,345,678.90``` &nbsp; ```१,२३,४५,६७८.९०```
 * Abbreviations: ```Mr.``` &nbsp; ```e.g.``` &nbsp; ```w/o```
 * Lexicon entries with dashes etc.: ```T-shirt``` &nbsp; ```father-in-law``` &nbsp; ```so-called``` &nbsp; ```Port-au-Prince``` &nbsp; &nbsp; ```Xi’an``` &nbsp; ```'s-Gravenhage```
 * Hashtags, handles: ```#global_warming``` &nbsp; ```#2``` &nbsp; ```@GermanBeer```
-* Groups of related punctuation: ```???????```
-* Groups of emoji and other symbols: ```👍👍🎉```
+* Groups of related punctuation: ```???```
+* Groups of emojis and other symbols: ```👍👍🎉```
 * Words with an internal _zero width non-joiner_: e.g. Farsi ```می‌خواهم```
 </details>
 
