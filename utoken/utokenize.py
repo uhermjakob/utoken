@@ -293,12 +293,12 @@ class Tokenizer:
         # Load tokenization resource entries for language specified by 'lang_code'
         if lang_code:
             self.tok_dict.load_resource(data_dir / f'tok-resource-{lang_code}.txt', lang_code=lang_code)
-        # Load language-independent tokenization resource entries
-        self.tok_dict.load_resource(data_dir / f'tok-resource.txt')
         # Load any other tokenization resource entries, for the time being just (global) English
         for lcode in ['eng-global']:
             if lcode != lang_code:
                 self.tok_dict.load_resource(data_dir / f'tok-resource-{lcode}.txt', lang_code=lcode)
+        # Load language-independent tokenization resource entries
+        self.tok_dict.load_resource(data_dir / f'tok-resource.txt')
         # Load detokenization resource entries, for proper mt-tokenization, e.g. @...@
         self.detok_resource.load_resource(data_dir / f'detok-resource.txt')
         self.detok_resource.build_markup_attach_re(self)
