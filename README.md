@@ -92,7 +92,7 @@ optional arguments:
 
 ### Requirements
 * Python 3.8 or higher
-* regex module (https://pypi.org/project/regex/)
+* regex module (https://pypi.org/project/regex/) &nbsp; ```import regex```
 
 ### More topics (click to open)
 <details>
@@ -108,8 +108,8 @@ optional arguments:
 ### What stays together
 * XML tags: ```<a href="http://www.hollywoodbowl.com">```
 * URLs: ```http://www.youtube.com/watch?v=IAaDVOd2sRQ```
-* email addresses: ```а.almukhanov@energo.gov.kz```
-* filenames: ```Оперплан_каз2015.doc```
+* Email addresses: ```а.almukhanov@energo.gov.kz```
+* Filenames: ```Оперплан_каз2015.doc```
 * Numbers: ```-12,345,678.90``` &nbsp; ```१,२३,४५,६७८.९०```
 * Abbreviations: ```Mr.``` &nbsp; ```e.g.``` &nbsp; ```w/o```
 * Lexicon entries with dashes etc.: ```T-shirt``` &nbsp; ```father-in-law``` &nbsp; ```so-called``` &nbsp; ```Port-au-Prince``` &nbsp; &nbsp; ```Xi’an``` &nbsp; ```'s-Gravenhage```
@@ -125,8 +125,9 @@ optional arguments:
 ### Mark-up of certain punctuation (e.g. @-@)
 For many application such as machine translation, tokenization is important, but should be reversed when producing the final output.
 In some cases, this is relatively straight forward, so ```.``` and ```,``` typically attach to the word on the left and ```(``` attaches to the word on the right.
-In other cases, it is very tricky to decide how to detokenize, so we add a special such as ```@``` during tokenization in order to guide later dekonization.
-A ```@``` on one or both sides of punctuation indicates that in the original text, the punctuation and neighboring word were together.
+In other cases, it can generally be very hard to decide how to detokenize, so we add a special tag such as ```@``` during tokenization in order to guide later dekonization.
+A ```@``` on one or both sides of punctuation indicates that in the original text, the punctuation and neighboring word were together. 
+To look at it in another way, the tokenizer basically upgrades the non-directional ```"``` to an open ```"@``` or close ```@"``` delimiter. 
 
 Example: ```("Hello,world!")``` &nbsp; Tokenized: ```( "@ Hello , world ! @" )``` &nbsp; Detokenized: ```("Hello, world!")```
   
