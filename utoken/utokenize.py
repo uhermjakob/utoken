@@ -949,6 +949,7 @@ class Tokenizer:
     re_ends_w_letter_or_digit_in_token = regex.compile(r'.*(\pL\pM*|\d)\S*$')
     re_ends_w_letter_plus_period = regex.compile(r'.*\pL\pM*\.$')
     re_ends_w_non_whitespace = regex.compile(r'.*\S$')
+    re_is_short_letter_token = regex.compile(r'(?:\pL\pM*){1,2}$')
 
     def resource_entry_fulfills_general_context_conditions(self, token_candidate: str,
                                                            left_context: str, right_context: str) -> bool:
@@ -971,6 +972,11 @@ class Tokenizer:
             if self.re_starts_w_apostrophe_plus.match(token_candidate) and \
                     self.re_ends_w_letter.match(token_candidate) and \
                     self.re_starts_w_apostrophe_plus.match(right_context):
+                return False
+        if self.lv & self.char_is_ampersand:
+            # Don't split of AD fromn IA&AD etc.
+            if self.re_is_short_letter_token.match(token_candidate) and \
+                    (right_context.startswith('&') or left_context.endswith('&')):
                 return False
         return True
 
