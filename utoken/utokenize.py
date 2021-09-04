@@ -255,6 +255,8 @@ class Tokenizer:
         bit_vector = bit_vector << 1
         self.char_is_apostrophe = bit_vector
         bit_vector = bit_vector << 1
+        self.char_is_quote = bit_vector  # any of several quotes, quotation marks, apostrophe
+        bit_vector = bit_vector << 1
         self.char_is_dash = bit_vector
         bit_vector = bit_vector << 1
         self.char_is_less_than_sign = bit_vector
@@ -374,6 +376,10 @@ class Tokenizer:
         for char in "'’":
             self.char_type_vector_dict[char] \
                 = self.char_type_vector_dict.get(char, 0) | self.char_is_apostrophe
+        # Quote (more general than apostophe)
+        for char in "'‘’`‛\"“”‟":
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_quote
         # Dash (incl. hyphen)
         for char in "-−–":
             self.char_type_vector_dict[char] \
@@ -936,15 +942,16 @@ class Tokenizer:
     re_starts_w_dashed_digit = regex.compile(r'[-−–]?\d')
     re_starts_w_single_s = regex.compile(r's(?!\pL|\d)', flags=regex.IGNORECASE)
     re_starts_w_non_whitespace = regex.compile(r'\S')
+    re_starts_w_apostrophe_plus = regex.compile(r"['‘’`]")
     re_ends_w_letter = regex.compile(r'.*\pL\pM*$')          # including any modifiers
-    re_ends_w_apostrophe = regex.compile(r".*['‘’]$")
+    re_ends_w_apostrophe_plus = regex.compile(r".*['‘’`]$")
     re_ends_w_letter_or_digit = regex.compile(r'.*(\pL\pM*|\d)$')
     re_ends_w_letter_or_digit_in_token = regex.compile(r'.*(\pL\pM*|\d)\S*$')
     re_ends_w_letter_plus_period = regex.compile(r'.*\pL\pM*\.$')
     re_ends_w_non_whitespace = regex.compile(r'.*\S$')
 
     def resource_entry_fulfills_general_context_conditions(self, token_candidate: str,
-                                                           _left_context: str, right_context: str) -> bool:
+                                                           left_context: str, right_context: str) -> bool:
         """Checks for general context requirements (not listed for a particular resource entry)."""
         # type-vector of any first character of the right context
         rc0_type_vector = self.char_type_vector_dict.get(right_context[0], 0) if right_context != '' else 0
@@ -954,6 +961,17 @@ class Tokenizer:
         # token can't be followed by an orphan modifier
         if rc0_type_vector & self.char_is_modifier:
             return False
+        if self.lv & self.char_is_quote:
+            # don't split off c' from 'c'
+            if self.re_starts_w_letter.match(token_candidate) and \
+                    self.re_ends_w_apostrophe_plus.match(token_candidate) and \
+                    self.re_ends_w_apostrophe_plus.match(left_context):
+                return False
+            # don't split off 'd from 'd'
+            if self.re_starts_w_apostrophe_plus.match(token_candidate) and \
+                    self.re_ends_w_letter.match(token_candidate) and \
+                    self.re_starts_w_apostrophe_plus.match(right_context):
+                return False
         return True
 
     def abbreviation_entry_fulfills_general_context_conditions(self, token_candidate: str,
@@ -1066,15 +1084,13 @@ class Tokenizer:
                 max_end_position = position
                 position += 1
             end_position = max_end_position
+            left_context = s[:start_position]
             while end_position > start_position:
                 token_candidate = s[start_position:end_position]
                 token_candidate_lc = s_lc[start_position:end_position]
                 right_context = s[end_position:]
-                rc0 = right_context[0] if right_context != '' else ' '  # first character of right context
-                rc0_type_vector = self.char_type_vector_dict.get(rc0, 0)
-                # general restriction: if token ends in a letter, it can't be followed by a letter
-                if (not((rc0_type_vector & self.char_is_alpha) and self.re_ends_w_letter.match(token_candidate))
-                        and not(rc0_type_vector & self.char_is_modifier)):  # not followed by orphan modifier
+                if self.resource_entry_fulfills_general_context_conditions(token_candidate,
+                                                                           left_context, right_context):
                     for resource_entry in self.tok_dict.resource_dict.get(token_candidate_lc, []):
                         if self.resource_entry_fulfills_conditions(resource_entry, util.LexicalEntry, token_candidate,
                                                                    s, start_position, end_position, offset):
@@ -1088,7 +1104,7 @@ class Tokenizer:
                                     and (not(self.re_ends_w_letter_or_digit.match(left_context)
                                              and self.re_starts_w_letter_or_digit.match(token_candidate)))
                                     # don't split off d' from d's etc.
-                                    and (not(self.re_ends_w_apostrophe.match(token_candidate)
+                                    and (not(self.re_ends_w_apostrophe_plus.match(token_candidate)
                                              and self.re_starts_w_single_s.match(right_context)))):
                                 return self.rec_tok([token_candidate], [start_position], s, offset,
                                                     resource_entry.tag or 'LEXICAL',
