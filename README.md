@@ -106,15 +106,27 @@ optional arguments:
 * Name initials: J.S.Bach → J. S. Bach
  
 ### What stays together
-* XML tags: <a href="http://www.hollywoodbowl.com">
-* URLs: http://www.youtube.com/watch?v=IAaDVOd2sRQ
-* email addresses: а.almukhanov@energo.gov.kz
-* filenames: Оперплан_каз2015.doc
-* Numbers: -12,345.67 &nbsp; १,२३,४५,६७८.९०
-* Abbreviations: Mr. &nbsp; e.g. &nbsp; w/o
-* Lexicon entries with dashes or apostrophes: T-shirt, father-in-law, so-called, Port-au-Prince; Xi’an, 's-Gravenhage
-* Hashtags, handles: #global_warming, #2, @GermanBeer
-* Groups of related punctuation: ???????
-* Groups of emoji and other symbols: 😌❤️
-* Words with an internal _zero width non-joiner_: e.g. Farsi می‌خواهم
+* XML tags: ```<a href="http://www.hollywoodbowl.com">```
+* URLs: ```http://www.youtube.com/watch?v=IAaDVOd2sRQ```
+* email ```addresses: а.almukhanov@energo.gov.kz```
+* filenames: ```Оперплан_каз2015.doc```
+* Numbers: ```-12,345.67``` &nbsp; ```१,२३,४५,६७८.९०```
+* Abbreviations: ```Mr.``` &nbsp; ```e.g.``` &nbsp; ```w/o```
+* Lexicon entries with dashes etc.: ```T-shirt``` &nbsp; ```father-in-law``` &nbsp; ```so-called``` &nbsp; ```Port-au-Prince``` &nbsp; &nbsp; ```Xi’an``` &nbsp; ```'s-Gravenhage```
+* Hashtags, handles: ```#global_warming``` &nbsp; ```#2``` &nbsp; ```@GermanBeer```
+* Groups of related punctuation: ```???????```
+* Groups of emoji and other symbols: ```👍👍🎉```
+* Words with an internal _zero width non-joiner_: e.g. Farsi ```می‌خواهم```
+</details>
+
+<details>
+<summary>Mark-up of certain punctuation (e.g. @-@)</summary>
+
+### Mark-up of certain punctuation (e.g. @-@)
+For many application such as machine translation, tokenization is important, but should be reversed when producing the final output.
+In some cases, this is relatively straight forward, so ```.``` and ```,``` typically attach to the word on the left and ```(``` attaches to the word on the right.
+In other cases, it is very tricky to decide how to detokenize, so we add a special such as ```@``` during tokenization in order to guide later dekonization.
+A ```@``` on one or both sides of punctuation indicates that in the original text, the punctuation and neighboring word were together.
+
+If later detokenization is not import and you want to suppress any markup with ```@```, call _utokenizer.py_ with the option _--simple_
 </details>
