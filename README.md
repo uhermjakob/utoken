@@ -32,7 +32,7 @@ _The ouput below is in the more human-friendly annotation format. Default format
 
 ### Usage
 <details>
-<summary>utokenize.py (click to see usage)</summary>
+<summary>utokenize.py</summary>
   
 ```
 utokenize.py [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-a ANNOTATION-FILENAME] [--annotation_format ANNOTATION_FORMAT]
@@ -64,7 +64,7 @@ optional arguments:
 </details>
 
 <details>
-<summary>detokenize.py (click to see usage)</summary>
+<summary>detokenize.py</summary>
 
   ```
 detokenize.py [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-d DATA_DIRECTORY] [--lc LANGUAGE-CODE] [-f] [-v] [--version]
@@ -103,7 +103,6 @@ optional arguments:
 * regex module (https://pypi.org/project/regex/) &nbsp; ```import regex```
 
 ### More topics
-Click on any topic of interest.
 <details>
 <summary>What gets split and what not</summary>
 
