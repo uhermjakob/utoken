@@ -108,7 +108,7 @@ optional arguments:
 ### What stays together
 * XML tags: ```<a href="http://www.hollywoodbowl.com">```
 * URLs: ```http://www.youtube.com/watch?v=IAaDVOd2sRQ```
-* email ```addresses: а.almukhanov@energo.gov.kz```
+* email addresses: ```а.almukhanov@energo.gov.kz```
 * filenames: ```Оперплан_каз2015.doc```
 * Numbers: ```-12,345,678.90``` &nbsp; ```१,२३,४५,६७८.९०```
 * Abbreviations: ```Mr.``` &nbsp; ```e.g.``` &nbsp; ```w/o```
@@ -128,5 +128,9 @@ In some cases, this is relatively straight forward, so ```.``` and ```,``` typic
 In other cases, it is very tricky to decide how to detokenize, so we add a special such as ```@``` during tokenization in order to guide later dekonization.
 A ```@``` on one or both sides of punctuation indicates that in the original text, the punctuation and neighboring word were together.
 
+Example: ```("Hello,world!")``` &nbsp; Tokenized: ```( "@ Hello , world ! @" )``` &nbsp; Detokenized: ```("Hello, world!")```
+  
 If later detokenization is not import and you want to suppress any markup with ```@```, call _utokenizer.py_ with the option _--simple_
+  
+Example: ```("Hello,world!")``` &nbsp; Tokenized (simple): ```( " Hello , world ! " )``` &nbsp; Detokenized: ```(" Hello, world! ")```
 </details>
