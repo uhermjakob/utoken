@@ -137,11 +137,11 @@ Example: ```("Hello,world!")``` &nbsp; Tokenized (simple): ```( " Hello , world 
 </details>
 
 <details>
-<summary>Option --first_token_is_line_id (-f)</summary>
+<summary>Option --first_token_is_line_id</summary>
 
-### Option --first_token_is_line_id (-f)
-In some applications, the text to be tokenized is preceded by a sentence ID at the beginning of each line, which should tokenization should not be applied.  
-Option ```--first_token_is_line_id``` or ```-f``` for short, suppresses tokenization of those sentence IDs.
+### Option --first_token_is_line_id
+In some applications, the text to be tokenized is preceded by a sentence ID at the beginning of each line and tokenization should *not* be applied to those sentence IDs.  
+Option ```--first_token_is_line_id```, or ```-f``` for short, suppresses tokenization of those sentence IDs.
 
 * Example input: ```GEN:1:1	In the beginning, God created the heavens and the earth.```
 * ```utokenize.pl``` tokenization: ```GEN @:@ 1 @:@ 1 In the beginning , God created the heavens and the earth .```
