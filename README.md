@@ -115,7 +115,7 @@ optional arguments:
  
 ### What stays together
 * XML tags: ```<a href="http://www.hollywoodbowl.com">```
-* URLs: ```http://www.youtube.com/watch?v=IAaDVOd2sRQ```
+* URLs: ```https://www.youtube.com/watch?v=AaZ_RSt0KP8```
 * Email addresses: ```а.almukhanov@energo.gov.kz```
 * Filenames: ```Оперплан_каз2015.doc```
 * Numbers: ```-12,345,678.90``` &nbsp; ```१,२३,४५,६७८.९०```
