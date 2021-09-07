@@ -128,7 +128,7 @@ class TokenizationAnalysis:
                  self.pre_number_anomalies, self.post_number_anomalies)
         legends = ('lower/upper case', 'letter+punct', 'letter w/o period', 'pre-number', 'post-number')
         for i in range(len(dicts)):
-            print(legends[i])
+            print('###', legends[i])
             anomalies = list(dicts[i].values())
             anomalies.sort(key=functools.cmp_to_key(self.compare_anomalies))
             for anomaly in anomalies:
