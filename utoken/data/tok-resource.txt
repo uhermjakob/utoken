@@ -684,3 +684,7 @@
 ::lexical :wink: ::token-category symbol ::comment emoji
 ::lexical ¯\_(ツ)_/¯ ::token-category symbol ::comment shrug emoji
 
+::url 24.kz
+::url 31.kz
+::url el.kz
+::url sk.kz
