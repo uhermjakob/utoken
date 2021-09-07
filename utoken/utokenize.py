@@ -313,22 +313,43 @@ class Tokenizer:
         # log.info(f're_mt_punct_preserve: {self.re_mt_punct_preserve}')
         # Challenge: top-domain names (e.g. at|be|im|in|is|it|my|no|so|to|US) that can also be regular words,
         #     e.g. G-20.In car.so
-        self.common_top_domain_suffixes = '|'.join(util.load_top_level_domains(data_dir / 'top-level-domain-codes.txt'))
-        # log.info(f'top_level_domain_regex_s: {self.common_top_domain_suffixes}')
+        top_level_domain_names_tuple = util.load_top_level_domains(data_dir / 'top-level-domain-codes.txt')
+        self.low_reliability = '|'.join(top_level_domain_names_tuple[0])       # all in lower case
+        self.normal_reliability = '|'.join(top_level_domain_names_tuple[1])
+        self.high_reliability = '|'.join(top_level_domain_names_tuple[2])
+        self.top_level_dom_names_w_low_reliability = self.low_reliability + '|' + self.low_reliability.upper()
+        self.top_level_dom_names_w_normal_reliability = self.normal_reliability + '|' + self.normal_reliability.upper()
+        self.top_level_dom_names_w_high_reliability = self.high_reliability + '|' + self.high_reliability.upper()
+        # log.info(f'top_level_dom_names_w_low_reliability: {self.top_level_dom_names_w_low_reliability}')
+        # log.info(f'top_level_dom_names_w_normal_reliability: {self.top_level_dom_names_w_normal_reliability}')
+        # log.info(f'top_level_dom_names_w_high_reliability: {self.top_level_dom_names_w_high_reliability}')
+        url_letter = r"(?:\p{L}\p{M}*|\d|[-_])"
+        url_elem = url_letter + r"+\."
+        url_elem23 = url_letter + r"{2,3}\."
+        url_elem3 = url_letter + r"{3,}\."
+        url_elem5 = url_letter + r"{5,}\."
+        times234 = '{2,4}'
         self.re_url2 = \
             regex.compile(r'(.*?)'
-                          r'(?<![\p{Latin}&&\p{Letter}]\.?|\@)'  # negative lookbehind: no Latin+ letters, no @ please
-                          r"((?:(?:www(?:\.(?:\p{L}\p{M}*|\d|[-_]))+\.(?:[a-z]{2,4}]))|"
-                          r"(?:(?:(?:\p{L}\p{M}*|\d|[-_])+\.)+(?:com|edu|org|tv))|"
-                          r"(?:(?:(?:\p{L}\p{M}*|\d|[-_])+\.)*"
-                          r"(?:(?:\p{L}\p{M}*|\d|[-_]){5,}\.(?:(?:\p{L}\p{M}*|\d|[-_])+\.)*|"
-                          r"(?:\p{L}\p{M}*|\d|[-_]){3,}\.(?:\p{L}\p{M}*){2,3}\.)"
-                          r"(?:" + self.common_top_domain_suffixes + r")))"
+                          # negative lookbehind: no Latin+ letters, no @ please
+                          r'(?<![\p{Latin}&&\p{Letter}]\.?|\@)'
+                          # core alternative 1: explicit www
+                          f"((?:(?:(?:www|WWW)(?:\\.{url_letter})+\\.(?:[a-z]{times234}]|[A-Z]{times234}]))|"
+                          # core alternative 2: very common domain (e.g. .com)
+                          f"(?:(?:{url_elem})+(?:{self.top_level_dom_names_w_high_reliability}))|"
+                          # core alternative 3: normal domain (e.g. .uk)
+                          f"(?:(?:{url_elem})*{url_elem3}(?:{url_elem})*"
+                          f"(?:{self.top_level_dom_names_w_normal_reliability}))|"
+                          # core alternative 4: unreliable domain (e.g. .in which could just be a word)
+                          f"(?:(?:{url_elem})*(?:{url_elem5}(?:{url_elem})*|{url_elem3}{url_elem23})"
+                          f"(?:{self.top_level_dom_names_w_low_reliability})))"
+                          # post-top level domain (e.g. /watch?v=AaZ_RSt0KP8)
                           r"(?:\/(?:(?:\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+]|"
                           r"\((?:\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+])\))*(?:\p{L}\p{M}*|\d|[/]))?)?)"
-                          r'(?![\p{Latin}&&\p{Letter}])'      # negative lookahead: no Latin+ letters please
-                          r'(.*)$',
-                          flags=regex.IGNORECASE)
+                          # negative lookahead: no Latin+ letters please
+                          r'(?![\p{Latin}&&\p{Letter}])'
+                          # post URL
+                          r'(.*)$')
 
     @staticmethod
     def default_data_dir() -> Path:
