@@ -42,6 +42,11 @@ class AbbreviationEntry(ResourceEntry):
         self.expansions = expansions      # e.g. [General]
 
 
+class UrlEntry(ResourceEntry):
+    def __init__(self, abbrev: str):
+        super().__init__(abbrev)
+
+
 class RepairEntry(ResourceEntry):
     def __init__(self, bad_s: str, good_s: str, sem_class: Optional[str] = None, problem: Optional[str] = None,
                  lcode: Optional[str] = None, country: Optional[str] = None, tag: Optional[str] = None):
@@ -260,13 +265,15 @@ class ResourceDict:
                                                                               'tag',
                                                                               'target',
                                                                               'taxon',
-                                                                              'token-category'],
+                                                                              'token-category',
+                                                                              'url'],
                                                                  required_slot_dict={'abbrev': [],
                                                                                      'contraction': ['target'],
                                                                                      'lexical': [],
                                                                                      'misspelling': ['target'],
                                                                                      'punct-split': ['side'],
-                                                                                     'repair': ['target']})
+                                                                                     'repair': ['target'],
+                                                                                     'url': []})
                         if not valid:
                             n_warnings += 1
                             continue
@@ -307,6 +314,8 @@ class ResourceDict:
                             self.register_resource_entry_in_reverse_resource_dict(resource_entry, [target])
                         elif head_slot == 'lexical':
                             resource_entry = LexicalEntry(s)
+                        elif head_slot == 'url':
+                            resource_entry = UrlEntry(s)
                         elif head_slot == 'punct-split':
                             side = slot_value_in_double_colon_del_list(line, 'side')
                             group = slot_value_in_double_colon_del_list(line, 'group', False)
