@@ -78,7 +78,8 @@
 ::code ER ::country-name Eritrea
 ::code EE ::country-name Estonia
 ::code ET ::country-name Ethiopia
-::code FK ::country-name Falkland Islands (Malvinas)
+::code EU ::country-name European Union
+::code FK ::country-name Falkland Islands
 ::code FO ::country-name Faroe Islands
 ::code FJ ::country-name Fiji
 ::code FI ::country-name Finland
