@@ -661,10 +661,12 @@ def double_colon_del_list_validation(s: str, line_id: str, filename: str,
     return valid
 
 
-def load_top_level_domains(filename: Path) -> List[str]:
+def load_top_level_domains(filename: Path) -> (List[str], List[str], List[str]):
     """Loads top level domain resource for URLs etc.
     Example input file: data/top-level-domain-codes.txt"""
-    top_level_domain_names = []
+    top_level_domain_names_with_low_reliability = []
+    top_level_domain_names_with_normal_reliability = []
+    top_level_domain_names_with_high_reliability = []
     try:
         with open(filename) as f_in:
             line_number = 0
@@ -681,22 +683,33 @@ def load_top_level_domains(filename: Path) -> List[str]:
                 valid = double_colon_del_list_validation(line, str(line_number), str(filename),
                                                          valid_slots=['code',
                                                                       'comment',
-                                                                      'country-name'],
+                                                                      'country-name',
+                                                                      'reliability'],
                                                          required_slot_dict={'code': []})
                 if not valid:
                     n_warnings += 1
                     continue
                 if code := slot_value_in_double_colon_del_list(line, 'code'):
                     # country_code = slot_value_in_double_colon_del_list(line, 'country-code')
-                    top_level_domain_names.append(code.lower())
+                    reliability = slot_value_in_double_colon_del_list(line, 'reliability')
+                    if reliability == 'low':
+                        top_level_domain_names_with_low_reliability.append(code.lower())
+                    elif reliability == 'high':
+                        top_level_domain_names_with_high_reliability.append(code.lower())
+                    else:
+                        top_level_domain_names_with_normal_reliability.append(code.lower())
                     n_entries += 1
                 else:
                     log.warning(f'Could not process line {line_number} in {filename}')
             # log.info(f'Loaded {n_entries} entries from {line_number} lines in {filename}')
-            top_level_domain_names.sort()
+            top_level_domain_names_with_low_reliability.sort()
+            top_level_domain_names_with_normal_reliability.sort()
+            top_level_domain_names_with_high_reliability.sort()
     except OSError:
         log.warning(f'Could not open top-level-domain file {filename}')
-    return top_level_domain_names
+    return (top_level_domain_names_with_low_reliability,
+            top_level_domain_names_with_normal_reliability,
+            top_level_domain_names_with_high_reliability)
 
 
 def lists_share_element(list1: list, list2: list) -> bool:
