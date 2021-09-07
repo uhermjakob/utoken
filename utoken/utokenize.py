@@ -657,7 +657,7 @@ class Tokenizer:
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_xml = re.compile(r'(.*?)'
-                        r'(</?[a-z][-_:a-z0-9]*(?:\s+[a-z][-_:a-z0-9]*="[^"]*")*\s*/?>|'    # open/close tag
+                        r'(</?[a-z][-_:a-z0-9]*(?:\s+[a-z][-_:a-z0-9]*=(?:"[^"]*"|\'[^\']*\'))*\s*/?>|' # open/close tag
                         r'<\$[-_a-z0-9]+\$>|'                                               # <$BlogBacklinkAuthor$>
                         r'<!--.*?-->)'                                                      # comment tag
                         r'(.*)$',
@@ -689,10 +689,10 @@ class Tokenizer:
     # Consider out-sourcing the following top-level domain names to data file.
     # Challenge: top-domain names (e.g. at|be|in|is|it|my|no|so|US) that can also be regular words, e.g. G-20.In car.so
     common_top_domain_suffixes = "museum|info|cat|com|edu|gov|int|mil|net|org|ar|at|au|be|bg|bi|br|ca|ch|cn|co|cz|" \
-                                 "de|dk|es|eu|fi|fr|gr|hk|hu|id|ie|il|in|ir|is|it|jp|ke|kr|lu|mg|mx|my|nl|no|nz|" \
+                                 "de|dk|es|eu|fi|fr|gr|hk|hu|id|ie|il|in|ir|is|it|jp|ke|kr|kz|lu|mg|mx|my|nl|no|nz|" \
                                  "ph|pl|pt|ro|rs|ru|rw|se|sg|sk|so|tr|tv|tw|tz|ua|ug|uk|us|za"
     re_url2 = regex.compile(r'(.*?)'
-                            r'(?<![\p{Latin}&&\p{Letter}]|\@)'  # negative lookbehind: no Latin+ letters, no @ please
+                            r'(?<![\p{Latin}&&\p{Letter}]\.?|\@)'  # negative lookbehind: no Latin+ letters, no @ please
                             r"((?:(?:www(?:\.(?:\p{L}\p{M}*|\d|[-_]))+\.(?:[a-z]{2,4}]))|"
                             r"(?:(?:(?:\p{L}\p{M}*|\d|[-_])+\.)+(?:" + common_top_domain_suffixes + r")))"
                             r"(?:\/(?:(?:\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+]|"
@@ -711,7 +711,7 @@ class Tokenizer:
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     common_file_suffixes = "aspx?|bmp|cgi|csv|docx?|eps|gif|html?|jpeg|jpg|mov|mp3|mp4|" \
-                           "pdf|php|png|pptx?|ps|rtf|tiff|tsv|tok|txt|xlsx?|xml"
+                           "pdf|php|png|pptx?|ps|rtf|tiff|tsv|tok|txt|xlsx?|xml|zip"
     re_filename = regex.compile(r'(.*?)'
                                 r'(?<!\pL\pM*|\d|[-_.@])'  # negative lookbehind: no letters, digits, @ please
                                 r"((?:\pL\pM*)(?:\pL\pM*|\d|[-_.])*(?:\pL\pM*|\d)\.(?:" + common_file_suffixes + "))"
