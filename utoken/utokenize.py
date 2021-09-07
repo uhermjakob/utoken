@@ -347,7 +347,7 @@ class Tokenizer:
                           r"(?:\/(?:(?:\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+]|"
                           r"\((?:\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+])\))*(?:\p{L}\p{M}*|\d|[/]))?)?)"
                           # negative lookahead: no Latin+ letters please
-                          r'(?![\p{Latin}&&\p{Letter}])'
+                          r'(?!\.?[\p{Latin}&&\p{Letter}])'
                           # post URL
                           r'(.*)$')
 
