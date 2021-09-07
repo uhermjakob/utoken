@@ -145,10 +145,10 @@ class TokenizationAnalysis:
                         token_count_clause = f' #{token_count}'
                 instance_s = self.reg_plural('instance', count)
                 locations = anomaly.locations
-                location_s = ', '.join(locations)
+                location_s = ' '.join(locations)
                 n_locations = len(locations)
                 line_s = self.reg_plural('line', n_locations)
-                print(f'   {s} ({count} {instance_s}; {line_s} {location_s}) {token_count_clause}')
+                print(f'   {s} ({count} {instance_s} {line_s} {location_s}) {token_count_clause}')
 
 
 def main():
