@@ -1,0 +1,258 @@
+::code cat ::comment Catalan
+::code com ::comment commercial
+::code edu ::comment education (limited to USA since 2001)
+::code gov ::comment government (USA)
+::code info ::comment information
+::code int ::comment international
+::code mil ::comment military (USA)
+::code museum
+::code net ::comment network, internet
+::code org ::comment organization (mostly non-profit)
+
+::code AF ::country-name Afghanistan
+::code AX ::country-name Åland Islands
+::code AL ::country-name Albania
+::code DZ ::country-name Algeria
+::code AS ::country-name American Samoa
+::code AD ::country-name Andorra
+::code AO ::country-name Angola
+::code AI ::country-name Anguilla
+::code AQ ::country-name Antarctica
+::code AG ::country-name Antigua and Barbuda
+::code AR ::country-name Argentina
+::code AM ::country-name Armenia
+::code AW ::country-name Aruba
+::code AU ::country-name Australia
+::code AT ::country-name Austria
+::code AZ ::country-name Azerbaijan
+::code BS ::country-name Bahamas
+::code BH ::country-name Bahrain
+::code BD ::country-name Bangladesh
+::code BB ::country-name Barbados
+::code BY ::country-name Belarus
+::code BE ::country-name Belgium
+::code BZ ::country-name Belize
+::code BJ ::country-name Benin
+::code BM ::country-name Bermuda
+::code BT ::country-name Bhutan
+::code BO ::country-name Bolivia, Plurinational State of
+::code BA ::country-name Bosnia and Herzegovina
+::code BW ::country-name Botswana
+::code BV ::country-name Bouvet Island
+::code BR ::country-name Brazil
+::code IO ::country-name British Indian Ocean Territory
+::code BN ::country-name Brunei Darussalam
+::code BG ::country-name Bulgaria
+::code BF ::country-name Burkina Faso
+::code BI ::country-name Burundi
+::code KH ::country-name Cambodia
+::code CM ::country-name Cameroon
+::code CA ::country-name Canada
+::code CV ::country-name Cape Verde
+::code KY ::country-name Cayman Islands
+::code CF ::country-name Central African Republic
+::code TD ::country-name Chad
+::code CL ::country-name Chile
+::code CN ::country-name China
+::code CX ::country-name Christmas Island
+::code CC ::country-name Cocos (Keeling) Islands
+::code CO ::country-name Colombia
+::code KM ::country-name Comoros
+::code CG ::country-name Congo
+::code CD ::country-name Congo, the Democratic Republic of the
+::code CK ::country-name Cook Islands
+::code CR ::country-name Costa Rica
+::code CI ::country-name Côte d'Ivoire
+::code HR ::country-name Croatia
+::code CU ::country-name Cuba
+::code CY ::country-name Cyprus
+::code CZ ::country-name Czech Republic
+::code DK ::country-name Denmark
+::code DJ ::country-name Djibouti
+::code DM ::country-name Dominica
+::code DO ::country-name Dominican Republic
+::code EC ::country-name Ecuador
+::code EG ::country-name Egypt
+::code SV ::country-name El Salvador
+::code GQ ::country-name Equatorial Guinea
+::code ER ::country-name Eritrea
+::code EE ::country-name Estonia
+::code ET ::country-name Ethiopia
+::code FK ::country-name Falkland Islands (Malvinas)
+::code FO ::country-name Faroe Islands
+::code FJ ::country-name Fiji
+::code FI ::country-name Finland
+::code FR ::country-name France
+::code GF ::country-name French Guiana
+::code PF ::country-name French Polynesia
+::code TF ::country-name French Southern Territories
+::code GA ::country-name Gabon
+::code GM ::country-name Gambia
+::code GE ::country-name Georgia
+::code DE ::country-name Germany
+::code GH ::country-name Ghana
+::code GI ::country-name Gibraltar
+::code GR ::country-name Greece
+::code GL ::country-name Greenland
+::code GD ::country-name Grenada
+::code GP ::country-name Guadeloupe
+::code GU ::country-name Guam
+::code GT ::country-name Guatemala
+::code GG ::country-name Guernsey
+::code GN ::country-name Guinea
+::code GW ::country-name Guinea-Bissau
+::code GY ::country-name Guyana
+::code HT ::country-name Haiti
+::code HM ::country-name Heard Island and McDonald Islands
+::code VA ::country-name Holy See (Vatican City State)
+::code HN ::country-name Honduras
+::code HK ::country-name Hong Kong
+::code HU ::country-name Hungary
+::code IS ::country-name Iceland
+::code IN ::country-name India
+::code ID ::country-name Indonesia
+::code IR ::country-name Iran, Islamic Republic of
+::code IQ ::country-name Iraq
+::code IE ::country-name Ireland
+::code IM ::country-name Isle of Man
+::code IL ::country-name Israel
+::code IT ::country-name Italy
+::code JM ::country-name Jamaica
+::code JP ::country-name Japan
+::code JE ::country-name Jersey
+::code JO ::country-name Jordan
+::code KZ ::country-name Kazakhstan
+::code KE ::country-name Kenya
+::code KI ::country-name Kiribati
+::code KP ::country-name Korea, Democratic People's Republic of
+::code KR ::country-name Korea, Republic of
+::code KW ::country-name Kuwait
+::code KG ::country-name Kyrgyzstan
+::code LA ::country-name Lao People's Democratic Republic
+::code LV ::country-name Latvia
+::code LB ::country-name Lebanon
+::code LS ::country-name Lesotho
+::code LR ::country-name Liberia
+::code LY ::country-name Libyan Arab Jamahiriya
+::code LI ::country-name Liechtenstein
+::code LT ::country-name Lithuania
+::code LU ::country-name Luxembourg
+::code MO ::country-name Macao
+::code MK ::country-name Macedonia, the former Yugoslav Republic of
+::code MG ::country-name Madagascar
+::code MW ::country-name Malawi
+::code MY ::country-name Malaysia
+::code MV ::country-name Maldives
+::code ML ::country-name Mali
+::code MT ::country-name Malta
+::code MH ::country-name Marshall Islands
+::code MQ ::country-name Martinique
+::code MR ::country-name Mauritania
+::code MU ::country-name Mauritius
+::code YT ::country-name Mayotte
+::code MX ::country-name Mexico
+::code FM ::country-name Micronesia, Federated States of
+::code MD ::country-name Moldova, Republic of
+::code MC ::country-name Monaco
+::code MN ::country-name Mongolia
+::code ME ::country-name Montenegro
+::code MS ::country-name Montserrat
+::code MA ::country-name Morocco
+::code MZ ::country-name Mozambique
+::code MM ::country-name Myanmar
+::code NA ::country-name Namibia
+::code NR ::country-name Nauru
+::code NP ::country-name Nepal
+::code NL ::country-name Netherlands
+::code AN ::country-name Netherlands Antilles
+::code NC ::country-name New Caledonia
+::code NZ ::country-name New Zealand
+::code NI ::country-name Nicaragua
+::code NE ::country-name Niger
+::code NG ::country-name Nigeria
+::code NU ::country-name Niue
+::code NF ::country-name Norfolk Island
+::code MP ::country-name Northern Mariana Islands
+::code NO ::country-name Norway
+::code OM ::country-name Oman
+::code PK ::country-name Pakistan
+::code PW ::country-name Palau
+::code PS ::country-name Palestinian Territory, Occupied
+::code PA ::country-name Panama
+::code PG ::country-name Papua New Guinea
+::code PY ::country-name Paraguay
+::code PE ::country-name Peru
+::code PH ::country-name Philippines
+::code PN ::country-name Pitcairn
+::code PL ::country-name Poland
+::code PT ::country-name Portugal
+::code PR ::country-name Puerto Rico
+::code QA ::country-name Qatar
+::code RE ::country-name Réunion
+::code RO ::country-name Romania
+::code RU ::country-name Russian Federation
+::code RW ::country-name Rwanda
+::code BL ::country-name Saint Barthélemy
+::code SH ::country-name Saint Helena, Ascension and Tristan da Cunha
+::code KN ::country-name Saint Kitts and Nevis
+::code LC ::country-name Saint Lucia
+::code MF ::country-name Saint Martin (French part)
+::code PM ::country-name Saint Pierre and Miquelon
+::code VC ::country-name Saint Vincent and the Grenadines
+::code WS ::country-name Samoa
+::code SM ::country-name San Marino
+::code ST ::country-name Sao Tome and Principe
+::code SA ::country-name Saudi Arabia
+::code SN ::country-name Senegal
+::code RS ::country-name Serbia
+::code SC ::country-name Seychelles
+::code SL ::country-name Sierra Leone
+::code SG ::country-name Singapore
+::code SK ::country-name Slovakia
+::code SI ::country-name Slovenia
+::code SB ::country-name Solomon Islands
+::code SO ::country-name Somalia
+::code ZA ::country-name South Africa
+::code GS ::country-name South Georgia and the South Sandwich Islands
+::code ES ::country-name Spain
+::code LK ::country-name Sri Lanka
+::code SD ::country-name Sudan
+::code SR ::country-name Suriname
+::code SJ ::country-name Svalbard and Jan Mayen
+::code SZ ::country-name Swaziland
+::code SE ::country-name Sweden
+::code CH ::country-name Switzerland
+::code SY ::country-name Syrian Arab Republic
+::code TW ::country-name Taiwan, Province of China
+::code TJ ::country-name Tajikistan
+::code TZ ::country-name Tanzania, United Republic of
+::code TH ::country-name Thailand
+::code TL ::country-name Timor-Leste
+::code TG ::country-name Togo
+::code TK ::country-name Tokelau
+::code TO ::country-name Tonga
+::code TT ::country-name Trinidad and Tobago
+::code TN ::country-name Tunisia
+::code TR ::country-name Turkey
+::code TM ::country-name Turkmenistan
+::code TC ::country-name Turks and Caicos Islands
+::code TV ::country-name Tuvalu
+::code UG ::country-name Uganda
+::code UA ::country-name Ukraine
+::code AE ::country-name United Arab Emirates
+::code GB ::country-name United Kingdom
+::code UK ::country-name United Kingdom
+::code US ::country-name United States
+::code UM ::country-name United States Minor Outlying Islands
+::code UY ::country-name Uruguay
+::code UZ ::country-name Uzbekistan
+::code VU ::country-name Vanuatu
+::code VE ::country-name Venezuela, Bolivarian Republic of
+::code VN ::country-name Viet Nam
+::code VG ::country-name Virgin Islands, British
+::code VI ::country-name Virgin Islands, U.S.
+::code WF ::country-name Wallis and Futuna
+::code EH ::country-name Western Sahara
+::code YE ::country-name Yemen
+::code ZM ::country-name Zambia
+::code ZW ::country-name Zimbabwe
