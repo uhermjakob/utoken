@@ -1071,6 +1071,10 @@ class Tokenizer:
                                 return self.rec_tok([token_candidate], [start_position], s, offset, 'ABBREV',
                                                     line_id, chart, lang_code, ht, this_function, [token_candidate],
                                                     sem_class=resource_entry.sem_class, left_done=True)
+                            if isinstance(resource_entry, util.UrlEntry):
+                                return self.rec_tok([token_candidate], [start_position], s, offset, 'URL-L',
+                                                    line_id, chart, lang_code, ht, this_function, [token_candidate],
+                                                    left_done=True)
                             if isinstance(resource_entry, util.ContractionEntry):
                                 tokens, orig_tokens, start_positions = \
                                     self.map_contraction(token_candidate, resource_surf, resource_entry.target,
