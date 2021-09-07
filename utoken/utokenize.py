@@ -300,7 +300,7 @@ class Tokenizer:
             if lcode != lang_code:
                 self.tok_dict.load_resource(data_dir / f'tok-resource-{lcode}.txt', lang_code=lcode)
         # Load language-independent tokenization resource entries
-        self.tok_dict.load_resource(data_dir / f'tok-resource.txt')
+        self.tok_dict.load_resource(data_dir / 'tok-resource.txt')
         # Load detokenization resource entries, for proper mt-tokenization, e.g. @...@
         self.detok_resource.load_resource(data_dir / f'detok-resource.txt')
         self.detok_resource.build_markup_attach_re(self)
@@ -311,6 +311,24 @@ class Tokenizer:
                                                   r'(.*)$',
                                                   flags=regex.IGNORECASE)
         # log.info(f're_mt_punct_preserve: {self.re_mt_punct_preserve}')
+        # Challenge: top-domain names (e.g. at|be|im|in|is|it|my|no|so|to|US) that can also be regular words,
+        #     e.g. G-20.In car.so
+        self.common_top_domain_suffixes = '|'.join(util.load_top_level_domains(data_dir / 'top-level-domain-codes.txt'))
+        # log.info(f'top_level_domain_regex_s: {self.common_top_domain_suffixes}')
+        self.re_url2 = \
+            regex.compile(r'(.*?)'
+                          r'(?<![\p{Latin}&&\p{Letter}]\.?|\@)'  # negative lookbehind: no Latin+ letters, no @ please
+                          r"((?:(?:www(?:\.(?:\p{L}\p{M}*|\d|[-_]))+\.(?:[a-z]{2,4}]))|"
+                          r"(?:(?:(?:\p{L}\p{M}*|\d|[-_])+\.)+(?:com|edu|org|tv))|"
+                          r"(?:(?:(?:\p{L}\p{M}*|\d|[-_])+\.)*"
+                          r"(?:(?:\p{L}\p{M}*|\d|[-_]){5,}\.(?:(?:\p{L}\p{M}*|\d|[-_])+\.)*|"
+                          r"(?:\p{L}\p{M}*|\d|[-_]){3,}\.(?:\p{L}\p{M}*){2,3}\.)"
+                          r"(?:" + self.common_top_domain_suffixes + r")))"
+                          r"(?:\/(?:(?:\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+]|"
+                          r"\((?:\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+])\))*(?:\p{L}\p{M}*|\d|[/]))?)?)"
+                          r'(?![\p{Latin}&&\p{Letter}])'      # negative lookahead: no Latin+ letters please
+                          r'(.*)$',
+                          flags=regex.IGNORECASE)
 
     @staticmethod
     def default_data_dir() -> Path:
@@ -657,9 +675,10 @@ class Tokenizer:
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_xml = re.compile(r'(.*?)'
-                        r'(</?[a-z][-_:a-z0-9]*(?:\s+[a-z][-_:a-z0-9]*=(?:"[^"]*"|\'[^\']*\'))*\s*/?>|' # open/close tag
-                        r'<\$[-_a-z0-9]+\$>|'                                               # <$BlogBacklinkAuthor$>
-                        r'<!--.*?-->)'                                                      # comment tag
+                        # following line: open/close tag
+                        r'(</?[a-z][-_:a-z0-9]*(?:\s+[a-z][-_:a-z0-9]*=(?:"[^"]*"|\'[^\']*\'))*\s*/?>|' 
+                        r'<\$[-_a-z0-9]+\$>|'                            # <$BlogBacklinkAuthor$>
+                        r'<!--.*?-->)'                                   # comment tag
                         r'(.*)$',
                         flags=re.IGNORECASE)
     re_BBCode = re.compile(r'(.*?)'
@@ -684,20 +703,6 @@ class Tokenizer:
                             r"((?:https?|ftps?)://"
                             r"(\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+]|\((?:\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+])\))+"
                             r"(?:\p{L}\p{M}*|\d|[/]))"
-                            r'(.*)$',
-                            flags=regex.IGNORECASE)
-    # Consider out-sourcing the following top-level domain names to data file.
-    # Challenge: top-domain names (e.g. at|be|in|is|it|my|no|so|US) that can also be regular words, e.g. G-20.In car.so
-    common_top_domain_suffixes = "museum|info|cat|com|edu|gov|int|mil|net|org|ar|at|au|be|bg|bi|br|ca|ch|cn|co|cz|" \
-                                 "de|dk|es|eu|fi|fr|gr|hk|hu|id|ie|il|in|ir|is|it|jp|ke|kr|kz|lu|mg|mx|my|nl|no|nz|" \
-                                 "ph|pl|pt|ro|rs|ru|rw|se|sg|sk|so|tr|tv|tw|tz|ua|ug|uk|us|za"
-    re_url2 = regex.compile(r'(.*?)'
-                            r'(?<![\p{Latin}&&\p{Letter}]\.?|\@)'  # negative lookbehind: no Latin+ letters, no @ please
-                            r"((?:(?:www(?:\.(?:\p{L}\p{M}*|\d|[-_]))+\.(?:[a-z]{2,4}]))|"
-                            r"(?:(?:(?:\p{L}\p{M}*|\d|[-_])+\.)+(?:" + common_top_domain_suffixes + r")))"
-                            r"(?:\/(?:(?:\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+]|"
-                            r"\((?:\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+])\))*(?:\p{L}\p{M}*|\d|[/]))?)?)"
-                            r'(?![\p{Latin}&&\p{Letter}])'      # negative lookahead: no Latin+ letters please
                             r'(.*)$',
                             flags=regex.IGNORECASE)
 
