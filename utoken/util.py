@@ -661,6 +661,44 @@ def double_colon_del_list_validation(s: str, line_id: str, filename: str,
     return valid
 
 
+def load_top_level_domains(filename: Path) -> List[str]:
+    """Loads top level domain resource for URLs etc.
+    Example input file: data/top-level-domain-codes.txt"""
+    top_level_domain_names = []
+    try:
+        with open(filename) as f_in:
+            line_number = 0
+            n_warnings = 0
+            n_entries = 0
+            for orig_line in f_in:
+                line_number += 1
+                line = ResourceDict.line_without_comment(orig_line)
+                if line.strip() == '':
+                    continue
+                if re.match(r'^\uFEFF?\s*(?:#.*)?$', line):  # ignore empty or comment line
+                    continue
+                # Check whether cost file line is well-formed. Following call will output specific warnings.
+                valid = double_colon_del_list_validation(line, str(line_number), str(filename),
+                                                         valid_slots=['code',
+                                                                      'comment',
+                                                                      'country-name'],
+                                                         required_slot_dict={'code': []})
+                if not valid:
+                    n_warnings += 1
+                    continue
+                if code := slot_value_in_double_colon_del_list(line, 'code'):
+                    # country_code = slot_value_in_double_colon_del_list(line, 'country-code')
+                    top_level_domain_names.append(code.lower())
+                    n_entries += 1
+                else:
+                    log.warning(f'Could not process line {line_number} in {filename}')
+            # log.info(f'Loaded {n_entries} entries from {line_number} lines in {filename}')
+            top_level_domain_names.sort()
+    except OSError:
+        log.warning(f'Could not open top-level-domain file {filename}')
+    return top_level_domain_names
+
+
 def lists_share_element(list1: list, list2: list) -> bool:
     for elem1 in list1:
         for elem2 in list2:
