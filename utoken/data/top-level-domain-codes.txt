@@ -1,13 +1,13 @@
 ::code cat ::comment Catalan
-::code com ::comment commercial
-::code edu ::comment education (limited to USA since 2001)
+::code com ::comment commercial ::reliability high
+::code edu ::comment education (limited to USA since 2001) ::reliability high
 ::code gov ::comment government (USA)
 ::code info ::comment information
 ::code int ::comment international
 ::code mil ::comment military (USA)
 ::code museum
 ::code net ::comment network, internet
-::code org ::comment organization (mostly non-profit)
+::code org ::comment organization (mostly non-profit) ::reliability high
 
 ::code AF ::country-name Afghanistan
 ::code AX ::country-name Åland Islands
@@ -23,14 +23,14 @@
 ::code AM ::country-name Armenia
 ::code AW ::country-name Aruba
 ::code AU ::country-name Australia
-::code AT ::country-name Austria
+::code AT ::country-name Austria ::reliability low
 ::code AZ ::country-name Azerbaijan
 ::code BS ::country-name Bahamas
 ::code BH ::country-name Bahrain
 ::code BD ::country-name Bangladesh
 ::code BB ::country-name Barbados
 ::code BY ::country-name Belarus
-::code BE ::country-name Belgium
+::code BE ::country-name Belgium ::reliability low
 ::code BZ ::country-name Belize
 ::code BJ ::country-name Benin
 ::code BM ::country-name Bermuda
@@ -108,15 +108,15 @@
 ::code HN ::country-name Honduras
 ::code HK ::country-name Hong Kong
 ::code HU ::country-name Hungary
-::code IS ::country-name Iceland
-::code IN ::country-name India
+::code IS ::country-name Iceland ::reliability low
+::code IN ::country-name India ::reliability low
 ::code ID ::country-name Indonesia
 ::code IR ::country-name Iran, Islamic Republic of
 ::code IQ ::country-name Iraq
 ::code IE ::country-name Ireland
-::code IM ::country-name Isle of Man
+::code IM ::country-name Isle of Man ::reliability low
 ::code IL ::country-name Israel
-::code IT ::country-name Italy
+::code IT ::country-name Italy ::reliability low
 ::code JM ::country-name Jamaica
 ::code JP ::country-name Japan
 ::code JE ::country-name Jersey
@@ -141,7 +141,7 @@
 ::code MK ::country-name Macedonia, the former Yugoslav Republic of
 ::code MG ::country-name Madagascar
 ::code MW ::country-name Malawi
-::code MY ::country-name Malaysia
+::code MY ::country-name Malaysia ::reliability low
 ::code MV ::country-name Maldives
 ::code ML ::country-name Mali
 ::code MT ::country-name Malta
@@ -173,7 +173,7 @@
 ::code NU ::country-name Niue
 ::code NF ::country-name Norfolk Island
 ::code MP ::country-name Northern Mariana Islands
-::code NO ::country-name Norway
+::code NO ::country-name Norway ::reliability low
 ::code OM ::country-name Oman
 ::code PK ::country-name Pakistan
 ::code PW ::country-name Palau
@@ -211,7 +211,7 @@
 ::code SK ::country-name Slovakia
 ::code SI ::country-name Slovenia
 ::code SB ::country-name Solomon Islands
-::code SO ::country-name Somalia
+::code SO ::country-name Somalia ::reliability low
 ::code ZA ::country-name South Africa
 ::code GS ::country-name South Georgia and the South Sandwich Islands
 ::code ES ::country-name Spain
@@ -230,19 +230,19 @@
 ::code TL ::country-name Timor-Leste
 ::code TG ::country-name Togo
 ::code TK ::country-name Tokelau
-::code TO ::country-name Tonga
+::code TO ::country-name Tonga ::reliability low
 ::code TT ::country-name Trinidad and Tobago
 ::code TN ::country-name Tunisia
 ::code TR ::country-name Turkey
 ::code TM ::country-name Turkmenistan
 ::code TC ::country-name Turks and Caicos Islands
-::code TV ::country-name Tuvalu
+::code TV ::country-name Tuvalu ::reliability high
 ::code UG ::country-name Uganda
 ::code UA ::country-name Ukraine
 ::code AE ::country-name United Arab Emirates
 ::code GB ::country-name United Kingdom
 ::code UK ::country-name United Kingdom
-::code US ::country-name United States
+::code US ::country-name United States ::reliability low
 ::code UM ::country-name United States Minor Outlying Islands
 ::code UY ::country-name Uruguay
 ::code UZ ::country-name Uzbekistan
