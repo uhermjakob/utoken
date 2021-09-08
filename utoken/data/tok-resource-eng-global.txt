@@ -72,6 +72,7 @@
 ::abbrev Fig. ::exp figure ::lcode eng ::sem-class corpus-component
 ::abbrev fig. ::exp figure ::lcode eng ::sem-class corpus-component
 ::abbrev No. ::exp number ::lcode eng ::sem-class corpus-component ::case-sensitive True ::right-context \s*\d
+::abbrev no. ::exp number ::lcode eng ::sem-class corpus-component ::case-sensitive True ::right-context \s*\d
 ::abbrev Nos. ::exp numbers ::lcode eng ::sem-class corpus-component ::case-sensitive True ::right-context \s*\d
 ::abbrev Nr. ::exp number ::lcode eng ::sem-class corpus-component
 ::abbrev op. ::exp opus ::lcode eng ::sem-class corpus-component ::case-sensitive True ::left-context-not [.] ::right-context \s*\d
@@ -532,12 +533,14 @@
 
 ::lexical M&M's ::lcode eng ::sem-class product ::alt-spelling M&Ms
 
-::lexical c' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::example C'est la vie.
-::lexical d' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::example Coeur d'Alene
-::lexical l' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::example l'amour
-::lexical n' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::left-context-not ['’‘]
-::lexical qu' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra
-::lexical s' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra
+# Preserve the following French decontraction tokens (if they are full tokens already).
+# But don't split off (as effected by ::right-context-not \S). - Leave that to tok-resource-fra.txt
+::lexical c' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::example C'est la vie. ::right-context-not \S
+::lexical d' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::example Coeur d'Alene ::right-context-not \S
+::lexical l' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::example l'amour ::right-context-not \S
+::lexical n' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::left-context-not ['’‘] ::right-context-not \S
+::lexical qu' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::right-context-not \S
+::lexical s' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::right-context-not \S
 
 ::lexical 'd ::lcode eng ::tag DECONTRACTION-R  ::example I'd like a beer.
 ::lexical 'em ::lcode eng ::tag DECONTRACTION-R  ::example Tell'em to go home.
