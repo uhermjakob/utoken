@@ -1,14 +1,46 @@
+::punct-split : ::side both ::left-context \pL\pM*\pL\pM* ::right-context [-\/]*\pL\pM*\pL
+
 ::abbrev hal. ::exp halimbawa ::lcode tgl ::comment example
 ::abbrev Bb. ::exp Binibini ::lcode tgl ::comment Miss
+::abbrev Bgy. ::exp Barangay ::lcode tgl ::comment local district
 ::abbrev Brgy. ::exp Barangay ::lcode tgl ::comment local district
 ::abbrev Gng. ::exp Ginang ::lcode tgl ::comment Mrs.
-::abbrev G. ::exp Ginoo ::lcode tgl ::comment Mr.
 ::abbrev n.u. ::exp ng umaga ::lcode tgl ::comment in the morning
 ::abbrev n.t. ::exp ng tanghali ::lcode tgl ::comment at noon
 ::abbrev n.h. ::exp ng hapon ::lcode tgl ::comment in the afternoon
 ::abbrev n.g. ::exp ng gabi ::lcode tgl ::comment at night; in the evening
-::abbrev H. ::exp hilaga ::lcode tgl ::comment north; name initial
-::abbrev T. ::exp timog ::lcode tgl ::comment south; name initial
-::abbrev K. ::exp kanluran ::lcode tgl ::comment west; name initial
-::abbrev S. ::exp silangan ::lcode tgl ::comment east; name initial
-::abbrev P. ::exp peso ::lcode tgl ::sem-class currency-unit ::right-context \s*\d
+::abbrev Sta. ::exp Santa ::lcode tgl ::case-sensitive True ::sem-class pre-name-title
+::abbrev Sto. ::exp Santo ::lcode tgl ::case-sensitive True ::sem-class pre-name-title
+::abbrev Ma. ::lcode tgl ::case-sensitive True ::sem-class pre-name-title
+::abbrev Atty. ::lcode tgl ::sem-class pre-name-title
+::abbrev Dir. ::lcode tgl ::case-sensitive True ::sem-class pre-name-title
+::abbrev Dra. ::lcode tgl ::case-sensitive True ::sem-class pre-name-title
+::abbrev Sec. ::lcode tgl ::case-sensitive True ::sem-class pre-name-title
+
+::abbrev A. ::right-context \s*\S
+::abbrev B. ::right-context \s*\S
+::abbrev C. ::right-context \s*\S
+::abbrev D. ::right-context \s*\S
+::abbrev E. ::right-context \s*\S
+::abbrev F. ::right-context \s*\S
+::abbrev G. ::right-context \s*\S ::exp Ginoo ::lcode tgl ::comment Mr.
+::abbrev H. ::right-context \s*\S ::exp hilaga ::lcode tgl ::comment north
+::abbrev I. ::right-context \s*\S
+::abbrev J. ::right-context \s*\S
+::abbrev K. ::right-context \s*\S ::exp kanluran ::lcode tgl ::comment west
+::abbrev L. ::right-context \s*\S
+::abbrev M. ::right-context \s*\S
+::abbrev N. ::right-context \s*\S
+::abbrev O. ::right-context \s*\S
+::abbrev P. ::right-context \s*\d ::exp peso ::lcode tgl ::sem-class currency-unit
+::abbrev P. ::right-context \s*\S
+::abbrev Q. ::right-context \s*\S
+::abbrev R. ::right-context \s*\S
+::abbrev S. ::right-context \s*\S ::exp silangan ::lcode tgl ::comment east
+::abbrev T. ::right-context \s*\S ::exp timog ::lcode tgl ::comment south
+::abbrev U. ::right-context \s*\S
+::abbrev V. ::right-context \s*\S
+::abbrev W. ::right-context \s*\S
+::abbrev X. ::right-context \s*\S
+::abbrev Y. ::right-context \s*\S
+::abbrev Z. ::right-context \s*\S
