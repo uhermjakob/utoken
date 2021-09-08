@@ -95,8 +95,8 @@ optional arguments:
 
 ### Limitations
 * Currently excluded: no-space scripts like Chinese
-* Substantial set of resource entries (data file) currently for English only
-* Substantial testing so far only for English, Hindi, Farsi and to a lesser degree Kazakh and Uyghur
+* Large set of resource entries (data file) currently for English only; limited resource entries for 40+ other languages
+* Languages with substantial testing so far: English, Farsi, Hindi, Kazakh, Tagalog and Uyghur
 
 ### Requirements
 * Python 3.8 or higher
