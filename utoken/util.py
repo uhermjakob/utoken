@@ -43,6 +43,7 @@ class AbbreviationEntry(ResourceEntry):
 
 
 class LexicalPriorityEntry(ResourceEntry):
+    """LexicalPriorityEntry are applied earlier (i.e. with higher priority) than regular LexicalEntry."""
     def __init__(self, s: str, sem_class: Optional[str] = None, lcode: Optional[str] = None):
         super().__init__(s, sem_class=sem_class, lcode=lcode)
 
