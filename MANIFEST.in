@@ -1,4 +1,5 @@
 include README.md
 include utoken/data/tok-resource*.txt
-include utoken/data/detok-resource.txt
+include utoken/data/detok-resource*.txt
+include utoken/data/top-level-domain-codes.txt
 global-exclude *.pyc
