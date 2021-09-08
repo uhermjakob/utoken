@@ -689,8 +689,9 @@
 ::lexical w3af
 ::lexical X.509
 
-::url 24.kz
-::url 31.kz
-::url el.kz
-::url sk.kz
-::url x.org
+# Short URLs can be tricky, as they compete with non-URLs of similar structure such as sq.km ir ago.In
+::lexical 24.kz ::sem-class url
+::lexical 31.kz ::sem-class url
+::lexical el.kz ::sem-class url
+::lexical sk.kz ::sem-class url
+::lexical x.org ::sem-class url

@@ -42,9 +42,9 @@ class AbbreviationEntry(ResourceEntry):
         self.expansions = expansions      # e.g. [General]
 
 
-class UrlEntry(ResourceEntry):
-    def __init__(self, abbrev: str):
-        super().__init__(abbrev)
+class LexicalPriorityEntry(ResourceEntry):
+    def __init__(self, s: str, sem_class: Optional[str] = None, lcode: Optional[str] = None):
+        super().__init__(s, sem_class=sem_class, lcode=lcode)
 
 
 class RepairEntry(ResourceEntry):
@@ -210,6 +210,7 @@ class ResourceDict:
         return lines
 
     re_comma_space = re.compile(r',\s*')
+    re_contains_digit = regex.compile(r'.*\d')
 
     def load_resource(self, filename: Path, lang_code: Optional[str] = None) -> None:
         """Loads abbreviations, contractions etc. for tokenization.
@@ -254,6 +255,7 @@ class ResourceDict:
                                                                               'nonstandard',
                                                                               'plural',
                                                                               'problem',
+                                                                              'priority',
                                                                               'punct-split',
                                                                               'repair',
                                                                               'right-context',
@@ -265,15 +267,13 @@ class ResourceDict:
                                                                               'tag',
                                                                               'target',
                                                                               'taxon',
-                                                                              'token-category',
-                                                                              'url'],
+                                                                              'token-category'],
                                                                  required_slot_dict={'abbrev': [],
                                                                                      'contraction': ['target'],
                                                                                      'lexical': [],
                                                                                      'misspelling': ['target'],
                                                                                      'punct-split': ['side'],
-                                                                                     'repair': ['target'],
-                                                                                     'url': []})
+                                                                                     'repair': ['target']})
                         if not valid:
                             n_warnings += 1
                             continue
@@ -313,9 +313,12 @@ class ResourceDict:
                             resource_entry = ContractionEntry(s, target, char_splits=char_splits)
                             self.register_resource_entry_in_reverse_resource_dict(resource_entry, [target])
                         elif head_slot == 'lexical':
-                            resource_entry = LexicalEntry(s)
-                        elif head_slot == 'url':
-                            resource_entry = UrlEntry(s)
+                            sem_class = slot_value_in_double_colon_del_list(line, 'sem-class')
+                            priority = slot_value_in_double_colon_del_list(line, 'priority')
+                            if priority or (sem_class in ('url',)) or self.re_contains_digit.match(s):
+                                resource_entry = LexicalPriorityEntry(s)
+                            else:
+                                resource_entry = LexicalEntry(s)
                         elif head_slot == 'punct-split':
                             side = slot_value_in_double_colon_del_list(line, 'side')
                             group = slot_value_in_double_colon_del_list(line, 'group', False)
@@ -331,7 +334,7 @@ class ResourceDict:
                             for prefix_length in range(1, len(lc_s)+1):
                                 if head_slot == 'punct-split':
                                     self.prefix_dict_punct[lc_s[:prefix_length]] = True
-                                elif head_slot == 'lexical':
+                                elif head_slot == 'lexical' and not isinstance(resource_entry, LexicalPriorityEntry):
                                     self.prefix_dict_lexical[lc_s[:prefix_length]] = True
                                 else:
                                     self.prefix_dict[lc_s[:prefix_length]] = True

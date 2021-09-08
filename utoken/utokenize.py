@@ -971,6 +971,7 @@ class Tokenizer:
     re_starts_w_apostrophe_plus = regex.compile(r"['‘’`]")
     re_ends_w_letter = regex.compile(r'.*\pL\pM*$')          # including any modifiers
     re_ends_w_apostrophe_plus = regex.compile(r".*['‘’`]$")
+    re_ends_w_digit = regex.compile(r'.*\d$')
     re_ends_w_letter_or_digit = regex.compile(r'.*(\pL\pM*|\d)$')
     re_ends_w_letter_or_digit_in_token = regex.compile(r'.*(\pL\pM*|\d)\S*$')
     re_ends_w_letter_plus_period = regex.compile(r'.*\pL\pM*\.$')
@@ -1012,7 +1013,7 @@ class Tokenizer:
         """Checks for general context requirements (not listed for a particular abbreviation entry)."""
         if abbreviation_entry.sem_class == 'currency-unit':
             return True
-        if self.re_ends_w_letter.match(token_candidate):
+        if self.re_ends_w_letter_or_digit.match(token_candidate):
             # type-vector of any first character of the right context
             rc0_type_vector = self.char_type_vector_dict.get(right_context[0], 0) if right_context != '' else 0
             if ((rc0_type_vector & self.char_is_dash_or_digit)  # quick pre-check
@@ -1044,6 +1045,10 @@ class Tokenizer:
             if last_primary_char_type_vector & self.char_is_alpha \
                     and current_char_type_vector & self.char_is_alpha:
                 continue
+            # same for digits: if token starts with a digit, it can't be preceded by a digit
+            if last_primary_char_type_vector & self.char_is_digit \
+                    and current_char_type_vector & self.char_is_digit:
+                continue
             left_context = s[:start_position]
             max_end_position = start_position
             position = start_position+1
@@ -1071,10 +1076,14 @@ class Tokenizer:
                                 return self.rec_tok([token_candidate], [start_position], s, offset, 'ABBREV',
                                                     line_id, chart, lang_code, ht, this_function, [token_candidate],
                                                     sem_class=resource_entry.sem_class, left_done=True)
-                            if isinstance(resource_entry, util.UrlEntry):
-                                return self.rec_tok([token_candidate], [start_position], s, offset, 'URL-L',
+                            if isinstance(resource_entry, util.LexicalPriorityEntry):
+                                if sem_class == 'url':
+                                    token_type = 'URL-L'
+                                else:
+                                    token_type = 'LEXICAL-P'
+                                return self.rec_tok([token_candidate], [start_position], s, offset, token_type,
                                                     line_id, chart, lang_code, ht, this_function, [token_candidate],
-                                                    left_done=True)
+                                                    sem_class=resource_entry.sem_class, left_done=True)
                             if isinstance(resource_entry, util.ContractionEntry):
                                 tokens, orig_tokens, start_positions = \
                                     self.map_contraction(token_candidate, resource_surf, resource_entry.target,
