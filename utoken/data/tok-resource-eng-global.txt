@@ -531,8 +531,6 @@
 ::lexical major general ::lcode eng ::sem-class military-rank ::plural +s
 ::lexical private first class ::lcode eng ::sem-class military-rank
 
-::lexical M&M's ::lcode eng ::sem-class product ::alt-spelling M&Ms
-
 # Preserve the following French decontraction tokens (if they are full tokens already).
 # But don't split off (as effected by ::right-context-not \S). - Leave that to tok-resource-fra.txt
 ::lexical c' ::lcode eng ::tag DECONTRACTION-L ::etym-lcode fra ::example C'est la vie. ::right-context-not \S
@@ -804,11 +802,15 @@
 ::lexical for all intents and purposes ::lcode eng
 ::lexical full-scale ::lcode eng
 ::lexical full-time ::lcode eng
+::lexical Generation X ::lcode eng
+::lexical Generation Z ::lcode eng
 ::lexical grade point average ::lcode eng ::plural +s
 ::lexical grass-roots of the army ::lcode eng ::alt-spelling grass-root
 ::lexical hand in hand ::lcode eng
 ::lexical hat-trick ::lcode eng
 ::lexical heart attack ::lcode eng
+::lexical hepatitis B ::lcode eng
+::lexical hepatitis C ::lcode eng
 ::lexical high-end ::lcode eng
 ::lexical high school ::lcode eng ::plural +s ::alt-spelling +hyphen
 ::lexical high-tech ::lcode eng
@@ -833,6 +835,7 @@
 ::lexical lump sum ::lcode eng
 ::lexical middle school ::lcode eng ::plural +s
 ::lexical mid-term ::lcode eng
+::lexical M&M's ::lcode eng ::sem-class product ::alt-spelling M&Ms
 ::lexical modern-day ::lcode eng
 ::lexical mom-and-pop ::lcode eng
 ::lexical mother-in-law ::lcode eng ::plural mothers-in-law
@@ -851,6 +854,7 @@
 ::lexical op-ed ::lcode eng
 ::lexical parent-in-law ::lcode eng ::plural parents-in-law
 ::lexical part-time ::lcode eng
+::lexical plan B ::lcode eng
 ::lexical powers that be ::lcode eng
 ::lexical rank and file ::lcode eng ::alt-spelling +hyphen
 ::lexical real estate ::lcode eng ::alt-spelling +hyphen
@@ -878,11 +882,27 @@
 ::lexical tongue-in-cheek ::lcode eng
 ::lexical top-of-the-line ::lcode eng
 ::lexical T-shirt ::lcode eng ::plural +s
+::lexical vitamin A ::lcode eng
+::lexical vitamin B ::lcode eng
+::lexical vitamin B₁ ::lcode eng ::alt-spelling vitamin B1; vitamin B-1
+::lexical vitamin B₂ ::lcode eng ::alt-spelling vitamin B2; vitamin B-2
+::lexical vitamin B₃ ::lcode eng ::alt-spelling vitamin B3; vitamin B-3
+::lexical vitamin B₅ ::lcode eng ::alt-spelling vitamin B5; vitamin B-5
+::lexical vitamin B₆ ::lcode eng ::alt-spelling vitamin B6; vitamin B-6
+::lexical vitamin B₇ ::lcode eng ::alt-spelling vitamin B7; vitamin B-7
+::lexical vitamin B₉ ::lcode eng ::alt-spelling vitamin B9; vitamin B-9
+::lexical vitamin B₁₂ ::lcode eng ::alt-spelling vitamin B12; vitamin B-12
+::lexical vitamin C ::lcode eng
+::lexical vitamin D ::lcode eng
+::lexical vitamin E ::lcode eng
+::lexical vitamin K ::lcode eng
 ::lexical white-collar ::lcode eng
 ::lexical wide receiver ::lcode eng ::plural +s
 ::lexical wild-type ::lcode eng
 ::lexical win-win ::lcode eng
 ::lexical wishy-washy ::lcode eng
+::lexical World War I ::lcode eng ::sem-class war
+::lexical World War II ::lcode eng ::sem-class war
 ::lexical X-ray ::lcode eng ::plural +s
 ::lexical yo-yo ::lcode eng
 
@@ -997,4 +1017,3 @@
 ::misspelling whereever ::target wherever ::lcode eng
 ::misspelling wich ::target which ::lcode eng
 ::misspelling wierd ::target weird ::lcode eng
-

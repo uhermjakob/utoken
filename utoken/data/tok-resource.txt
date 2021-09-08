@@ -599,6 +599,8 @@
 ::lexical O'Shea ::sem-class person-last-name
 ::lexical O'Sullivan ::sem-class person-last-name
 
+::lexical Malcolm X ::sem-class person-name
+
 ::lexical Jamaat-e-Islami ::sem-class political-party ::alt-spelling Jamaat-i-Islami
 ::lexical ZANU-PF ::sem-class political-party
 
@@ -687,6 +689,9 @@
 ::lexical :wink: ::token-category symbol ::comment emoji
 ::lexical ¯\_(ツ)_/¯ ::token-category symbol ::comment shrug emoji
 
+::lexical bisphenol A
+::lexical Model T
+::lexical Saturn V
 ::lexical w3af
 ::lexical X.509
 
