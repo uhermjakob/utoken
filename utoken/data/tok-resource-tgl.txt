@@ -1,5 +1,6 @@
 ::abbrev hal. ::exp halimbawa ::lcode tgl ::comment example
 ::abbrev Bb. ::exp Binibini ::lcode tgl ::comment Miss
+::abbrev Brgy. ::exp Barangay ::lcode tgl ::comment local district
 ::abbrev Gng. ::exp Ginang ::lcode tgl ::comment Mrs.
 ::abbrev G. ::exp Ginoo ::lcode tgl ::comment Mr.
 ::abbrev n.u. ::exp ng umaga ::lcode tgl ::comment in the morning
@@ -10,3 +11,4 @@
 ::abbrev T. ::exp timog ::lcode tgl ::comment south; name initial
 ::abbrev K. ::exp kanluran ::lcode tgl ::comment west; name initial
 ::abbrev S. ::exp silangan ::lcode tgl ::comment east; name initial
+::abbrev P. ::exp peso ::lcode tgl ::sem-class currency-unit ::right-context \s*\d

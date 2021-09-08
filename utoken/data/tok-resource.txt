@@ -274,7 +274,7 @@
 ::abbrev mm² ::exp square millimeter ::sem-class unit-of-measurement
 ::abbrev mm³ ::exp cubic millimeter ::sem-class unit-of-measurement
 ::abbrev mℳ ::exp millimolar ::sem-class unit-of-measurement
-::abbrev ng ::exp nanogram ::sem-class unit-of-measurement ::case-sensitive True
+::abbrev ng ::exp nanogram ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
 ::abbrev nM ::exp nanomolar ::sem-class unit-of-measurement ::case-sensitive True
 ::abbrev nℳ ::exp nanomolar ::sem-class unit-of-measurement
 ::abbrev pℳ ::exp picomolar ::sem-class unit-of-measurement
