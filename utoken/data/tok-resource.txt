@@ -63,6 +63,7 @@
 ::punct-split ¥ ::side both ::token-category prefix ::sem-class currency-unit
 ::punct-split ₹ ::side both ::token-category prefix ::sem-class currency-unit
 ::punct-split ฿ ::side both ::token-category prefix ::sem-class currency-unit
+::punct-split ₱ ::side both ::token-category prefix ::sem-class currency-unit
 ::punct-split © ::side both
 ::punct-split ® ::side both
 ::punct-split ™ ::side both
