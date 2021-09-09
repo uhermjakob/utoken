@@ -165,7 +165,6 @@ if __name__ == "__main__":
             legend = ' -l old new'
             file_stem = filename.stem
             txt_filename = filename.parent.parent / (file_stem + '.txt')
-            log.info(f'A {file_stem} {txt_filename}')
             if txt_filename.is_file():
                 command += f' {txt_filename}'
                 legend += ' txt'
@@ -173,7 +172,7 @@ if __name__ == "__main__":
                 eng_filename_name = re.sub(r'\.[a-z]{3}$', '.eng.txt', file_stem)
                 if eng_filename_name != filename.name:
                     eng_filename = filename.parent.parent / eng_filename_name
-                    if txt_filename.is_file():
+                    if eng_filename.is_file():
                         command += f' {eng_filename}'
                         legend += ' eng'
             command += legend
