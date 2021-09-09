@@ -213,7 +213,7 @@ class ResourceDict:
     re_comma_space = re.compile(r',\s*')
     re_contains_digit = regex.compile(r'.*\d')
 
-    def load_resource(self, filename: Path, lang_code: Optional[str] = None) -> None:
+    def load_resource(self, filename: Path, lang_code: Optional[str] = None, verbose: bool = True) -> None:
         """Loads abbreviations, contractions etc. for tokenization.
         Example input file: data/tok-resource-eng.txt"""
         try:
@@ -384,7 +384,8 @@ class ResourceDict:
                             self.resource_dict[lc_s] = abbreviation_entry_list
                             n_entries += 1
                 expanded_clause = f' (plus {n_expanded_lines} expanded lines)' if n_expanded_lines else ''
-                log.info(f'Loaded {n_entries} entries from {line_number} lines{expanded_clause} in {filename}')
+                if verbose:
+                    log.info(f'Loaded {n_entries} entries from {line_number} lines{expanded_clause} in {filename}')
         except OSError:
             if lang_code:
                 log.warning(f"No resource file available for language '{lang_code}' ({filename})")
@@ -453,7 +454,7 @@ class DetokenizationResource:
         self.markup_attach_re = None   # compiled regular expression
         self.contraction_dict = defaultdict(list)
 
-    def load_resource(self, filename: Path, lang_codes: Optional[List[str]] = None) -> None:
+    def load_resource(self, filename: Path, lang_codes: Optional[List[str]] = None, verbose: bool = True) -> None:
         """Loads detokenization resources such as auto-attach, markup-attach etc.
         Example input file: data/detok-resource.txt
         This file is also loaded and by the tokenizer to produce appropriate mt-style @...@ tokens."""
@@ -601,7 +602,8 @@ class DetokenizationResource:
                                     log.warning(f'Regex compile error in l.{line_number} for {s} ::right-context-not '
                                                 f'{right_context_not_s}')
                             n_entries += 1
-                log.info(f'Loaded {n_entries} entries from {line_number} lines in {filename}')
+                if verbose:
+                    log.info(f'Loaded {n_entries} entries from {line_number} lines in {filename}')
         except OSError:
             log.warning(f'Could not open general resource file {filename}')
 
