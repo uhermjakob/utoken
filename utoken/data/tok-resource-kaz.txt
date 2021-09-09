@@ -13,7 +13,7 @@
 ::abbrev Kb. ::lcode kaz
 ::abbrev млн. ::lcode kaz ::eng million
 ::abbrev млрд. ::lcode kaz ::eng billion
-::abbrev кв.м. ::locde kaz ::sem-class unit-of-measurement ::eng m²
+::abbrev кв.м. ::lcode kaz ::sem-class unit-of-measurement ::eng m²
 
 ::abbrev м/с ::lcode kaz ::sem-class unit-of-measurement ::eng m/s
 ::abbrev км/сағ ::lcode kaz ::sem-class unit-of-measurement ::eng km/h
