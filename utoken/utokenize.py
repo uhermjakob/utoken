@@ -294,15 +294,17 @@ class Tokenizer:
             data_dir = self.default_data_dir()
         # Load tokenization resource entries for language specified by 'lang_code'
         if lang_code:
-            self.tok_dict.load_resource(data_dir / f'tok-resource-{lang_code}.txt', lang_code=lang_code)
+            self.tok_dict.load_resource(data_dir / f'tok-resource-{lang_code}.txt', lang_code=lang_code,
+                                        verbose=self.verbose)
         # Load any other tokenization resource entries, for the time being just (global) English
         for lcode in ['eng-global']:
             if lcode != lang_code:
-                self.tok_dict.load_resource(data_dir / f'tok-resource-{lcode}.txt', lang_code=lcode)
+                self.tok_dict.load_resource(data_dir / f'tok-resource-{lcode}.txt', lang_code=lcode,
+                                            verbose=self.verbose)
         # Load language-independent tokenization resource entries
-        self.tok_dict.load_resource(data_dir / 'tok-resource.txt')
+        self.tok_dict.load_resource(data_dir / 'tok-resource.txt', verbose=self.verbose)
         # Load detokenization resource entries, for proper mt-tokenization, e.g. @...@
-        self.detok_resource.load_resource(data_dir / f'detok-resource.txt')
+        self.detok_resource.load_resource(data_dir / f'detok-resource.txt', verbose=self.verbose)
         self.detok_resource.build_markup_attach_re(self)
         self.re_mt_punct_preserve = regex.compile(r'(.*?)'
                                                   r'(?<!\S)'      # negative lookbehind
