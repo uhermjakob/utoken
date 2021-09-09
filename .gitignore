@@ -19,6 +19,7 @@ test/data/tmp
 test/data/uroman-large-test-set
 test/data/*.wb
 test/data/*[0-9]
+test/data/utoken-out/*.ana
 test/data/utoken-out/*save*
 test/data/utoken-out/*.json
 test/data/utoken-out/*.boost
@@ -27,10 +28,14 @@ test/data/utoken-out/*.mt.*
 test/data/utoken-out/*simple*
 test/data/utoken-out/*[0-9]
 test/data/utoken-out/3S-tweetsdev.orig.*.dcln
+test/data/utoken-out/pmindia*
+test/data/utoken-out/Bible-*-woid.*.dcln
+test/data/utoken-out/Bible-*-woid.*.tok
 test/data/viz
 test/data/wildebeest
 test/data/Bible-ULT-woid.eng.txt
 test/data/Bible-IRV-woid.hin.txt
+test/data/pmindia_v1.*.txt
 to-do
 utoken/data/external
 utoken/data/old
