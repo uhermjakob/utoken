@@ -39,7 +39,11 @@ if __name__ == "__main__":
         elif filename == 'set2':
             filenames2.extend(['Bible-IRV-woid.hin.txt' if args.compare else 'Bible-IRV.hin.txt',
                                'saral-dev.kaz.txt',
+                               'train46735.tgl.txt',
                                'train99005.uig.txt'])
+        elif filename == 'set3':
+            filenames2.extend(['ELRC_wikipedia_health.tgl.txt',
+                               'OPUS_ParaCrawl_v7_1.tgl.txt'])
         else:
             filenames2.append(filename)
     filenames = filenames2
@@ -72,14 +76,14 @@ if __name__ == "__main__":
             utokenize_system_call_args.extend(['-i', input_filename])
             utokenize_system_call_args.extend(['-o', output_filename])
             utokenize_system_call_args.extend(['-a', json_annotation_filename])
-            sys.stderr.write(f"utokenize.py {filename} ...\n")
+            sys.stderr.write(f"\nutokenize.py {filename} ...\n")
             # sys.stderr.write(f"{' '.join(utokenize_system_call_args)} ...\n")
             subprocess.run(utokenize_system_call_args)
 
             # reformat-annotation-json2dcln.py call
             reformat_system_call_args = \
                 f'reformat-annotation-json2dcln.py < {json_annotation_filename} > {dcln_annotation_filename}'
-            sys.stderr.write(f"reformat {json_annotation_filename} ...\n")
+            sys.stderr.write(f"reformat ...\n")
             # sys.stderr.write(f'{reformat_system_call_args} ...\n')
             subprocess.run(reformat_system_call_args, shell=True)
 
@@ -126,13 +130,14 @@ if __name__ == "__main__":
                 subprocess.run(b1_command, shell=True)
                 subprocess.run(b2_command, shell=True)
                 subprocess.run(b3_command, shell=True)
+                sys.stderr.write(f"color ...\n")
                 command = f'color-mt-diffs.pl {sacremoses_filename} {output_filename}{ref_file_s}' \
                           f' -b {sacremoses_filename}.boost {output_filename}.boost' \
                           f' -l sacrem utoken{ref_legend_s}' \
                           f' -o {sacremoses_viz_filename}'
                 # sys.stderr.write(f"{command} ...\n")
-                sys.stderr.write(f"color-mt-diffs.pl sacremoses {input_filename}"
-                                 f" -out {sacremoses_viz_filename} ...\n")
+                # sys.stderr.write(f"color-mt-diffs.pl sacremoses {input_filename}"
+                #                  f" -o {sacremoses_viz_filename} ...\n")
                 subprocess.run(command, shell=True)
                 old_ulf_tokenizer_viz_filename = os.path.join(public_test_data_dir, 'viz',
                                                               f'{core_filename}.old-u-t-utoken-diff.html')
@@ -141,9 +146,9 @@ if __name__ == "__main__":
                           f' -l old-u-t utoken{ref_legend_s}' \
                           f' -o {old_ulf_tokenizer_viz_filename}'
                 # sys.stderr.write(f"{command} ...\n")
-                sys.stderr.write(f"color-mt-diffs.pl old ulf-tokenizer {input_filename}"
-                                 f" -o {old_ulf_tokenizer_viz_filename} ...\n")
+                # sys.stderr.write(f"color-mt-diffs.pl old ulf-tokenizer {input_filename}"
+                #                  f" -o {old_ulf_tokenizer_viz_filename} ...\n")
                 subprocess.run(command, shell=True)
         else:
-            sys.stderr.write(f"Ignoring filename {filename}, because it does not end in '.txt'\n")
+            sys.stderr.write(f"WARNING: Ignoring filename {filename}, because it does not end in '.txt'\n")
             continue
