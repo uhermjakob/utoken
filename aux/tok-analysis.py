@@ -8,7 +8,7 @@ import json
 import logging as log
 import regex
 import sys
-from typing import TextIO
+from typing import Optional, TextIO
 
 
 log.basicConfig(level=log.INFO)
@@ -31,7 +31,8 @@ class TokenizationAnomaly:
 
 
 class TokenizationAnalysis:
-    def __init__(self):
+    def __init__(self, lcode: Optional[str] = None):
+        self.lcode = lcode
         self.token_count = defaultdict(int)
         self.case_anomalies = {}
         self.letter_punct_anomalies = {}
@@ -77,7 +78,8 @@ class TokenizationAnalysis:
                                 and not regex.match(r'Ma?c\p{Lu}\p{Ll}+$', surf):
                             TokenizationAnomaly.register_anomaly(surf, snt_id, self.case_anomalies)
                         if self.re_contains_letter.match(surf) and self.re_contains_punct.match(surf) \
-                                and not regex.match(r"(?:\p{Lu}\.|'n'|@?&quot;@?)$", surf):
+                                and not regex.match(r"(?:\p{Lu}\.|'n'|@?&quot;@?)$", surf)\
+                                and not (self.lcode in ('som', 'tgl')  and regex.match(r"(?:\pL|['’])+$", surf)):
                             TokenizationAnomaly.register_anomaly(surf, snt_id, self.letter_punct_anomalies)
                         if len(surf) <= 4 and self.re_ends_w_letter.match(surf) and right_context.startswith('.'):
                             right_context_token = regex.sub(r'\s.*$', '', right_context)
@@ -91,7 +93,8 @@ class TokenizationAnalysis:
                                 token_pattern = regex.sub(r'[0-9]', 'd', surf)
                                 TokenizationAnomaly.register_anomaly(left_context_token + ' ' + token_pattern,
                                                                      snt_id, self.pre_number_anomalies)
-                            if not regex.match(r"(?:(?:%|\+|st|nd|rd|th|[kKM])?[\"”]?[_.,;!?:\)\]]?[\"”]? |[-:/]\d|'s|[)\]]|<\/)",
+                            if not regex.match(r"(?:(?:%|\+|st|nd|rd|th|[kKM])?[\"”]?[_.,;!?:\)\]]?[\"”]? |"
+                                               r"[-:/]\d|'s|[)\]]|<\/)",
                                                right_context):
                                 right_context_token = regex.sub(r'\s.*$', '', right_context)
                                 token_pattern = regex.sub(r'[0-9]', 'd', surf)
@@ -145,6 +148,8 @@ class TokenizationAnalysis:
                         token_count_clause = f' #{token_count}'
                 instance_s = self.reg_plural('instance', count)
                 locations = anomaly.locations
+                if len(locations) > 12:
+                    locations[10:] = ['ETC']
                 location_s = ' '.join(locations)
                 n_locations = len(locations)
                 line_s = self.reg_plural('line', n_locations)
@@ -152,7 +157,8 @@ class TokenizationAnalysis:
 
 
 def main():
-    ta = TokenizationAnalysis()
+    lcode = sys.argv[1] if len(sys.argv) >= 2 else None
+    ta = TokenizationAnalysis(lcode=lcode)
     ta.analyze_tokenization(sys.stdin)
     ta.print_tokenization_analysis()
 
