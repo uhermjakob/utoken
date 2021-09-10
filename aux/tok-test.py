@@ -18,6 +18,7 @@ if __name__ == "__main__":
     root_dir = os.path.dirname(src_dir)
     public_test_data_dir = os.path.join(root_dir, 'test', 'data')
     private_test_data_dir = os.path.join(public_test_data_dir, 'private')
+    wiki_test_data_dir = os.path.join(public_test_data_dir, 'uroman-large-test-set')
     parser = argparse.ArgumentParser(description='Runs tokenization test(s)')
     parser.add_argument('-i', '--input', type=str, help='(comma-separated input filenames)')
     parser.add_argument('-c', '--compare', action='count', default=0, help='(compare results with other tokenizers)')
@@ -40,7 +41,11 @@ if __name__ == "__main__":
             filenames2.extend(['Bible-IRV-woid.hin.txt' if args.compare else 'Bible-IRV.hin.txt',
                                'saral-dev.kaz.txt',
                                'train46735.tgl.txt',
-                               'train99005.uig.txt'])
+                               'train99005.uig.txt',
+                               'deu.txt',
+                               'fra.txt',
+                               'spa.txt',
+                               'swe.txt'])
         elif filename == 'set3':
             filenames2.extend(['ELRC_wikipedia_health.tgl.txt',
                                'OPUS_ParaCrawl_v7_1.tgl.txt'])
@@ -54,13 +59,15 @@ if __name__ == "__main__":
                 test_dir = public_test_data_dir
             elif os.path.isfile(os.path.join(private_test_data_dir, filename)):
                 test_dir = private_test_data_dir
+            elif os.path.isfile(os.path.join(wiki_test_data_dir, filename)):
+                test_dir = wiki_test_data_dir
             else:
                 sys.stderr.write(f"Can't find file {filename}\n")
                 continue
 
             # utokenizer.py call
             utokenize_system_call_args = ['utokenize.py']
-            if m := re.match(r'.*\.([a-z]{3})$', core_filename):
+            if m := re.match(r'(?:.*\.)?([a-z]{3})$', core_filename):
                 lang_code = m.group(1)
             else:
                 lang_code = None

@@ -50,7 +50,7 @@ if __name__ == "__main__":
     root_test_data_dir = Path(__file__).parent.parent / "test" / "data"
     public_test_data_dir = root_test_data_dir
     private_test_data_dir = public_test_data_dir / 'private'
-    wiki_test_data_dir = private_test_data_dir / 'wiki'
+    wiki_test_data_dir = public_test_data_dir / 'uroman-large-test-set'
     # log.info(f'root_test_data_dir {root_test_data_dir}')
     cwd = Path.cwd()
     tok_filenames = []
