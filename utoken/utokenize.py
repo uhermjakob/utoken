@@ -1372,8 +1372,9 @@ class Tokenizer:
             index += 1
         return util.join_tokens(tokens)
 
-    def tokenize_string(self, s: str, ht: dict, lang_code: Optional[str], line_id: Optional[str],
-                        annotation_file: Optional[TextIO] = None, annotation_format: Optional[str] = None) -> str:
+    def tokenize_string(self, s: str, line_id: Optional[str] = None, lang_code: Optional[str] = None,
+                        ht: Optional[dict] = None, annotation_file: Optional[TextIO] = None,
+                        annotation_format: Optional[str] = None) -> str:
         self.current_orig_s = s
         self.current_s = s
         self.lv = 0  # line_char_type_vector
@@ -1416,12 +1417,12 @@ class Tokenizer:
                 if m := self.re_id_snt.match(line):
                     line_id, line_id_sep, core_line = m.group(1, 2, 3)
                     output_file.write(line_id + line_id_sep
-                                      + self.tokenize_string(core_line, ht, lang_code, line_id,
+                                      + self.tokenize_string(core_line, line_id, lang_code, ht,
                                                              annotation_file, annotation_format)
                                       + "\n")
             else:
                 line_id = str(line_number)
-                output_file.write(self.tokenize_string(line.rstrip("\n"), ht, lang_code, line_id,
+                output_file.write(self.tokenize_string(line.rstrip("\n"), line_id, lang_code, ht,
                                                        annotation_file, annotation_format)
                                   + "\n")
         if annotation_file and annotation_format == 'json':
