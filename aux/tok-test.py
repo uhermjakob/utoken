@@ -43,9 +43,12 @@ if __name__ == "__main__":
                                'train46735.tgl.txt',
                                'train99005.uig.txt',
                                'deu.txt',
+                               'eng.txt',
                                'fra.txt',
+                               'som.txt',
                                'spa.txt',
-                               'swe.txt'])
+                               'swe.txt',
+                               'tgl.txt'])
         elif filename == 'set3':
             filenames2.extend(['ELRC_wikipedia_health.tgl.txt',
                                'OPUS_ParaCrawl_v7_1.tgl.txt'])
@@ -119,7 +122,7 @@ if __name__ == "__main__":
 
                 ref_file_s = None
                 ref_legend_s = None
-                if lang_code and lang_code != 'eng':
+                if lang_code and lang_code != 'eng' and re.match(r'.*\.[a-z]{3}\.txt$', input_filename):
                     english_filename = re.sub(r'\.[a-z]{3}\.txt$', '.eng.txt', input_filename)
                     # sys.stderr.write(f"**** {input_filename} to {english_filename}\n")
                     if os.path.isfile(english_filename):
