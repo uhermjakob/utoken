@@ -97,6 +97,7 @@ optional arguments:
 * Currently excluded: no-space scripts like Chinese
 * Large set of resource entries (data file) currently for English only; limited resource entries for 40+ other languages
 * Languages with substantial testing so far: English, Farsi, Hindi, Kazakh, Tagalog and Uyghur
+  * Limited testing (a few 100 wiki snt. each) for: French, German, Spanish, Swedish
 
 ### Requirements
 * Python 3.8 or higher
