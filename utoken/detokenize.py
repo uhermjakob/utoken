@@ -120,6 +120,15 @@ class Detokenizer:
             prev_token = tokens[i-1] if i >= 1 else ''
             token = tokens[i]
             next_token = tokens[i+1] if i+1 < n_tokens else ''
+            next_token2 = tokens[i+2] if i+2 < n_tokens else ''
+            # Contract the next 3 tokens if appropriate, e.g. "jusque" + "à" + "le" -> "jusqu'au".
+            if next_token2:
+                three_tokens = ' '.join((token, next_token, next_token2))
+                if contraction := self.token_contraction(three_tokens, lang_code):
+                    # log.info(f'Contraction: {three_tokens} -> {contraction}')
+                    tokens[i:i+3] = [contraction]
+                    next_i = i
+                    continue
             # Contract the next 2 tokens if appropriate, e.g. "can" + "n't" -> "can't".
             if next_token:
                 two_tokens = ' '.join((token, next_token))
