@@ -17,10 +17,14 @@
 ::markup-attach ‚ ::paired-delimiter True ::group True ::comment single low-9 quotation mark
 ::markup-attach “ ::paired-delimiter True ::comment left double quotation mark
 ::markup-attach ” ::paired-delimiter True ::comment right double quotation mark
+::markup-attach ″ ::paired-delimiter True ::comment double prime
 ::markup-attach _ ::paired-delimiter True
 ::markup-attach * ::paired-delimiter True
 ::markup-attach ~ ::paired-delimiter True
 ::markup-attach &quot; ::paired-delimiter True ::comment unnormalized quotation mark
+
+::markup-attach -t- ::lcode fra ::example y a-t-il ::comment so-called "euphonic t" used in French subject-verb inversions
+::markup-attach i- ::lcode tgl ::example i-download ::comment Tagalog prefix often preceding foreign loadwords
 
 ::auto-attach / ::side both
 # ::auto-attach · ::side both ::comment middle dot
@@ -59,7 +63,7 @@
 ::auto-attach ， ::side left ::comment fullwidth character
 ::auto-attach ； ::side left ::comment fullwidth character
 ::auto-attach ： ::side left ::comment fullwidth character
-::auto-attach ։  ::side left ::comment Armenian full stop
+::auto-attach ։ ::side left ::comment Armenian full stop
 ::auto-attach ። ::side left ::comment Ethiopic full stop
 ::auto-attach ፣ ::side left ::comment Ethiopic comma
 ::auto-attach ፤ ::side left ::comment Ethiopic semicolon
@@ -120,9 +124,8 @@
 ::auto-attach st ::side left ::left-context 1 ::lcode eng
 ::auto-attach nd ::side left ::left-context 2 ::lcode eng
 ::auto-attach rd ::side left ::left-context 3 ::lcode eng
-::auto-attach s ::side left ::left-context 0  ::example 1950s
+::auto-attach s ::side left ::left-context 0 ::example 1950s
 
-::markup-attach -t- ::lcode fra ::example y a-t-il ::comment so-called "euphonic t" used in French subject-verb inversions
 ::auto-attach e ::side left ::left-context \d ::lcode fra ::comment ordinal particle ("th")
 ::auto-attach er ::side left ::left-context \d ::lcode fra ::comment ordinal particle ("th")
 
@@ -145,6 +148,9 @@
 ::auto-attach т ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
 ::auto-attach мг ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
 ::auto-attach гг ::side left ::left-context \d ::lcode rus ::comment ordinal particle ("th")
+
+::auto-attach aad ::side left ::left-context \d ::lcode som ::comment ordinal particle ("th")
+::auto-attach kii ::side left ::left-context \d ::lcode som ::example 1950kii
 
 ::auto-attach :a ::side left ::left-context \d ::lcode swe ::comment ordinal particle ("th") ::syntax-checked True
 ::auto-attach :e ::side left ::left-context \d ::lcode swe ::comment ordinal particle ("th") ::syntax-checked True
