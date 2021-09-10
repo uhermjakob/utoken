@@ -1,5 +1,7 @@
 ::punct-split : ::side both ::left-context \pL\pM*\pL\pM* ::right-context [-\/]*\pL\pM*\pL
 
+::lexical i- ::lcode tgl ::tag DECONTRACTION-L ::comment prefix e.g. in i-download
+
 ::abbrev hal. ::exp halimbawa ::lcode tgl ::comment example
 ::abbrev Bb. ::exp Binibini ::lcode tgl ::comment Miss
 ::abbrev Bgy. ::exp Barangay ::lcode tgl ::comment local district
@@ -16,6 +18,8 @@
 ::abbrev Dir. ::lcode tgl ::case-sensitive True ::sem-class pre-name-title
 ::abbrev Dra. ::lcode tgl ::case-sensitive True ::sem-class pre-name-title
 ::abbrev Sec. ::lcode tgl ::case-sensitive True ::sem-class pre-name-title
+::abbrev Apok. ::lcode tgl ::case-sensitive True ::eng Apocalypse
+::abbrev blg. ::lcode tgl ::eng number
 
 ::abbrev A. ::right-context \s*\S
 ::abbrev B. ::right-context \s*\S
