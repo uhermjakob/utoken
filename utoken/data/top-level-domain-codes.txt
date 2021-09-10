@@ -5,7 +5,8 @@
 ::code info ::comment information
 ::code int ::comment international
 ::code mil ::comment military (USA)
-::code museum
+::code mobi ::comment mobile
+::code museum ::comment museum
 ::code net ::comment network, internet
 ::code org ::comment organization (mostly non-profit) ::reliability high
 
