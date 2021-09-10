@@ -1,3 +1,30 @@
+::abbrev A. ::right-context \s*\S
+::abbrev B. ::right-context \s*\S
+::abbrev C. ::right-context \s*\S
+::abbrev D. ::right-context \s*\S ::exp Don ::lcode spa
+::abbrev E. ::right-context \s*\S
+::abbrev F. ::right-context \s*\S
+::abbrev G. ::right-context \s*\S
+::abbrev H. ::right-context \s*\S
+::abbrev I. ::right-context \s*\S
+::abbrev J. ::right-context \s*\S
+::abbrev K. ::right-context \s*\S
+::abbrev L. ::right-context \s*\S
+::abbrev M. ::right-context \s*\S
+::abbrev N. ::right-context \s*\S
+::abbrev O. ::right-context \s*\S
+::abbrev P. ::right-context \s*\S
+::abbrev Q. ::right-context \s*\S
+::abbrev R. ::right-context \s*\S
+::abbrev S. ::right-context \s*\S
+::abbrev T. ::right-context \s*\S
+::abbrev U. ::right-context \s*\S
+::abbrev V. ::right-context \s*\S
+::abbrev W. ::right-context \s*\S
+::abbrev X. ::right-context \s*\S
+::abbrev Y. ::right-context \s*\S
+::abbrev Z. ::right-context \s*\S
+
 ::abbrev abr. ::exp abril ::lcode spa
 ::abbrev a.C. ::exp antes de Cristo ::lcode spa
 ::abbrev a/c. ::lcode spa
@@ -28,7 +55,6 @@
 ::abbrev Col. ::exp Colonel ::lcode spa
 ::abbrev Cptn. ::exp Capitán ::lcode spa
 ::abbrev cta. ::lcode spa
-::abbrev D. ::exp Don ::lcode spa
 ::abbrev Da. ::exp Doña ::lcode spa
 ::abbrev d.C. ::exp después de Cristo ::lcode spa
 ::abbrev dcha. ::lcode spa
@@ -74,13 +100,14 @@
 ::abbrev km. ::lcode spa
 ::abbrev Let. ::lcode spa
 ::abbrev Lic. ::exp Licenciado ::lcode spa
-::abbrev mar. ::exp marzo ::lcode spa
+::abbrev mar. ::exp marzo ::lcode spa ::right-context \s*(?:de\s*)?\d ::comment "mar" ("sea") can be a regular word as well
 ::abbrev mg. ::lcode spa
 ::abbrev mm. ::lcode spa
 ::abbrev Mr. ::exp Mister ::lcode spa
 ::abbrev Msñr. ::exp Monseñor ::lcode spa
 ::abbrev Mtra. ::exp Ministra ::lcode spa
 ::abbrev Mtro. ::exp Ministro ::lcode spa
+::abbrev n. ::exp número ::lcode spa
 ::abbrev N.B. ::lcode spa
 ::abbrev NN.UU. Naciones Unidas ::exp ::lcode spa ::eng U.N.
 ::abbrev no. ::exp número ::lcode spa

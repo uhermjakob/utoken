@@ -97,6 +97,7 @@
 ::punct-split ‘ ::side start ::group True
 ::punct-split ’ ::side start ::group True
 ::punct-split ` ::side start ::group True
+::punct-split ‚ ::side start ::group True
 ::punct-split ¡ ::side start ::group True
 ::punct-split ¿ ::side start ::group True
 ::punct-split ~ ::side start ::group True
@@ -115,6 +116,8 @@
 ::punct-split > ::side start ::right-context (?:\d|\pL)
 ::punct-split \ ::side start ::right-context (?:\pL|/d)
 ::punct-split � ::side start
+::punct-split † ::side start
+::punct-split ″ ::side start
 
 # split off punctuation from end of token
 ::punct-split ' ::side end ::group True
@@ -150,6 +153,8 @@
 ::punct-split > ::side end ::left-context (?:\d|\pL\pM*)
 ::punct-split \ ::side end ::left-context (?:\d|\pL\pM*)
 ::punct-split � ::side end
+::punct-split † ::side end
+::punct-split ″ ::side end
 
 ::abbrev AT&T ::sem-class company
 ::abbrev ES&S ::sem-class company
@@ -484,7 +489,7 @@
 ::lexical McDonalds ::sem-class company
 ::lexical MetroPCS ::sem-class company
 ::lexical PanAm ::sem-class company
-::lexical PricewaterhouseCoopers ::exp Washington Post ::sem-class company
+::lexical PricewaterhouseCoopers ::sem-class company
 ::lexical StubHub ::sem-class company
 ::lexical T-Mobile ::sem-class company
 ::lexical Walmart ::sem-class company ::alt-spelling Wal-Mart; WalMart
@@ -698,6 +703,8 @@
 # Short URLs can be tricky, as they compete with non-URLs of similar structure such as sq.km ir ago.In
 ::lexical 24.kz ::sem-class url
 ::lexical 31.kz ::sem-class url
+::lexical GeoNames.Org ::sem-class url  # tricky: CamelCase
 ::lexical el.kz ::sem-class url
 ::lexical sk.kz ::sem-class url
 ::lexical x.org ::sem-class url
+

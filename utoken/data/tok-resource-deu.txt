@@ -1,3 +1,19 @@
+::punct-split : ::side both ::left-context \pL\pM*\pL\pM* ::right-context [-\/]*\pL\pM*\pL
+
+# Tricky: der Laden in dem er arbeitete (nicht "im er")
+# ::contraction am ::target an dem ::lcode deu
+# ::contraction ans ::target an das ::lcode deu ::nonstandard True
+# ::contraction aufs ::target auf das ::lcode deu ::nonstandard True
+# ::contraction beim ::target bei dem ::lcode deu
+# ::contraction durchs ::target durch das ::lcode deu ::nonstandard True
+# ::contraction im ::target in dem ::lcode deu
+# ::contraction ins ::target in das ::lcode deu
+# ::contraction übers ::target über das ::lcode deu ::nonstandard True
+# ::contraction ums ::target um das ::lcode deu ::nonstandard True
+# ::contraction vom ::target von dem ::lcode deu
+# ::contraction zum ::target zu dem ::lcode deu
+# ::contraction zur ::target zu der ::lcode deu
+
 ::abbrev A. ::lcode deu
 ::abbrev a. ::lcode deu
 ::abbrev ä ::exp ähnlich ::lcode deu ::eng similar
@@ -42,7 +58,7 @@
 ::abbrev AOK ::exp Allgemeine Ortskrankenkasse ::lcode deu ::eng local health insurance company
 ::abbrev a.o.Prof. ::exp außerordentlicher Professor ::lcode deu ::eng associate professor
 ::abbrev Apr. ::exp April ::lcode deu ::eng April
-::abbrev Art. ::exp Artikel ::lcode deu ::right-types-context /^\s*[-.\/Aa]*[1]/ ::eng article
+::abbrev Art. ::exp Artikel ::lcode deu ::right-context \s*(?:[-.\/]|\pL\pM*)*\d ::eng article
 ::abbrev AT ::exp Altes Testament ::lcode deu ::eng Old Testament
 ::abbrev Aufl. ::exp Auflage ::lcode deu ::eng edition
 ::abbrev Aug. ::exp August ::lcode deu ::eng August
@@ -319,6 +335,7 @@
 ::abbrev L. ::lcode deu
 ::abbrev l ::exp Liter, links ::lcode deu ::eng liter; left
 ::abbrev l. ::lcode deu
+::abbrev lat. ::exp Latein ::lcode deu ::eng Latin
 ::abbrev Ldkr. ::exp Landkreis ::lcode deu ::eng rural district
 ::abbrev led. ::exp ledig ::lcode deu ::eng unmarried
 ::abbrev Lekt. ::exp Lektion ::lcode deu ::eng lesson
@@ -535,6 +552,7 @@
 ::abbrev Teilh. ::exp Teilhaber ::lcode deu ::eng partner
 ::abbrev Tel. ::exp Telefon ::lcode deu ::eng telephone
 ::abbrev TH ::exp Technische Hochschule ::lcode deu ::eng technical college
+::abbrev theol. ::exp theologisch ::lcode deu ::eng theological
 ::abbrev Tsd. ::exp tausend ::lcode deu ::eng thousand
 ::abbrev TSV ::exp Turn- und Sportverein ::lcode deu ::eng gymnastics and sports club
 ::abbrev TU ::exp Technische Universität ::lcode deu ::eng Technical University

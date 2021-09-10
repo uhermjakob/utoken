@@ -1,13 +1,17 @@
-::contraction au ::target à le ::lcode fra
-::contraction aux ::target à les ::lcode fra
-::contraction des ::target des; de les ::lcode fra
-::contraction du ::target de le ::lcode fra
+::contraction au ::target à le ::lcode fra ::char-split 1,1
+::contraction aux ::target à les ::lcode fra  ::char-split 1,2
+::contraction des ::target de les ::lcode fra ::char-split 1,2
+::contraction du ::target de le ::lcode fra  ::char-split 1,1
+# ::contraction jusqu'à ::target jusque à ::lcode fra
+# ::contraction jusqu'au ::target jusque à le ::lcode fra ::char-split 6,1,1
+# ::contraction jusqu'aux ::target jusque à les ::lcode fra ::char-split 6,1,2
 ::contraction s'il ::target si il ::lcode fra
 ::contraction s'ils ::target si ils ::lcode fra
 
 ::lexical c' ::lcode fra ::tag DECONTRACTION-L ::comment ce
 ::lexical d' ::lcode fra ::tag DECONTRACTION-L ::comment de
 ::lexical j' ::lcode fra ::tag DECONTRACTION-L ::comment je
+::lexical jusqu' ::lcode fra ::tag DECONTRACTION-L ::comment jusque ::example jusqu'en; jusqu'ici
 ::lexical l' ::lcode fra ::tag DECONTRACTION-L ::comment le, la
 ::lexical m' ::lcode fra ::tag DECONTRACTION-L ::comment me
 ::lexical n' ::lcode fra ::tag DECONTRACTION-L ::comment ne
@@ -15,6 +19,9 @@
 ::lexical s' ::lcode fra ::tag DECONTRACTION-L ::comment se
 ::lexical t' ::lcode fra ::tag DECONTRACTION-L ::comment te
 
+::lexical au-dessous ::lcode fra ::eng below ::priority high
+::lexical au-dessus ::lcode fra ::eng above ::priority high
+::lexical c'est-à-dire ::lcode fra ::eng that is to say ::priority high
 ::lexical -t- ::lcode fra ::tag DECONTRACTION-B  ::example y a-t-il
 
 ::abbrev A. ::lcode fra ::case-sensitive True
@@ -26,6 +33,7 @@
 ::abbrev art. ::lcode fra ::right-context \s*\d
 ::abbrev auj. ::lcode fra
 ::abbrev av. ::lcode fra
+::abbrev avr. ::lcode fra
 ::abbrev B. ::lcode fra
 ::abbrev b. ::lcode fra ::eng a.
 ::abbrev boul. ::lcode fra
@@ -45,6 +53,7 @@
 ::abbrev C.S. ::lcode fra
 ::abbrev D. ::lcode fra
 ::abbrev d. ::lcode fra
+::abbrev déc. ::lcode fra
 ::abbrev dir. ::lcode fra
 ::abbrev E. ::lcode fra
 ::abbrev e. ::lcode fra
@@ -58,6 +67,8 @@
 ::abbrev f. ::lcode fra
 ::abbrev fasc. ::lcode fra
 ::abbrev fém. ::lcode fra
+::abbrev fév. ::lcode fra
+::abbrev févr. ::lcode fra
 ::abbrev fig. ::lcode fra
 ::abbrev fr. ::lcode fra
 ::abbrev G. ::lcode fra
@@ -73,6 +84,8 @@
 ::abbrev inf. ::lcode fra
 ::abbrev J. ::lcode fra
 ::abbrev j. ::lcode fra
+::abbrev janv. ::lcode fra
+::abbrev juill. ::lcode fra
 ::abbrev K. ::lcode fra
 ::abbrev k. ::lcode fra
 ::abbrev L. ::lcode fra
@@ -100,11 +113,13 @@
 ::abbrev N.D.L.R. ::lcode fra
 ::abbrev N.D.T. ::lcode fra
 ::abbrev NN.SS. ::lcode fra
+::abbrev nov. ::lcode fra
 ::abbrev N.P.A.I. ::lcode fra
 ::abbrev n/réf. ::lcode fra
 ::abbrev N.S. ::lcode fra
 ::abbrev O. ::lcode fra
 ::abbrev o. ::lcode fra
+::abbrev oct. ::lcode fra
 ::abbrev P. ::lcode fra
 ::abbrev p. ::lcode fra
 ::abbrev p.c.c. ::lcode fra
@@ -130,6 +145,8 @@
 ::abbrev S.E. ::lcode fra
 ::abbrev sec. ::lcode fra
 ::abbrev sect. ::lcode fra
+::abbrev sep. ::lcode fra
+::abbrev sept. ::lcode fra
 ::abbrev sing. ::lcode fra
 ::abbrev S.M. ::lcode fra
 ::abbrev S.M.I.R. ::lcode fra

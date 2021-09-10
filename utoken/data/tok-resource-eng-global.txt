@@ -385,6 +385,7 @@
 ::abbrev AC ::exp air conditioning ::lcode eng
 ::abbrev AC ::exp alternating current ::lcode eng
 ::abbrev a/c ::exp air conditioning; account current ::lcode eng
+::abbrev Acad. ::exp Academy ::lcode eng ::case-sensitive True
 ::abbrev A.D. ::exp anno Domini ::lcode eng
 ::abbrev ad ::exp advertisement ::lcode eng
 ::abbrev adj. ::exp adjective ::lcode eng
@@ -410,6 +411,7 @@
 ::abbrev bd ::exp bluray disc ::lcode eng
 ::abbrev bldg. ::exp building ::lcode eng
 ::abbrev Blvd. ::exp Boulevard ::lcode eng
+::abbrev Bot. ::exp Botanical ::case-sensitive True ::lcode eng
 ::abbrev bro ::exp brother ::lcode eng
 ::abbrev bros. ::exp brothers ::lcode eng
 ::abbrev B.S. ::exp bullshit ::lcode eng
@@ -432,6 +434,7 @@
 ::abbrev DS ::exp dear son ::lcode eng
 ::abbrev DW ::exp dear wife ::lcode eng
 ::abbrev ed. ::exp editor ::lcode eng
+::abbrev eds. ::exp editors ::lcode eng
 ::abbrev e'er ::exp ever ::lcode eng
 ::abbrev eff'd ::exp fucked ::lcode eng
 ::abbrev e.g. ::exp exempli gratia; for example ::lcode eng
@@ -439,6 +442,7 @@
 ::abbrev EMT ::exp epithelial-mesenchymal transition ::lcode eng
 ::abbrev etc. ::exp et cetera; and other things ::lcode eng ::misspelling etc .; e.t.c.; e.t.c; et c.
 ::abbrev exec ::exp executive ::lcode eng ::inflections execs
+::abbrev fl. ::lcode eng
 ::abbrev Flr. ::exp floor ::lcode eng
 ::abbrev Ft. ::exp Fort ::lcode eng  ::case-sensitive True
 ::abbrev gov't ::exp government ::lcode eng
@@ -485,6 +489,7 @@
 ::abbrev P/E ::exp price-to-earnings [ratio] ::lcode eng
 ::abbrev Ph.D. ::exp doctor of philosophy ::lcode eng ::alt-spelling PhD; Ph. D.
 ::abbrev pic ::exp picture ::lcode eng
+::abbrev Pl. ::lcode eng
 ::abbrev p.m. ::exp post meridiem ::lcode eng
 ::abbrev POW ::exp prisoner of war ::lcode eng
 ::abbrev p.s. ::exp post scriptum ::lcode eng
@@ -496,6 +501,7 @@
 ::abbrev Rt. ::exp Right ::lcode eng
 ::abbrev RPG ::exp rocket-propelled grenade ::lcode eng
 ::abbrev r/w ::exp read/write ::lcode eng
+::abbrev Sci. ::exp science ::lcode eng
 ::abbrev sci-fi ::exp science fiction ::lcode eng
 ::abbrev S.E. ::exp standard error ::lcode eng
 ::abbrev s/he ::exp she or he ::lcode eng
