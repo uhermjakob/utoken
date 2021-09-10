@@ -208,3 +208,19 @@ Exmaples of resource entries:
 ```
 </details>
   
+<details>
+<summary>Sample call of utoken from another Python program</summary>
+
+### Sample call of utoken from another Python program
+Script:
+```
+import utokenize
+
+tok = utokenize.Tokenizer(lang_code='eng')  # Initialize tokenizer, load resources
+print(tok.tokenize_string("Dont worry!"))
+```
+Output:
+```
+Do n't worry !
+```
+</details>
