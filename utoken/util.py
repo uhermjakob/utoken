@@ -620,7 +620,8 @@ class DetokenizationResource:
         regex_string_core = attach_tag + '?(?:' + '|'.join(self.markup_attach_re_elements) + ')' + attach_tag + '?'
         self.markup_attach_re_string = '(?:' + regex_string_core + '|' + attach_tag + attach_tag + ')'
         # log.info(f"markup_attach_re: {self.markup_attach_re_string}")
-        self.markup_attach_re = re.compile('^' + self.markup_attach_re_string + '$')
+        self.markup_attach_re = re.compile('^' + self.markup_attach_re_string + '$', flags=re.IGNORECASE)
+        # log.info(f"markup_attach_re: {self.markup_attach_re}")
 
 
 def slot_value_in_double_colon_del_list(line: str, slot: str, default: Optional = None) -> str:
