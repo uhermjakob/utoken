@@ -484,6 +484,7 @@ class DetokenizationResource:
                                                                               'comment',
                                                                               'contraction',
                                                                               'country',
+                                                                              'eng',
                                                                               'etym-lcode',
                                                                               'example',
                                                                               'except',
@@ -498,11 +499,13 @@ class DetokenizationResource:
                                                                               'nonstandard',
                                                                               'paired-delimiter',
                                                                               'plural',
+                                                                              'priority',
                                                                               'right-context',
                                                                               'right-context-not',
                                                                               'sem-class',
                                                                               'side',
                                                                               'substandard',
+                                                                              'syntax-checked',
                                                                               'tag',
                                                                               'target',
                                                                               'taxon',
@@ -535,11 +538,11 @@ class DetokenizationResource:
                             detokenization_entry = DetokenizationEntry(s, group, lang_codes)
                             if side == 'left' or side == 'both':
                                 if self.auto_attach_left.get(lc_s, None):
-                                    log.info(f'Duplicate ::auto-attach {lc_s} ::side left')
+                                    log.warning(f'Duplicate ::auto-attach {lc_s} ::side left')
                                 self.auto_attach_left[lc_s].append(detokenization_entry)
                             if side == 'right' or side == 'both':
                                 if self.auto_attach_right.get(lc_s, None):
-                                    log.info(f'Duplicate ::auto-attach {lc_s} ::side right')
+                                    log.warning(f'Duplicate ::auto-attach {lc_s} ::side right')
                                 self.auto_attach_right[lc_s].append(detokenization_entry)
                         elif head_slot == 'markup-attach':
                             paired_delimiter = bool(slot_value_in_double_colon_del_list(line, 'paired-delimiter',
@@ -659,18 +662,22 @@ def double_colon_del_list_validation(s: str, line_id: str, filename: str,
                 valid = False
                 log.warning(f'missing required slot ::{slot} in line {line_id} in {filename}')
     # Check for ::slot syntax problems
-    m = re.match(r'.*?(\S+::[a-z]\S*)', s)
-    if m:
+    if m := re.match(r'.*?(\S+::[a-z]\S*)', s):
         valid = False
         value = m.group(1)
         if re.match(r'.*:::', value):
             log.warning(f"suspected spurious colon in '{value}' in line {line_id} in {filename}")
         else:
             log.warning(f"# Warning: suspected missing space in '{value}' in line {line_id} in {filename}")
-    m = re.match(r'(?:.*\s)?(:[a-z]\S*)', s)
-    if m:  # Element starts with single colon (:). Might be slot with a missing colon.
-        if not (re.match(r':[a-z][-_a-z]*[a-z]:$', m.group(1), flags=re.IGNORECASE)  # Exception :emoji-shortcut:
-                and re.match(r'.*\b(?:symbol|emoji)\b', s, flags=re.IGNORECASE)):
+    # Element starts with single colon (:). Might be slot with a missing colon.
+    if m := re.match(r'(?:.*\s)?(:[a-z]\S*)', s):
+        # Exception :emoji-shortcut:
+        if re.match(r':[a-z][-_a-z]*[a-z]:$', m.group(1), flags=re.IGNORECASE) \
+                and re.match(r'.*\b(?:symbol|emoji)\b', s, flags=re.IGNORECASE):
+            pass
+        elif re.match(r'.*::syntax-checked True\b', s):
+            pass
+        else:
             valid = False
             log.warning(f"suspected missing colon in '{m.group(1)}' in line {line_id} in {filename}")
     return valid
