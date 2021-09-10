@@ -172,7 +172,8 @@ class Chart:
 
 
 class Tokenizer:
-    def __init__(self, lang_code: Optional[str] = None, data_dir: Optional[Path] = None):
+    def __init__(self, lang_code: Optional[str] = None, data_dir: Optional[Path] = None,
+                 verbose: Optional[bool] = False):
         # Ordered list of tokenization steps
         self.tok_step_functions = [self.normalize_characters,
                                    self.tokenize_xmls,
@@ -274,12 +275,14 @@ class Tokenizer:
         self.char_is_miscellaneous_symbol = bit_vector
         bit_vector = bit_vector << 1
         self.char_is_attach_tag = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_lower_upper_unstable = bit_vector
         self.char_is_dash_or_digit = self.char_is_dash | self.char_is_digit
         self.range_init_char_type_vector_dict()
         self.chart_p: bool = False
         self.simple_tok_p: bool = False  # simple tokenization: no MT-markup such as @-@
         self.first_token_is_line_id_p: bool = False
-        self.verbose: bool = False
+        self.verbose: bool = verbose
         self.lang_code: Optional[str] = lang_code
         self.n_lines_tokenized = 0
         self.tok_dict = util.ResourceDict()
@@ -437,6 +440,12 @@ class Tokenizer:
             elif ud.category(char).startswith("M"):
                 self.char_type_vector_dict[char] \
                     = self.char_type_vector_dict.get(char, 0) | self.char_is_modifier
+        # Character is unstable with respect to lowercasing:
+        #   char.lower().upper() != char
+        #   len(char) != len(char.lower())
+        # One single such characters in Unicode: İ (lower-case: i̇ (i with an second dot on top))
+        self.char_type_vector_dict['İ'] \
+            = self.char_type_vector_dict.get('İ', 0) | self.char_is_lower_upper_unstable
 
     def open_or_close_paired_delimiter(self, _token: str, left_context: str, right_context: str) -> Optional[str]:
         """Tests whether a non-directional paired delimiter such as apostrophe or quotation mark is
@@ -738,7 +747,7 @@ class Tokenizer:
                 return self.rec_tok_m3(m3, s, offset, 'URL', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    common_file_suffixes = "aspx?|bmp|cgi|csv|docx?|eps|gif|html?|jpeg|jpg|mov|mp3|mp4|" \
+    common_file_suffixes = "aspx?|bmp|cgi|csv|dat|docx?|eps|gif|html?|jpeg|jpg|mov|mp3|mp4|" \
                            "pdf|php|png|pptx?|ps|rtf|tiff|tsv|tok|txt|xlsx?|xml|zip"
     re_filename = regex.compile(r'(.*?)'
                                 r'(?<!\pL\pM*|\d|[-_.@])'  # negative lookbehind: no letters, digits, @ please
@@ -967,6 +976,7 @@ class Tokenizer:
     re_starts_w_letter_or_digit = regex.compile(r'(\pL|\d)')
     re_starts_w_letter_or_digit_in_token = regex.compile(r'\S*(\pL|\d)')
     re_starts_w_single_letter = regex.compile(r'\pL\pM*(?!\pL)')
+    re_starts_w_dash = regex.compile(r'[-−–]')
     re_starts_w_dashed_digit = regex.compile(r'[-−–]?\d')
     re_starts_w_single_s = regex.compile(r's(?!\pL|\d)', flags=regex.IGNORECASE)
     re_starts_w_non_whitespace = regex.compile(r'\S')
@@ -978,12 +988,14 @@ class Tokenizer:
     re_ends_w_letter_or_digit_in_token = regex.compile(r'.*(\pL\pM*|\d)\S*$')
     re_ends_w_letter_plus_period = regex.compile(r'.*\pL\pM*\.$')
     re_ends_w_non_whitespace = regex.compile(r'.*\S$')
+    re_ends_w_dash = regex.compile(r'.*[-−–]$')
     re_is_short_letter_token = regex.compile(r'(?:\pL\pM*){1,2}$')
 
     def resource_entry_fulfills_general_context_conditions(self, token_candidate: str,
                                                            left_context: str, right_context: str) -> bool:
         """Checks for general context requirements (not listed for a particular resource entry)."""
-        # type-vector of any first character of the right context
+        # type-vector of any first character of the left/right context
+        lc0_type_vector = self.char_type_vector_dict.get(left_context[-1], 0) if left_context != '' else 0
         rc0_type_vector = self.char_type_vector_dict.get(right_context[0], 0) if right_context != '' else 0
         # general restriction: if token ends in a letter, it can't be followed by a letter
         if self.re_ends_w_letter.match(token_candidate) and (rc0_type_vector & self.char_is_alpha):
@@ -1007,6 +1019,10 @@ class Tokenizer:
             if self.re_is_short_letter_token.match(token_candidate) and \
                     (right_context.startswith('&') or left_context.endswith('&')):
                 return False
+        if self.lv & self.char_is_attach_tag:
+            if (rc0_type_vector & self.char_is_attach_tag or lc0_type_vector & self.char_is_attach_tag) \
+                    and self.detok_resource.markup_attach_re.match(token_candidate):
+                return False
         return True
 
     def abbreviation_entry_fulfills_general_context_conditions(self, token_candidate: str,
@@ -1029,6 +1045,14 @@ class Tokenizer:
             return False
         return True
 
+    re_capital_i_w_dot_above = re.compile(r'İ')
+
+    def lower(self, s: str) -> str:
+        '''This version of 'lower' preserves the length of the string.'''
+        if self.lv & self.char_is_lower_upper_unstable:
+            s = self.re_capital_i_w_dot_above.sub('i', s)
+        return s.lower()
+
     def tokenize_according_to_resource_entries(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                                                line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step handles abbreviations, contractions and repairs according to data files
@@ -1037,7 +1061,7 @@ class Tokenizer:
 
         last_primary_char_type_vector = 0  # 'primary': not counting modifying letters
         len_s = len(s)
-        s_lc = s.lower()
+        s_lc = self.lower(s)
         for start_position in range(0, len_s):
             c = s[start_position]
             current_char_type_vector = self.char_type_vector_dict.get(c, 0)
@@ -1114,7 +1138,7 @@ class Tokenizer:
 
         last_primary_char_type_vector = 0  # 'primary': not counting modifying letters
         len_s = len(s)
-        s_lc = s.lower()
+        s_lc = self.lower(s)
         for start_position in range(0, len_s):
             c = s[start_position]
             current_char_type_vector = self.char_type_vector_dict.get(c, 0)
@@ -1170,7 +1194,7 @@ class Tokenizer:
         this_function = self.tokenize_punctuation_according_to_resource_entries
 
         len_s = len(s)
-        s_lc = s.lower()
+        s_lc = self.lower(s)
         for start_position in range(0, len_s):
             max_end_position = start_position
             position = start_position+1
@@ -1434,7 +1458,7 @@ def main():
     args = parser.parse_args()
     lang_code = args.lc
     data_dir = Path(args.data_directory) if args.data_directory else None
-    tok = Tokenizer(lang_code=lang_code, data_dir=data_dir)
+    tok = Tokenizer(lang_code=lang_code, data_dir=data_dir, verbose=args.verbose)
     tok.chart_p = bool(args.annotation_file) or bool(args.chart)
     tok.simple_tok_p = bool(args.simple)
     tok.first_token_is_line_id_p = bool(args.first_token_is_line_id)
