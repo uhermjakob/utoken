@@ -65,8 +65,8 @@
 ::abbrev N.V. ::exp Naamloze vennootschap ::lcode eng ::sem-class company-type
 ::abbrev S.p.A. ::exp Società per Azioni; joint-stock company ::lcode eng ::sem-class company-type ::misspelling S.p . A.;
 
-::abbrev art. ::exp article ::lcode eng ::sem-class corpus-component
-::abbrev arts. ::exp articles ::lcode eng ::sem-class corpus-component
+::abbrev art. ::exp article ::lcode eng ::sem-class corpus-component ::right-context \s*\d
+::abbrev arts. ::exp articles ::lcode eng ::sem-class corpus-component ::right-context \s*\d
 ::abbrev chap. ::exp chapter ::lcode eng ::sem-class corpus-component
 ::abbrev chaps. ::exp chapters ::lcode eng ::sem-class corpus-component
 ::abbrev Fig. ::exp figure ::lcode eng ::sem-class corpus-component
@@ -304,7 +304,7 @@
 ::abbrev Ks. ::exp Kansas ::lcode eng ::sem-class state ::country United States
 ::abbrev Ky. ::exp Kentucky ::lcode eng ::sem-class state ::country United States
 ::abbrev La. ::exp Louisiana ::lcode eng ::sem-class state ::country United States ::case-sensitive True
-::abbrev Mass. ::exp Massachusetts ::lcode eng ::sem-class state ::country United States
+::abbrev Mass. ::exp Massachusetts ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev Md. ::exp Maryland ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev Mich. ::exp Michigan ::lcode eng ::sem-class state ::country United States
 ::abbrev Minn. ::exp Minnesota ::lcode eng ::sem-class state ::country United States
@@ -416,6 +416,7 @@
 ::abbrev bros. ::exp brothers ::lcode eng
 ::abbrev B.S. ::exp bullshit ::lcode eng
 ::abbrev b/w ::exp black and white; between ::lcode eng
+::abbrev c. ::exp circa ::lcode eng ::case-sensitive True ::right-context \s*\S
 ::abbrev 'cause ::exp because ::lcode eng
 ::abbrev CCTV ::exp closed-circuit television ::lcode eng
 ::abbrev CEO ::exp chief executive officer ::lcode eng
@@ -432,6 +433,7 @@
 ::abbrev Dept. ::exp Department ::lcode eng
 ::abbrev DH ::exp dear husband ::lcode eng
 ::abbrev DS ::exp dear son ::lcode eng
+::abbrev D.Sc. ::exp Doctor of Science ::lcode eng
 ::abbrev DW ::exp dear wife ::lcode eng
 ::abbrev ed. ::exp editor ::lcode eng
 ::abbrev eds. ::exp editors ::lcode eng
@@ -463,6 +465,7 @@
 ::abbrev k9 ::exp canine ::lcode eng
 ::abbrev l/c ::exp lower case ::lcode eng
 ::abbrev lib ::exp liberal ::lcode eng
+::abbrev LL.B. ::exp Bachelor of Laws ::lcode eng
 ::abbrev lol ::exp laughing out loud ::lcode eng
 ::abbrev l8r ::exp later ::lcode eng
 ::abbrev ma'am ::exp madam ::lcode eng
@@ -475,6 +478,7 @@
 ::abbrev MoU ::exp memorandum of understanding ::case-sensitive True ::plural +s
 ::abbrev MP ::exp member of parliament ::lcode eng ::country UK
 ::abbrev MP ::exp military police ::lcode eng
+::abbrev M.Sc. ::exp Master of Science ::lcode eng
 ::abbrev Mt. ::exp Mount ::lcode eng ::case-sensitive True
 ::abbrev n/a ::exp not available; not applicable ::lcode eng
 ::abbrev nat'l ::exp national ::lcode eng
@@ -869,6 +873,8 @@
 ::lexical rock'n'roll ::lcode eng
 ::lexical same-sex ::lcode eng
 ::lexical science-fiction ::lcode eng
+::lexical Scud B ::lcode eng
+::lexical Scud C ::lcode eng
 ::lexical self-righteous ::lcode eng
 ::lexical short-term ::lcode eng
 ::lexical sister-in-law ::lcode eng ::plural sisters-in-law
