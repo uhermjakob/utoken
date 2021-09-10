@@ -479,13 +479,14 @@ class Tokenizer:
                 orig_token = token
                 paired_delimiter = False
                 valid_detokenization_entry = None
-                shortened_token = token
+                lc_token = token.lower()
+                shortened_token = lc_token
                 if token != '' and token == len(token) * token[0]:  # all chars in token are the same
                     while len(token) >= 2 and not self.detok_resource.markup_attach.get(shortened_token, None):
                         shortened_token = shortened_token[:-1]
                 for detokenization_entry in self.detok_resource.markup_attach.get(shortened_token, []):
-                    group_necessary = token != shortened_token
-                    if detokenization_entry.detokenization_entry_fulfills_conditions(token, left_context,
+                    group_necessary = lc_token != shortened_token
+                    if detokenization_entry.detokenization_entry_fulfills_conditions(lc_token, left_context,
                                                                                      right_context, lang_code,
                                                                                      group_necessary):
                         valid_detokenization_entry = detokenization_entry
