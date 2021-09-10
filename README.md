@@ -158,3 +158,53 @@ Option ```--first_token_is_line_id```, or ```-f``` for short, suppresses tokeniz
 * ```utokenize.pl -f``` tokenization: ```GEN:1:1 In the beginning , God created the heavens and the earth .```
 </details>
   
+<details>
+<summary>Why is tokenization hard?</summary>
+
+### Why is tokenization hard?
+Tokenization is more then just splitting a sentence along spaces, as a lot of punctuation such as commas and periods are attached to adjacent words.
+But we can't just blindly split off commas and periods, as this would break numbers such as 12,345.60, abbreviations such as Mr. or URLs such as www.usc.edu
+
+* There are many special types of entities that need to be preserved in tokenization, e.g. 
+  * XML tags: ```<a href="http://www.hollywoodbowl.com">```
+  * URLs: ```https://www.youtube.com/watch?v=AaZ_RSt0KP8```
+  * Email addresses: ```а.almukhanov@energo.gov.kz```
+  * Filenames: ```Оперплан_каз2015.doc```
+  * Numbers: ```-12,345,678.90``` &nbsp; ```१,२३,४५,६७८.९०```
+  * Hashtags, handles: ```#global_warming``` &nbsp; ```#2``` &nbsp; ```@GermanBeer```
+* Abbreviations can be hard in many languages, as a period might indicate an abbreviation or the end of a sentence.
+  * Abbreviations: ```Mr.``` &nbsp; ```e.g.``` &nbsp; ```w/o```
+* Apostrophes are normal letters in some languages, e.g. Somali ```su'aal``` (_question_). Apostrophes can appear in foreign names (e.g. ```Xi'an``` and ```'s-Gravenhage```). In some languages, an apostrophe is used for contractions, such as ```John's``` and ```we'll``` in English. Additionally, an apostrophe can be used as a quote around a phrase. All these cases have to be treated differently.
+* Many applications need to map a tokenized sentence back to 'normal' untokenized text. To support such a _detokenizer_, the tokenizer's output must facilitate that.
+  For example, by default, the tokenizer adds attachment tags such as '@' to punctuation to indicate to which side(s) they should attach after detokenization. For more on this topic, please see topic _Mark-up of certain punctuation_ above.
+* Other challenges: symbols, variation selectors, non-standard whitespaces, special characters such as zero width non-joiner.
+* In general, it is hard to make a tokenizer work universally, for a wide range of languages, scripts and conventions.
+* _utoken_ uses a combination of general patterns and lists of specific tokens to solve many of the challenges above. (See more under topic _Tokenization data files_.)
+</details>
+
+<details>
+<summary>Tokenization data files</summary>
+
+### Tokenization data files
+_utokenize_ includes some data files:
+* `tok-resource.txt` includes language-independent tokenization resource entries, especially for puncutation, abbreviations (e.g. ```km²```) and names (especially those with hyphens, spaces and other non-alpha characters)
+* `tok-resource-eng-global.txt` contains tokenization resource entries for English that are also loaded for other languages.
+* `tok-resource-eng.txt` contains tokenization resource entries for English that are not shared, including those that would not work in other languages. For example, in English, _dont_ in a non-standard version of _don't_ and is tokenized into ```do``` ```n't```, but in French, _dont_ (_of which_) is a regular word that should be left alone.
+* `detok-resource.txt` includes resources for detokenization. The file is also used by the tokenizer to mark up certain punctuation with attachment tags such as @-@.
+* There are numerous other `tok-resource-xxx.txt` files for other languages, some larger than others. Some languages such as Farsi just don't use contractions and abbreviations with periods that much so there are few entries. Others files might benefit from additional contributions. 
+* `top-level-domain-codes.txt` contains a list of suffixes such as .com, .org, .uk, .tv to support tokenization of URLs and email address.
+
+Exmaples of resource entries:
+```
+::punct-split ! ::side end ::group True ::comment multiple !!! remain grouped as a single token
+::contraction can't ::target can n't ::lcode eng
+::repair wo n't ::target will n't ::lcode eng ::problem previous tokenizer
+::abbrev No. ::exp number ::lcode eng ::sem-class corpus-component ::case-sensitive True ::right-context \s*\d
+::lexical T-shirt ::lcode eng ::plural +s
+::misspelling accomodate ::target accommodate ::lcode eng ::suffix-variations e/ed;es;ing;ion;ions
+
+::markup-attach - ::group True ::comment hyphen-minus ::example the hyphen in _peace-loving_ will be marked up as ```@-@```
+::auto-attach th ::side left ::left-context \d ::lcode eng ::example 20th
+```
+</details>
+  
