@@ -21,3 +21,5 @@
 ::abbrev с/о ::lcode kaz ::eng village
 ::abbrev н/ү ::lcode kaz
 ::abbrev м/а ::lcode kaz
+
+::abbrev Art. ::lcode kaz ::case-sensitive True ::eng Article
