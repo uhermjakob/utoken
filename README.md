@@ -97,7 +97,7 @@ optional arguments:
 * Currently excluded: no-space scripts like Chinese
 * Large set of resource entries (data file) currently for English only; limited resource entries for 40+ other languages
 * Languages with substantial testing so far: English, Farsi, Hindi, Kazakh, Tagalog and Uyghur
-  * Limited testing (a few 100 wiki snt. each) for: French, German, Spanish, Swedish
+  * Limited testing (a few hundred Wikipedia sentences each) for: French, German, Somali, Spanish, Swedish
 
 ### Requirements
 * Python 3.8 or higher
@@ -208,3 +208,19 @@ Exmaples of resource entries:
 ```
 </details>
   
+<details>
+<summary>Sample call of utoken from another Python program</summary>
+
+### Sample call of utoken from another Python program
+Script:
+```
+import utokenize
+
+tok = utokenize.Tokenizer(lang_code='eng')  # Initialize tokenizer, load resources
+print(tok.tokenize_string("Dont worry!"))
+```
+Output:
+```
+Do n't worry !
+```
+</details>
