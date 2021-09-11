@@ -1,3 +1,6 @@
+::punct-split - ::side start ::group True ::right-context [йхеяи] ::right-context-not \pL\pM*(?:\pL|\d)
+::punct-split - ::side both ::group True ::left-context \d ::right-context [йхеяи] ::right-context-not \pL\pM*(?:\pL|\d)
+
 ::abbrev Cв. ::lcode rus
 ::abbrev Cвв. ::lcode rus
 ::abbrev Iв. ::lcode rus
