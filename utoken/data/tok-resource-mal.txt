@@ -1,5 +1,5 @@
 ::punct-split : ::side both ::left-context \pL\pM*\pL\pM* ::right-context [-\/]*\pL\pM*\pL
-::punct-split - ::side start ::group True ::right-context (?:ൽ|ല്|ന്|ലെ|ആം|നു) ::right-context-not (?:ൽ|ല്|ന്|ലെ|ആം|നു)(?:\pL|\d)
+::punct-split - ::side start ::group True ::right-context (?:ൽ|ല്|ന്|ലെ|ആം|നു)(?!\pL|\d)
 
 ::abbrev ഡോ. ::exp ഡോക്ടർ ::lcode mal ::sem-class pre-name-title ::comment Dr.
 ::abbrev പ്രസ്. ::exp പ്രസിഡന്റ് ::lcode mal ::sem-class pre-name-title ::comment Pres.
