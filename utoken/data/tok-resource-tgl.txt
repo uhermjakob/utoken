@@ -1,6 +1,5 @@
 ::punct-split : ::side both ::left-context \pL\pM*\pL\pM* ::right-context [-\/]*\pL\pM*\pL
-
-::lexical i- ::lcode tgl ::tag DECONTRACTION-L ::comment prefix e.g. in i-download
+::punct-split - ::side both ::group True ::left-context [iI] ::left-context-not (?:\pL\pM|\d)[iI] ::right-context \pL
 
 ::abbrev hal. ::exp halimbawa ::lcode tgl ::comment example
 ::abbrev Bb. ::exp Binibini ::lcode tgl ::comment Miss
