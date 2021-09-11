@@ -1049,7 +1049,7 @@ class Tokenizer:
     re_capital_i_w_dot_above = re.compile(r'İ')
 
     def lower(self, s: str) -> str:
-        '''This version of 'lower' preserves the length of the string.'''
+        """This version of 'lower' preserves the length of the string."""
         if self.lv & self.char_is_lower_upper_unstable:
             s = self.re_capital_i_w_dot_above.sub('i', s)
         return s.lower()
@@ -1267,7 +1267,7 @@ class Tokenizer:
     re_dot_pl = regex.compile(r'.*\pL')  # used to filter the following below
     re_abbrev_acronym_periods = regex.compile(r'(.*?)'
                                               r'(?<!\pL\pM*|\d|[-−–.]+)'
-                                              r'((?:\pL\pM*\.){2,})'
+                                              r'((?:(?:\pL\pM*){1,2}\.){2,})'  # 2+ groups of (1-2 letters + .)
                                               r'(?!\pL|\d|[.])'
                                               r'(.*)')
 
