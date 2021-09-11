@@ -126,6 +126,8 @@
 ::auto-attach rd ::side left ::left-context 3 ::lcode eng
 ::auto-attach s ::side left ::left-context 0 ::example 1950s
 
+::auto-attach م ::side left ::left-context \d ::lcode ara ::comment year particle ::eng AD ::example 2021م
+
 ::auto-attach e ::side left ::left-context \d ::lcode fra ::comment ordinal particle ("th")
 ::auto-attach er ::side left ::left-context \d ::lcode fra ::comment ordinal particle ("th")
 

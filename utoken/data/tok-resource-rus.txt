@@ -599,6 +599,7 @@
 ::abbrev Кбод ::exp килобод ::lcode rus
 ::abbrev кВ ::exp киловольт ::lcode rus
 ::abbrev кв. ::exp квадрат, квадратный; квартал; квартира ::lcode rus
+::abbrev кв.м. ::lcode rus ::eng square meter
 ::abbrev кВА ::exp киловольт-ампер ::lcode rus
 ::abbrev кВт ::exp киловатт ::lcode rus
 ::abbrev кВт·ч ::exp киловатт-час ::lcode rus
@@ -1121,6 +1122,7 @@
 ::abbrev пом. ::exp помещение; помощник ::lcode rus
 ::abbrev попер. ::exp поперечный ::lcode rus
 ::abbrev пор. ::exp порог, пороги; порошок (лекарство) ::lcode rus
+::abbrev порт. ::lcode rus ::eng Portuguese
 ::abbrev португ. ::exp португальский ::lcode rus
 ::abbrev пос. ::exp поселок ::lcode rus
 ::abbrev посв. ::exp посвященный, посвящается ::lcode rus
