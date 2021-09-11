@@ -519,7 +519,7 @@
 ::abbrev TV ::exp television ::lcode eng
 ::abbrev ?4u ::exp question for you ::lcode eng
 ::abbrev u/c ::exp upper case ::lcode eng
-::abbrev v. ::exp versus; von ::lcode eng ::left-context-not ::case-sensitive True
+::abbrev v. ::exp versus; von ::lcode eng ::case-sensitive True
 ::abbrev V.  ::lcode eng ::left-context-not \p{Lu}\.\s* ::case-sensitive True
 ::abbrev viz. ::lcode eng ::comment British, "in other words"
 ::abbrev vs. ::exp versus ::lcode eng
