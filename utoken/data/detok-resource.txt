@@ -24,7 +24,6 @@
 ::markup-attach &quot; ::paired-delimiter True ::comment unnormalized quotation mark
 
 ::markup-attach -t- ::lcode fra ::example y a-t-il ::comment so-called "euphonic t" used in French subject-verb inversions
-::markup-attach i- ::lcode tgl ::example i-download ::comment Tagalog prefix often preceding foreign loadwords
 
 ::auto-attach / ::side both
 # ::auto-attach · ::side both ::comment middle dot
