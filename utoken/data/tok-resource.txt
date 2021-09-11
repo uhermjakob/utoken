@@ -706,8 +706,8 @@
 # Short URLs can be tricky, as they compete with non-URLs of similar structure such as sq.km ir ago.In
 ::lexical 24.kz ::sem-class url
 ::lexical 31.kz ::sem-class url
-::lexical GeoNames.Org ::sem-class url  # tricky: CamelCase
 ::lexical el.kz ::sem-class url
+::lexical pm.kz ::sem-class url
 ::lexical sk.kz ::sem-class url
 ::lexical x.org ::sem-class url
-
+::lexical GeoNames.Org ::sem-class url  # tricky: CamelCase
