@@ -41,3 +41,5 @@
 ::contraction y'all ::target you all ::lcode eng ::nonstandard True
 ::contraction y'know ::target you know ::lcode eng ::nonstandard True
 ::contraction y're ::target you 're ::lcode eng ::substandard True
+
+::punct-split - ::side both ::lcode eng ::left-context \p{Ll} ::right-context [IAa]\s  # Yes-I agree to phase-I.
