@@ -770,7 +770,7 @@ class Tokenizer:
                              r'(?<!\pL\pM*|\d|[.])'
                              r'(\pL\pM*(?:\pL\pM*|\d|[-_.])*(?:\pL\pM*|\d)'
                              r'@'
-                             r'\pL\pM*(?:\pL\pM*|\d|[-_.])*(?:\pL\pM*|\d)\.[a-z]{2,})'
+                             r'(?:\pL\pM*|\d)(?:\pL\pM*|\d|[-_.])*(?:\pL\pM*|\d)\.[a-z]{2,})'
                              r'(?!\pL|\pM|\d|[.])'
                              r'(.*)$', flags=regex.IGNORECASE)
 
