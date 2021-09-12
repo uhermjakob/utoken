@@ -35,6 +35,7 @@ if __name__ == "__main__":
                                'pmindia_v1.hin.txt',
                                '3S-tweetsdev.orig.eng.txt',
                                '3S-tweetsdev.orig.fas.txt',
+                               'challenge.eng.txt',
                                'test1.eng.txt',
                                'test.mal.txt'])
         elif filename == 'set2':
