@@ -167,6 +167,19 @@ class ResourceDict:
                     # remove ::alt-spelling ...
                     new_line = re.sub(r'::alt-spelling\s+(?:\S|\S.*\S)\s*(::\S.*|)$', r'\1', new_line)
                     lines.append(new_line)
+        # expand resource entry with ::last-char-repeatable
+        n_lines = len(lines)
+        for line in lines[0:n_lines]:
+            if slot_value_in_double_colon_del_list(line, 'last-char-repeatable'):
+                 if m3 := regex.match(r'(::\S+\s+)(\S|\S.*?\S)(\s+::\S.*)$', line):
+                    token = m3.group(2)
+                    last_char = token[-1]
+                    for _ in range(127):
+                        token += last_char
+                        new_line = f'{m3.group(1)}{token}{m3.group(3)}'
+                        # remove any ::last-char-repeatable ...
+                        new_line = re.sub(r'::last-char-repeatable\s+(?:\S|\S.*\S)\s*(::\S.*|)$', r'\1', new_line)
+                        lines.append(new_line)
         # expand resource entry with ::misspelling
         n_lines = len(lines)
         for line in lines[0:n_lines]:
@@ -247,6 +260,7 @@ class ResourceDict:
                                                                               'exp',
                                                                               'group',
                                                                               'inflections',
+                                                                              'last-char-repeatable',
                                                                               'lcode',
                                                                               'lcode-not',
                                                                               'left-context',
