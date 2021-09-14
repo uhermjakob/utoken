@@ -689,7 +689,7 @@
 ::lexical :-/ ::token-category symbol ::comment slant emoji
 ::lexical :// ::token-category symbol ::comment could be part of broken URL
 ::lexical ;) ::token-category symbol ::comment wink emoji
-::lexical ;-) ::token-category symbol ::comment nose wink emoji
+::lexical ;-) ::token-category symbol ::comment nose wink emoji ::left-context-not [+]
 ::lexical =) ::token-category symbol ::comment equal smile emoji ::last-char-repeatable True
 ::lexical :( ::token-category symbol ::comment frown emoji ::right-context-not (?:\pL|\d)
 ::lexical :'( ::token-category symbol ::comment cry emoji ::right-context-not (?:\pL|\d)
@@ -700,7 +700,7 @@
 ::lexical :headbang: ::token-category symbol ::comment emoji
 ::lexical :lol: ::token-category symbol ::comment emoji
 ::lexical \m/ ::token-category symbol ::comment rock out emoji
-::lexical :P ::token-category symbol ::comment tongue-out emoji ::case-sensitive True
+::lexical :P ::token-category symbol ::comment tongue-out emoji
 ::lexical %pw ::token-category symbol
 ::lexical :rofl: ::token-category symbol ::comment emoji
 ::lexical :sad: ::token-category symbol ::comment emoji
