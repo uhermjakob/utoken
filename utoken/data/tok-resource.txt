@@ -53,6 +53,8 @@
 ::punct-split ፠ ::side both
 ::punct-split । ::side both ::comment Devanagari danda
 ::punct-split ॥ ::side both ::comment Devanagari double danda
+::punct-split ། ::side both ::comment Tibetan mark Shad (danda)
+::punct-split ༎ ::side both ::comment Tibetan mark Nyis Shad (double danda)
 ::punct-split % ::side both
 ::punct-split ‰ ::side both
 ::punct-split ‱ ::side both
@@ -677,18 +679,28 @@
 ::lexical 3′ ::token-category symbol ::comment 3 prime (to mark end in DNA sequences)
 ::lexical 5′ ::token-category symbol ::comment 5 prime (to mark end in DNA sequences)
 ::lexical 8-) ::token-category symbol ::comment large eyes emoji
-::lexical :| ::token-category symbol ::comment neutral face emoji ::alt-spelling :||; :|||; :||||; :|||||; :||||||
-::lexical :( ::token-category symbol ::comment sad emoji
-::lexical :) ::token-category symbol ::comment smiley emoji ::alt-spelling :)); :))); :)))); :))))); :)))))); :))))))); :)))))))); :))))))))); :)))))))))); :))))))))))); :))))))))))))
+::lexical :| ::token-category symbol ::comment neutral face emoji ::last-char-repeatable True
+::lexical :-| ::token-category symbol ::comment straight face emoji ::last-char-repeatable True
+::lexical :( ::token-category symbol ::comment sad emoji ::right-context-not (?:\pL|\d)
+::lexical :) ::token-category symbol ::comment smiley emoji ::last-char-repeatable True  # comment includes :)) etc.
 ::lexical :-) ::token-category symbol ::comment smiley emoticon
 ::lexical :--) ::token-category symbol ::comment smiley long nose emoticon
 ::lexical :/ ::token-category symbol
+::lexical :-/ ::token-category symbol ::comment slant emoji
 ::lexical :// ::token-category symbol ::comment could be part of broken URL
-::lexical ;) ::token-category symbol ::comment winky eyes emoji
+::lexical ;) ::token-category symbol ::comment wink emoji
+::lexical ;-) ::token-category symbol ::comment nose wink emoji
+::lexical =) ::token-category symbol ::comment equal smile emoji ::last-char-repeatable True
+::lexical :( ::token-category symbol ::comment frown emoji ::right-context-not (?:\pL|\d)
+::lexical :'( ::token-category symbol ::comment cry emoji ::right-context-not (?:\pL|\d)
+::lexical :D ::token-category symbol ::comment emoji grin ::case-sensitive True
+::lexical :-D ::token-category symbol ::comment emoji nose grin ::case-sensitive True
+::lexical =D ::token-category symbol ::comment emoji equal grin ::case-sensitive True
 ::lexical :facepalm: ::token-category symbol ::comment emoji
 ::lexical :headbang: ::token-category symbol ::comment emoji
 ::lexical :lol: ::token-category symbol ::comment emoji
-::lexical :P ::token-category symbol ::comment tongue-out emoji
+::lexical \m/ ::token-category symbol ::comment rock out emoji
+::lexical :P ::token-category symbol ::comment tongue-out emoji ::case-sensitive True
 ::lexical %pw ::token-category symbol
 ::lexical :rofl: ::token-category symbol ::comment emoji
 ::lexical :sad: ::token-category symbol ::comment emoji
