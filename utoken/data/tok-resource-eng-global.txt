@@ -34,6 +34,7 @@
 ::repair U.K ::target U.K. ::lcode eng ::right-context-not \s*[.] ::problem missing period
 ::repair U.N ::target U.N. ::lcode eng ::right-context-not \s*[.] ::problem missing period
 ::repair U.S ::target U.S. ::lcode eng ::right-context-not \s*[.] ::problem missing period
+::repair D.C ::target D.C. ::lcode eng ::right-context-not \s*[.] ::problem missing period
 ::repair H. E. ::target H.E. ::lcode eng ::right-context-not \s*[.] ::problem spurious space
 
 ::repair ca n't ::target can n't ::lcode eng ::problem previous tokenizer
