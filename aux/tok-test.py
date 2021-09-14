@@ -23,6 +23,7 @@ if __name__ == "__main__":
     parser.add_argument('-i', '--input', type=str, help='(comma-separated input filenames)')
     parser.add_argument('-c', '--compare', action='count', default=0, help='(compare results with other tokenizers)')
     parser.add_argument('-v', '--visualize', action='count', default=0, help='(visualize results)')
+    parser.add_argument('--verbose', action='count', default=0)
     args = parser.parse_args()
     filenames: list[str] = args.input.split(r'[;,]\s*')
     # filename expansion
@@ -153,8 +154,8 @@ if __name__ == "__main__":
                           f' -l sacrem utoken{ref_legend_s}' \
                           f' -o {sacremoses_viz_filename}'
                 # sys.stderr.write(f"{command} ...\n")
-                # sys.stderr.write(f"color-mt-diffs.pl sacremoses {input_filename}"
-                #                  f" -o {sacremoses_viz_filename} ...\n")
+                if args.verbose:
+                    print(command)
                 subprocess.run(command, shell=True)
                 old_ulf_tokenizer_viz_filename = os.path.join(public_test_data_dir, 'viz',
                                                               f'{core_filename}.old-u-t-utoken-diff.html')
@@ -163,8 +164,8 @@ if __name__ == "__main__":
                           f' -l old-u-t utoken{ref_legend_s}' \
                           f' -o {old_ulf_tokenizer_viz_filename}'
                 # sys.stderr.write(f"{command} ...\n")
-                # sys.stderr.write(f"color-mt-diffs.pl old ulf-tokenizer {input_filename}"
-                #                  f" -o {old_ulf_tokenizer_viz_filename} ...\n")
+                if args.verbose:
+                    print(command)
                 subprocess.run(command, shell=True)
         else:
             sys.stderr.write(f"WARNING: Ignoring filename {filename}, because it does not end in '.txt'\n")
