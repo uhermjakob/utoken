@@ -80,6 +80,7 @@
 ::abbrev para. ::exp paragraph ::lcode eng ::sem-class corpus-component
 ::abbrev paras. ::exp paragraphs ::lcode eng ::sem-class corpus-component
 ::abbrev pp. ::exp pages ::lcode eng ::sem-class corpus-component ::case-sensitive True ::left-context-not [.] ::right-context \s*\d
+::abbrev PP. ::exp pope ::lcode eng ::case-sensitive True
 ::abbrev sect. ::exp section ::lcode eng ::sem-class corpus-component
 ::abbrev sects. ::exp sections ::lcode eng ::sem-class corpus-component
 ::abbrev vol. ::exp volume ::lcode eng ::sem-class corpus-component
