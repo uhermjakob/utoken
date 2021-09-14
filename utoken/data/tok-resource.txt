@@ -92,6 +92,7 @@
 ::punct-split . ::side both ::left-context (?:\p{Ll}\p{Ll}|\d|[IVXL]+) ::right-context \p{Lu}\p{Ll}
 ::punct-split ؟ ::side both ::comment Arabic question mark
 ::punct-split ؛ ::side both ::comment Arabic semicolon
+::punct-split ۔ ::side both ::comment Arabic period
 ::punct-split § ::side both ::comment section sign
 ::punct-split ¶ ::side both ::comment pillcrow
 
