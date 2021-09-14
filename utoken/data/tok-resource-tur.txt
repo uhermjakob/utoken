@@ -1,0 +1,9 @@
+::punct-split : ::side both ::lcode tur ::left-context \pL\pM*\pL\pM* ::right-context [-\/]*\pL\pM*\pL
+::punct-split ' ::side both ::lcode tur ::left-context \pL\pM* ::right-context \pL ::left-context-not \b[AaCcDdIiJjLlMmNnOoSsTt]  ::comment O'Connor
+::punct-split . ::side both ::lcode tur ::left-context \d ::right-context \pL
+
+::abbrev d. ::exp doğum ::lcode tur ::eng born ::left-context-not \.\s* ::right-context-not \s*\pL\.
+::abbrev ö. ::exp ölüm ::lcode tur ::eng died ::left-context-not \.\s* ::right-context-not \s*\pL\.
+::abbrev okn. ::exp okunuşu ::lcode tur ::eng pronunciation
+::abbrev arş.gör. ::exp araştırma görevlisi ::lcode tur ::eng research assistant
+::abbrev ör. ::exp örneğin ::lcode tur ::eng e.g.

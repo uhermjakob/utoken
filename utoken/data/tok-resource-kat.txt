@@ -1,0 +1,26 @@
+::punct-split : ::side both ::lcode kat ::left-context \pL\pM*\pL\pM* ::right-context [-\/]*\pL\pM*\pL
+::punct-split - ::side both ::lcode kat ::group True ::left-context (?:\pL\pM*|\d) ::right-context (ე|მ|ს|ია|ის|ისა)(?!\pL\d)
+
+::abbrev კმ² ::lcode kat ::eng km²
+::abbrev კვ.კმ. ::lcode kat ::eng sq.km ::alt-spelling კვ.კმ
+::abbrev კვ. ::lcode kat ::eng square
+::abbrev მ³ ::lcode kat ::eng m³
+::abbrev კგ. ::lcode kat ::eng kg
+
+::abbrev დ. ::lcode kat ::eng born
+::abbrev გ. ::lcode kat ::eng died
+::abbrev ინგლ. ::lcode kat ::eng English
+::abbrev გერმ. ::lcode kat ::eng German
+::abbrev ლათ. ::lcode kat ::eng Latin
+::abbrev სერბ. ::lcode kat ::eng Serbian
+::abbrev სომხ. ::lcode kat ::eng Armenian
+::abbrev რუს. ::lcode kat ::eng Russian
+::abbrev ესპ. ::lcode kat ::eng Spanish
+::abbrev ძვ.წ. ::lcode kat ::eng B.C.
+::abbrev ტ. ::lcode kat ::eng t. (?)
+::abbrev გვ. ::lcode kat ::eng page
+::abbrev თბ. ::lcode kat ::eng Tbilisi
+::abbrev წ ::lcode kat ::eng year (?)
+::abbrev მაგ. ::lcode kat ::eng e.g.
+::abbrev მლნ. ::lcode kat ::eng million
+::abbrev ე.წ. ::lcode kat ::eng so-called
