@@ -796,7 +796,7 @@ class Tokenizer:
                            "pdf|php|png|pptx?|ps|rtf|tiff|tsv|tok|txt|xlsx?|xml|zip"
     re_filename = regex.compile(r'(.*?)'
                                 r'(?<!\pL\pM*|\d|[-_.@])'  # negative lookbehind: no letters, digits, @ please
-                                r"((?:\pL\pM*)(?:\pL\pM*|\d|[-_.])*(?:\pL\pM*|\d)\.(?:" + common_file_suffixes + "))"
+                                r"((?:\pL\pM*|\d)(?:\pL\pM*|\d|[-_.])*(?:\pL\pM*|\d)\.(?:" + common_file_suffixes + "))"
                                 r'(?!\pL|\d)'      # negative lookahead: no letters or digits please
                                 r'(.*)$',
                                 flags=regex.IGNORECASE)
