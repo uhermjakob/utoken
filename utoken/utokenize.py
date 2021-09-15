@@ -23,8 +23,6 @@ from typing import Callable, List, Match, Optional, TextIO, Tuple, Type
 import unicodedata as ud
 from . import __version__, last_mod_date
 from . import util
-# import util
-# from __init__ import __version__, last_mod_date
 
 log.basicConfig(level=log.INFO)
 
@@ -808,10 +806,11 @@ class Tokenizer:
                                        r'(.*)$')
     cap_w = r'\p{Lu}\pM*(?:\p{Ll}\pM*)+'
     cap_ws = cap_w + r'(?:[-−–]' + cap_w + ')*'
+    name_bridge = r'(?:de|du|e|en|et|i|la|le|upon|sur)'
     re_multi_dash_name = regex.compile(r'(.*?)'
-                                       r"(?<!\pL\pM*|\d|[.-−–—+]|\pL\pM*['‘’`‛])"
-                                       r'(' + cap_ws + '[-−–](?:de|du|e|en|et|i|la|le|upon|sur)[-−–]' + cap_ws + ')'
-                                       r"(?!(?:\pL|\pM|\d|[.-−–—+]|['‘’`‛]\pL))"
+                                       r"(?<!\pL\pM*|\d|[-−–—+.]|\pL\pM*['‘’`‛])"
+                                       r'(' + cap_ws + '(?:[-−–]' + name_bridge + '[-−–]' + cap_ws + ')+)'
+                                       r"(?!(?:\pL|\pM|\d|[-−–—+.]|['‘’`‛]\pL))"  # negative lookahead
                                        r'(.*)$')
 
     def tokenize_complex_names(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
