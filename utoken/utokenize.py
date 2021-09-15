@@ -244,7 +244,11 @@ class Tokenizer:
         bit_vector = bit_vector << 1
         self.char_is_non_standard_space = bit_vector
         bit_vector = bit_vector << 1
+        self.char_is_zwsp = bit_vector  # zero width space U+200B
+        bit_vector = bit_vector << 1
         self.char_is_zwnj = bit_vector  # zero width non-joiner U+200C
+        bit_vector = bit_vector << 1
+        self.char_is_zwj = bit_vector   # zero width joiner U+200D
         bit_vector = bit_vector << 1
         self.char_is_surrogate = bit_vector
         bit_vector = bit_vector << 1
@@ -362,7 +366,7 @@ class Tokenizer:
 
     def range_init_char_type_vector_dict(self) -> None:
         # Deletable control characters,
-        # keeping zero-width joiner/non-joiner (U+200E/U+200F) for now.
+        # keeping zero-width joiner/non-joiner (U+200C/U+200D).
         for code_point in chain(range(0x0000, 0x0009), range(0x000B, 0x000D), range(0x000E, 0x0020), [0x007F],  # C0
                                 range(0x0080, 0x00A0),     # C1 block of control characters
                                 [0x00AD],                  # soft hyphen
@@ -413,9 +417,15 @@ class Tokenizer:
         # At sign
         self.char_type_vector_dict['['] \
             = self.char_type_vector_dict.get('[', 0) | self.char_is_left_square_bracket
+        # Zero width space
+        self.char_type_vector_dict['\u200B'] \
+            = self.char_type_vector_dict.get('\u200B', 0) | self.char_is_zwsp
         # Zero width non-joiner
         self.char_type_vector_dict['\u200C'] \
             = self.char_type_vector_dict.get('\u200C', 0) | self.char_is_zwnj
+        # Zero width joiner
+        self.char_type_vector_dict['\u200D'] \
+            = self.char_type_vector_dict.get('\u200D', 0) | self.char_is_zwj
         # Apostrophe (incl. right single quotation mark)
         for char in "'’":
             self.char_type_vector_dict[char] \
@@ -697,13 +707,47 @@ class Tokenizer:
                         s = s.replace(char, ' ')
             if chart:
                 s = chart.s
-        # Remove zero width non-joiner from beginning/end of words (but keep inside words).
+        # Remove zero width spaces outside words
         if self.lv & self.char_is_zwnj:
-            s = re.sub(r'(\u200C)\u200C+', r'\1', s)  # remove consecutive duplicates
-            s = re.sub(r'^\u200C', '', s)
-            s = re.sub(r'\u200C$', '', s)
-            s = re.sub(r'\u200C(\s)', r'\1', s)
-            s = re.sub(r'(\s)\u200C', r'\1', s)
+            s = regex.sub(r'(\u200B)\u200B+', r'\1', s)  # remove consecutive duplicates
+            s = regex.sub(r'^\u200B', '', s)
+            s = regex.sub(r'\u200B$', '', s)
+            s = regex.sub(r'\u200B(\s|\pP)', r'\1', s)
+            s = regex.sub(r'(\s|\pP)\u200B', r'\1', s)
+            s = regex.sub(r'(\p{Arabic})\u200B(\p{Arabic})', r'\1\2', s)
+            s = regex.sub(r'(\p{Armenian})\u200B(\p{Armenian})', r'\1\2', s)
+            s = regex.sub(r'(\p{Bengali})\u200B(\p{Bengali})', r'\1\2', s)
+            s = regex.sub(r'(\p{Cyrillic})\u200B(\p{Cyrillic})', r'\1\2', s)
+            s = regex.sub(r'(\p{Devanagari})\u200B(\p{Devanagari})', r'\1\2', s)
+            s = regex.sub(r'(\p{Ethiopic})\u200B(\p{Ethiopic})', r'\1\2', s)
+            s = regex.sub(r'(\p{Georgian})\u200B(\p{Georgian})', r'\1\2', s)
+            s = regex.sub(r'(\p{Greek})\u200B(\p{Greek})', r'\1\2', s)
+            s = regex.sub(r'(\p{Gujarati})\u200B(\p{Gujarati})', r'\1\2', s)
+            s = regex.sub(r'(\p{Hangul})\u200B(\p{Hangul})', r'\1\2', s)
+            s = regex.sub(r'(\p{Hebrew})\u200B(\p{Hebrew})', r'\1\2', s)
+            s = regex.sub(r'(\p{Kannada})\u200B(\p{Kannada})', r'\1\2', s)
+            s = regex.sub(r'(\p{Latin})\u200B(\p{Latin})', r'\1\2', s)
+            s = regex.sub(r'(\p{Malayalam})\u200B(\p{Malayalam})', r'\1\2', s)
+            s = regex.sub(r'(\p{Oriya})\u200B(\p{Oriya})', r'\1\2', s)
+            s = regex.sub(r'(\p{Sinhala})\u200B(\p{Sinhala})', r'\1\2', s)
+            s = regex.sub(r'(\p{Tamil})\u200B(\p{Tamil})', r'\1\2', s)
+            s = regex.sub(r'(\p{Telugu})\u200B(\p{Telugu})', r'\1\2', s)
+    # Remove zero width non-joiner from beginning/end of words (but keep inside words).
+        if self.lv & self.char_is_zwnj:
+            s = regex.sub(r'(?:\u200C|\u200D)*\u200D\u200C(?:\u200C|\u200D)', '', s)  # remove mixed zwj, zwnj
+            s = regex.sub(r'(\u200C)\u200C+', r'\1', s)  # remove consecutive duplicates
+            s = regex.sub(r'^\u200C', '', s)
+            s = regex.sub(r'\u200C$', '', s)
+            s = regex.sub(r'\u200C(\s|\pP)', r'\1', s)
+            s = regex.sub(r'(\s|\pP)\u200C', r'\1', s)
+        # Remove zero width joiner from beginning/end of words (but keep inside words).
+        if self.lv & self.char_is_zwj:
+            s = regex.sub(r'(?:\u200C|\u200D)*\u200C\u200D(?:\u200C|\u200D)', '', s)  # remove mixed zwnj, zwj
+            s = regex.sub(r'(\u200D)\u200D+', r'\1', s)  # remove consecutive duplicates
+            s = regex.sub(r'^\u200D', '', s)
+            s = regex.sub(r'\u200D$', '', s)
+            s = regex.sub(r'\u200D(\s|\pP)', r'\1', s)
+            s = regex.sub(r'(\s|\pP)\u200D', r'\1', s)
         self.current_s = s
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
@@ -748,7 +792,7 @@ class Tokenizer:
                 return self.rec_tok_m3(m3, s, offset, 'URL', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    common_file_suffixes = "aspx?|bmp|cgi|csv|dat|docx?|eps|gif|html?|jpeg|jpg|mov|mp3|mp4|" \
+    common_file_suffixes = "aspx?|bmp|cgi|csv|dat|docx?|eps|exe|gif|html?|jpeg|jpg|mov|mp3|mp4|" \
                            "pdf|php|png|pptx?|ps|rtf|tiff|tsv|tok|txt|xlsx?|xml|zip"
     re_filename = regex.compile(r'(.*?)'
                                 r'(?<!\pL\pM*|\d|[-_.@])'  # negative lookbehind: no letters, digits, @ please
