@@ -692,8 +692,8 @@
 ::lexical alter ego ::lcode eng ::etym-lcode lat
 ::lexical anno domini ::lcode eng ::etym-lcode lat
 ::lexical ante bellum ::lcode eng ::etym-lcode lat
-::lexical a posteriori ::lcode eng ::etym-lcode lat
-::lexical a priori ::lcode eng ::etym-lcode lat
+::lexical a posteriori ::lcode eng ::etym-lcode lat ::alt-spelling +hyphen
+::lexical a priori ::lcode eng ::etym-lcode lat ::alt-spelling +hyphen
 ::lexical bona fide ::lcode eng ::etym-lcode lat
 ::lexical carpe diem ::lcode eng ::etym-lcode lat
 ::lexical casus belli ::lcode eng ::etym-lcode lat
@@ -702,8 +702,8 @@
 ::lexical coitus interruptus ::lcode eng ::etym-lcode lat
 ::lexical corpus delicti ::lcode eng ::etym-lcode lat ::plural corpora delicti
 ::lexical curriculum vitae ::lcode eng ::etym-lcode lat
-::lexical de facto ::lcode eng ::etym-lcode lat
-::lexical de jure ::lcode eng ::etym-lcode lat
+::lexical de facto ::lcode eng ::etym-lcode lat ::alt-spelling +hyphen
+::lexical de jure ::lcode eng ::etym-lcode lat ::alt-spelling +hyphen
 ::lexical deus ex machina ::lcode eng ::etym-lcode lat
 ::lexical e pluribus unum ::lcode eng ::etym-lcode lat
 ::lexical et alia ::lcode eng ::etym-lcode lat
@@ -792,19 +792,22 @@
 ::lexical 403(b) ::lcode eng
 ::lexical 457(b) ::lcode eng
 ::lexical badass ::lcode eng ::alt-spelling bad-ass; bad ass
+::lexical back to back ::lcode eng ::alt-spelling back-to-back
 ::lexical big-time ::lcode eng
 ::lexical blue-collar ::lcode eng
 ::lexical Blu-ray ::lcode eng
 ::lexical brother-in-law ::lcode eng ::plural brothers-in-law
 ::lexical by all means ::lcode eng
 ::lexical by and large ::lcode eng
-::lexical case by case ::lcode eng ::alt-spelling +hyphen
+::lexical case by case ::lcode eng ::alt-spelling +hyphen; case-to-case
 ::lexical catch-22 ::lcode eng
 ::lexical commander-in-chief ::lcode eng ::plural commanders-in-chief
 ::lexical cutting-edge ::lcode eng
 ::lexical daughter-in-law ::lcode eng ::plural daughters-in-law
+::lexical day-to-day ::lcode eng
 ::lexical d'oh ::lcode eng
 ::lexical due process ::lcode eng
+::lexical end-to-end ::lcode eng
 ::lexical every now and then ::lcode eng
 ::lexical face-to-face ::lcode eng
 ::lexical far and away ::lcode eng
@@ -818,7 +821,7 @@
 ::lexical Generation Z ::lcode eng
 ::lexical grade point average ::lcode eng ::plural +s
 ::lexical grass-roots of the army ::lcode eng ::alt-spelling grass-root
-::lexical hand in hand ::lcode eng
+::lexical hand in hand ::lcode eng ::alt-spelling +hyphen
 ::lexical hat-trick ::lcode eng
 ::lexical heart attack ::lcode eng
 ::lexical hepatitis B ::lcode eng
@@ -864,6 +867,7 @@
 ::lexical on-site ::lcode eng
 ::lexical on the fly ::lcode eng ::alt-spelling +hyphen
 ::lexical op-ed ::lcode eng
+::lexical out-of-the-box ::lcode eng
 ::lexical parent-in-law ::lcode eng ::plural parents-in-law
 ::lexical part-time ::lcode eng
 ::lexical plan B ::lcode eng
@@ -882,10 +886,11 @@
 ::lexical sister-in-law ::lcode eng ::plural sisters-in-law
 ::lexical small-scale ::lcode eng
 ::lexical smart-ass ::lcode eng ::alt-spelling smart ass; smartass; smart-a$$; smart a$$; smarta$$
+::lexical so-and-so ::lcode eng
 ::lexical so-called ::lcode eng
 ::lexical son-in-law ::lcode eng ::plural sons-in-law
 ::lexical son of a bitch ::lcode eng ::plural sons of bitches
-::lexical state-of-the-art ::lcode eng
+::lexical state-of-the-art ::lcode eng ::alt-spelling state-of-the art; state-of-art
 ::lexical stir-fry ::lcode eng
 ::lexical subprime ::lcode eng ::alt-spelling sub-prime
 ::lexical teeny-weeny ::lcode eng
@@ -896,6 +901,7 @@
 ::lexical tongue-in-cheek ::lcode eng
 ::lexical top-of-the-line ::lcode eng
 ::lexical T-shirt ::lcode eng ::plural +s
+::lexical up to date ::lcode eng ::alt-spelling up-to-date
 ::lexical vitamin A ::lcode eng
 ::lexical vitamin B ::lcode eng
 ::lexical vitamin B₁ ::lcode eng ::alt-spelling vitamin B1; vitamin B-1
