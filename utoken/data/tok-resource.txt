@@ -619,15 +619,16 @@
 
 ::lexical 14-3-3 ::sem-class protein
 
-::lexical British Columbia ::sem-class province
-::lexical Hauts-de-Seine ::sem-class province
-::lexical Inner Mongolia ::sem-class province
-::lexical New Brunswick ::sem-class province
-::lexical Newfoundland and Labrador ::sem-class province
-::lexical Nova Scotia ::sem-class province
-::lexical Prince Edward Island ::sem-class province
-::lexical Sistan-Baluchestan ::sem-class province
-::lexical West Papua ::sem-class province
+::lexical Hauts-de-Seine ::sem-class province ::country France
+::lexical Seine-Saint-Denis ::sem-class province ::country France
+::lexical British Columbia ::sem-class province ::country Canada
+::lexical New Brunswick ::sem-class province ::country Canada
+::lexical Newfoundland and Labrador ::sem-class province ::country Canada
+::lexical Nova Scotia ::sem-class province ::country Canada
+::lexical Prince Edward Island ::sem-class province ::country Canada
+::lexical Inner Mongolia ::sem-class province ::country China
+::lexical Sistan-Baluchestan ::sem-class province ::country Iran
+::lexical West Papua ::sem-class province ::country Indonesia
 
 ::lexical Agence France-Presse ::sem-class publication
 ::lexical Al Jazeera ::sem-class publication ::alt-spelling Al-Jazeera
