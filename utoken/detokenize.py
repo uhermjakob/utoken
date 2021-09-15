@@ -14,8 +14,10 @@ from pathlib import Path
 import re
 import sys
 from typing import Optional, TextIO
-import util
-from __init__ import __version__, last_mod_date
+# import util
+# from __init__ import __version__, last_mod_date
+from . import __version__, last_mod_date
+from . import util
 
 log.basicConfig(level=log.INFO)
 

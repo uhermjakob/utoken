@@ -21,10 +21,10 @@ import regex
 import sys
 from typing import Callable, List, Match, Optional, TextIO, Tuple, Type
 import unicodedata as ud
-# from . import __version__, last_mod_date
-# from . import util
-import util
-from __init__ import __version__, last_mod_date
+from . import __version__, last_mod_date
+from . import util
+# import util
+# from __init__ import __version__, last_mod_date
 
 log.basicConfig(level=log.INFO)
 
@@ -182,6 +182,7 @@ class Tokenizer:
                                    self.tokenize_filenames,
                                    self.tokenize_symbol_group,
                                    self.tokenize_hashtags_and_handles,
+                                   self.tokenize_complexes,
                                    self.tokenize_abbreviation_patterns,
                                    self.tokenize_according_to_resource_entries,
                                    self.tokenize_abbreviation_initials,
@@ -189,6 +190,7 @@ class Tokenizer:
                                    self.tokenize_english_contractions,
                                    self.tokenize_numbers,
                                    self.tokenize_lexical_according_to_resource_entries,
+                                   self.tokenize_complex_names,
                                    self.tokenize_mt_punctuation,
                                    self.tokenize_punctuation_according_to_resource_entries,
                                    self.tokenize_post_punct,
@@ -796,6 +798,36 @@ class Tokenizer:
             if m3 := self.re_hashtags_and_handles.match(s):
                 token_type = "HASHTAG" if m3.group(2)[0] == '#' else 'HANDLE'
                 return self.rec_tok_m3(m3, s, offset, token_type, line_id, chart, lang_code, ht, this_function)
+        return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
+
+    re_dash_letters_dash = regex.compile(r'.*[-−–](?:\pL\pM*)+[-−–]')
+    re_multi_dash_word = regex.compile(r'(.*?)'
+                                       r"(?<!\pL\pM*|\d|[.-−–—+]|\pL\pM*['‘’`‛])"
+                                       r'((?:\pL\pM*)+(?:[-−–](?:\pL\pM*)+){2,})'
+                                       r"(?!\pL|\pM|\d|[.-−–—+]|['‘’`‛]\pL)"
+                                       r'(.*)$')
+    cap_w = r'\p{Lu}\pM*(?:\p{Ll}\pM*)+'
+    cap_ws = cap_w + r'(?:[-−–]' + cap_w + ')*'
+    re_multi_dash_name = regex.compile(r'(.*?)'
+                                       r"(?<!\pL\pM*|\d|[.-−–—+]|\pL\pM*['‘’`‛])"
+                                       r'(' + cap_ws + '[-−–](?:de|du|e|en|et|i|la|le|upon|sur)[-−–]' + cap_ws + ')'
+                                       r"(?!(?:\pL|\pM|\d|[.-−–—+]|['‘’`‛]\pL))"
+                                       r'(.*)$')
+
+    def tokenize_complex_names(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
+                               line_id: Optional[str] = None, offset: int = 0) -> str:
+        """This tokenization step splits off (1) multi-dash names such as Stratford-upon-Avon"""
+        this_function = self.tokenize_complex_names
+        if self.lv & self.char_is_dash and self.re_dash_letters_dash.match(s):
+            if m3 := self.re_multi_dash_name.match(s):
+                token_type = "LEXICAL-N"
+                return self.rec_tok_m3(m3, s, offset, token_type, line_id, chart, lang_code, ht, this_function)
+        return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
+
+    def tokenize_complexes(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
+                           line_id: Optional[str] = None, offset: int = 0) -> str:
+        """This tokenization step splits off: ..."""
+        this_function = self.tokenize_complexes
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_number = regex.compile(r'(.*?)'                                  # excludes integers

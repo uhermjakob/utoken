@@ -37,7 +37,8 @@ setup(
                                                         'computational linguistics'],
     entry_points={
         'console_scripts': [
-            'utoken=utoken.utokenize:main'
+            'utokenize=utoken.utokenize:main',
+            'detokenize=utoken.detokenize:main'
         ],
     },
     install_requires=[

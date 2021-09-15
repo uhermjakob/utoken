@@ -11,8 +11,8 @@ import re
 import regex
 import sys
 from typing import Dict, List, Optional, Pattern
-from __init__ import __version__, last_mod_date
-
+from . import __version__, last_mod_date
+# from __init__ import __version__, last_mod_date
 
 class ResourceEntry:
     """Annotated entries for abbreviations, contractions, repairs etc."""
