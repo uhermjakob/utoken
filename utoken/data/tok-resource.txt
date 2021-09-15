@@ -90,7 +90,7 @@
 ::punct-split \ ::side both ::left-context (?:\pL\pM*|/d) ::right-context (?:\pL|/d)
 ::punct-split ~ ::side both ::left-context \pL\pM* ::right-context \pL
 ::punct-split . ::side both ::left-context (?:\p{Ll}\p{Ll}|\d|[IVXL]+) ::right-context \p{Lu}\p{Ll}
-::punct-split . ::side both ::left-context (?<!\pL|[-_.])\d+ ::right-context \pL
+::punct-split . ::side both ::left-context (?<!\pL|\d|[-_.])\d+ ::right-context \pL
 ::punct-split ؟ ::side both ::comment Arabic question mark
 ::punct-split ؛ ::side both ::comment Arabic semicolon
 ::punct-split ۔ ::side both ::comment Arabic period
@@ -726,4 +726,5 @@
 ::lexical pm.kz ::sem-class url
 ::lexical sk.kz ::sem-class url
 ::lexical x.org ::sem-class url
+::lexical 120.su ::sem-class url
 ::lexical GeoNames.Org ::sem-class url  # tricky: CamelCase
