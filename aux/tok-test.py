@@ -78,8 +78,8 @@ if __name__ == "__main__":
                 sys.stderr.write(f"Can't find file {filename}\n")
                 continue
 
-            # utokenizer.py call
-            utokenize_system_call_args = ['utokenize.py']
+            # utokenizer call
+            utokenize_system_call_args = ['python -m utoken.utokenize']
             if m := re.match(r'(?:.*\.)?([a-z]{3})$', core_filename):
                 lang_code = m.group(1)
             else:
@@ -96,9 +96,10 @@ if __name__ == "__main__":
             utokenize_system_call_args.extend(['-i', input_filename])
             utokenize_system_call_args.extend(['-o', output_filename])
             utokenize_system_call_args.extend(['-a', json_annotation_filename])
+            utokenize_system_call = ' '.join(utokenize_system_call_args)
             sys.stderr.write(f"\nutokenize.py {filename} ...\n")
             # sys.stderr.write(f"{' '.join(utokenize_system_call_args)} ...\n")
-            subprocess.run(utokenize_system_call_args)
+            subprocess.run(utokenize_system_call, shell=True)
 
             # reformat-annotation-json2dcln.py call
             reformat_system_call_args = \
