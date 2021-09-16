@@ -1467,9 +1467,9 @@ class Tokenizer:
             index += 1
         return util.join_tokens(tokens)
 
-    def tokenize_string(self, s: str, line_id: Optional[str] = None, lang_code: Optional[str] = None,
-                        ht: Optional[dict] = None, annotation_file: Optional[TextIO] = None,
-                        annotation_format: Optional[str] = None) -> str:
+    def utokenize_string(self, s: str, line_id: Optional[str] = None, lang_code: Optional[str] = None,
+                         ht: Optional[dict] = None, annotation_file: Optional[TextIO] = None,
+                         annotation_format: Optional[str] = None) -> str:
         self.current_orig_s = s
         self.current_s = s
         self.lv = 0  # line_char_type_vector
@@ -1501,8 +1501,8 @@ class Tokenizer:
 
     re_id_snt = re.compile(r'(\S+)(\s+)(\S|\S.*\S)\s*$')
 
-    def tokenize_lines(self, ht: dict, input_file: TextIO, output_file: TextIO, annotation_file: Optional[TextIO],
-                       annotation_format: Optional[str] = None, lang_code: Optional[str] = None):
+    def utokenize_lines(self, ht: dict, input_file: TextIO, output_file: TextIO, annotation_file: Optional[TextIO],
+                        annotation_format: Optional[str] = None, lang_code: Optional[str] = None):
         """Apply normalization/cleaning to a file (or STDIN/STDOUT)."""
         line_number = 0
         for line in input_file:
@@ -1512,13 +1512,13 @@ class Tokenizer:
                 if m := self.re_id_snt.match(line):
                     line_id, line_id_sep, core_line = m.group(1, 2, 3)
                     output_file.write(line_id + line_id_sep
-                                      + self.tokenize_string(core_line, line_id, lang_code, ht,
-                                                             annotation_file, annotation_format)
+                                      + self.utokenize_string(core_line, line_id, lang_code, ht,
+                                                              annotation_file, annotation_format)
                                       + "\n")
             else:
                 line_id = str(line_number)
-                output_file.write(self.tokenize_string(line.rstrip("\n"), line_id, lang_code, ht,
-                                                       annotation_file, annotation_format)
+                output_file.write(self.utokenize_string(line.rstrip("\n"), line_id, lang_code, ht,
+                                                        annotation_file, annotation_format)
                                   + "\n")
         if annotation_file and annotation_format == 'json':
             annotation_file.write('[' + ',\n'.join(self.annotation_json_elements) + ']\n')
@@ -1591,8 +1591,8 @@ def main():
         if lang_code:
             log_info += f'  ISO 639-3 language code: {lang_code}'
         log.info(log_info)
-    tok.tokenize_lines(ht, input_file=args.input, output_file=args.output, annotation_file=args.annotation_file,
-                       annotation_format=args.annotation_format, lang_code=lang_code)
+    tok.utokenize_lines(ht, input_file=args.input, output_file=args.output, annotation_file=args.annotation_file,
+                        annotation_format=args.annotation_format, lang_code=lang_code)
     if (log.INFO >= log.root.level) and (tok.n_lines_tokenized >= 1000):
         sys.stderr.write('\n')
     # Log some change stats.
