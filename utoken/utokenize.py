@@ -811,7 +811,7 @@ class Tokenizer:
                 return self.rec_tok_m3(m3, s, offset, 'URL', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    common_file_suffixes = "aspx?|bmp|cgi|csv|dat|docx?|eps|exe|gif|html?|jpeg|jpg|mov|mp3|mp4|" \
+    common_file_suffixes = "app|aspx?|bmp|cgi|csv|dat|docx?|eps|exe|gif|html?|jpeg|jpg|mov|mp3|mp4|" \
                            "pdf|php|png|pptx?|ps|rtf|tiff|tsv|tok|txt|xlsx?|xml|zip"
     re_filename = regex.compile(r'(.*?)'
                                 r'(?<!\pL\pM*|\d|[-_.@])'  # negative lookbehind: no letters, digits, @ please
