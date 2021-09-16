@@ -100,6 +100,8 @@
 ::punct-split ± ::side both ::comment plus-minus sign
 ::punct-split ° ::side both ::group True ::comment degree sign
 ::punct-split º ::side both ::comment masculine ordinal indicator, sometimes used as degree sign
+::punct-split ・ ::side both ::group True ::comment Katakana middle dot
+::punct-split ¬ ::side both
 
 # split off punctuation from start of token
 ::punct-split ' ::side start ::group True
@@ -122,7 +124,6 @@
 ::punct-split , ::side start
 ::punct-split • ::side start
 ::punct-split ※ ::side start
-::punct-split ¬ ::side start
 ::punct-split · ::side start
 ::punct-split ، ::side start
 ::punct-split < ::side start ::right-context (?:\d|\pL)
@@ -171,6 +172,11 @@
 ::punct-split † ::side end
 ::punct-split ′ ::side end ::comment prime
 ::punct-split ″ ::side end ::comment double prime
+
+::repair & gt ; ::target &gt; ::lcode eng ::problem previous tokenizer
+::repair & lt ; ::target &lt; ::lcode eng ::problem previous tokenizer
+::repair & quot ; ::target &quot; ::lcode eng ::problem previous tokenizer
+::repair & amp ; ::target &amp; ::lcode eng ::problem previous tokenizer
 
 ::abbrev AT&T ::sem-class company
 ::abbrev ES&S ::sem-class company
@@ -705,11 +711,11 @@
 ::lexical =) ::token-category symbol ::comment equal smile emoji ::last-char-repeatable True
 ::lexical :( ::token-category symbol ::comment frown emoji ::right-context-not (?:\pL|\d)
 ::lexical :'( ::token-category symbol ::comment cry emoji ::right-context-not (?:\pL|\d)
-::lexical °C ::token-category symbol ::comment degree celsius ::alt-spelling ºC; °С; ºС
+::lexical °C ::token-category symbol ::comment degree celsius ::alt-spelling ºC; °С; ºС; ℃
 ::lexical :D ::token-category symbol ::comment emoji grin ::case-sensitive True
 ::lexical :-D ::token-category symbol ::comment emoji nose grin ::case-sensitive True
 ::lexical =D ::token-category symbol ::comment emoji equal grin ::case-sensitive True
-::lexical °F ::token-category symbol ::comment degree fahrenheit ::alt-spelling ºF
+::lexical °F ::token-category symbol ::comment degree fahrenheit ::alt-spelling ºF; ℉
 ::lexical :facepalm: ::token-category symbol ::comment emoji
 ::lexical :headbang: ::token-category symbol ::comment emoji
 ::lexical :lol: ::token-category symbol ::comment emoji
