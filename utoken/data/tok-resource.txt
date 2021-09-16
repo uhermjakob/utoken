@@ -684,7 +684,7 @@
 ::lexical Middle East ::sem-class world-region
 ::lexical Sub-Saharan Africa ::sem-class world-region
 
-::lexical E. coli ::taxon species ::misspelling E.coli
+::lexical E. coli ::taxon species
 ::lexical SARS-CoV-2 ::taxon species
 
 ::lexical http:// ::token-category URL-prefix

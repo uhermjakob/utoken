@@ -86,7 +86,7 @@
 ::abbrev etc. ::exp et cetera; og så videre ::lcode dan
 ::abbrev evt. ::exp eventuelt ::lcode dan
 ::abbrev f. ::exp født; og følgende; for ::lcode dan
-::abbrev f. Kr. ::exp før Kristus ::lcode dan
+::abbrev f.Kr. ::exp før Kristus ::lcode dan
 ::abbrev f.eks. ::exp for eksempel ::lcode dan
 ::abbrev f.m. ::exp foregående måned ::lcode dan
 ::abbrev f.o. ::exp fra oven ::lcode dan

@@ -6,8 +6,9 @@
 ::repair Тengrinews.kzтілшісі ::target Tengrinews.kz тілшісі ::lcode kaz ::comment Cyrillic Т
 
 ::abbrev ж. ::exp жыл ::lcode kaz ::eng year ::left-context \d\s*
-::abbrev ж.т. ::lcode kaz ::eng born in
+::abbrev ж.т. ::lcode kaz ::eng born in ::case-sensitive True
 ::abbrev т.б. ::lcode kaz ::eng etc.
+::abbrev т.б.б. ::lcode kaz ::eng etc.
 ::abbrev г. ::lcode kaz ::eng year
 ::abbrev Қ. ::lcode kaz
 ::abbrev Ә. ::lcode kaz

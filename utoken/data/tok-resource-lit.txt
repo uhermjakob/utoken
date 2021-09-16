@@ -176,6 +176,7 @@
 ::abbrev moksl. ::exp mokslinis ::lcode lit
 ::abbrev mokyt. ::exp mokytojas ::lcode lit
 ::abbrev mot. ::exp moteris ::lcode lit
+::abbrev m.pr.m.e. ::exp m. prieš mūsų erą ::lcode lit ::eng BC
 ::abbrev ms. ::exp mįslė ::lcode lit
 ::abbrev mst. ::exp miestas ::lcode lit
 ::abbrev mstl. ::exp miestelis ::lcode lit
@@ -194,7 +195,7 @@
 ::abbrev orig. ::exp original ::lcode lit
 ::abbrev p. ::exp pietūs; ponas ::lcode lit
 ::abbrev p.d. ::exp pašto dėžutė ::lcode lit
-::abbrev p.m.e. ::exp prieš mūsų erą ::lcode lit
+::abbrev p.m.e. ::exp prieš mūsų erą ::lcode lit ::alt-spelling pr.m.e. ::eng BC
 ::abbrev pan. ::exp ir panašiai ::lcode lit
 ::abbrev pan. ::exp panašiai ::lcode lit
 ::abbrev parl. ::exp parlamentas ::lcode lit

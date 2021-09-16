@@ -200,7 +200,7 @@
 
 ::abbrev Adm. ::exp Admiral ::lcode eng ::sem-class military-rank
 ::abbrev Brig. ::exp Brigadier ::lcode eng ::sem-class military-rank
-::abbrev Brig.Gen. ::exp Brigadier General ::lcode eng ::sem-class military-rank ::alt-spelling Brig.-Gen.; Brig. Gen.
+::abbrev Brig. Gen. ::exp Brigadier General ::lcode eng ::sem-class military-rank ::alt-spelling Brig.-Gen.
 ::abbrev Capt. ::exp Captain ::lcode eng ::sem-class military-rank
 ::abbrev Cmdr. ::exp Commander ::lcode eng ::sem-class military-rank
 ::abbrev Col. ::exp Colonel ::lcode eng ::sem-class military-rank
@@ -210,10 +210,10 @@
 ::abbrev Ens. ::exp Ensign ::lcode eng ::sem-class military-rank
 ::abbrev Gen. ::exp General ::lcode eng ::sem-class military-rank
 ::abbrev Lt. ::exp Lieutenant ::lcode eng ::sem-class military-rank ::case-sensitive True
-::abbrev Lt.Col. ::exp Lieutenant Colonel ::lcode eng ::sem-class military-rank ::alt-spelling Lt.-Col.; Lt. Col.
-::abbrev Lt.Gen. ::exp Lieutenant General ::lcode eng ::sem-class military-rank ::alt-spelling Lt.-Gen.; Lt. Gen.
+::abbrev Lt. Col. ::exp Lieutenant Colonel ::lcode eng ::sem-class military-rank ::alt-spelling Lt.-Col.
+::abbrev Lt. Gen. ::exp Lieutenant General ::lcode eng ::sem-class military-rank ::alt-spelling Lt.-Gen.
 ::abbrev Maj. ::exp Major ::lcode eng ::sem-class military-rank
-::abbrev Maj.Gen. ::exp Major General ::lcode eng ::sem-class military-rank ::alt-spelling Maj.-Gen.; Maj. Gen.
+::abbrev Maj. Gen. ::exp Major General ::lcode eng ::sem-class military-rank ::alt-spelling Maj.-Gen.
 ::abbrev Pfc. ::exp Private First Class ::lcode eng ::sem-class military-rank
 ::abbrev PV1 ::exp Private ::lcode eng ::sem-class military-rank
 ::abbrev PV2 ::exp Private Second Class ::lcode eng ::sem-class military-rank
@@ -278,9 +278,7 @@
 ::abbrev Rep. ::exp Representative ::lcode eng ::sem-class pre-name-title ::case-sensitive True
 ::abbrev Reps. ::exp Representatives ::lcode eng ::sem-class pre-name-title
 ::abbrev Rev. ::exp Reverend ::lcode eng ::sem-class pre-name-title ::case-sensitive True
-::abbrev Rt Hon. ::exp Right Honorable ::lcode eng ::sem-class pre-name-title
-::abbrev Rt. Hon. ::exp Right Honorable ::lcode eng ::sem-class pre-name-title
-::abbrev Rt.Hon. ::exp Right Honorable ::lcode eng ::sem-class pre-name-title
+::abbrev Rt Hon. ::exp Right Honorable ::lcode eng ::sem-class pre-name-title ::alt-spelling Rt. Hon.
 ::abbrev Sen. ::exp Senator ::lcode eng ::sem-class pre-name-title
 ::abbrev Sens. ::exp Senators ::lcode eng ::sem-class pre-name-title
 ::abbrev Smt. ::exp Shrimati ::lcode eng ::sem-class pre-name-title ::comment Indian equivalent of Mrs.
@@ -351,9 +349,7 @@
 ::abbrev NPT ::exp Non-Proliferation Treaty ::lcode eng ::sem-class treaty
 
 ::abbrev d. ::exp day ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
-::abbrev fl oz ::exp fluid ounce ::lcode eng ::sem-class unit-of-measurement
-::abbrev fl. oz. ::exp fluid ounce ::lcode eng ::sem-class unit-of-measurement
-::abbrev fl.oz. ::exp fluid ounce ::lcode eng ::sem-class unit-of-measurement
+::abbrev fl.oz. ::exp fluid ounce ::lcode eng ::sem-class unit-of-measurement ::alt-spelling fl oz
 ::abbrev h ::exp hour ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
 ::abbrev hr ::exp hour ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True
 ::abbrev hr. ::exp hour ::lcode eng ::sem-class unit-of-measurement ::case-sensitive True
@@ -393,11 +389,11 @@
 ::abbrev adj. ::exp adjective ::lcode eng
 ::abbrev adv. ::exp adverb ::lcode eng
 ::abbrev A&E ::exp accident and emergency department ::lcode eng
-::abbrev A.F.P. ::exp Agence France-Presse ::lcode eng ::misspelling A. F. P.; A. F. P
+::abbrev A.F.P. ::exp Agence France-Presse ::lcode eng ::misspelling A. F. P
 ::abbrev a2k ::exp able to know ::lcode eng
 ::abbrev a/k/a ::exp also known as ::lcode eng
 ::abbrev al. ::exp alii ::lcode eng ::case-sensitive True
-::abbrev a.m. ::exp ante meridiem ::lcode eng
+::abbrev a.m. ::exp ante meridiem ::lcode eng ::case-sensitive True
 ::abbrev approx. ::exp approximately ::lcode eng
 ::abbrev Apt. ::exp apartment ::lcode eng ::case-sensitive True
 ::abbrev asap ::exp as soon as possible ::lcode eng
@@ -496,7 +492,7 @@
 ::abbrev Ph.D. ::exp doctor of philosophy ::lcode eng ::alt-spelling PhD; Ph. D.
 ::abbrev pic ::exp picture ::lcode eng
 ::abbrev Pl. ::lcode eng
-::abbrev p.m. ::exp post meridiem ::lcode eng
+::abbrev p.m. ::exp post meridiem ::lcode eng ::case-sensitive True
 ::abbrev POW ::exp prisoner of war ::lcode eng
 ::abbrev p.s. ::exp post scriptum ::lcode eng
 ::abbrev Q&A ::exp question and answer ::lcode eng

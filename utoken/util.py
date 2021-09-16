@@ -12,7 +12,7 @@ import regex
 import sys
 from typing import Dict, List, Optional, Pattern
 from . import __version__, last_mod_date
-# from __init__ import __version__, last_mod_date
+
 
 class ResourceEntry:
     """Annotated entries for abbreviations, contractions, repairs etc."""
@@ -104,8 +104,23 @@ class ResourceDict:
                 return m1.group(1) + m2.group(1)
         return line
 
-    @staticmethod
-    def expand_resource_lines(orig_line: str) -> List[str]:
+    def abbrev_space_expansions(self, abbrev: str) -> List[str]:
+        """'e.g.' -> ['e.g.', 'e. g.']"""
+        if m3 := regex.match(r'((?:\pL\pM*|\d|[-_])+) ?([.·]) ?((?:\pL|\d).*)$', abbrev):
+            first_elem = m3.group(1)
+            punct = m3.group(2)
+            result_list = []
+            for sub_expansion in self.abbrev_space_expansions(m3.group(3)):
+                result_list.append(first_elem + punct + sub_expansion)
+                if punct in '·':
+                    result_list.append(first_elem + ' ' + punct + ' ' + sub_expansion)
+                else:
+                    result_list.append(first_elem + punct + ' ' + sub_expansion)
+            return result_list
+        else:
+            return [abbrev]
+
+    def expand_resource_lines(self, orig_line: str) -> List[str]:
         lines = [orig_line]
         # expand resource entry with apostophe to alternatives with closely related characters (e.g. single quotes)
         apostrophe = "'"
@@ -167,11 +182,24 @@ class ResourceDict:
                     # remove ::alt-spelling ...
                     new_line = re.sub(r'::alt-spelling\s+(?:\S|\S.*\S)\s*(::\S.*|)$', r'\1', new_line)
                     lines.append(new_line)
+        # expand resource entry with extra spaces in punctuation e.g. -> e. g.
+        n_lines = len(lines)
+        for line in lines[0:n_lines]:
+            if m3 := regex.match(r'::(abbrev|lexical)\s+(\S|\S.*?\S)(\s+::\S.*)$', line):
+                abbreviation = m3.group(2)  # Could also be lexical item such as "St. Petersburg"
+                if regex.match(r'.*[.·] ?\S', abbreviation) \
+                        and slot_value_in_double_colon_del_list(line, 'sem-class') != 'url'\
+                        and (line.startswith('::abbrev ') or line.startswith('::lexical ')):
+                    for expanded_abbreviation in self.abbrev_space_expansions(abbreviation):
+                        if expanded_abbreviation != abbreviation:
+                            new_line = f'::repair {expanded_abbreviation} ::target {abbreviation}{m3.group(3)}'
+                            lines.append(new_line)
+                            # log.info(f'Expanding {abbreviation} TO {expanded_abbreviation}')
         # expand resource entry with ::last-char-repeatable
         n_lines = len(lines)
         for line in lines[0:n_lines]:
             if slot_value_in_double_colon_del_list(line, 'last-char-repeatable'):
-                 if m3 := regex.match(r'(::\S+\s+)(\S|\S.*?\S)(\s+::\S.*)$', line):
+                if m3 := regex.match(r'(::\S+\s+)(\S|\S.*?\S)(\s+::\S.*)$', line):
                     token = m3.group(2)
                     last_char = token[-1]
                     for _ in range(127):
@@ -477,12 +505,13 @@ class DetokenizationResource:
                 line_number = 0
                 n_warnings = 0
                 n_entries = 0
+                resource_dict = ResourceDict()
                 for orig_line in f_in:
                     line_number += 1
-                    line_without_comment = ResourceDict.line_without_comment(orig_line)
+                    line_without_comment = resource_dict.line_without_comment(orig_line)
                     if line_without_comment.strip() == '':
                         continue
-                    lines = ResourceDict.expand_resource_lines(line_without_comment)
+                    lines = resource_dict.expand_resource_lines(line_without_comment)
                     for line in lines:
                         if re.match(r'^\uFEFF?\s*(?:#.*)?$', line):  # ignore empty or comment line
                             continue
