@@ -32,12 +32,14 @@ _The ouput below is in the more human-friendly annotation format. Default format
 
 ### Usage
 <details>
-<summary>utokenize.py</summary>
-  
+<summary>utokenize</summary>
+
+Note: Please make sure that your $PYTHONPATH includes the directory in which this README file resides.
 ```
-utokenize.py [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-a ANNOTATION-FILENAME] [--annotation_format ANNOTATION_FORMAT]
-             [-p PROFILE-FILENAME] [--profile_scope PROFILE_SCOPE] [-d DATA_DIRECTORY] [--lc LANGUAGE-CODE] [-f] [-v] [--simple]
-             [--version]
+python -m utoken.utokenize [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-a ANNOTATION-FILENAME] 
+                           [--annotation_format ANNOTATION_FORMAT] [-p PROFILE-FILENAME] [--profile_scope PROFILE_SCOPE] 
+                           [-d DATA_DIRECTORY] [--lc LANGUAGE-CODE] [-f] [-v] [-c] [--simple] [--version]
+  
 optional arguments:
   -h, --help            show this help message and exit
   -i INPUT-FILENAME, --input INPUT-FILENAME
@@ -58,16 +60,18 @@ optional arguments:
   -f, --first_token_is_line_id
                         First token is line ID (and will be exempt from any tokenization)
   -v, --verbose         write change log etc. to STDERR
+  -c, --chart           build annotation chart, even without annotation output
   --simple              prevent MT-style output (e.g. @-@). Note: can degrade any detokinzation
   --version             show program's version number and exit
 ```
 </details>
 
 <details>
-<summary>detokenize.py</summary>
+<summary>detokenize</summary>
 
-  ```
-detokenize.py [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-d DATA_DIRECTORY] [--lc LANGUAGE-CODE] [-f] [-v] [--version]
+Note: Please make sure that your $PYTHONPATH includes the directory in which this README file resides.
+```
+python -m utoken.detokenize [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-d DATA_DIRECTORY] [--lc LANGUAGE-CODE] [-f] [-v] [--version]
 optional arguments:
   -h, --help            show this help message and exit
   -i INPUT-FILENAME, --input INPUT-FILENAME
@@ -91,7 +95,7 @@ optional arguments:
 * More information in data files rather than program code.
 * Written in Python.
 * Maintains a chart data structure with detailed additional information that can also serve as a basis for further processing.
-* Preliminary (implementation started in mid-July 2021, current version 0.0.5)
+* Preliminary (implementation started in mid-July 2021, current version 0.0.7)
 
 ### Limitations
 * Currently excluded: no-space scripts like Chinese
@@ -212,10 +216,15 @@ Exmaples of resource entries:
 <summary>Sample call of utoken from another Python program</summary>
 
 ### Sample call of utoken from another Python program
-Script:
-```
-import utokenize
 
+Note: Please make sure that your $PYTHONPATH includes the directory in which this README file resides.
+  
+Script sample-utokenize-use.py:
+```
+#!/usr/bin/env python3
+  
+from utoken import utokenize
+  
 tok = utokenize.Tokenizer(lang_code='eng')  # Initialize tokenizer, load resources
 print(tok.tokenize_string("Dont worry!"))
 print(tok.tokenize_string("Sold,for $9,999.99 on ebay.com."))
@@ -224,5 +233,21 @@ Output:
 ```
 Do n't worry !
 Sold , for $ 9,999.99 on ebay.com .
+```
+  
+Script sample-detokenize-use.py:
+```
+#!/usr/bin/env python3
+
+from utoken import detokenize
+
+detok = detokenize.Detokenizer(lang_code='eng')  # Initialize detokenizer, load resources
+print(detok.detokenize_string("Do n't worry !"))
+print(detok.detokenize_string("Sold , for $ 9,999.99 on ebay.com ."))
+```
+Output:
+```
+Don't worry!
+Sold, for $9,999.99 on ebay.com.
 ```
 </details>
