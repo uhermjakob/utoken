@@ -60,7 +60,8 @@ if __name__ == "__main__":
                                'swa.txt',
                                'swe.txt',
                                'tgl.txt',
-                               'tur.txt'])
+                               'tur.txt',
+                               'zul.txt'])
         elif filename == 'set3':
             filenames2.extend(['ELRC_wikipedia_health.tgl.txt',
                                'OPUS_ParaCrawl_v7_1.tgl.txt'])
