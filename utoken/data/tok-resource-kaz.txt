@@ -1,5 +1,6 @@
 ::punct-split : ::side both ::lcode kaz ::left-context \pL\pM*\pL\pM* ::right-context \pL\pM*\pL
 ::punct-split - ::side both ::lcode kaz ::right-context (?:і|ы|сі)\b
+::punct-split . ::side start ::left-context-not \S ::right-context \pL\pM*\pL
 
 ::repair Tengrinews.kzтілшісі ::target Tengrinews.kz тілшісі ::lcode kaz
 ::repair Тengrinews.kzтілшісі ::target Tengrinews.kz тілшісі ::lcode kaz ::comment Cyrillic Т

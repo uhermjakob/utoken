@@ -264,8 +264,8 @@
 ::abbrev sąs. ::exp sąsiuvinis ::lcode lit
 ::abbrev sąsk. ::exp sąskaita ::lcode lit
 ::abbrev t.p. ::exp ir taip pat ::lcode lit
-::abbrev t.t. ::exp ir taip toliau ::lcode lit
-::abbrev t.y. ::exp tai yra ::lcode lit
+::abbrev t.t. ::exp ir taip toliau ::lcode lit ::alt-spelling t. t.
+::abbrev t.y. ::exp tai yra ::lcode lit ::alt-spelling t. y.
 ::abbrev teatr. ::lcode lit
 ::abbrev tech. ::lcode lit
 ::abbrev techn. ::exp technika ::lcode lit

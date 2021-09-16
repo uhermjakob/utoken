@@ -1,3 +1,5 @@
+::punct-split . ::side both ::left-context \pL\pM*\pL\pM* ::right-context [-\/]*\pL\pM*\pL
+
 ::abbrev د.ئۇ.ق. ::exp دۇنيا ئۇيغۇر قۇرۇلتىيى ::lcode uig ::comment World Uyghur Congress
 ::abbrev ب.د.ت ::exp بىرلەشكەن دۆلەتلەر تەشكىلاتى ::lcode uig ::comment United Nations
 ::abbrev ل. ::lcode uig ::eng L.
