@@ -21,25 +21,29 @@ log.basicConfig(level=log.INFO)
 
 
 class Detokenizer:
-    def __init__(self, lang_code: Optional[str] = None, data_dir: Optional[Path] = None):
+    def __init__(self, lang_code: Optional[str] = None, data_dir: Optional[Path] = None,
+                 verbose: Optional[bool] = False):
         self.number_of_lines = 0
         self.lang_code: Optional[str] = lang_code
         lang_codes = [lang_code] if lang_code else []
         self.first_token_is_line_id_p = False
         if data_dir is None:
             data_dir = self.default_data_dir()
+        self.verbose: bool = verbose
         self.detok_resource = util.DetokenizationResource()
         # Load detokenization resource entries
-        self.detok_resource.load_resource(data_dir / f'detok-resource.txt')
+        self.detok_resource.load_resource(data_dir / f'detok-resource.txt', verbose=self.verbose)
         # Load tokenization resource entries for language specified by 'lang_code' (to harvest a few contractions)
         if lang_code:
-            self.detok_resource.load_resource(data_dir / f'tok-resource-{lang_code}.txt', lang_codes)
+            self.detok_resource.load_resource(data_dir / f'tok-resource-{lang_code}.txt', lang_codes,
+                                              verbose=self.verbose)
         # Load language-independent tokenization resource entries
-        self.detok_resource.load_resource(data_dir / f'tok-resource.txt')
+        self.detok_resource.load_resource(data_dir / f'tok-resource.txt', verbose=self.verbose)
         # Load any other tokenization resource entries, for the time being just (global) English
         for lcode in ['eng-global']:
             if lcode != lang_code:
-                self.detok_resource.load_resource(data_dir / f'tok-resource-{lcode}.txt', lang_codes)
+                self.detok_resource.load_resource(data_dir / f'tok-resource-{lcode}.txt', lang_codes,
+                                                  verbose=self.verbose)
         # Now that all resource files have been loaded, form regex for all marked-up attachment elements
         self.detok_resource.build_markup_attach_re()
         attach_tag = self.detok_resource.attach_tag
@@ -100,7 +104,7 @@ class Detokenizer:
                                         flags=re.IGNORECASE)
     re_starts_w_close_xml_tag = re.compile(r'</[a-z][-_a-z0-9]*>', flags=re.IGNORECASE)
 
-    def detokenize_string(self, s: str, lang_code: Optional[str], _line_id: Optional[str]) -> str:
+    def detokenize_string(self, s: str, lang_code: Optional[str] = None, _line_id: Optional[str] = None) -> str:
         markup_attach_re = self.detok_resource.markup_attach_re
         attach_tag = self.detok_resource.attach_tag
         s = s.strip()
@@ -193,7 +197,7 @@ def main():
     args = parser.parse_args()
     lang_code = args.lc
     data_dir = Path(args.data_directory) if args.data_directory else None
-    detok = Detokenizer(lang_code=lang_code, data_dir=data_dir)
+    detok = Detokenizer(lang_code=lang_code, data_dir=data_dir, verbose=args.verbose)
     detok.first_token_is_line_id_p = bool(args.first_token_is_line_id)
 
     # Open any input or output files. Make sure utf-8 encoding is properly set (in older Python3 versions).
