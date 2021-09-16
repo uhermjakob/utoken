@@ -96,6 +96,10 @@
 ::punct-split ۔ ::side both ::comment Arabic period
 ::punct-split § ::side both ::comment section sign
 ::punct-split ¶ ::side both ::comment pillcrow
+::punct-split × ::side both ::comment multiplication sign
+::punct-split ± ::side both ::comment plus-minus sign
+::punct-split ° ::side both ::group True ::comment degree sign
+::punct-split º ::side both ::comment masculine ordinal indicator, sometimes used as degree sign
 
 # split off punctuation from start of token
 ::punct-split ' ::side start ::group True
@@ -108,6 +112,7 @@
 ::punct-split ~ ::side start ::group True
 ::punct-split _ ::side start ::group True
 ::punct-split | ::side start ::group True
+::punct-split ¦ ::side start ::group True
 ::punct-split / ::side start ::group True ::right-context \pL
 ::punct-split * ::side start ::right-context (?:\pL|['‘])  # don't group, because of ****ing
 ::punct-split - ::side start ::group True ::right-context -*\pL\pM*\pL
@@ -116,6 +121,8 @@
 ::punct-split : ::side start ::left-context \d ::right-context \d+[-,]\d  # Genesis 1:26-28
 ::punct-split , ::side start
 ::punct-split • ::side start
+::punct-split ※ ::side start
+::punct-split ¬ ::side start
 ::punct-split · ::side start
 ::punct-split ، ::side start
 ::punct-split < ::side start ::right-context (?:\d|\pL)
@@ -124,6 +131,7 @@
 ::punct-split � ::side start
 ::punct-split † ::side start
 ::punct-split ″ ::side start ::comment double prime
+::punct-split . ::side start ::left-context \s ::right-context (?:18|19|20)\d\d(?!\d)  # .year -- but not .45 caliber
 
 # split off punctuation from end of token
 ::punct-split ' ::side end ::group True
@@ -161,6 +169,7 @@
 ::punct-split \ ::side end ::left-context (?:\d|\pL\pM*)
 ::punct-split � ::side end
 ::punct-split † ::side end
+::punct-split ′ ::side end ::comment prime
 ::punct-split ″ ::side end ::comment double prime
 
 ::abbrev AT&T ::sem-class company
@@ -696,13 +705,16 @@
 ::lexical =) ::token-category symbol ::comment equal smile emoji ::last-char-repeatable True
 ::lexical :( ::token-category symbol ::comment frown emoji ::right-context-not (?:\pL|\d)
 ::lexical :'( ::token-category symbol ::comment cry emoji ::right-context-not (?:\pL|\d)
+::lexical °C ::token-category symbol ::comment degree celsius ::alt-spelling ºC; °С; ºС
 ::lexical :D ::token-category symbol ::comment emoji grin ::case-sensitive True
 ::lexical :-D ::token-category symbol ::comment emoji nose grin ::case-sensitive True
 ::lexical =D ::token-category symbol ::comment emoji equal grin ::case-sensitive True
+::lexical °F ::token-category symbol ::comment degree fahrenheit ::alt-spelling ºF
 ::lexical :facepalm: ::token-category symbol ::comment emoji
 ::lexical :headbang: ::token-category symbol ::comment emoji
 ::lexical :lol: ::token-category symbol ::comment emoji
 ::lexical \m/ ::token-category symbol ::comment rock out emoji
+::lexical Nº ::token-category symbol ::alt-spelling N° ::comment variant of numero sign (№)
 ::lexical :P ::token-category symbol ::comment tongue-out emoji
 ::lexical %pw ::token-category symbol
 ::lexical :rofl: ::token-category symbol ::comment emoji
