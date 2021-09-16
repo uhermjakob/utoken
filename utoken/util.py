@@ -503,6 +503,7 @@ class DetokenizationResource:
                                                                               'example',
                                                                               'except',
                                                                               'group',
+                                                                              'last-char-repeatable',
                                                                               'lcode',
                                                                               'lcode-not',
                                                                               'left-context',
