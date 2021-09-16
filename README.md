@@ -93,10 +93,7 @@ Note: Please make sure that your $PYTHONPATH includes the directory in which thi
 <details>
 <summary>utokenize_string (Python function call to tokenize a string)</summary>
   
-Script sample-utokenize-use.py:
 ```
-#!/usr/bin/env python3
-  
 from utoken import utokenize
   
 tok = utokenize.Tokenizer(lang_code='eng')  # Initialize tokenizer, load resources
@@ -114,10 +111,7 @@ Note: Please make sure that your $PYTHONPATH includes the directory in which thi
 <details>
 <summary>detokenize_string (Python function call to detokenize a string)</summary>
  
-Script sample-detokenize-use.py:
 ```
-#!/usr/bin/env python3
-
 from utoken import detokenize
 
 detok = detokenize.Detokenizer(lang_code='eng')  # Initialize detokenizer, load resources
