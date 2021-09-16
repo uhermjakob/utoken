@@ -281,6 +281,8 @@ class Tokenizer:
         self.char_is_attach_tag = bit_vector
         bit_vector = bit_vector << 1
         self.char_is_lower_upper_unstable = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_miscode_elem = bit_vector
         self.char_is_dash_or_digit = self.char_is_dash | self.char_is_digit
         self.range_init_char_type_vector_dict()
         self.chart_p: bool = False
@@ -426,6 +428,10 @@ class Tokenizer:
         # Zero width joiner
         self.char_type_vector_dict['\u200D'] \
             = self.char_type_vector_dict.get('\u200D', 0) | self.char_is_zwj
+        # Miscoding elements, incl. unusual punctuation
+        for char in "¦§¨±Ã":
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_miscode_elem
         # Apostrophe (incl. right single quotation mark)
         for char in "'’":
             self.char_type_vector_dict[char] \
@@ -682,6 +688,19 @@ class Tokenizer:
             if chart:
                 chart.s = s
 
+        # repair ¡¦ etc. Fairly ad hoc for now. Opportunity for more general repair solution.
+        if self.lv & self.char_is_miscode_elem:
+            s = re.sub('¡¦', '’', s)
+            s = re.sub('¡§', '“', s)
+            s = re.sub('¡¨', '”', s)
+            s = re.sub('Âº', 'º', s)
+            s = re.sub('Ã±', 'ñ', s)
+            s = re.sub('Ãº', 'ú', s)
+            s = re.sub('Ä±', 'ı', s)  # Ä = C4, ± = B1, UTF-8 xC4B1 = U+0131 = ı
+            if chart:
+                chart.s0 = s
+                chart.s = s
+
         # repair some control characters in the C1 Control black (assuming they are still unconverted Windows1252),
         # delete some control characters, replace non-standard spaces with ASCII space
         if self.lv & self.char_is_deletable_control_character:
@@ -732,9 +751,10 @@ class Tokenizer:
             s = regex.sub(r'(\p{Sinhala})\u200B(\p{Sinhala})', r'\1\2', s)
             s = regex.sub(r'(\p{Tamil})\u200B(\p{Tamil})', r'\1\2', s)
             s = regex.sub(r'(\p{Telugu})\u200B(\p{Telugu})', r'\1\2', s)
-    # Remove zero width non-joiner from beginning/end of words (but keep inside words).
+        # Remove zero width non-joiner from beginning/end of words (but keep inside words).
         if self.lv & self.char_is_zwnj:
-            s = regex.sub(r'(?:\u200C|\u200D)*\u200D\u200C(?:\u200C|\u200D)', '', s)  # remove mixed zwj, zwnj
+            s = regex.sub(r'(?:\u200C|\u200D)*\u200D\u200C(?:\u200C|\u200D)*', '', s)  # remove mixed zwj, zwnj
+            s = regex.sub(r'(?:\u200C|\u200D)*\u200C\u200D(?:\u200C|\u200D)*', '', s)  # remove mixed zwnj, zwj
             s = regex.sub(r'(\u200C)\u200C+', r'\1', s)  # remove consecutive duplicates
             s = regex.sub(r'^\u200C', '', s)
             s = regex.sub(r'\u200C$', '', s)
@@ -742,7 +762,6 @@ class Tokenizer:
             s = regex.sub(r'(\s|\pP)\u200C', r'\1', s)
         # Remove zero width joiner from beginning/end of words (but keep inside words).
         if self.lv & self.char_is_zwj:
-            s = regex.sub(r'(?:\u200C|\u200D)*\u200C\u200D(?:\u200C|\u200D)', '', s)  # remove mixed zwnj, zwj
             s = regex.sub(r'(\u200D)\u200D+', r'\1', s)  # remove consecutive duplicates
             s = regex.sub(r'^\u200D', '', s)
             s = regex.sub(r'\u200D$', '', s)
@@ -797,7 +816,7 @@ class Tokenizer:
     re_filename = regex.compile(r'(.*?)'
                                 r'(?<!\pL\pM*|\d|[-_.@])'  # negative lookbehind: no letters, digits, @ please
                                 r"((?:\pL\pM*|\d|[/])(?:(?:\pL\pM*|\d|[-_./])*(?:\pL\pM*|\d))?\.(?:"
-                                    + common_file_suffixes + "))"
+                                + common_file_suffixes + "))"
                                 r'(?!\pL|\d)'      # negative lookahead: no letters or digits please
                                 r'(.*)$',
                                 flags=regex.IGNORECASE)
