@@ -30,7 +30,7 @@ _The ouput below is in the more human-friendly annotation format. Default format
 ::span 42-43 ::type PUNCT-E ::surf .
 ```
 
-### Usage
+### Usage &nbsp; (click below for details)
 <details>
 <summary>utokenize (command line interface to tokenize a file)</summary>
 
@@ -145,7 +145,7 @@ Note: Please make sure that your $PYTHONPATH includes the directory in which thi
 * Python 3.8 or higher
 * regex module (https://pypi.org/project/regex/) &nbsp; ```import regex```
 
-### More topics
+### More topics &nbsp; (click below for details)
 <details>
 <summary>What gets split and what not</summary>
 
