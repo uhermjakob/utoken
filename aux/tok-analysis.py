@@ -79,7 +79,7 @@ class TokenizationAnalysis:
                             TokenizationAnomaly.register_anomaly(surf, snt_id, self.case_anomalies)
                         if self.re_contains_letter.match(surf) and self.re_contains_punct.match(surf) \
                                 and not regex.match(r"(?:\p{Lu}\.|'n'|@?&quot;@?)$", surf)\
-                                and not (self.lcode in ('som', 'tgl')  and regex.match(r"(?:\pL|['’])+$", surf)):
+                                and not (self.lcode in ('heb', 'som', 'tgl')  and regex.match(r"(?:\pL|['’])+$", surf)):
                             TokenizationAnomaly.register_anomaly(surf, snt_id, self.letter_punct_anomalies)
                         if len(surf) <= 4 and self.re_ends_w_letter.match(surf) and right_context.startswith('.'):
                             right_context_token = regex.sub(r'\s.*$', '', right_context)

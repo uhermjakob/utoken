@@ -276,6 +276,8 @@ class Tokenizer:
         bit_vector = bit_vector << 1
         self.char_is_digit = bit_vector
         bit_vector = bit_vector << 1
+        self.char_is_hebrew = bit_vector
+        bit_vector = bit_vector << 1
         self.char_is_miscellaneous_symbol = bit_vector
         bit_vector = bit_vector << 1
         self.char_is_attach_tag = bit_vector
@@ -444,6 +446,11 @@ class Tokenizer:
         for char in "-−–":
             self.char_type_vector_dict[char] \
                 = self.char_type_vector_dict.get(char, 0) | self.char_is_dash
+        # Hebrew
+        for code_point in range(0x0591, 0x0600):
+            char = chr(code_point)
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_hebrew
         # alpha, digit
         for code_point in range(0x0000, 0xE0200):  # All Unicode points
             char = chr(code_point)
@@ -893,27 +900,27 @@ class Tokenizer:
         this_function = self.tokenize_complexes
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    re_number = regex.compile(r'(.*?)'                                  # excludes integers
-                              r'(?<![-−–+,]|\PL\.|\d[%\']?)'            # negative lookbehind
-                              r'([-−–+]?'                               # plus/minus sign
-                              r'(?:\d{1,3}(?:,\d\d\d)+(?:\.\d+)?|'      # Western style, e.g. 12,345,678.90
-                              r'\d{1,2}(?:,\d\d)*,\d\d\d(?:\.\d+)?|'    # Indian style, e.g. 1,23,45,678.90
-                              r'\d+\.\d+))'                             # floating point, e.g. 12345678.90
-                              r'(?![.,]?\d)'                            # negative lookahead
+    re_number = regex.compile(r'(.*?)'                                    # excludes integers
+                              r'(?<![-−–+,]|\PL\.|\d[%\']?|[כבהלשומ])'    # negative lookbehind
+                              r'([-−–+]?'                                 # plus/minus sign
+                              r'(?:\d{1,3}(?:,\d\d\d)+(?:\.\d+)?|'        # Western style, e.g. 12,345,678.90
+                              r'\d{1,2}(?:,\d\d)*,\d\d\d(?:\.\d+)?|'      # Indian style, e.g. 1,23,45,678.90
+                              r'\d+\.\d+))'                               # floating point, e.g. 12345678.90
+                              r'(?![.,]?\d)'                              # negative lookahead
                               r'(.*)')
-    re_number2 = regex.compile(r'(.*?)'                                 # excludes integers
-                               r'(?<![-−–+,:]|\PL\.|\d[%\']?)'          # negative lookbehind
-                               r'([-−–+]?'                              # plus/minus sign
-                               r'(?:\d{1,3}(?:\.\d\d\d)+(?:,\d+)?|'     # Western style, e.g. 12.345.678,90
-                               r'\d{1,2}(?:\.\d\d)*\.\d\d\d(?:,\d+)?|'  # Indian style, e.g. 1.23.45.678,90
-                               r'\d+,\d+))'                             # floating point, e.g. 12345678,90
-                               r'(?![.,]?\d)'                           # negative lookahead
+    re_number2 = regex.compile(r'(.*?)'                                   # excludes integers
+                               r'(?<![-−–+,:]|\PL\.|\d[%\']?|[כבהלשומ])'  # negative lookbehind
+                               r'([-−–+]?'                                # plus/minus sign
+                               r'(?:\d{1,3}(?:\.\d\d\d)+(?:,\d+)?|'       # Western style, e.g. 12.345.678,90
+                               r'\d{1,2}(?:\.\d\d)*\.\d\d\d(?:,\d+)?|'    # Indian style, e.g. 1.23.45.678,90
+                               r'\d+,\d+))'                               # floating point, e.g. 12345678,90
+                               r'(?![.,]?\d)'                             # negative lookahead
                                r'(.*)')
     re_integer = regex.compile(r'(.*?)'
-                               r'(?<![-−–+]|\PL\.|\d[,.%\']?|\pL\pM*)'  # negative lookbehind (stricter: no letters)
-                               r'([-−–+]?'                              # plus/minus sign
-                               r'\d+)'                                  # plain integer, e.g. 12345678
-                               r'(?![-−–.,]?\d)'                        # negative lookahead
+                               r'(?<![-−–+]|\PL\.|\d[,.%\']?|\pL\pM*)'    # negative lookbehind (stricter: no letters)
+                               r'([-−–+]?'                                # plus/minus sign
+                               r'\d+)'                                    # plain integer, e.g. 12345678
+                               r'(?![-−–.,]?\d)'                          # negative lookahead
                                r'(.*)')
 
     def tokenize_numbers(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
@@ -1086,6 +1093,7 @@ class Tokenizer:
     re_ends_w_non_whitespace = regex.compile(r'.*\S$')
     re_ends_w_dash = regex.compile(r'.*[-−–]$')
     re_is_short_letter_token = regex.compile(r'(?:\pL\pM*){1,2}$')
+    re_starts_w_single_hebrew_letter = regex.compile(r'[\p{Hebrew}&&\p{Letter}]\pM*(?!\'?\pL)')
 
     def resource_entry_fulfills_general_context_conditions(self, token_candidate: str,
                                                            left_context: str, right_context: str) -> bool:
@@ -1118,6 +1126,18 @@ class Tokenizer:
         if self.lv & self.char_is_attach_tag:
             if (rc0_type_vector & self.char_is_attach_tag or lc0_type_vector & self.char_is_attach_tag) \
                     and self.detok_resource.markup_attach_re.match(token_candidate):
+                return False
+        if self.lv & self.char_is_hebrew:
+            # Don't split " inside Hebrew word, inserted between the penultimate and last letter,
+            # where it stands for the similar-looking Hebrew character gershayim (״), which indicates an acronym.
+            if token_candidate == '"' \
+                    and (lc0_type_vector & self.char_is_hebrew) \
+                    and (rc0_type_vector & self.char_is_hebrew) \
+                    and self.re_starts_w_single_hebrew_letter.match(right_context):
+                return False
+            # The apostrophe in a Hebrew word can stand for the similar-looking Hebrew character geresh (׳),
+            # which modifies the sound of the preceding letter or can stand as an abbreviation sign.
+            if token_candidate == "'" and (lc0_type_vector & self.char_is_hebrew):
                 return False
         return True
 
@@ -1298,30 +1318,35 @@ class Tokenizer:
                 max_end_position = position
                 position += 1
             end_position = max_end_position
+            left_context = s[:start_position]
             while end_position > start_position:
                 token_candidate = s[start_position:end_position]
                 token_candidate_lc = s[start_position:end_position]
-                for resource_entry in self.tok_dict.resource_dict.get(token_candidate_lc, []):
-                    if self.resource_entry_fulfills_conditions(resource_entry, util.PunctSplitEntry, token_candidate,
-                                                               s, start_position, end_position, offset):
-                        side = resource_entry.side
-                        end_position2 = end_position
-                        if resource_entry.group:
-                            while end_position2 < len_s and s[end_position2-1] == s[end_position2]:
-                                end_position2 += 1
-                        token = s[start_position:end_position2]  # includes any group reduplication
-                        if side == 'both':
-                            return self.rec_tok([token], [start_position], s, offset, 'PUNCT',
-                                                line_id, chart, lang_code, ht, this_function, [token],
-                                                sem_class=resource_entry.sem_class)
-                        elif side == 'start' and ((start_position == 0) or s[start_position-1].isspace()):
-                            return self.rec_tok([token], [start_position], s, offset, 'PUNCT-S',
-                                                line_id, chart, lang_code, ht, this_function, [token],
-                                                sem_class=resource_entry.sem_class)
-                        elif side == 'end' and ((end_position2 == len_s) or s[end_position2].isspace()):
-                            return self.rec_tok([token], [start_position], s, offset, 'PUNCT-E',
-                                                line_id, chart, lang_code, ht, this_function, [token],
-                                                sem_class=resource_entry.sem_class)
+                right_context = s[end_position:]
+                if self.resource_entry_fulfills_general_context_conditions(token_candidate,
+                                                                           left_context, right_context):
+                    for resource_entry in self.tok_dict.resource_dict.get(token_candidate_lc, []):
+                        if self.resource_entry_fulfills_conditions(resource_entry, util.PunctSplitEntry,
+                                                                   token_candidate, s, start_position, end_position,
+                                                                   offset):
+                            side = resource_entry.side
+                            end_position2 = end_position
+                            if resource_entry.group:
+                                while end_position2 < len_s and s[end_position2-1] == s[end_position2]:
+                                    end_position2 += 1
+                            token = s[start_position:end_position2]  # includes any group reduplication
+                            if side == 'both':
+                                return self.rec_tok([token], [start_position], s, offset, 'PUNCT',
+                                                    line_id, chart, lang_code, ht, this_function, [token],
+                                                    sem_class=resource_entry.sem_class)
+                            elif side == 'start' and ((start_position == 0) or s[start_position-1].isspace()):
+                                return self.rec_tok([token], [start_position], s, offset, 'PUNCT-S',
+                                                    line_id, chart, lang_code, ht, this_function, [token],
+                                                    sem_class=resource_entry.sem_class)
+                            elif side == 'end' and ((end_position2 == len_s) or s[end_position2].isspace()):
+                                return self.rec_tok([token], [start_position], s, offset, 'PUNCT-E',
+                                                    line_id, chart, lang_code, ht, this_function, [token],
+                                                    sem_class=resource_entry.sem_class)
                 end_position -= 1
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
