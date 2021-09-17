@@ -270,6 +270,8 @@ class Tokenizer:
         bit_vector = bit_vector << 1
         self.char_is_micro_sign = bit_vector
         bit_vector = bit_vector << 1
+        self.char_is_masculine_ordinal_indicator = bit_vector
+        bit_vector = bit_vector << 1
         self.char_is_alpha = bit_vector
         bit_vector = bit_vector << 1
         self.char_is_modifier = bit_vector
@@ -418,6 +420,9 @@ class Tokenizer:
         # Micro sign; often normalized to Greek letter mu
         self.char_type_vector_dict['µ'] \
             = self.char_type_vector_dict.get('µ', 0) | self.char_is_micro_sign
+        # Masculine ordinal indicator, sometimes used as degree sign
+        self.char_type_vector_dict['º'] \
+            = self.char_type_vector_dict.get('º', 0) | self.char_is_masculine_ordinal_indicator
         # At sign
         self.char_type_vector_dict['['] \
             = self.char_type_vector_dict.get('[', 0) | self.char_is_left_square_bracket
@@ -1092,7 +1097,9 @@ class Tokenizer:
     re_ends_w_letter_plus_period = regex.compile(r'.*\pL\pM*\.$')
     re_ends_w_non_whitespace = regex.compile(r'.*\S$')
     re_ends_w_dash = regex.compile(r'.*[-−–]$')
+    re_ends_w_punct = regex.compile(r'.*\pP$')
     re_is_short_letter_token = regex.compile(r'(?:\pL\pM*){1,2}$')
+    re_is_all_whitespaces = regex.compile(r'\s*$')
     re_starts_w_single_hebrew_letter = regex.compile(r'[\p{Hebrew}&&\p{Letter}]\pM*(?!\'?\pL)')
 
     def resource_entry_fulfills_general_context_conditions(self, token_candidate: str,
@@ -1102,10 +1109,10 @@ class Tokenizer:
         lc0_type_vector = self.char_type_vector_dict.get(left_context[-1], 0) if left_context != '' else 0
         rc0_type_vector = self.char_type_vector_dict.get(right_context[0], 0) if right_context != '' else 0
         # general restriction: if token ends in a letter, it can't be followed by a letter
-        if self.re_ends_w_letter.match(token_candidate) and (rc0_type_vector & self.char_is_alpha):
+        if (rc0_type_vector & self.char_is_alpha) and self.re_ends_w_letter.match(token_candidate):
             return False
         # token can't be followed by an orphan modifier
-        if rc0_type_vector & self.char_is_modifier:
+        if (rc0_type_vector & self.char_is_modifier) and not self.re_ends_w_punct.match(token_candidate):
             return False
         if self.lv & self.char_is_quote:
             # don't split off c' from 'c'
@@ -1123,10 +1130,16 @@ class Tokenizer:
             if self.re_is_short_letter_token.match(token_candidate) and \
                     (right_context.startswith('&') or left_context.endswith('&')):
                 return False
+        # Don't split off parts of a attach-tag-decorated token.
         if self.lv & self.char_is_attach_tag:
-            if (rc0_type_vector & self.char_is_attach_tag or lc0_type_vector & self.char_is_attach_tag) \
+            if rc0_type_vector & self.char_is_attach_tag \
                     and self.detok_resource.markup_attach_re.match(token_candidate):
-                return False
+                if self.re_is_all_whitespaces.match(right_context[1] if len(right_context) >= 2 else ''):
+                    return False
+            if lc0_type_vector & self.char_is_attach_tag \
+                    and self.detok_resource.markup_attach_re.match(token_candidate):
+                if self.re_is_all_whitespaces.match(left_context[1] if len(left_context) >= 2 else ''):
+                    return False
         if self.lv & self.char_is_hebrew:
             # Don't split " inside Hebrew word, inserted between the penultimate and last letter,
             # where it stands for the similar-looking Hebrew character gershayim (״), which indicates an acronym.
