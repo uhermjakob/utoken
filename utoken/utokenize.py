@@ -185,7 +185,7 @@ class Tokenizer:
                                    self.tokenize_according_to_resource_entries,
                                    self.tokenize_abbreviation_initials,
                                    self.tokenize_abbreviation_periods,
-                                   self.tokenize_english_contractions,
+                                   self.tokenize_contractions,
                                    self.tokenize_numbers,
                                    self.tokenize_lexical_according_to_resource_entries,
                                    self.tokenize_complex_names,
@@ -278,6 +278,8 @@ class Tokenizer:
         bit_vector = bit_vector << 1
         self.char_is_digit = bit_vector
         bit_vector = bit_vector << 1
+        self.char_is_greek = bit_vector
+        bit_vector = bit_vector << 1
         self.char_is_hebrew = bit_vector
         bit_vector = bit_vector << 1
         self.char_is_miscellaneous_symbol = bit_vector
@@ -347,7 +349,7 @@ class Tokenizer:
         self.re_url2 = \
             regex.compile(r'(.*?)'
                           # negative lookbehind: no Latin+ letters, no @ please
-                          r'(?<![\p{Latin}&&\p{Letter}]\.?|\@)'
+                          r'(?V1)(?<![\p{Latin}&&\p{Letter}]\.?|\@)'
                           # core alternative 1: explicit www
                           f"((?:(?:(?:www|WWW)(?:\\.{url_letter})+\\.(?:[a-z]{times234}]|[A-Z]{times234}]))|"
                           # core alternative 2: very common domain (e.g. .com)
@@ -362,7 +364,7 @@ class Tokenizer:
                           r"(?:\/(?:(?:\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+]|"
                           r"\((?:\p{L}\p{M}*|\d|[-_,./:;=?@'`~#%&*+])\))*(?:\p{L}\p{M}*|\d|[/]))?)?)"
                           # negative lookahead: no Latin+ letters please
-                          r'(?!\.?[\p{Latin}&&\p{Letter}])'
+                          r'(?V1)(?!\.?[\p{Latin}&&\p{Letter}])'
                           # post URL
                           r'(.*)$')
 
@@ -451,6 +453,11 @@ class Tokenizer:
         for char in "-−–":
             self.char_type_vector_dict[char] \
                 = self.char_type_vector_dict.get(char, 0) | self.char_is_dash
+        # Greek
+        for code_point in range(0x0370, 0x03E2):
+            char = chr(code_point)
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_greek
         # Hebrew
         for code_point in range(0x0591, 0x0600):
             char = chr(code_point)
@@ -938,14 +945,20 @@ class Tokenizer:
                 return self.rec_tok_m3(m3, s, offset, 'NUMBER', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
+    re_ell_contraction = regex.compile(r"(?V1)(.*?)(?<!\pL|['‘’`‛])([\p{Greek}&&\p{Letter}]+[’'])(.*)")
     re_eng_suf_contraction = re.compile(r'(.*?[a-z])([\'’](?:d|em|ll|m|re|s|ve))\b(.*)', flags=re.IGNORECASE)
 
-    def tokenize_english_contractions(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
-                                      line_id: Optional[str] = None, offset: int = 0) -> str:
-        """This tokenization step handles English contractions such as John's -> John 's; he'd -> he 'd
-        Others such as don't -> do not; won't -> will not are handled as resource_entries"""
-        this_function = self.tokenize_english_contractions
+    def tokenize_contractions(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
+                              line_id: Optional[str] = None, offset: int = 0) -> str:
+        """This tokenization step handles some contractions: John's (English)"""
+        this_function = self.tokenize_contractions
         if self.lv & self.char_is_apostrophe:
+            # Greek contractions such as ἀλλ’
+            if lang_code in ('ell', 'grc', 'ecg'):  # modern/ancient/Koine Greek
+                if m3 := self.re_ell_contraction.match(s):
+                    return self.rec_tok_m3(m3, s, offset, 'DECONTRACTION', line_id, chart, lang_code, ht, this_function)
+            # English contractions such as John's -> John 's; he'd -> he 'd
+            # Others such as don't -> do not; won't -> will not are handled as resource_entries
             # Tokenize contractions such as:
             # (1) "John's mother", "He's hungry.", "He'll come.", "We're here.", "You've got to be kidding."
             # (2) "He'd rather die.", "They'd been informed.", "It'd be like war.",  but not "cont'd", "EFF'd up people"
@@ -1100,7 +1113,7 @@ class Tokenizer:
     re_ends_w_punct = regex.compile(r'.*\pP$')
     re_is_short_letter_token = regex.compile(r'(?:\pL\pM*){1,2}$')
     re_is_all_whitespaces = regex.compile(r'\s*$')
-    re_starts_w_single_hebrew_letter = regex.compile(r'[\p{Hebrew}&&\p{Letter}]\pM*(?!\'?\pL)')
+    re_starts_w_single_hebrew_letter = regex.compile(r'(?V1)[\p{Hebrew}&&\p{Letter}]\pM*(?!\'?\pL)')
 
     def resource_entry_fulfills_general_context_conditions(self, token_candidate: str,
                                                            left_context: str, right_context: str) -> bool:
@@ -1167,10 +1180,12 @@ class Tokenizer:
                     and self.re_starts_w_dashed_digit.match(right_context)):
                 return False
         if token_candidate.endswith('.') and self.re_starts_w_single_letter.match(right_context):
+            # log.info(f'  ABBREV test2 {token_candidate} :rc {right_context} false')  # HHERE Malayalam challenge
             return False
         if left_context.endswith('.') \
                 and '.' in token_candidate \
                 and self.re_ends_w_letter_plus_period.match(left_context):
+            # log.info(f'  ABBREV test3 {token_candidate} :lc {left_context} false')  # HHERE Malayalam challenge
             return False
         return True
 

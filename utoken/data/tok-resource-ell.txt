@@ -1,3 +1,7 @@
+::punct-split : ::side both ::lcode ell ::left-context \pL\pM*\pL\pM*[)]* ::right-context [-\/(]*\pL\pM*\pL
+
+::repair ΄s ::target 's ::lcode ell ::problem Greek tonos instead of apostrophe ::comment English possessive 's
+
 ::abbrev Α. ::lcode ell
 ::abbrev Β. ::lcode ell
 ::abbrev Γ. ::lcode ell
@@ -22,6 +26,52 @@
 ::abbrev Χ. ::lcode ell
 ::abbrev Ψ. ::lcode ell
 ::abbrev Ω. ::lcode ell
+
+# Greek often uses the old Greek number system (Greek letter+numeral sign) for ordinal numbers, usually
+# where English uses Roman numerals. Example: Elizabeth II = Ελισάβετ Βʹ or Louis XIV = Λουδοβίκος ΙΔʹ
+# Proper Greek number abbreviation symbol is "Greek numeral sign" (U+0374). Alternatives are:
+#    Greek tonos (U+0384), apostrophe (U+0027), right single quotation mark (U+2019), acute accent (U+00B4)
+# To do: consider generating alternative spellings automatically
+::abbrev Αʹ ::lcode ell ::sem-class number ::eng 1 ::alt-spelling A΄; A'; A’; A´ ::right-context-not \pL
+::abbrev Βʹ ::lcode ell ::sem-class number ::eng 2 ::alt-spelling Β΄; Β'; Β’; Β´ ::right-context-not \pL
+::abbrev Γʹ ::lcode ell ::sem-class number ::eng 3 ::alt-spelling Γ΄; Γ'; Γ’; Γ´ ::right-context-not \pL
+::abbrev Δʹ ::lcode ell ::sem-class number ::eng 4 ::alt-spelling Δ΄; Δ'; Δ’; Δ´ ::right-context-not \pL
+::abbrev Εʹ ::lcode ell ::sem-class number ::eng 5 ::alt-spelling Ε΄; Ε'; Ε’; Ε´ ::right-context-not \pL
+# Ϛ is the archaic Greek letter stigma (ligature of sigma and tau)
+::abbrev Ϛʹ ::lcode ell ::sem-class number ::eng 6 ::alt-spelling Ϛ΄; Ϛ'; Ϛ’; Ϛ´ ::right-context-not \pL
+# Ϝ is the archaic Greek letter digamma
+::abbrev Ϝʹ ::lcode ell ::sem-class number ::eng 6 ::alt-spelling Ϝ΄; Ϝ'; Ϝ’; Ϝ´ ::right-context-not \pL
+# ΣΤ are the Greek letters sigma and tau
+::abbrev ΣΤʹ ::lcode ell ::sem-class number ::eng 6 ::alt-spelling ΣΤ΄; ΣΤ'; ΣΤ’; ΣΤ´ ::right-context-not \pL
+::abbrev Ζʹ ::lcode ell ::sem-class number ::eng 7 ::alt-spelling Ζ΄; Ζ'; Ζ’; Ζ´ ::right-context-not \pL
+::abbrev Ηʹ ::lcode ell ::sem-class number ::eng 8 ::alt-spelling Η΄; Η'; Η’; Η´ ::right-context-not \pL
+::abbrev Θʹ ::lcode ell ::sem-class number ::eng 9 ::alt-spelling Θ΄; Θ'; Θ’; Θ´ ::right-context-not \pL
+::abbrev Ιʹ ::lcode ell ::sem-class number ::eng 10 ::alt-spelling Ι΄; Ι'; Ι’; Ι´ ::right-context-not \pL
+::abbrev ΙΑʹ ::lcode ell ::sem-class number ::eng 11 ::alt-spelling ΙA΄; ΙA'; ΙA’; ΙA´ ::right-context-not \pL
+::abbrev ΙΒʹ ::lcode ell ::sem-class number ::eng 12 ::alt-spelling ΙΒ΄; ΙΒ'; ΙΒ’; ΙΒ´ ::right-context-not \pL
+::abbrev ΙΓʹ ::lcode ell ::sem-class number ::eng 13 ::alt-spelling ΙΓ΄; ΙΓ'; ΙΓ’; ΙΓ´ ::right-context-not \pL
+::abbrev ΙΔʹ ::lcode ell ::sem-class number ::eng 14 ::alt-spelling ΙΔ΄; ΙΔ'; ΙΔ’; ΙΔ´ ::right-context-not \pL
+::abbrev ΙΕʹ ::lcode ell ::sem-class number ::eng 15 ::alt-spelling ΙΕ΄; ΙΕ'; ΙΕ’; ΙΕ´ ::right-context-not \pL
+::abbrev ΙϚʹ ::lcode ell ::sem-class number ::eng 16 ::alt-spelling ΙϚ΄; ΙϚ'; ΙϚ’; ΙϚ´ ::right-context-not \pL
+::abbrev ΙϜʹ ::lcode ell ::sem-class number ::eng 16 ::alt-spelling ΙϜ΄; ΙϜ'; ΙϜ’; ΙϜ´ ::right-context-not \pL
+::abbrev ΙΣΤʹ ::lcode ell ::sem-class number ::eng 16 ::alt-spelling ΙΣΤ΄; ΙΣΤ'; ΙΣΤ’; ΙΣΤ´ ::right-context-not \pL
+::abbrev ΙΖʹ ::lcode ell ::sem-class number ::eng 17 ::alt-spelling ΙΖ΄; ΙΖ'; ΙΖ’; ΙΖ´ ::right-context-not \pL
+::abbrev ΙΗʹ ::lcode ell ::sem-class number ::eng 18 ::alt-spelling ΙΗ΄; ΙΗ'; ΙΗ’; ΙΗ´ ::right-context-not \pL
+::abbrev ΙΘʹ ::lcode ell ::sem-class number ::eng 19 ::alt-spelling ΙΘ΄; ΙΘ'; ΙΘ’; ΙΘ´ ::right-context-not \pL
+::abbrev Κʹ ::lcode ell ::sem-class number ::eng 20 ::alt-spelling Κ΄; Κ'; Κ’; Κ´ ::right-context-not \pL
+::abbrev Λʹ ::lcode ell ::sem-class number ::eng 30 ::alt-spelling Λ΄; Λ'; Λ’; Λ´ ::right-context-not \pL
+::abbrev Μʹ ::lcode ell ::sem-class number ::eng 40 ::alt-spelling Μ΄; Μ'; Μ’; Μ´ ::right-context-not \pL
+::abbrev Νʹ ::lcode ell ::sem-class number ::eng 50 ::alt-spelling Ν΄; Ν'; Ν’; Ν´ ::right-context-not \pL
+::abbrev Ξʹ ::lcode ell ::sem-class number ::eng 60 ::alt-spelling Ξ΄; Ξ'; Ξ’; Ξ´ ::right-context-not \pL
+::abbrev Οʹ ::lcode ell ::sem-class number ::eng 70 ::alt-spelling Ο΄; Ο'; Ο’; Ο´ ::right-context-not \pL
+::abbrev Πʹ ::lcode ell ::sem-class number ::eng 80 ::alt-spelling Π΄; Π'; Π’; Π´ ::right-context-not \pL
+::abbrev Ϟʹ ::lcode ell ::sem-class number ::eng 90 ::alt-spelling Ϟ΄; Ϟ'; Ϟ’; Ϟ´ ::right-context-not \pL
+::abbrev Ϙʹ ::lcode ell ::sem-class number ::eng 90 ::alt-spelling Ϙ΄; Ϙ'; Ϙ’; Ϙ´ ::right-context-not \pL
+::abbrev Ρʹ ::lcode ell ::sem-class number ::eng 100 ::alt-spelling Ρ΄; Ρ'; Ρ’; Ρ´ ::right-context-not \pL
+::abbrev Σʹ ::lcode ell ::sem-class number ::eng 200 ::alt-spelling Σ΄; Σ'; Σ’; Σ´ ::right-context-not \pL
+::abbrev ,Αʹ ::lcode ell ::sem-class number ::eng 1000 ::alt-spelling ,A΄; ,A'; ,A’; ,Α´ ::left-context-not \pL ::right-context-not \pL
+::abbrev ,ΒΚΑʹ ::lcode ell ::sem-class number ::eng 2021 ::alt-spelling ,ΒΚΑ΄; ,ΒΚΑ'; ,ΒΚΑ’; ,ΒΚΑ´ ::left-context-not \pL ::right-context-not \pL
+
 ::abbrev Άθαν. ::lcode ell
 ::abbrev Έγχρ. ::lcode ell
 ::abbrev Έκθ. ::lcode ell
@@ -235,6 +285,7 @@
 ::abbrev Γέν. ::lcode ell
 ::abbrev Γαλ. ::lcode ell
 ::abbrev Γεν. ::lcode ell
+::abbrev γενν. ::lcode ell ::eng born
 ::abbrev Γλ. ::lcode ell
 ::abbrev Γν.Ν.Σ.Κρ. ::lcode ell
 ::abbrev Γνωμ. ::lcode ell
@@ -786,7 +837,7 @@
 ::abbrev ίδ. ::lcode ell
 ::abbrev αβεστ. ::lcode ell
 ::abbrev αβησσ. ::lcode ell
-::abbrev αγγλ. ::lcode ell
+::abbrev αγγλ. ::lcode ell ::eng English
 ::abbrev αγγ. ::lcode ell
 ::abbrev αδημ. ::lcode ell
 ::abbrev αεροναυτ. ::lcode ell
@@ -885,7 +936,7 @@
 ::abbrev αρχιτεκτ. ::lcode ell
 ::abbrev αρχιτ. ::lcode ell
 ::abbrev αρχκ. ::lcode ell
-::abbrev αρχ. ::lcode ell
+::abbrev αρχ. ::lcode ell ::eng archaic
 ::abbrev αρωμουν. ::lcode ell
 ::abbrev αρωμ. ::lcode ell
 ::abbrev αρ. ::lcode ell
@@ -1015,7 +1066,8 @@
 ::abbrev εκκλησ. ::lcode ell
 ::abbrev εκκλ. ::lcode ell
 ::abbrev εκ. ::lcode ell
-::abbrev ελλην. ::lcode ell
+::abbrev ελλην. ::lcode ell ::eng Greek
+::abbrev ελληνοπ. ::lcode ell ::eng Greek
 ::abbrev ελλ. ::lcode ell
 ::abbrev ελνστ. ::lcode ell
 ::abbrev ελπ. ::lcode ell
@@ -1454,8 +1506,8 @@
 ::abbrev τόμ. ::lcode ell
 ::abbrev τόνν. ::lcode ell
 ::abbrev τ. ::lcode ell
-::abbrev τ.μ. ::lcode ell
-::abbrev τ.χλμ. ::lcode ell
+::abbrev τ.μ. ::lcode ell ::eng square meter
+::abbrev τ.χλμ. ::lcode ell ::eng square kilometer
 ::abbrev υβρ. ::lcode ell
 ::abbrev υπερθ. ::lcode ell
 ::abbrev υπερσ. ::lcode ell

@@ -128,6 +128,11 @@
 
 ::auto-attach م ::side left ::left-context \d ::lcode ara ::comment year particle ::eng AD ::example 2021م
 
+::auto-attach η ::side left ::left-context \d ::lcode ell ::comment ordinal particle ("th")
+::auto-attach ο ::side left ::left-context \d ::lcode ell ::comment ordinal particle ("th")
+::auto-attach ου ::side left ::left-context \d ::lcode ell ::comment ordinal particle ("th")
+::auto-attach ος ::side left ::left-context \d ::lcode ell ::comment ordinal particle ("th")
+
 ::auto-attach e ::side left ::left-context \d ::lcode fra ::comment ordinal particle ("th")
 ::auto-attach er ::side left ::left-context \d ::lcode fra ::comment ordinal particle ("th")
 

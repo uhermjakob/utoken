@@ -7,7 +7,7 @@
 ::abbrev ಚ.ಮೈ. ::lcode kan ::eng sq. mi. ::sem-class unit-of-measurement
 ::abbrev ಡಾ. ::eng Dr. ::lcode kan ::sem-class pre-name-title
 ::abbrev ಶ್ರೀ. ::eng Mr. ::lcode kan ::sem-class pre-name-title
-::abbrev ಪಿ‍ಎಚ್.ಡಿ. ::eng Ph.D. :lcode kan
+::abbrev ಪಿ‍ಎಚ್.ಡಿ. ::eng Ph.D. ::lcode kan
 
 ::abbrev ಎ. ::token-category phonetics ::eng A. ::lcode kan
 ::abbrev ಬಿ. ::token-category phonetics ::eng B. ::lcode kan
