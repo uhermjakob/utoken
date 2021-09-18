@@ -139,7 +139,8 @@ Note: Please make sure that your $PYTHONPATH includes the directory in which thi
 * Currently excluded: no-space scripts like Chinese
 * Large set of resource entries (data file) currently for English only; limited resource entries for 40+ other languages
 * Languages with substantial testing so far: English, Farsi, Hindi, Kazakh, Tagalog and Uyghur
-  * Limited testing (a few hundred Wikipedia sentences each) for: Arabic, Bulgarian, French, Georgian, German, Greek (Ancient, Koine and Modern), Hebrew, Kannada, Lithuanian, Malayalam, Pashto, Russian, Somali, Spanish, Swahili, Swedish, Turkish, Zulu
+  * Limited testing (a few hundred Wikipedia sentences each) for: Arabic, Bulgarian, French, Georgian, German, Greek (Modern), Hebrew, Kannada, Lithuanian, Malayalam, Pashto, Russian, Somali, Spanish, Swahili, Swedish, Turkish, Zulu
+  * Equivalent limited testing: Greek (Ancient) and Greek (Koine)
 
 ### Requirements
 * Python 3.8 or higher
