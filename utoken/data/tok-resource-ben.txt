@@ -1,4 +1,20 @@
+::punct-split : ::side both ::lcode ben ::left-context \pL\pM*\pL\pM*[)]* ::right-context [-\/(]*\pL\pM*\pL
+::punct-split - ::side both ::lcode ben ::left-context \pL\pM*[)]* ::right-context \pL
+::punct-split - ::side both ::lcode ben ::right-context (?:এ)(?!\pL)
+
+::lexical 'র ::lcode ben ::eng of; in ::comment "r(a)" genitive/locative case suffix; possessive
+::lexical 'তে ::lcode ben ::eng in ::comment "te" locative case suffix
+::lexical 'য় ::lcode ben ::eng in ::comment "y(a)" locative case suffix
+::lexical 'কে ::lcode ben ::comment "ke" dative/accusative case suffix
+
+::lexical বর্গ কিলোমিটার ::lcode ben ::sem-class unit-of-measurement ::eng square kilometer
+
 ::abbrev ড. ::lcode ben ::eng Dr.
+
+::abbrev আ-ধ্ব-ব ::lcode ben ::eng IPA; International Phonetic Alphabet
+::abbrev মিগ-২৯কে ::lcode ben ::eng MiG-29K
+::abbrev মিগ-২৯এম ::lcode ben ::eng MiG-29M
+
 ::abbrev এ. ::lcode ben ::token-category phonetics ::eng A.
 ::abbrev বি. ::lcode ben ::token-category phonetics ::eng B.
 ::abbrev সি. ::lcode ben ::token-category phonetics ::eng C.
