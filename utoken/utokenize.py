@@ -1189,6 +1189,29 @@ class Tokenizer:
             return False
         return True
 
+    def lexical_entry_fulfills_general_context_conditions(self, token_candidate: str,
+                                                          left_context: str, right_context: str,
+                                                          lexical_entry: util.LexicalEntry) -> bool:
+        """Checks for general context requirements (not listed for a particular lexical entry)."""
+        sem_class = lexical_entry.sem_class
+        # fail if token-end letter/digit is followed by letter/digit
+        if self.re_ends_w_letter_or_digit.match(token_candidate) \
+                and self.re_starts_w_letter_or_digit.match(right_context):
+            return False
+        # fail if token-start letter/digit is preceded by letter/digit
+        if self.re_ends_w_letter_or_digit.match(left_context) \
+                and self.re_starts_w_letter_or_digit.match(token_candidate):
+            # exception: number+unit OK even without space
+            if self.re_ends_w_digit.match(left_context) and sem_class == 'unit-of-measurement':
+                pass
+            else:
+                return False
+        # don't split off d' from d's etc.
+        if self.re_ends_w_apostrophe_plus.match(token_candidate) \
+                and self.re_starts_w_single_s.match(right_context):
+            return False
+        return True
+
     re_capital_i_w_dot_above = re.compile(r'İ')
 
     def lower(self, s: str) -> str:
@@ -1309,18 +1332,8 @@ class Tokenizer:
                     for resource_entry in self.tok_dict.resource_dict.get(token_candidate_lc, []):
                         if self.resource_entry_fulfills_conditions(resource_entry, util.LexicalEntry, token_candidate,
                                                                    s, start_position, end_position, offset):
-                            sem_class = resource_entry.sem_class
-                            clause = ''
-                            if sem_class:
-                                clause += f'; sem: {sem_class}'
-                            left_context = s[:start_position]
-                            if (not(self.re_ends_w_letter_or_digit.match(token_candidate)
-                                    and self.re_starts_w_letter_or_digit.match(right_context))
-                                    and (not(self.re_ends_w_letter_or_digit.match(left_context)
-                                             and self.re_starts_w_letter_or_digit.match(token_candidate)))
-                                    # don't split off d' from d's etc.
-                                    and (not(self.re_ends_w_apostrophe_plus.match(token_candidate)
-                                             and self.re_starts_w_single_s.match(right_context)))):
+                            if self.lexical_entry_fulfills_general_context_conditions(token_candidate, left_context,
+                                                                                      right_context, resource_entry):
                                 return self.rec_tok([token_candidate], [start_position], s, offset,
                                                     resource_entry.tag or 'LEXICAL',
                                                     line_id, chart, lang_code, ht, this_function, [token_candidate],
