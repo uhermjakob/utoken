@@ -4,6 +4,7 @@
 ::markup-attach - ::group True ::comment hyphen-minus
 ::markup-attach – ::group True ::comment en-dash
 ::markup-attach — ::group True ::comment em-dash
+::markup-attach ־ ::group True ::comment Hebrew maqaf (hyphen)
 ::markup-attach + ::group True ::comment originally auto-attach w/ left-context \d\s?[%‰kK]?
 
 ::markup-attach .. ::group True
@@ -71,6 +72,8 @@
 ::auto-attach ፦ ::side left ::comment Ethiopic preface colon
 ::auto-attach ፧ ::side left ::comment Ethiopic question mark
 ::auto-attach ; ::side left ::comment Greek question mark
+::auto-attach ׃ ::side left ::comment Hebrew sof pasuq (sentence period)
+::auto-attach ׀ ::side left ::comment Hebrew paseq (separator), typically at the end of words
 ::auto-attach ؟ ::side left ::comment Arabic question mark
 ::auto-attach ، ::side left ::comment Arabic comma
 ::auto-attach ؛ ::side left ::comment Arabic semicolon

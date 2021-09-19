@@ -45,6 +45,7 @@ if __name__ == "__main__":
                                'train46735.tgl.txt',
                                'train99005.uig.txt',
                                'NewTestament-430randVerses.ecg.txt',
+                               'OldTestament-sel.hbo.txt',
                                'Odyssey-Republic-sel.grc.txt',
                                'ara.txt',
                                'ben.txt',

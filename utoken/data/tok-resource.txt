@@ -73,11 +73,13 @@
 ::punct-split $ ::side both ::token-category prefix ::sem-class currency-unit ::group True
 ::punct-split — ::side both ::group True
 ::punct-split -- ::side both ::group True ::left-context (?:\pL\pM*|\d) ::right-context (?:\pL\pM*|\d)
+::punct-split ־ ::side both ::group True ::comment Hebrew maqaf (hyphen)
 ::punct-split … ::side both ::group True
 ::punct-split .. ::side both ::group True
 ::punct-split ، ::side both ::left-context (?:\pL\pM*|\d)[-_+*'’‘`]* ::right-context (?:\pL|[‘])
 ::punct-split , ::side both ::left-context (?:\pL\pM*|\d)[-_+*'’‘`]* ::right-context (?:\pL|[‘])
 ::punct-split | ::side both ::left-context (?:\pL\pM*|\d)[-_+*'’‘`]* ::right-context (?:\pL|[‘]) ::group True
+::punct-split ׀ ::side both ::group True ::comment Hebrew paseq (separator), typically at the end of words
 ::punct-split ! ::side both ::left-context (?:\pL\pM*|\d)[-_+*'’‘`?]* ::right-context (?:\pL|[‘?]) ::group True
 ::punct-split ? ::side both ::left-context (?:\pL\pM*|\d)[-_+*'’‘`!]* ::right-context (?:\pL|[‘!]) ::group True
 ::punct-split , ::side both ::left-context \d:\d{1,2} ::right-context \d{1,2}[-]\d  # Genesis 1:1,26-28
@@ -140,6 +142,7 @@
 ::punct-split ‘ ::side end ::group True
 ::punct-split ` ::side end ::group True
 ::punct-split . ::side end
+::punct-split ׃ ::side end ::comment Hebrew sof pasuq (sentence period)
 ::punct-split ? ::side end ::group True
 ::punct-split ! ::side end ::group True
 ::punct-split | ::side end ::group True
