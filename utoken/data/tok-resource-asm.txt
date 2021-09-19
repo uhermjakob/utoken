@@ -1,3 +1,11 @@
+::punct-split : ::side both ::lcode asm ::left-context \pL\pM*\pL\pM*[)]* ::right-context [-\/(]*\pL\pM*\pL
+::punct-split - ::side both ::lcode asm ::left-context \pL\pM*[)]* ::right-context \pL
+
+::lexical কিল'মিটাৰ ::lcode asm ::sem-class unit-of-measurement ::eng kilometer
+::lexical কি:গ্ৰা: ::lcode asm ::sem-class unit-of-measurement ::eng kilogram
+::lexical ছে:মি: ::lcode asm ::sem-class unit-of-measurement ::eng cm
+::lexical পুন:পুন: ::lcode asm ::eng again and again
+
 ::abbrev ড. ::lcode asm ::eng Dr.
 ::abbrev এ. ::lcode asm ::token-category phonetics ::eng A.
 ::abbrev বি. ::lcode asm ::token-category phonetics ::eng B.

@@ -53,6 +53,7 @@
 ::punct-split ፠ ::side both
 ::punct-split । ::side both ::comment Devanagari danda
 ::punct-split ॥ ::side both ::comment Devanagari double danda
+::punct-split ৷ ::side both ::group True ::comment Bengali currency numerator four, often operating as Bengali danda
 ::punct-split ། ::side both ::comment Tibetan mark Shad (danda)
 ::punct-split ༎ ::side both ::comment Tibetan mark Nyis Shad (double danda)
 ::punct-split % ::side both

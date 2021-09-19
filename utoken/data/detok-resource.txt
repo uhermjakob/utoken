@@ -79,6 +79,7 @@
 ::auto-attach ؛ ::side left ::comment Arabic semicolon
 ::auto-attach । ::side left ::comment Devanagari danda
 ::auto-attach ॥ ::side left ::comment Devanagari double danda
+::auto-attach ৷ ::side left ::group True ::comment Bengali currency numerator four, often operating as Bengali danda
 ::auto-attach % ::side left ::left-context \d
 ::auto-attach ‰ ::side left ::left-context \d
 ::auto-attach ‱ ::side left ::left-context \d
@@ -130,6 +131,10 @@
 ::auto-attach s ::side left ::left-context 0 ::example 1950s
 
 ::auto-attach م ::side left ::left-context \d ::lcode ara ::comment year particle ::eng AD ::example 2021م
+
+::auto-attach ৰ ::side left ::left-context \d ::lcode asm ::comment e.g. "s" in "1920s"
+::auto-attach ৰ্থ ::side left ::left-context \d ::lcode asm ::comment ordinal particle ("th")
+::auto-attach তম ::side left ::left-context \d ::lcode asm ::comment ordinal particle ("th")
 
 ::auto-attach শ ::side left ::left-context \d ::lcode ben ::comment ordinal particle ("th")
 ::auto-attach ই ::side left ::left-context \d ::lcode ben ::comment ordinal particle ("th")
