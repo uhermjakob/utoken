@@ -107,6 +107,7 @@
 ::punct-split ¬ ::side both
 
 # split off punctuation from start of token
+::punct-split &apos; ::side start ::group True
 ::punct-split ' ::side start ::group True
 ::punct-split ‘ ::side start ::group True
 ::punct-split ’ ::side start ::group True
@@ -131,6 +132,8 @@
 ::punct-split ، ::side start
 ::punct-split < ::side start ::right-context (?:\d|\pL)
 ::punct-split > ::side start ::right-context (?:\d|\pL)
+::punct-split &lt; ::side start ::right-context (?:\d|\pL)
+::punct-split &gt; ::side start ::right-context (?:\d|\pL)
 ::punct-split \ ::side start ::right-context (?:\pL|/d)
 ::punct-split � ::side start
 ::punct-split † ::side start
@@ -138,6 +141,7 @@
 ::punct-split . ::side start ::left-context \s ::right-context (?:18|19|20)\d\d(?!\d)  # .year -- but not .45 caliber
 
 # split off punctuation from end of token
+::punct-split &apos; ::side end ::group True
 ::punct-split ' ::side end ::group True
 ::punct-split ’ ::side end ::group True
 ::punct-split ‘ ::side end ::group True
@@ -172,6 +176,8 @@
 ::punct-split < ::side end ::left-context (?:\d|\pL\pM*)
 ::punct-split > ::side end ::left-context (?:\d|\pL\pM*)
 ::punct-split \ ::side end ::left-context (?:\d|\pL\pM*)
+::punct-split &lt; ::side end ::left-context (?:\d|\pL\pM*)
+::punct-split &gt; ::side end ::left-context (?:\d|\pL\pM*)
 ::punct-split � ::side end
 ::punct-split † ::side end
 ::punct-split ′ ::side end ::comment prime

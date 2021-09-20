@@ -746,7 +746,7 @@ class Tokenizer:
             if chart:
                 s = chart.s
         # Remove zero width spaces outside words
-        if self.lv & self.char_is_zwnj:
+        if self.lv & self.char_is_zwsp:
             s = regex.sub(r'(\u200B)\u200B+', r'\1', s)  # remove consecutive duplicates
             s = regex.sub(r'^\u200B', '', s)
             s = regex.sub(r'\u200B$', '', s)
