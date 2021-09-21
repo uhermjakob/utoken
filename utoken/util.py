@@ -490,16 +490,18 @@ class DetokenizationResource:
         self.attach_tag = '@'  # default
         self.auto_attach_left = defaultdict(list)
         self.auto_attach_right = defaultdict(list)
+        self.auto_attach_left_w_lc = {}
+        self.auto_attach_right_w_lc = {}
         self.markup_attach = defaultdict(list)
         self.markup_attach_re_elements = set()
         self.markup_attach_re_string = None
         self.markup_attach_re = None   # compiled regular expression
         self.contraction_dict = defaultdict(list)
 
-    def load_resource(self, filename: Path, lang_codes: Optional[List[str]] = None, verbose: bool = True) -> None:
+    def load_resource(self, filename: Path, doc_lang_codes: List[str], verbose: bool = True) -> None:
         """Loads detokenization resources such as auto-attach, markup-attach etc.
         Example input file: data/detok-resource.txt
-        This file is also loaded and by the tokenizer to produce appropriate mt-style @...@ tokens."""
+        This file is also loaded by the tokenizer to produce appropriate mt-style @...@ tokens."""
         try:
             with open(filename) as f_in:
                 line_number = 0
@@ -566,27 +568,35 @@ class DetokenizationResource:
                             head_slot = m1.group(1)
                         else:
                             continue
-                        if lang_codes:
-                            if line_lang_code_s := slot_value_in_double_colon_del_list(line, 'lcode'):
-                                line_lang_codes = re.split(r'[;,\s*]', line_lang_code_s)
-                                if not lists_share_element(lang_codes, line_lang_codes):
-                                    continue
+                        line_lang_code_s = slot_value_in_double_colon_del_list(line, 'lcode')
+                        line_lang_codes = re.split(r'[;,\s*]', line_lang_code_s) if line_lang_code_s else []
+                        if doc_lang_codes and line_lang_codes:
+                            if not lists_share_element(doc_lang_codes, line_lang_codes):
+                                continue
                         s = slot_value_in_double_colon_del_list(line, head_slot)
                         lc_s = s.lower()
                         detokenization_entry = None
                         if head_slot == 'auto-attach':
                             side = slot_value_in_double_colon_del_list(line, 'side')
                             group = bool(slot_value_in_double_colon_del_list(line, 'group', False))
-                            lang_code_s = slot_value_in_double_colon_del_list(line, 'lcode')
-                            lang_codes = lang_code_s.split(r'[;,]\s') if lang_code_s else []
-                            detokenization_entry = DetokenizationEntry(s, group, lang_codes)
+                            detokenization_entry = DetokenizationEntry(s, group, line_lang_codes)
                             if side == 'left' or side == 'both':
-                                if self.auto_attach_left.get(lc_s, None):
-                                    log.warning(f'Duplicate ::auto-attach {lc_s} ::side left')
+                                for line_lang_code in (line_lang_codes if line_lang_codes else [None]):
+                                    key = f'{line_lang_code} {lc_s}'
+                                    if self.auto_attach_left_w_lc.get(key, False):
+                                        lcode_clause = f' ::lcode {line_lang_code}' if line_lang_code else ''
+                                        log.warning(f'Duplicate ::auto-attach {lc_s} ::side left{lcode_clause}')
+                                    else:
+                                        self.auto_attach_left_w_lc[key] = True
                                 self.auto_attach_left[lc_s].append(detokenization_entry)
                             if side == 'right' or side == 'both':
-                                if self.auto_attach_right.get(lc_s, None):
-                                    log.warning(f'Duplicate ::auto-attach {lc_s} ::side right')
+                                for line_lang_code in (line_lang_codes if line_lang_codes else [None]):
+                                    key = f'{line_lang_code} {lc_s}'
+                                    if self.auto_attach_right_w_lc.get(key, False):
+                                        lcode_clause = f' ::lcode {line_lang_code}' if line_lang_code else ''
+                                        log.warning(f'Duplicate ::auto-attach {lc_s} ::side right{lcode_clause}')
+                                    else:
+                                        self.auto_attach_right_w_lc[key] = True
                                 self.auto_attach_right[lc_s].append(detokenization_entry)
                         elif head_slot == 'markup-attach':
                             paired_delimiter = bool(slot_value_in_double_colon_del_list(line, 'paired-delimiter',
