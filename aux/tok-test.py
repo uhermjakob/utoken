@@ -37,7 +37,7 @@ if __name__ == "__main__":
     for filename in filenames:
         if filename == 'set1':
             filenames2.extend(['amr-general-corpus.eng.txt',
-                               'Bible-ULT-woid.eng.txt' if args.compare else 'Bible-ULT.eng.txt',
+                               'Bible-ULT-woid.eng.txt',  # if args.compare else 'Bible-ULT.eng.txt'
                                'pmindia_v1.eng.txt',
                                'pmindia_v1.hin.txt',
                                '3S-tweetsdev.orig.eng.txt',
@@ -46,7 +46,7 @@ if __name__ == "__main__":
                                'test1.eng.txt',
                                'test.mal.txt'])
         elif filename == 'set2':
-            filenames2.extend(['Bible-IRV-woid.hin.txt' if args.compare else 'Bible-IRV.hin.txt',
+            filenames2.extend(['Bible-IRV-woid.hin.txt',  # if args.compare else 'Bible-IRV.hin.txt'
                                'saral-dev.kaz.txt',
                                'train46735.tgl.txt',
                                'train99005.uig.txt',
