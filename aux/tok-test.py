@@ -7,10 +7,14 @@
 """
 
 import argparse
+import logging as log
 import os
+from pathlib import Path
 import re
 import subprocess
 import sys
+
+log.basicConfig(level=log.INFO)
 
 
 if __name__ == "__main__":
@@ -22,7 +26,9 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Runs tokenization test(s)')
     parser.add_argument('-i', '--input', type=str, help='(comma-separated input filenames)')
     parser.add_argument('-c', '--compare', action='count', default=0, help='(compare results with other tokenizers)')
-    parser.add_argument('-v', '--visualize', action='count', default=0, help='(visualize results)')
+    parser.add_argument('-o', '--orig_compare', action='count', default=0, help='(compare original text w/ utoken)')
+    parser.add_argument('-d', '--detokenize', action='count', default=0, help='(detokenize results)')
+    #  parser.add_argument('-v', '--visualize', action='count', default=0, help='(visualize results)')
     parser.add_argument('--verbose', action='count', default=0)
     args = parser.parse_args()
     filenames: list[str] = args.input.split(r'[;,]\s*')
@@ -117,6 +123,23 @@ if __name__ == "__main__":
             # sys.stderr.write(f'{reformat_system_call_args} ...\n')
             subprocess.run(reformat_system_call_args, shell=True)
 
+            ref_file_s = None
+            ref_legend_s = None
+            if lang_code and lang_code != 'eng' and re.match(r'.*\.[a-z]{3}\.txt$', input_filename):
+                english_filename = re.sub(r'\.[a-z]{3}\.txt$', '.eng.txt', input_filename)
+                if os.path.isfile(english_filename):
+                    ref_file_s = f' {input_filename} {english_filename}'
+                    ref_legend_s = f' {lang_code}.txt eng.txt'
+            if ref_file_s is None:
+                input_filename_path = Path(input_filename)
+                google_dir = input_filename_path.parent / 'google-translations'
+                english_filename = google_dir / f'{input_filename_path.stem}.eng.txt'
+                if english_filename.is_file():
+                    ref_file_s = f' {input_filename} {english_filename}'
+                    ref_legend_s = f' {lang_code}.txt google'
+            if not ref_file_s:
+                ref_file_s = f' {input_filename}'
+                ref_legend_s = f' {lang_code}.txt'
             if args.compare:
                 # build sacremoses tokenization, if it does not already exist
                 sacremoses_filename = os.path.join(public_test_data_dir, 'tok-comparison', 'sacremoses',
@@ -140,19 +163,6 @@ if __name__ == "__main__":
                     sys.stderr.write(f"{command} ...\n")
                     subprocess.run(command, shell=True)
 
-                ref_file_s = None
-                ref_legend_s = None
-                if lang_code and lang_code != 'eng' and re.match(r'.*\.[a-z]{3}\.txt$', input_filename):
-                    english_filename = re.sub(r'\.[a-z]{3}\.txt$', '.eng.txt', input_filename)
-                    # sys.stderr.write(f"**** {input_filename} to {english_filename}\n")
-                    if os.path.isfile(english_filename):
-                        ref_file_s = f' {input_filename} {english_filename}'
-                        ref_legend_s = f' {lang_code}.txt eng.txt'
-                if not ref_file_s:
-                    ref_file_s = f' {input_filename}'
-                    ref_legend_s = f' {lang_code}.txt'
-                sacremoses_viz_filename = os.path.join(public_test_data_dir, 'viz',
-                                                       f'{core_filename}.sacrem-utoken-diff.html')
                 sys.stderr.write(f"boost ...\n")
                 b1_command = f'boost-tok.py < {output_filename} > {output_filename}.boost'
                 b2_command = f'boost-tok.py < {old_ulf_tokenizer_filename} > {old_ulf_tokenizer_filename}.boost'
@@ -160,7 +170,12 @@ if __name__ == "__main__":
                 subprocess.run(b1_command, shell=True)
                 subprocess.run(b2_command, shell=True)
                 subprocess.run(b3_command, shell=True)
+                if args.orig_compare:
+                    b4_command = f'boost-tok.py < {input_filename} > {input_filename}.boost'
+                    subprocess.run(b4_command, shell=True)
                 sys.stderr.write(f"color ...\n")
+                sacremoses_viz_filename = os.path.join(public_test_data_dir, 'viz',
+                                                       f'{core_filename}.sacrem-utoken-diff.html')
                 command = f'color-mt-diffs.pl {sacremoses_filename} {output_filename}{ref_file_s}' \
                           f' -b {sacremoses_filename}.boost {output_filename}.boost' \
                           f' -l sacrem utoken{ref_legend_s}' \
@@ -179,6 +194,43 @@ if __name__ == "__main__":
                 if args.verbose:
                     print(command)
                 subprocess.run(command, shell=True)
+                if args.orig_compare:
+                    orig_text_viz_filename = os.path.join(public_test_data_dir, 'viz',
+                                                          f'{core_filename}.orig-text-utoken-diff.html')
+                    ref_file_s2 = re.sub(f' {input_filename}', '', ref_file_s)
+                    ref_legend_s2 = re.sub(f' {lang_code}.txt', '', ref_legend_s)
+                    command = f'color-mt-diffs.pl {input_filename} {output_filename}{ref_file_s2}' \
+                              f' -b {input_filename}.boost {output_filename}.boost' \
+                              f' -l {lang_code}.txt utoken{ref_legend_s2}' \
+                              f' -o {orig_text_viz_filename}' \
+                              f' -a'
+                    # sys.stderr.write(f"{command} ...\n")
+                    if args.verbose:
+                        print(command)
+                    subprocess.run(command, shell=True)
+            if args.detokenize:
+                sys.stderr.write(f"detok ...\n")
+                detok_filename = re.sub(r'\.tok$', '.detok', output_filename)
+                command = f'python -m utoken.detokenize -i {output_filename} -o {detok_filename}'
+                if lang_code:
+                    command += f' --lc {lang_code}'
+                # sys.stderr.write(f"{command} ...\n")
+                subprocess.run(command, shell=True)
+                if args.compare:
+                    detok_viz_filename = os.path.join(public_test_data_dir, 'viz',
+                                                      f'{core_filename}.orig-text-detok-diff.html')
+                    b5_command = f'boost-detok.py < {input_filename} > {input_filename}.boost'
+                    subprocess.run(b5_command, shell=True)
+                    b6_command = f'boost-detok.py < {detok_filename} > {detok_filename}.boost'
+                    subprocess.run(b6_command, shell=True)
+                    command = f'color-mt-diffs.pl {input_filename} {detok_filename}{ref_file_s}' \
+                              f' -b {input_filename}.boost {detok_filename}.boost' \
+                              f' -l {lang_code}.txt detok{ref_legend_s}' \
+                              f' -o {detok_viz_filename}'
+                    # sys.stderr.write(f"{command} ...\n")
+                    if args.verbose:
+                        print(command)
+                    subprocess.run(command, shell=True)
         else:
             sys.stderr.write(f"WARNING: Ignoring filename {filename}, because it does not end in '.txt'\n")
             continue
