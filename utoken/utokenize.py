@@ -170,7 +170,7 @@ class Chart:
 
 
 class Tokenizer:
-    def __init__(self, lang_code: Optional[str] = None, data_dir: Optional[Path] = None,
+    def __init__(self, lang_code_s: Optional[str] = None, data_dir: Optional[Path] = None,
                  verbose: Optional[bool] = False):
         # Ordered list of tokenization steps
         self.tok_step_functions = [self.normalize_characters,
@@ -295,7 +295,8 @@ class Tokenizer:
         self.simple_tok_p: bool = False  # simple tokenization: no MT-markup such as @-@
         self.first_token_is_line_id_p: bool = False
         self.verbose: bool = verbose
-        self.lang_code: Optional[str] = lang_code
+        self.lang_codes = re.split(r'[;,\s*]', lang_code_s) if lang_code_s else []
+        self.lang_code: Optional[str] = self.lang_codes[0] if self.lang_codes else None
         self.n_lines_tokenized = 0
         self.tok_dict = util.ResourceDict()
         self.detok_resource = util.DetokenizationResource()
@@ -308,18 +309,18 @@ class Tokenizer:
         if data_dir is None:
             data_dir = self.default_data_dir()
         # Load tokenization resource entries for language specified by 'lang_code'
-        if lang_code:
+        for lang_code in self.lang_codes:
             self.tok_dict.load_resource(data_dir / f'tok-resource-{lang_code}.txt', lang_code=lang_code,
                                         verbose=self.verbose)
         # Load any other tokenization resource entries, for the time being just (global) English
         for lcode in ['eng-global']:
-            if lcode != lang_code:
+            if lcode not in self.lang_codes:
                 self.tok_dict.load_resource(data_dir / f'tok-resource-{lcode}.txt', lang_code=lcode,
                                             verbose=self.verbose)
         # Load language-independent tokenization resource entries
         self.tok_dict.load_resource(data_dir / 'tok-resource.txt', verbose=self.verbose)
         # Load detokenization resource entries, for proper mt-tokenization, e.g. @...@
-        self.detok_resource.load_resource(data_dir / f'detok-resource.txt', verbose=self.verbose)
+        self.detok_resource.load_resource(data_dir / f'detok-resource.txt', self.lang_codes, verbose=self.verbose)
         self.detok_resource.build_markup_attach_re(self)
         self.re_mt_punct_preserve = regex.compile(r'(.*?)'
                                                   r'(?<!\S)'      # negative lookbehind
@@ -722,7 +723,7 @@ class Tokenizer:
 
         # repair some control characters in the C1 Control black (assuming they are still unconverted Windows1252),
         # delete some control characters, replace non-standard spaces with ASCII space
-        if self.lv & self.char_is_deletable_control_character:
+        if self.lv & (self.char_is_deletable_control_character | self.char_is_non_standard_space):
             s = re.sub(r'[\u0080-\u009F]', self.apply_spec_windows1252_to_utf8_mapping_dict, s)
             # update line vector
             for char in s:
@@ -1621,7 +1622,7 @@ def main():
     args = parser.parse_args()
     lang_code = args.lc
     data_dir = Path(args.data_directory) if args.data_directory else None
-    tok = Tokenizer(lang_code=lang_code, data_dir=data_dir, verbose=args.verbose)
+    tok = Tokenizer(lang_code_s=lang_code, data_dir=data_dir, verbose=bool(args.verbose))
     tok.chart_p = bool(args.annotation_file) or bool(args.chart)
     tok.simple_tok_p = bool(args.simple)
     tok.first_token_is_line_id_p = bool(args.first_token_is_line_id)
