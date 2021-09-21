@@ -168,13 +168,23 @@ if __name__ == "__main__":
             if txt_filename.is_file():
                 command += f' {txt_filename}'
                 legend += ' txt'
+            eng_filename = None
+            eng_legend = 'eng'
             if re.match(r'.*\.[a-z]{3}$', file_stem):
                 eng_filename_name = re.sub(r'\.[a-z]{3}$', '.eng.txt', file_stem)
                 if eng_filename_name != filename.name:
-                    eng_filename = filename.parent.parent / eng_filename_name
-                    if eng_filename.is_file():
-                        command += f' {eng_filename}'
-                        legend += ' eng'
+                    eng_filename_cand = filename.parent.parent / eng_filename_name
+                    if eng_filename_cand.is_file():
+                        eng_filename = eng_filename_cand
+            if not eng_filename:
+                google_dir = filename.parent.parent / 'google-translations'
+                eng_filename_cand = google_dir / f'{file_stem}.eng.txt'
+                if eng_filename_cand.is_file():
+                    eng_filename = eng_filename_cand
+                    eng_legend = 'google'
+            if eng_filename:
+                command += f' {eng_filename}'
+                legend += ' ' + eng_legend
             command += legend
             command += ' -o /Users/ulf/utoken/test/data/viz/out.html'
             # log.info(f'command: {command}')
