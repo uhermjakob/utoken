@@ -145,6 +145,10 @@
 ::auto-attach তম ::side left ::left-context \d ::lcode ben ::comment ordinal particle ("th")
 ::auto-attach টি ::side left ::left-context \d ::lcode ben
 
+::auto-attach er ::side left ::left-context \d ::lcode deu ::comment 1920er Jahre
+::auto-attach ern ::side left ::left-context \d ::lcode deu ::comment in den 1920ern
+::auto-attach (in) ::side left ::left-context \pL ::lcode deu ::comment Lehrer(in)
+
 ::auto-attach η ::side left ::left-context \d ::lcode ell ::comment ordinal particle ("th")
 ::auto-attach ο ::side left ::left-context \d ::lcode ell ::comment ordinal particle ("th")
 ::auto-attach ου ::side left ::left-context \d ::lcode ell ::comment ordinal particle ("th")
@@ -171,7 +175,6 @@
 ::auto-attach кг ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
 ::auto-attach т ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
 ::auto-attach мг ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
-::auto-attach гг ::side left ::left-context \d ::lcode rus ::comment ordinal particle ("th")
 
 ::auto-attach aad ::side left ::left-context \d ::lcode som ::comment ordinal particle ("th")
 ::auto-attach kii ::side left ::left-context \d ::lcode som ::example 1950kii
