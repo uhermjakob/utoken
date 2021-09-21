@@ -17,7 +17,7 @@ if __name__ == "__main__":
         line = re.sub('', '“', line)
         line = re.sub('', '–', line)
         line = re.sub('', '—', line)
-        line = re.sub(r'(?: |&#160;)+', ' ', line)
+        line = re.sub(r'(?: |\t|&#160;)+', ' ', line)
         for _ in range(2):
             line = re.sub(r" (['’])(d|em|m|re|s|ve) ", r'\1\2 ', line)
             line = re.sub(r'(\d) ([%]) ', r'\1\2 ', line)
