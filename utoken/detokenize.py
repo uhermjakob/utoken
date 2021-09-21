@@ -13,7 +13,7 @@ import logging as log
 from pathlib import Path
 import re
 import sys
-from typing import Optional, TextIO
+from typing import List, Optional, TextIO
 from . import __version__, last_mod_date
 from . import util
 
@@ -21,28 +21,27 @@ log.basicConfig(level=log.INFO)
 
 
 class Detokenizer:
-    def __init__(self, lang_code: Optional[str] = None, data_dir: Optional[Path] = None,
+    def __init__(self, lang_code_s: Optional[str] = None, data_dir: Optional[Path] = None,
                  verbose: Optional[bool] = False):
         self.number_of_lines = 0
-        self.lang_code: Optional[str] = lang_code
-        lang_codes = [lang_code] if lang_code else []
+        self.lang_codes: List[str] = re.split(r'[;,\s*]', lang_code_s) if lang_code_s else []
         self.first_token_is_line_id_p = False
         if data_dir is None:
             data_dir = self.default_data_dir()
         self.verbose: bool = verbose
         self.detok_resource = util.DetokenizationResource()
         # Load detokenization resource entries
-        self.detok_resource.load_resource(data_dir / f'detok-resource.txt', verbose=self.verbose)
+        self.detok_resource.load_resource(data_dir / f'detok-resource.txt', self.lang_codes, verbose=self.verbose)
         # Load tokenization resource entries for language specified by 'lang_code' (to harvest a few contractions)
-        if lang_code:
-            self.detok_resource.load_resource(data_dir / f'tok-resource-{lang_code}.txt', lang_codes,
+        for lang_code in self.lang_codes:
+            self.detok_resource.load_resource(data_dir / f'tok-resource-{lang_code}.txt', self.lang_codes,
                                               verbose=self.verbose)
         # Load language-independent tokenization resource entries
-        self.detok_resource.load_resource(data_dir / f'tok-resource.txt', verbose=self.verbose)
+        self.detok_resource.load_resource(data_dir / f'tok-resource.txt', self.lang_codes, verbose=self.verbose)
         # Load any other tokenization resource entries, for the time being just (global) English
         for lcode in ['eng-global']:
-            if lcode != lang_code:
-                self.detok_resource.load_resource(data_dir / f'tok-resource-{lcode}.txt', lang_codes,
+            if lcode not in self.lang_codes:
+                self.detok_resource.load_resource(data_dir / f'tok-resource-{lcode}.txt', self.lang_codes,
                                                   verbose=self.verbose)
         # Now that all resource files have been loaded, form regex for all marked-up attachment elements
         self.detok_resource.build_markup_attach_re()
@@ -197,7 +196,7 @@ def main():
     args = parser.parse_args()
     lang_code = args.lc
     data_dir = Path(args.data_directory) if args.data_directory else None
-    detok = Detokenizer(lang_code=lang_code, data_dir=data_dir, verbose=args.verbose)
+    detok = Detokenizer(lang_code_s=lang_code, data_dir=data_dir, verbose=bool(args.verbose))
     detok.first_token_is_line_id_p = bool(args.first_token_is_line_id)
 
     # Open any input or output files. Make sure utf-8 encoding is properly set (in older Python3 versions).
