@@ -132,8 +132,8 @@
 ::punct-split ، ::side start
 ::punct-split < ::side start ::right-context (?:\d|\pL)
 ::punct-split > ::side start ::right-context (?:\d|\pL)
-::punct-split &lt; ::side start ::right-context (?:\d|\pL)
-::punct-split &gt; ::side start ::right-context (?:\d|\pL)
+::punct-split &lt; ::side start ::right-context (?:\d|\pL|[&])
+::punct-split &gt; ::side start ::right-context (?:\d|\pL|[&])
 ::punct-split \ ::side start ::right-context (?:\pL|/d)
 ::punct-split � ::side start
 ::punct-split † ::side start
@@ -176,8 +176,8 @@
 ::punct-split < ::side end ::left-context (?:\d|\pL\pM*)
 ::punct-split > ::side end ::left-context (?:\d|\pL\pM*)
 ::punct-split \ ::side end ::left-context (?:\d|\pL\pM*)
-::punct-split &lt; ::side end ::left-context (?:\d|\pL\pM*)
-::punct-split &gt; ::side end ::left-context (?:\d|\pL\pM*)
+::punct-split &lt; ::side end ::left-context (?:\d|\pL\pM*|[;])
+::punct-split &gt; ::side end ::left-context (?:\d|\pL\pM*|[;])
 ::punct-split � ::side end
 ::punct-split † ::side end
 ::punct-split ′ ::side end ::comment prime
