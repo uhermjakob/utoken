@@ -3,6 +3,7 @@
 ::punct-split - ::side both ::lcode kan ::left-context \pL\pM*[,)]* ::right-context [-\/(]*\pL
 ::punct-split ' ::side both ::group True ::lcode kan ::left-context \pL\pM*[,)]* ::right-context [-\/(]*\pL
 
+# Note: Abbreviations below of at least three (?) phonetic initials are temporary; to be covered by pattern rules.
 ::abbrev ರೂ. ::lcode kan ::eng Rs.; rupee ::sem-class currency-unit
 ::abbrev ಕ್ರಿ.ಪೂ ::lcode kan ::eng B.C.
 ::abbrev ಕ್ರಿ.ಶ ::lcode kan ::eng A.D.
