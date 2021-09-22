@@ -187,6 +187,8 @@
 ::repair & lt ; ::target &lt; ::lcode eng ::problem previous tokenizer
 ::repair & quot ; ::target &quot; ::lcode eng ::problem previous tokenizer
 ::repair & amp ; ::target &amp; ::lcode eng ::problem previous tokenizer
+::repair ፡፡ ::target ። ::problem Ethiopic period look-alike
+::repair ፡- ::target ፦ ::problem Ethiopic preface-colon look-alike
 
 ::abbrev AT&T ::sem-class company
 ::abbrev ES&S ::sem-class company
