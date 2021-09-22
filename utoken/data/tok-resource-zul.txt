@@ -1,5 +1,5 @@
 ::punct-split : ::side both ::lcode zul ::left-context \pL\pM*\pL\pM* ::right-context \pL\pM*\pL
 ::punct-split . ::side both ::lcode zul ::left-context \pL\pM*\pL\pM* ::right-context \pL\pM*\pL
-::punct-split - ::side both ::group True ::left-context (?<!\pL\pM*|\d)[eEiIuU] ::right-context \pL
+::punct-split - ::side both ::group True ::lcode zul ::left-context (?<!\pL\pM*|\d)[eEiIuU] ::right-context \pL
 
 ::abbrev c. ::lcode zul
