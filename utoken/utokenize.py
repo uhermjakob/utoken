@@ -282,6 +282,8 @@ class Tokenizer:
         bit_vector = bit_vector << 1
         self.char_is_hebrew = bit_vector
         bit_vector = bit_vector << 1
+        self.char_is_ethiopic_number = bit_vector
+        bit_vector = bit_vector << 1
         self.char_is_miscellaneous_symbol = bit_vector
         bit_vector = bit_vector << 1
         self.char_is_attach_tag = bit_vector
@@ -397,8 +399,9 @@ class Tokenizer:
             self.char_type_vector_dict[char] \
                 = self.char_type_vector_dict.get(char, 0) | self.char_is_surrogate
         # Non-standard space
-        for code_point in chain(range(0x2000, 0x200C), [0x00A0, 0x202F, 0x205F, 0x3000]):
-            # A0: NO-BREAK SPACE; 202F: NARROW NO-BREAK SPACE; 205F: MEDIUM MATHEMATICAL SPACE; 3000: IDEOGRAPHIC SPACE
+        for code_point in chain(range(0x2000, 0x200C), [0x00A0, 0x1361, 0x202F, 0x205F, 0x3000]):
+            # A0: NO-BREAK SPACE; 1361: ETHIOPIC WORDSPACE; 202F: NARROW NO-BREAK SPACE;
+            # 205F: MEDIUM MATHEMATICAL SPACE; 3000: IDEOGRAPHIC SPACE
             char = chr(code_point)
             self.char_type_vector_dict[char] \
                 = self.char_type_vector_dict.get(char, 0) | self.char_is_non_standard_space
@@ -464,6 +467,11 @@ class Tokenizer:
             char = chr(code_point)
             self.char_type_vector_dict[char] \
                 = self.char_type_vector_dict.get(char, 0) | self.char_is_hebrew
+        # Ethiopic numbers
+        for code_point in range(0x1369, 0x1380):
+            char = chr(code_point)
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_ethiopic_number
         # alpha, digit
         for code_point in range(0x0000, 0xE0200):  # All Unicode points
             char = chr(code_point)
@@ -725,6 +733,9 @@ class Tokenizer:
         # delete some control characters, replace non-standard spaces with ASCII space
         if self.lv & (self.char_is_deletable_control_character | self.char_is_non_standard_space):
             s = re.sub(r'[\u0080-\u009F]', self.apply_spec_windows1252_to_utf8_mapping_dict, s)
+            # repair Ethiopic
+            s = re.sub('፡፡', '።', s)  # double wordspace to look-alike period
+            s = re.sub('፡-', '፦', s)  # wordspace-hyphen to look-alike preface-colon
             # update line vector
             for char in s:
                 if char_type_vector := self.char_type_vector_dict.get(char, 0):
@@ -935,11 +946,17 @@ class Tokenizer:
                                r'\d+)'                                    # plain integer, e.g. 12345678
                                r'(?![-−–.,]?\d)'                          # negative lookahead
                                r'(.*)')
+    re_ethiopic_number = regex.compile(r'(.*?)'
+                                       r'([\u1369-\u137C]+)'              # Ethiopic numbers 1 .. 10,000
+                                       r'(.*)')
 
     def tokenize_numbers(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                          line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off numbers such as 12,345,678.90"""
         this_function = self.tokenize_numbers
+        if self.lv & self.char_is_ethiopic_number:
+            if m3 := self.re_ethiopic_number.match(s):
+                return self.rec_tok_m3(m3, s, offset, 'NUMBER-E', line_id, chart, lang_code, ht, this_function)
         if self.lv & self.char_is_digit:
             if m3 := self.re_number.match(s) or self.re_number2.match(s) or self.re_integer.match(s):
                 # log.info(f'A s: {s} offset: {offset} chart: {chart}')
@@ -1198,7 +1215,15 @@ class Tokenizer:
         # fail if token-end letter/digit is followed by letter/digit
         if self.re_ends_w_letter_or_digit.match(token_candidate) \
                 and self.re_starts_w_letter_or_digit.match(right_context):
-            return False
+            # Exception: letter + digit when explicitly mentioned in right context clause of lexical entry
+            # noinspection PyUnboundLocalVariable
+            if self.re_ends_w_letter.match(token_candidate) \
+                    and self.re_starts_w_dashed_digit.match(right_context) \
+                    and (re_r := lexical_entry.right_context) \
+                    and re_r.match(right_context):
+                pass
+            else:
+                return False
         # fail if token-start letter/digit is preceded by letter/digit
         if self.re_ends_w_letter_or_digit.match(left_context) \
                 and self.re_starts_w_letter_or_digit.match(token_candidate):
