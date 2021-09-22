@@ -282,6 +282,24 @@ class Tokenizer:
         bit_vector = bit_vector << 1
         self.char_is_hebrew = bit_vector
         bit_vector = bit_vector << 1
+        self.char_is_devanagari = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_bengali = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_gujarati = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_gurmukhi = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_kannada = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_malayalam = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_oriya = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_tamil = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_telugu = bit_vector
+        bit_vector = bit_vector << 1
         self.char_is_ethiopic_number = bit_vector
         bit_vector = bit_vector << 1
         self.char_is_miscellaneous_symbol = bit_vector
@@ -291,8 +309,14 @@ class Tokenizer:
         self.char_is_lower_upper_unstable = bit_vector
         bit_vector = bit_vector << 1
         self.char_is_miscode_elem = bit_vector
+        # import math; log.info(f'bit_vector length = {round(math.log2(bit_vector)) + 1}')
+
         self.char_is_dash_or_digit = self.char_is_dash | self.char_is_digit
+        self.char_is_indic = self.char_is_devanagari | self.char_is_bengali | self.char_is_gujarati \
+            | self.char_is_gurmukhi | self.char_is_kannada | self.char_is_malayalam | self.char_is_oriya \
+            | self.char_is_tamil | self.char_is_telugu
         self.range_init_char_type_vector_dict()
+
         self.chart_p: bool = False
         self.simple_tok_p: bool = False  # simple tokenization: no MT-markup such as @-@
         self.first_token_is_line_id_p: bool = False
@@ -467,6 +491,51 @@ class Tokenizer:
             char = chr(code_point)
             self.char_type_vector_dict[char] \
                 = self.char_type_vector_dict.get(char, 0) | self.char_is_hebrew
+        # Devanagari
+        for code_point in range(0x0900, 0x0980):
+            char = chr(code_point)
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_devanagari
+        # Bengali
+        for code_point in range(0x0980, 0x0A00):
+            char = chr(code_point)
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_bengali
+        # Gurmukhi
+        for code_point in range(0x0A00, 0x0A80):
+            char = chr(code_point)
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_gurmukhi
+        # Gujarati
+        for code_point in range(0x0A80, 0x0B00):
+            char = chr(code_point)
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_gujarati
+        # Oriya
+        for code_point in range(0x0B00, 0x0B80):
+            char = chr(code_point)
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_oriya
+        # Tamil
+        for code_point in range(0x0B80, 0x0C00):
+            char = chr(code_point)
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_tamil
+        # Telegu
+        for code_point in range(0x0C00, 0x0C80):
+            char = chr(code_point)
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_telugu
+        # Kannada
+        for code_point in range(0x0C80, 0x0D00):
+            char = chr(code_point)
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_kannada
+        # Malayalam
+        for code_point in range(0x0D00, 0x0D80):
+            char = chr(code_point)
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_malayalam
         # Ethiopic numbers
         for code_point in range(0x1369, 0x1380):
             char = chr(code_point)
@@ -733,9 +802,8 @@ class Tokenizer:
         # delete some control characters, replace non-standard spaces with ASCII space
         if self.lv & (self.char_is_deletable_control_character | self.char_is_non_standard_space):
             s = re.sub(r'[\u0080-\u009F]', self.apply_spec_windows1252_to_utf8_mapping_dict, s)
-            # repair Ethiopic
-            s = re.sub('፡፡', '።', s)  # double wordspace to look-alike period
-            s = re.sub('፡-', '፦', s)  # wordspace-hyphen to look-alike preface-colon
+            # replace Ethiopic wordspace by space, but leave '፡፡' and '፡-' for later repair
+            s = re.sub(r'(?<![፡])(፡)(?![-፡])', ' ', s)
             # update line vector
             for char in s:
                 if char_type_vector := self.char_type_vector_dict.get(char, 0):
@@ -747,6 +815,8 @@ class Tokenizer:
                     char = chart.s[i]
                     if self.char_type_vector_dict.get(char, 0) & self.char_is_deletable_control_character:
                         chart.delete_char(i, 1)
+                    elif char == '፡':  # Ethiopic wordspace
+                        pass
                     elif self.char_type_vector_dict.get(char, 0) & self.char_is_non_standard_space:
                         chart.s = chart.s.replace(char, ' ')
                 else:
