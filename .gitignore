@@ -19,10 +19,13 @@ test/data/tmp
 test/data/uroman-large-test-set
 test/data/*.wb
 test/data/*[0-9]
+test/data/*.boost
 test/data/utoken-out/*.ana
 test/data/utoken-out/*save*
 test/data/utoken-out/*.json
 test/data/utoken-out/*.boost
+test/data/utoken-out/*.detok
+test/data/utoken-out/*.dcln
 test/data/utoken-out/*.wb
 test/data/utoken-out/*.mt.*
 test/data/utoken-out/*simple*
