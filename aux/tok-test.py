@@ -28,8 +28,7 @@ if __name__ == "__main__":
     parser.add_argument('-c', '--compare', action='count', default=0, help='(compare results with other tokenizers)')
     parser.add_argument('-o', '--orig_compare', action='count', default=0, help='(compare original text w/ utoken)')
     parser.add_argument('-d', '--detokenize', action='count', default=0, help='(detokenize results)')
-    #  parser.add_argument('-v', '--visualize', action='count', default=0, help='(visualize results)')
-    parser.add_argument('--verbose', action='count', default=0)
+    parser.add_argument('-v', '--verbose', action='count', default=0)
     args = parser.parse_args()
     filenames: list[str] = args.input.split(r'[;,]\s*')
     # filename expansion
@@ -53,7 +52,9 @@ if __name__ == "__main__":
                                'NewTestament-430randVerses.ecg.txt',
                                'OldTestament-sel.hbo.txt',
                                'Odyssey-Republic-sel.grc.txt',
+                               'amh.txt',
                                'ara.txt',
+                               'asm.txt',
                                'ben.txt',
                                'bul.txt',
                                'deu.txt',
@@ -63,6 +64,7 @@ if __name__ == "__main__":
                                'heb.txt',
                                'kan.txt',
                                'kat.txt',
+                               'lao.txt',
                                'lit.txt',
                                'mal.txt',
                                'pus.txt',
