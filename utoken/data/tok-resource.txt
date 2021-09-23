@@ -87,7 +87,7 @@
 ::punct-split , ::side both ::left-context \d\.\d{1,2} ::right-context \d
 ::punct-split , ::side both ::left-context \d:\d{1,2} ::right-context \d{1,2}[-]\d  # Genesis 1:1,26-28
 ::punct-split , ::side both ::left-context \d ::right-context \pL\pM*\pL
-::punct-split / ::side both ::left-context \pL\pM*(?:\pL\pM*|\d) ::right-context \pL\pM*\pL  #right-context-not (?:hr|yr)\b
+::punct-split / ::side both ::left-context \pL\pM*(?:\pL\pM*|\d) ::right-context (?:\pL\pM*\pL|[㎀-㏟])  #right-context-not (?:hr|yr)\b
 ::punct-split ; ::side both ::left-context \pL\pM*\pL\pM* ::right-context [-\/]*\pL\pM*\pL ::left-context-not &(?:amp|apos|gt|lt|nbsp|quot|#\d+|#x[0-9A-F]+)  # xml tags
 ::punct-split / ::side both ::left-context -\d+ ::right-context \d+-
 ::punct-split \ ::side both ::left-context (?:\pL\pM*|/d) ::right-context (?:\pL|/d)
@@ -116,6 +116,7 @@
 ::punct-split ¡ ::side start ::group True
 ::punct-split ¿ ::side start ::group True
 ::punct-split ~ ::side start ::group True
+::punct-split ～ ::side start ::comment full-width tilde
 ::punct-split _ ::side start ::group True
 ::punct-split | ::side start ::group True
 ::punct-split ¦ ::side start ::group True
@@ -166,6 +167,7 @@
 ::punct-split : ::side end
 ::punct-split ： ::side end
 ::punct-split ~ ::side end
+::punct-split ～ ::side end ::comment full-width tilde
 ::punct-split * ::side end ::left-context (?:\pL\pM*|[’,.])
 ::punct-split _ ::side end ::group True
 ::punct-split / ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?'’‘])
@@ -294,7 +296,7 @@
 ::abbrev H2O ::exp water ::sem-class substance
 ::abbrev TNT ::exp trinitrotoluene ::sem-class substance
 
-::abbrev cm ::exp centimeter ::sem-class unit-of-measurement
+::abbrev cm ::exp centimeter ::sem-class unit-of-measurement ::alt-spelling ㎝
 ::abbrev cm² ::exp square centimeter ::sem-class unit-of-measurement
 ::abbrev cm³ ::exp cubic centimeter ::sem-class unit-of-measurement
 ::abbrev g ::exp gram ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
@@ -306,8 +308,8 @@
 ::abbrev kWh ::exp kilowatt-hour ::sem-class unit-of-measurement ::misspelling kW/h
 ::abbrev M ::exp molar ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
 ::abbrev m ::exp meter ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
-::abbrev m² ::exp square meter ::sem-class unit-of-measurement ::alt-spelling sq.mtr.
-::abbrev m³ ::exp cubic meter ::sem-class unit-of-measurement
+::abbrev m² ::exp square meter ::sem-class unit-of-measurement ::alt-spelling ㎡; sq.mtr.
+::abbrev m³ ::exp cubic meter ::sem-class unit-of-measurement ::alt-spelling ㎥
 ::abbrev mg ::exp milligram ::sem-class unit-of-measurement ::case-sensitive True
 ::abbrev ml ::exp milliliter ::sem-class unit-of-measurement ::case-sensitive True
 ::abbrev mm ::exp millimeter ::sem-class unit-of-measurement ::case-sensitive True

@@ -300,6 +300,8 @@ class Tokenizer:
         bit_vector = bit_vector << 1
         self.char_is_telugu = bit_vector
         bit_vector = bit_vector << 1
+        self.char_is_hangul = bit_vector
+        bit_vector = bit_vector << 1
         self.char_is_ethiopic_number = bit_vector
         bit_vector = bit_vector << 1
         self.char_is_miscellaneous_symbol = bit_vector
@@ -541,6 +543,11 @@ class Tokenizer:
             char = chr(code_point)
             self.char_type_vector_dict[char] \
                 = self.char_type_vector_dict.get(char, 0) | self.char_is_ethiopic_number
+        # Hangul syllables
+        for code_point in range(0xAC00, 0xD7B0):
+            char = chr(code_point)
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_hangul
         # alpha, digit
         for code_point in range(0x0000, 0xE0200):  # All Unicode points
             char = chr(code_point)
@@ -1191,6 +1198,7 @@ class Tokenizer:
     re_starts_w_non_whitespace = regex.compile(r'\S')
     re_starts_w_apostrophe_plus = regex.compile(r"['‘’`]")
     re_ends_w_letter = regex.compile(r'.*\pL\pM*$')          # including any modifiers
+    re_ends_w_latin_letter = regex.compile(r'(?V1).*[\p{Latin}&&\p{Letter}]$')
     re_ends_w_apostrophe_plus = regex.compile(r".*['‘’`]$")
     re_ends_w_digit = regex.compile(r'.*\d$')
     re_ends_w_letter_or_digit = regex.compile(r'.*(\pL\pM*|\d)$')
@@ -1268,8 +1276,13 @@ class Tokenizer:
                     and self.re_starts_w_dashed_digit.match(right_context)):
                 return False
         if token_candidate.endswith('.') and self.re_starts_w_single_letter.match(right_context):
+            rc0_type_vector = self.char_type_vector_dict.get(right_context[0], 0) if right_context != '' else 0
+            # exeptions
+            if rc0_type_vector & self.char_is_hangul:
+                pass
             # log.info(f'  ABBREV test2 {token_candidate} :rc {right_context} false')  # HHERE Malayalam challenge
-            return False
+            else:
+                return False
         if left_context.endswith('.') \
                 and '.' in token_candidate \
                 and self.re_ends_w_letter_plus_period.match(left_context):
@@ -1292,13 +1305,34 @@ class Tokenizer:
                     and (re_r := lexical_entry.right_context) \
                     and re_r.match(right_context):
                 pass
+            elif self.re_ends_w_digit.match(token_candidate) \
+                    and self.re_starts_w_letter.match(right_context) \
+                    and (re_r := lexical_entry.right_context) \
+                    and re_r.match(right_context):
+                pass
             else:
                 return False
         # fail if token-start letter/digit is preceded by letter/digit
         if self.re_ends_w_letter_or_digit.match(left_context) \
                 and self.re_starts_w_letter_or_digit.match(token_candidate):
             # exception: number+unit OK even without space
+            # noinspection PyUnboundLocalVariable
             if self.re_ends_w_digit.match(left_context) and sem_class == 'unit-of-measurement':
+                pass
+            elif self.re_ends_w_letter.match(left_context) \
+                    and self.re_starts_w_dashed_digit.match(token_candidate) \
+                    and (re_l := lexical_entry.left_context) \
+                    and re_l.match(left_context):
+                pass
+            elif self.re_ends_w_digit.match(left_context) \
+                    and self.re_starts_w_letter.match(token_candidate) \
+                    and (re_l := lexical_entry.left_context) \
+                    and re_l.match(left_context):
+                pass
+            elif self.lv & (self.char_is_indic | self.char_is_hangul) \
+                    and self.re_ends_w_latin_letter.match(left_context) \
+                    and (t0_type_vector := self.char_type_vector_dict.get(token_candidate[0], 0)) \
+                    and (t0_type_vector & (self.char_is_indic | self.char_is_hangul)):
                 pass
             else:
                 return False
@@ -1400,6 +1434,7 @@ class Tokenizer:
         this_function = self.tokenize_lexical_according_to_resource_entries
 
         last_primary_char_type_vector = 0  # 'primary': not counting modifying letters
+        last_c = ' '
         len_s = len(s)
         s_lc = self.lower(s)
         for start_position in range(0, len_s):
@@ -1410,6 +1445,9 @@ class Tokenizer:
             # general restriction: if token starts with a letter, it can't be preceded by a letter
             if last_primary_char_type_vector & self.char_is_alpha \
                     and current_char_type_vector & self.char_is_alpha:
+                # if current_char_type_vector & (self.char_is_indic | self.char_is_hangul) \
+                #         and self.re_ends_w_latin_letter.match(last_c):
+                #     pass
                 continue
             max_end_position = start_position
             position = start_position+1
@@ -1436,6 +1474,7 @@ class Tokenizer:
                                                     sem_class=resource_entry.sem_class, left_done=True)
                 end_position -= 1
             last_primary_char_type_vector = current_char_type_vector
+            last_c = c
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     def tokenize_punctuation_according_to_resource_entries(self, s: str, chart: Chart, ht: dict,
