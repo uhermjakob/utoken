@@ -138,9 +138,11 @@ Note: Please make sure that your $PYTHONPATH includes the directory in which thi
 ### Limitations
 * Currently excluded: no-space scripts like Chinese
 * Large set of resource entries (data file) currently for English only; limited resource entries for 50+ other languages
-* Languages with substantial testing so far: English, Farsi, Hindi, Kazakh, Tagalog and Uyghur
-  * Limited testing (a few hundred Wikipedia sentences each) for: Amharic, Arabic, Assamese, Bengali, Bulgarian, French, Georgian, German, Greek (Modern), Hebrew (Modern), Kannada, Korean, Lao, Lithuanian, Malayalam, Pashto, Russian, Somali, Spanish, Swahili, Swedish, Turkish, Zulu
-  * Equivalent limited testing: Ancient Greek (Odyssey, Republic) and Biblical Hebrew and Greek (Koine)
+* Languages tested so far: Amharic, Arabic, Assamese, Bengali, Bulgarian, __English__, __Farsi__, French, Georgian, German, Greek (Ancient/Koine/Modern), Hebrew (Ancient/Modern), __Hindi__, Kannada, __Kazakh__, Korean, Lao, Lithuanian, Malayalam, Pashto, Russian, Somali, Spanish, Swahili, Swedish, __Tagalog__, Turkish, __Uyghur__, Zulu
+  * For languages in __bold__: large-scale testing of thousands to hundreds of thousands of sentences per language.
+  * For other modern languages: a few hundred sentences from 100 Wikipedia articles per language.
+  * For Ancient Hebrew and Koine Greek: a few hundred verses each from the Bible's Old and New Testament respectively.  
+  * For Ancient Greek: a few hundred sentences from Homer's _Odyssey_ and Plato's _Republic_.
 
 ### Requirements
 * Python 3.8 or higher
