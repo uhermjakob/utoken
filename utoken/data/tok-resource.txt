@@ -116,7 +116,7 @@
 ::punct-split ¡ ::side start ::group True
 ::punct-split ¿ ::side start ::group True
 ::punct-split ~ ::side start ::group True
-::punct-split ～ ::side start ::comment full-width tilde
+::punct-split ～ ::side start ::group True ::comment full-width tilde
 ::punct-split _ ::side start ::group True
 ::punct-split | ::side start ::group True
 ::punct-split ¦ ::side start ::group True
