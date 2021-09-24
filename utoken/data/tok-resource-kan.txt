@@ -2,8 +2,12 @@
 ::punct-split + ::side both ::lcode kan ::left-context \pL\pM*[,)]* ::right-context [-\/(]*\pL
 ::punct-split - ::side both ::lcode kan ::left-context \pL\pM*[,)]* ::right-context [-\/(]*\pL
 ::punct-split ' ::side both ::group True ::lcode kan ::left-context \pL\pM*[,)]* ::right-context [-\/(]*\pL
+# Following two entries support common sentence breaks, could possibly be refined.
+::punct-split . ::side both ::lcode kan ::left-context \pL\pM*\pL\pM*\pL\pM* ::right-context \pL
+::punct-split . ::side both ::lcode kan ::left-context \pL\pM* ::right-context \pL\pM*\pL\pM*\pL
 
-# Note: Abbreviations below of at least three (?) phonetic initials are temporary; to be covered by pattern rules.
+# Note: Some of the abbreviations below, particularly those with at least three phonetic initials (maybe 2)
+# are temporary; to be covered by general pattern rule in analogy to rule for initials in capitalized scripts.
 ::abbrev ರೂ. ::lcode kan ::eng Rs.; rupee ::sem-class currency-unit
 ::abbrev ಕ್ರಿ.ಪೂ ::lcode kan ::eng B.C.
 ::abbrev ಕ್ರಿ.ಶ ::lcode kan ::eng A.D.
@@ -15,7 +19,9 @@
 ::abbrev ಬಿ.ಎಸ್.ಎನ್.ಎಲ್. ::lcode kan ::eng BSNL ::sem-class company ::alt-spelling ಬಿ.ಎಸ್.ಎನ್.ಎಲ್
 ::abbrev ಚ.ಕಿಮಿ ::lcode kan ::eng sq. km ::sem-class unit-of-measurement
 ::abbrev ಚ.ಮೈ. ::lcode kan ::eng sq. mi. ::sem-class unit-of-measurement
-::abbrev ಕಿಮಿ. ::lcode kan ::eng km ::sem-class unit-of-measurement
+::abbrev ಕಿಮಿ. ::lcode kan ::eng km ::sem-class unit-of-measurement ::alt-spelling ಕಿ.ಮಿ.
+::abbrev ಮಿ.ಮಿ. ::lcode kan ::eng mm ::sem-class unit-of-measurement
+::abbrev ಉದಾ. ::lcode kan ::eng e.g.
 
 ::abbrev ಎ. ::token-category phonetics ::eng A. ::lcode kan
 ::abbrev ಬಿ. ::token-category phonetics ::eng B. ::lcode kan
