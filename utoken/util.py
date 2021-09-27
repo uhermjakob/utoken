@@ -88,6 +88,8 @@ class ResourceDict:
         self.prefix_dict_lexical: Dict[str, bool] = {}
         self.prefix_dict_punct: Dict[str, bool] = {}
         self.max_s_length: int = 0
+        self.pre_name_title_list = defaultdict(list)  # key: lang_code  value: ["Mr.", "Dr."]
+        self.phonetics_list = defaultdict(list)       # key: lang_code  value: ["Ey.", "Bi.", "Si."]
 
     def register_resource_entry_in_reverse_resource_dict(self, resource_entry: ResourceEntry, rev_anchors: List[str]):
         for rev_anchor in rev_anchors:
@@ -383,6 +385,13 @@ class ResourceDict:
                                     self.prefix_dict[lc_s[:prefix_length]] = True
                             if sem_class := slot_value_in_double_colon_del_list(line, 'sem-class'):
                                 resource_entry.sem_class = sem_class
+                                if (sem_class == "pre-name-title") \
+                                        and (lcode := slot_value_in_double_colon_del_list(line, 'lcode')):
+                                    self.pre_name_title_list[lcode].append(lc_s)
+                            if (token_category := slot_value_in_double_colon_del_list(line, 'token-category')) \
+                                    and (token_category == 'phonetics') \
+                                    and (lcode := slot_value_in_double_colon_del_list(line, 'lcode')):
+                                self.phonetics_list[lcode].append(lc_s)
                             if slot_value_in_double_colon_del_list(line, 'case-sensitive'):
                                 resource_entry.case_sensitive = True
                             if tag := slot_value_in_double_colon_del_list(line, 'tag'):

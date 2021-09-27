@@ -11,6 +11,7 @@ import argparse
 from itertools import chain
 import cProfile
 import datetime
+from collections import defaultdict
 import functools
 import json
 import logging as log
@@ -357,6 +358,28 @@ class Tokenizer:
                                                   r'(.*)$',
                                                   flags=regex.IGNORECASE)
         # log.info(f're_mt_punct_preserve: {self.re_mt_punct_preserve}')
+        # build regular expressions for phonetic initials as common in many Indian languages, store in phonetics_re_dict
+        self.phonetics_re_dict = defaultdict(list)                 # key: lang_code
+        for lang_code in self.lang_codes:
+            phonetics_list = self.tok_dict.phonetics_list[lang_code]
+            if phonetics_list:
+                phonetics_list_wop = [x.rstrip('.') for x in phonetics_list]  # wop: without period
+                phonetics_alts_wop = '(?:' + '|'.join(phonetics_list_wop) + ')'
+                phonetics_alts = '(?:' + phonetics_alts_wop + r'\.)'
+                if pre_name_list := self.tok_dict.pre_name_title_list[lang_code]:
+                    pre_name_list_wop = [x.rstrip('.') for x in pre_name_list]
+                    pre_name = '(?:(?:' + '|'.join(pre_name_list_wop) + r')\.)*'
+                else:
+                    pre_name = ''
+                re1_string = r'(.*(?<!(?:\pL\pM*|[.\u200C\u200D]))' + pre_name + ')'\
+                             r'(' + phonetics_alts + '+' + phonetics_alts_wop + ')'\
+                             r'(?!(?:\pL|\pM|[.]))'\
+                             r'(.*)$'
+                re2_string = r'(.*(?<!(?:\pL\pM*|[.\u200C\u200D]))' + pre_name + ')' \
+                             r'(' + phonetics_alts + '{2,})' \
+                             r'(.*)$'
+                self.phonetics_re_dict[lang_code].append(regex.compile(re1_string, flags=regex.IGNORECASE | regex.V1))
+                self.phonetics_re_dict[lang_code].append(regex.compile(re2_string, flags=regex.IGNORECASE | regex.V1))
         # Challenge: top-domain names (e.g. at|be|im|in|is|it|my|no|so|to|US) that can also be regular words,
         #     e.g. G-20.In car.so
         top_level_domain_names_tuple = util.load_top_level_domains(data_dir / 'top-level-domain-codes.txt')
@@ -1035,7 +1058,9 @@ class Tokenizer:
             if m3 := self.re_ethiopic_number.match(s):
                 return self.rec_tok_m3(m3, s, offset, 'NUMBER-E', line_id, chart, lang_code, ht, this_function)
         if self.lv & self.char_is_digit:
-            if m3 := self.re_number.match(s) or self.re_number2.match(s) or self.re_integer.match(s):
+            if m3 := self.re_number.match(s) \
+                     or ((lang_code not in ('kan', 'mal')) and self.re_number2.match(s)) \
+                     or self.re_integer.match(s):
                 # log.info(f'A s: {s} offset: {offset} chart: {chart}')
                 return self.rec_tok_m3(m3, s, offset, 'NUMBER', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
@@ -1191,7 +1216,7 @@ class Tokenizer:
     re_starts_w_letter = regex.compile(r'\pL')
     re_starts_w_letter_or_digit = regex.compile(r'(\pL|\d)')
     re_starts_w_letter_or_digit_in_token = regex.compile(r'\S*(\pL|\d)')
-    re_starts_w_single_letter = regex.compile(r'\pL\pM*(?!\pL)')
+    re_starts_w_single_letter = regex.compile(r'\pL\pM*(?!\pL|\pM)')
     re_starts_w_dash = regex.compile(r'[-−–]')
     re_starts_w_dashed_digit = regex.compile(r'[-−–]?\d')
     re_starts_w_single_s = regex.compile(r's(?!\pL|\d)', flags=regex.IGNORECASE)
@@ -1278,10 +1303,10 @@ class Tokenizer:
         if token_candidate.endswith('.') and self.re_starts_w_single_letter.match(right_context):
             rc0_type_vector = self.char_type_vector_dict.get(right_context[0], 0) if right_context != '' else 0
             # exeptions
-            if rc0_type_vector & self.char_is_hangul:
+            if rc0_type_vector & (self.char_is_hangul | self.char_is_indic):
                 pass
-            # log.info(f'  ABBREV test2 {token_candidate} :rc {right_context} false')  # HHERE Malayalam challenge
             else:
+                # log.info(f'  ABBREV test2 {token_candidate} :rc {right_context} false')  # HHERE Malayalam challenge
                 return False
         if left_context.endswith('.') \
                 and '.' in token_candidate \
@@ -1434,7 +1459,6 @@ class Tokenizer:
         this_function = self.tokenize_lexical_according_to_resource_entries
 
         last_primary_char_type_vector = 0  # 'primary': not counting modifying letters
-        last_c = ' '
         len_s = len(s)
         s_lc = self.lower(s)
         for start_position in range(0, len_s):
@@ -1474,7 +1498,6 @@ class Tokenizer:
                                                     sem_class=resource_entry.sem_class, left_done=True)
                 end_position -= 1
             last_primary_char_type_vector = current_char_type_vector
-            last_c = c
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     def tokenize_punctuation_according_to_resource_entries(self, s: str, chart: Chart, ht: dict,
@@ -1558,6 +1581,10 @@ class Tokenizer:
         if self.lv & self.char_is_dash:
             if m3 := self.re_abbrev_acronym_product.match(s):
                 return self.rec_tok_m3(m3, s, offset, 'ABBREV-P', line_id, chart, lang_code, ht, this_function)
+        # phonetic initials in many Indian languages, e.g. "ey.bi.si." ("ABC")
+        for phonetic_re in self.phonetics_re_dict[lang_code]:
+            if m3 := phonetic_re.match(s):
+                return self.rec_tok_m3(m3, s, offset, 'ABBREV-IP', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_dot_pl = regex.compile(r'.*\pL')  # used to filter the following below
