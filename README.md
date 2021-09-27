@@ -34,7 +34,7 @@ _The ouput below is in the more human-friendly annotation format. Default format
 <details>
 <summary>utokenize (command line interface to tokenize a file)</summary>
 
-```
+```bash
 python -m utoken.utokenize [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-a ANNOTATION-FILENAME] 
                            [--annotation_format ANNOTATION_FORMAT] [-p PROFILE-FILENAME] 
                            [--profile_scope PROFILE_SCOPE] [-d DATA_DIRECTORY] [--lc LANGUAGE-CODE] 
@@ -70,7 +70,7 @@ Note: Please make sure that your $PYTHONPATH includes the directory in which thi
 <details>
 <summary>detokenize (command line interface to detokenize a file)</summary>
 
-```
+```bash
 python -m utoken.detokenize [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-d DATA_DIRECTORY] 
                             [--lc LANGUAGE-CODE] [-f] [-v] [--version]
 optional arguments:
@@ -93,7 +93,7 @@ Note: Please make sure that your $PYTHONPATH includes the directory in which thi
 <details>
 <summary>utokenize_string (Python function call to tokenize a string)</summary>
   
-```
+```python
 from utoken import utokenize
   
 tok = utokenize.Tokenizer(lang_code='eng')  # Initialize tokenizer, load resources
@@ -111,7 +111,7 @@ Note: Please make sure that your $PYTHONPATH includes the directory in which thi
 <details>
 <summary>detokenize_string (Python function call to detokenize a string)</summary>
  
-```
+```python
 from utoken import detokenize
 
 detok = detokenize.Detokenizer(lang_code='eng')  # Initialize detokenizer, load resources
