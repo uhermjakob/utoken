@@ -38,6 +38,7 @@
 ::abbrev ഒ. ::token-category phonetics ::lcode mal ::eng O.
 ::abbrev പി. ::token-category phonetics ::lcode mal ::eng P.
 ::abbrev ക്യൂ. ::token-category phonetics ::lcode mal ::eng Q.
+::abbrev ക്യു. ::token-category phonetics ::lcode mal ::eng Q.
 ::abbrev ആർ. ::token-category phonetics ::lcode mal ::eng R.
 ::abbrev എസ്. ::token-category phonetics ::lcode mal ::eng S.
 ::abbrev ടി. ::token-category phonetics ::lcode mal ::eng T.

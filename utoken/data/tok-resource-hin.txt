@@ -80,6 +80,7 @@
 ::abbrev ई.पू. ::exp ईसा पूर्व ::lcode hin ::eng BC (BCE)
 ::abbrev एच॰आई॰वी ::lcode hin ::eng HIV
 ::abbrev टीवी. ::lcode hin ::eng TV
+::abbrev एम.फिल. ::lcode hin ::eng M.Phil. ::alt-spelling एम.फिल
 ::abbrev डा. ::lcode hin ::eng Dr.
 ::abbrev डॉ. ::exp डॉक्टर ::lcode hin ::eng Dr.
 ::abbrev दि॰ब॰स॰ ::exp दिवालोक बचत समय ::lcode hin ::eng daylight saving time

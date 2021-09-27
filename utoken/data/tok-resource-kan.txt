@@ -5,18 +5,14 @@
 # Following two entries support common sentence breaks, could possibly be refined.
 ::punct-split . ::side both ::lcode kan ::left-context \pL\pM*\pL\pM*\pL\pM* ::right-context \pL
 ::punct-split . ::side both ::lcode kan ::left-context \pL\pM* ::right-context \pL\pM*\pL\pM*\pL
+::punct-split , ::side both ::lcode kan ::left-context \d ::right-context \d\d\d\d
 
-# Note: Some of the abbreviations below, particularly those with at least three phonetic initials (maybe 2)
-# are temporary; to be covered by general pattern rule in analogy to rule for initials in capitalized scripts.
 ::abbrev ರೂ. ::lcode kan ::eng Rs.; rupee ::sem-class currency-unit
 ::abbrev ಕ್ರಿ.ಪೂ ::lcode kan ::eng B.C.
 ::abbrev ಕ್ರಿ.ಶ ::lcode kan ::eng A.D.
 ::abbrev ಡಾ. ::lcode kan ::sem-class pre-name-title ::eng Dr.
 ::abbrev ಶ್ರೀ. ::lcode kan ::sem-class pre-name-title ::eng Mr.
 ::abbrev ಪಿ‍ಎಚ್.ಡಿ. ::lcode kan ::eng Ph.D.
-::abbrev ಯು.ಪಿ.ಎ. ::lcode kan ::eng UPA ::sem-class political-party
-::abbrev ಎನ್.ಡಿ.ಎ ::lcode kan ::eng NDA ::sem-class political-party
-::abbrev ಬಿ.ಎಸ್.ಎನ್.ಎಲ್. ::lcode kan ::eng BSNL ::sem-class company ::alt-spelling ಬಿ.ಎಸ್.ಎನ್.ಎಲ್
 ::abbrev ಚ.ಕಿಮಿ ::lcode kan ::eng sq. km ::sem-class unit-of-measurement
 ::abbrev ಚ.ಮೈ. ::lcode kan ::eng sq. mi. ::sem-class unit-of-measurement
 ::abbrev ಕಿಮಿ. ::lcode kan ::eng km ::sem-class unit-of-measurement ::alt-spelling ಕಿ.ಮಿ.
@@ -24,6 +20,7 @@
 ::abbrev ಉದಾ. ::lcode kan ::eng e.g.
 
 ::abbrev ಎ. ::token-category phonetics ::eng A. ::lcode kan
+::abbrev ಏ. ::token-category phonetics ::eng A. ::lcode kan
 ::abbrev ಬಿ. ::token-category phonetics ::eng B. ::lcode kan
 ::abbrev ಸಿ. ::token-category phonetics ::eng C. ::lcode kan
 ::abbrev ಡಿ. ::token-category phonetics ::eng D. ::lcode kan
