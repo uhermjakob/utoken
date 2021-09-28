@@ -68,6 +68,7 @@ if __name__ == "__main__":
                                'lao.txt',
                                'lit.txt',
                                'mal.txt',
+                               'por.txt',
                                'pus.txt',
                                'rus.txt',
                                'som.txt',

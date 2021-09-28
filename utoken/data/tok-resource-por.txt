@@ -1,3 +1,11 @@
+::punct-split : ::side both ::lcode por ::left-context \pL\pM*\pL\pM* ::right-context \pL\pM*\pL
+::punct-split . ::side both ::lcode por ::left-context \pL\pM*\pL\pM* ::right-context \pL\pM*\pL
+
+::lexical .º ::lcode por ::eng th ::comment ordinal suffix
+
+::lexical Grã-Bretanha ::lcode por ::sem-class country
+::lexical Grã-Colômbia ::lcode por ::sem-class country
+
 ::abbrev a. ::lcode por
 ::abbrev b. ::lcode por
 ::abbrev c. ::lcode por

@@ -2,6 +2,9 @@
 ::punct-split - ::side both ::group True ::left-context (?<!\pL\pM*|\d)[iI] ::right-context \pL
 ::punct-split -a- ::side both ::group True ::left-context (?<!\pL\pM*|\d)(?:[MmNnPp]ag|[Ii]) ::right-context \pL
 
+::lexical :e ::lcode tgl ::left-context \d ::eng th ::etym-lcode swe ::comment ordinal suffix ::syntax-checked True
+::lexical :th ::lcode tgl ::left-context \d ::eng th ::etym-lcode eng ::comment ordinal suffix ::syntax-checked True
+
 ::abbrev hal. ::exp halimbawa ::lcode tgl ::comment example
 ::abbrev Bb. ::exp Binibini ::lcode tgl ::comment Miss
 ::abbrev Bgy. ::exp Barangay ::lcode tgl ::comment local district

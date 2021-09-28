@@ -126,6 +126,7 @@
 ::punct-split – ::side start ::group True ::right-context -*\pL\pM*\pL
 ::punct-split ; ::side start ::group True ::right-context [-\/]*\pL\pM*\pL
 ::punct-split : ::side start ::left-context \d ::right-context \d+[-,]\d  # Genesis 1:26-28
+::punct-split : ::side start ::left-context \d ::right-context \pL
 ::punct-split , ::side start
 ::punct-split • ::side start
 ::punct-split ※ ::side start
@@ -370,12 +371,14 @@
 ::abbrev 2D ::exp two-dimensional ::case-sensitive True
 ::abbrev 3D ::exp three-dimensional ::case-sensitive True
 ::abbrev 4D ::exp four-dimensional ::case-sensitive True
+::abbrev 4x4 ::exp four-wheel drive
 ::abbrev CD ::exp compact disc ::case-sensitive True
 ::abbrev CD-ROM ::exp compact disc read-only memory
 ::abbrev COP21 ::exp United Nations Climate Change Conference ::comment conference of the parties, 21st century ::alt-spelling COP-21
 ::abbrev CPU ::exp central processing unit
 ::abbrev DDoS ::exp distributed denial of service (attack)
 ::abbrev DVD ::exp digital versatile disc
+::abbrev ISO 3166-2
 ::abbrev Mφ ::exp macrophage ::alt-spelling MΦ; MØ
 ::abbrev MφCM ::exp macrophage-conditioned medium ::alt-spelling MΦCM; MØCM
 
@@ -692,6 +695,9 @@
 ::lexical West Bengal ::sem-class state
 ::lexical Western Australia ::sem-class state
 ::lexical West Virginia ::sem-class state
+
+::lexical 49ers ::sem-class team
+::lexical 76ers ::sem-class team
 
 ::lexical START-II ::sem-class treaty
 

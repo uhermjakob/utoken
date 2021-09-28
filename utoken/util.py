@@ -309,6 +309,7 @@ class ResourceDict:
                                                                               'side',
                                                                               'substandard',
                                                                               'suffix-variations',
+                                                                              'syntax-checked',
                                                                               'tag',
                                                                               'target',
                                                                               'taxon',
