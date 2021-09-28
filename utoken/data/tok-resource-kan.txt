@@ -2,13 +2,14 @@
 ::punct-split + ::side both ::lcode kan ::left-context \pL\pM*[,)]* ::right-context [-\/(]*\pL
 ::punct-split - ::side both ::lcode kan ::left-context \pL\pM*[,)]* ::right-context [-\/(]*\pL
 ::punct-split ' ::side both ::group True ::lcode kan ::left-context \pL\pM*[,)]* ::right-context [-\/(]*\pL
-# Following two entries support common sentence breaks, could possibly be refined.
-::punct-split . ::side both ::lcode kan ::left-context \pL\pM*\pL\pM*\pL\pM* ::right-context \pL
-::punct-split . ::side both ::lcode kan ::left-context \pL\pM* ::right-context \pL\pM*\pL\pM*\pL
+::punct-split . ::side both ::lcode kan ::left-context \pL\pM*\pL\pM* ::right-context \pL
+::punct-split . ::side both ::lcode kan ::left-context \pL\pM* ::right-context \pL\pM*\pL
+
 ::punct-split , ::side both ::lcode kan ::left-context \d ::right-context \d\d\d\d
 
 ::abbrev ರೂ. ::lcode kan ::eng Rs.; rupee ::sem-class currency-unit
 ::abbrev ಕ್ರಿ.ಪೂ ::lcode kan ::eng B.C.
+::abbrev ಪ್ರ.ಶ.ಪು. ::lcode kan ::eng B.C.
 ::abbrev ಕ್ರಿ.ಶ ::lcode kan ::eng A.D.
 ::abbrev ಡಾ. ::lcode kan ::sem-class pre-name-title ::eng Dr.
 ::abbrev ಶ್ರೀ. ::lcode kan ::sem-class pre-name-title ::eng Mr.
@@ -18,6 +19,9 @@
 ::abbrev ಕಿಮಿ. ::lcode kan ::eng km ::sem-class unit-of-measurement ::alt-spelling ಕಿ.ಮಿ.
 ::abbrev ಮಿ.ಮಿ. ::lcode kan ::eng mm ::sem-class unit-of-measurement
 ::abbrev ಉದಾ. ::lcode kan ::eng e.g.
+::abbrev ಶೇ. ::lcode kan ::right-context \s*\d ::eng percent ::alt-spelling ಶೇ
+
+::lexical ರಂದು ::lcode kan ::left-context \d ::eng on ::comment suffix
 
 ::abbrev ಎ. ::token-category phonetics ::eng A. ::lcode kan
 ::abbrev ಏ. ::token-category phonetics ::eng A. ::lcode kan

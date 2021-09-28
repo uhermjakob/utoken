@@ -85,7 +85,7 @@
 ::punct-split ? ::side both ::left-context (?:\pL\pM*|\d)[-_+*'’‘`!]* ::right-context (?:\pL|[‘!]) ::group True
 ::punct-split , ::side both ::left-context \d:\d{1,2} ::right-context \d{1,2}[-]\d  # Genesis 1:1,26-28
 ::punct-split , ::side both ::left-context \d\.\d{1,2} ::right-context \d
-::punct-split , ::side both ::left-context \d:\d{1,2} ::right-context \d{1,2}[-]\d  # Genesis 1:1,26-28
+::punct-split , ::side both ::left-context \pL\pM* ::right-context \d
 ::punct-split , ::side both ::left-context \d ::right-context \pL\pM*\pL
 ::punct-split / ::side both ::left-context \pL\pM*(?:\pL\pM*|\d) ::right-context (?:\pL\pM*\pL|[㎀-㏟])  #right-context-not (?:hr|yr)\b
 ::punct-split ; ::side both ::left-context \pL\pM*\pL\pM* ::right-context [-\/]*\pL\pM*\pL ::left-context-not &(?:amp|apos|gt|lt|nbsp|quot|#\d+|#x[0-9A-F]+)  # xml tags

@@ -1059,7 +1059,7 @@ class Tokenizer:
                 return self.rec_tok_m3(m3, s, offset, 'NUMBER-E', line_id, chart, lang_code, ht, this_function)
         if self.lv & self.char_is_digit:
             if m3 := self.re_number.match(s) \
-                     or ((lang_code not in ('kan', 'mal')) and self.re_number2.match(s)) \
+                     or ((lang_code not in ('kan', 'mal', 'hin', 'ben', 'asm')) and self.re_number2.match(s)) \
                      or self.re_integer.match(s):
                 # log.info(f'A s: {s} offset: {offset} chart: {chart}')
                 return self.rec_tok_m3(m3, s, offset, 'NUMBER', line_id, chart, lang_code, ht, this_function)
@@ -1299,7 +1299,13 @@ class Tokenizer:
             rc0_type_vector = self.char_type_vector_dict.get(right_context[0], 0) if right_context != '' else 0
             if ((rc0_type_vector & self.char_is_dash_or_digit)  # quick pre-check
                     and self.re_starts_w_dashed_digit.match(right_context)):
-                return False
+                # noinspection PyUnboundLocalVariable
+                if self.re_ends_w_letter.match(token_candidate) \
+                        and (re_r := abbreviation_entry.right_context) \
+                        and re_r.match(right_context):
+                    pass
+                else:
+                    return False
         if token_candidate.endswith('.') and self.re_starts_w_single_letter.match(right_context):
             rc0_type_vector = self.char_type_vector_dict.get(right_context[0], 0) if right_context != '' else 0
             # exeptions
