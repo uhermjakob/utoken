@@ -13,7 +13,7 @@ import logging as log
 from pathlib import Path
 import re
 import sys
-from typing import List, Optional, TextIO
+from typing import List, Optional, TextIO, Tuple
 from . import __version__, last_mod_date
 from . import util
 
@@ -46,21 +46,27 @@ class Detokenizer:
         # Now that all resource files have been loaded, form regex for all marked-up attachment elements
         self.detok_resource.build_markup_attach_re()
         attach_tag = self.detok_resource.attach_tag
-        xml_tag_re_s = r'\s*(' + attach_tag + r'?</?[a-zA-Z][^<>]*>' + attach_tag + r'?)(\s.*|)$'
+        xml_tag_re_s = r'(\s*)(' + attach_tag + r'?</?[a-zA-Z][^<>]*>' + attach_tag + r'?)(\s.*|)$'
         # log.info(f'xml_tag_re_s {xml_tag_re_s}')
         self.xml_tag_re = re.compile(xml_tag_re_s)
-        self.non_whitespace_re = re.compile(r'\s*(\S+)(.*)$')
+        self.non_whitespace_re = re.compile(r'(\s*)(\S+)(.*)$')
 
     @staticmethod
     def default_data_dir() -> Path:
         return Path(__file__).parent / "data"
 
-    def tokens_in_tokenized_string(self, s: str):
+    def tokens_in_tokenized_string(self, s: str) -> Tuple[List[str], List[int]]:
         tokens = []
-        while m2 := self.xml_tag_re.match(s) or self.non_whitespace_re.match(s):
-            tokens.append(m2.group(1))
-            s = m2.group(2)
-        return tokens
+        offsets = []
+        offset = 0
+        might_contain_xml_tag = ('<' in s)
+        while m3 := (might_contain_xml_tag and self.xml_tag_re.match(s)) or self.non_whitespace_re.match(s):
+            offset += len(m3.group(1))
+            offsets.append(offset)
+            tokens.append(m3.group(2))
+            offset += len(m3.group(2))
+            s = m3.group(3)
+        return tokens, offsets
 
     def token_auto_attaches_to_left(self, s: str, left_context: str, right_context: str,
                                     lang_code: Optional[str]) -> bool:
@@ -110,10 +116,7 @@ class Detokenizer:
         # log.info(f's: {s}')
         if s == '':
             return ''
-        if '<' in s:
-            tokens = self.tokens_in_tokenized_string(s)
-        else:
-            tokens = re.split(r'\s+', s)
+        tokens, offsets = self.tokens_in_tokenized_string(s)
         # log.info(f"tokens: {' :: '.join(tokens)} ({len(tokens)})")
         eliminate_space_based_on_previous_token = True  # no space before first token
         result = ''
@@ -124,6 +127,8 @@ class Detokenizer:
             token = tokens[i]
             next_token = tokens[i+1] if i+1 < n_tokens else ''
             next_token2 = tokens[i+2] if i+2 < n_tokens else ''
+            next_offset = offsets[i+1] if i+1 < n_tokens else len(s)
+            right_context = s[next_offset:]
             # Contract the next 3 tokens if appropriate, e.g. "jusque" + "à" + "le" -> "jusqu'au".
             if next_token2:
                 three_tokens = ' '.join((token, next_token, next_token2))
@@ -144,7 +149,7 @@ class Detokenizer:
             # Add space between tokens with certain exceptions.
             if ((not eliminate_space_based_on_previous_token)
                     and (not (token_is_marked_up and token.startswith(attach_tag)))
-                    and (not self.token_auto_attaches_to_left(token, result, next_token, lang_code))
+                    and (not self.token_auto_attaches_to_left(token, result, right_context, lang_code))
                     and (not self.re_starts_w_close_xml_tag.match(token))
                     and (not self.re_ends_w_open_xml_tag.match(result))):
                 result += ' '
