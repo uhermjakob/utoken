@@ -6,6 +6,8 @@
 ::punct-split | ::side both ::group True ::left-context [\p{Devanagari}&&\pL]\pM*  # Vertical bar as danda
 ::punct-split ? ::side both ::group True ::left-context [\p{Devanagari}&&\pL]\pM*
 
+::lexical *99#
+
 ::abbrev क. ::lcode hin ::token-category consonant
 ::abbrev ख. ::lcode hin ::token-category consonant
 ::abbrev ग. ::lcode hin ::token-category consonant
