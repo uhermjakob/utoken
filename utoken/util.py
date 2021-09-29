@@ -771,6 +771,7 @@ def load_top_level_domains(filename: Path) -> (List[str], List[str], List[str]):
                                                          valid_slots=['code',
                                                                       'comment',
                                                                       'country-name',
+                                                                      'example',
                                                                       'reliability'],
                                                          required_slot_dict={'code': []})
                 if not valid:
