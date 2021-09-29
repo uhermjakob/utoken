@@ -1,4 +1,5 @@
 ::code cat ::comment Catalan
+::code bible ::example clear.bible
 ::code com ::comment commercial ::reliability high
 ::code edu ::comment education (limited to USA since 2001) ::reliability high
 ::code gov ::comment government (USA)
