@@ -878,6 +878,7 @@
 ::lexical Scud B ::lcode eng
 ::lexical Scud C ::lcode eng
 ::lexical self-righteous ::lcode eng
+::lexical (s)he ::lcode eng
 ::lexical short-term ::lcode eng
 ::lexical sister-in-law ::lcode eng ::plural sisters-in-law
 ::lexical small-scale ::lcode eng
