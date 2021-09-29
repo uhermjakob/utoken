@@ -1,3 +1,5 @@
+::lexical Iso-Britannia ::lcode fin ::sem-class country ::eng Great Britain
+
 ::abbrev A. ::lcode fin ::eng any single upper case letter  followed by a period is not a sentence ender.
 ::abbrev B. ::lcode fin
 ::abbrev C. ::lcode fin
@@ -27,6 +29,7 @@
 ::abbrev Å. ::lcode fin
 ::abbrev Ä. ::lcode fin
 ::abbrev Ö. ::lcode fin
+
 ::abbrev alik. ::lcode fin ::eng List of titles. These are often followed by upper-case names, but do not indicate sentence breaks.
 ::abbrev alil. ::lcode fin
 ::abbrev amir. ::lcode fin
@@ -122,3 +125,4 @@
 ::abbrev po. ::lcode fin
 ::abbrev t. ::lcode fin
 ::abbrev v. ::lcode fin
+
