@@ -85,9 +85,15 @@
 ::auto-attach ‱ ::side left ::left-context \d
 ::auto-attach ٪ ::side left ::left-context \d ::comment Arabic percent sign
 ::auto-attach ° ::side left ::left-context \d
+::auto-attach ′ ::side left ::left-context \d ::comment prime, used on geo-locations for minutes
+::auto-attach º ::side left ::comment masculine ordinal indicator
+::auto-attach .º ::side left ::comment period + masculine ordinal indicator
+::auto-attach ª ::side left ::comment feminine ordinal indicator
 ::auto-attach © ::side left
 ::auto-attach ® ::side left
 ::auto-attach ™ ::side left
+::auto-attach k ::side left ::left-context \d ::example 10k run
+::auto-attach M ::side left ::left-context \d ::case-sensitive True ::example $10M deficit
 
 ::auto-attach „ ::side right
 ::auto-attach ( ::side right
@@ -124,10 +130,10 @@
 ::auto-attach US$ ::side right ::right-context \d
 ::auto-attach RMB ::side right ::right-context \d
 
-::auto-attach th ::side left ::left-context \d ::lcode eng ::example 20th
-::auto-attach st ::side left ::left-context 1 ::lcode eng
-::auto-attach nd ::side left ::left-context 2 ::lcode eng
-::auto-attach rd ::side left ::left-context 3 ::lcode eng
+::auto-attach th ::side left ::left-context \d ::etym-lcode eng ::example 20th
+::auto-attach st ::side left ::left-context 1 ::etym-lcode eng
+::auto-attach nd ::side left ::left-context 2 ::etym-lcode eng
+::auto-attach rd ::side left ::left-context 3 ::etym-lcode eng
 ::auto-attach s ::side left ::left-context 0 ::example 1950s
 
 ::auto-attach م ::side left ::left-context \d ::lcode ara ::comment year particle ::eng AD ::example 2021م
@@ -144,10 +150,11 @@
 ::auto-attach লা ::side left ::left-context \d ::lcode ben ::comment ordinal particle ("th")
 ::auto-attach তম ::side left ::left-context \d ::lcode ben ::comment ordinal particle ("th")
 ::auto-attach টি ::side left ::left-context \d ::lcode ben
+::auto-attach ( ::side left ::left-context \pL ::right-context s\s*\)(?!\s*he\b) ::lcode eng ::comment friend(s)
 
 ::auto-attach er ::side left ::left-context \d ::lcode deu ::comment 1920er Jahre
 ::auto-attach ern ::side left ::left-context \d ::lcode deu ::comment in den 1920ern
-::auto-attach (in) ::side left ::left-context \pL ::lcode deu ::comment Lehrer(in)
+::auto-attach ( ::side left ::left-context \pL ::right-context in\s*\) ::lcode deu ::comment Lehrer(in)
 
 ::auto-attach η ::side left ::left-context \d ::lcode ell ::comment ordinal particle ("th")
 ::auto-attach ο ::side left ::left-context \d ::lcode ell ::comment ordinal particle ("th")
@@ -162,6 +169,22 @@
 ::auto-attach वींं ::side left ::left-context \d ::lcode hin ::comment ordinal particle ("th")
 ::auto-attach वें ::side left ::left-context \d ::lcode hin ::comment ordinal particle ("th")
 ::auto-attach वाँ ::side left ::left-context \d ::lcode hin ::comment ordinal particle ("th")
+
+# ::auto-attach ನೇ ::side left ::left-context \d ::lcode kan
+# ::auto-attach ರ ::side left ::left-context \d ::lcode kan
+# ::auto-attach ರಂದು ::side left ::left-context \d ::lcode kan
+# ::auto-attach ರಲ್ಲಿ ::side left ::left-context \d ::lcode kan
+# ::auto-attach ಕ್ಕೂ ::side left ::left-context \d ::lcode kan
+# ::auto-attach ನೆಯ ::side left ::left-context \d ::lcode kan
+# ::auto-attach ಕಿ ::side left ::left-context \d ::lcode kan
+# ::auto-attach XX ::side left ::left-context \d ::lcode kan
+
+::auto-attach ന് ::side left ::left-context \d ::lcode mal
+::auto-attach ലാണ് ::side left ::left-context \d ::lcode mal
+::auto-attach ൽ ::side left ::left-context \d ::lcode mal
+::auto-attach ലെ ::side left ::left-context \d ::lcode mal
+::auto-attach ന്റെ ::side left ::left-context \d ::lcode mal
+# ::auto-attach XX ::side left ::left-context \d ::lcode mal
 
 ::auto-attach гг ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
 ::auto-attach г ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
