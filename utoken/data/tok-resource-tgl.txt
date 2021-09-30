@@ -24,6 +24,14 @@
 ::abbrev Apok. ::lcode tgl ::case-sensitive True ::eng Apocalypse
 ::abbrev blg. ::lcode tgl ::eng number
 
+::abbrev M/Gen. ::exp Major General ::lcode tgl ::sem-class military-rank
+::abbrev C/Supt. ::exp Chief Superintendent ::sem-class pre-name-title
+::abbrev F/Supt. ::exp Fire Superintendent ::sem-class pre-name-title
+::abbrev P/Supt. ::exp Police Superintendent ::sem-class pre-name-title
+::abbrev S/Supt. ::exp Senior Superintendent ::sem-class pre-name-title
+::abbrev S/Sgt. ::exp Senior Sergeant; Staff Sergeant ::sem-class pre-name-title
+::abbrev T/Sgt. ::exp Technical Sergeant ::sem-class pre-name-title
+
 ::abbrev A. ::right-context \s*\S
 ::abbrev B. ::right-context \s*\S
 ::abbrev C. ::right-context \s*\S
