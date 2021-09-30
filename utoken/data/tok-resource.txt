@@ -132,8 +132,8 @@
 ::punct-split ※ ::side start
 ::punct-split · ::side start
 ::punct-split ، ::side start
-::punct-split < ::side start ::right-context (?:\d|\pL)
-::punct-split > ::side start ::right-context (?:\d|\pL)
+::punct-split < ::side start ::group True ::right-context (?:\d|\pL)
+::punct-split > ::side start ::group True ::right-context (?:\d|\pL)
 ::punct-split &lt; ::side start ::right-context (?:\d|\pL|[&])
 ::punct-split &gt; ::side start ::right-context (?:\d|\pL|[&])
 ::punct-split \ ::side start ::right-context (?:\pL|/d)
