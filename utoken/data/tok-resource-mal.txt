@@ -32,6 +32,7 @@
 ::abbrev എഫ്. ::token-category phonetics ::lcode mal ::eng F.
 ::abbrev ജി. ::token-category phonetics ::lcode mal ::eng G.
 ::abbrev എച്ച്. ::token-category phonetics ::lcode mal ::eng H.
+::abbrev എച്. ::token-category phonetics ::lcode mal ::eng H.  # OK?
 ::abbrev ഐ. ::token-category phonetics ::lcode mal ::eng I.
 ::abbrev ജെ. ::token-category phonetics ::lcode mal ::eng J.
 ::abbrev കെ. ::token-category phonetics ::lcode mal ::eng K.
