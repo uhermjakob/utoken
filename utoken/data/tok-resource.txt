@@ -720,6 +720,7 @@
 ::lexical :| ::token-category symbol ::comment neutral face emoji ::last-char-repeatable True
 ::lexical :-| ::token-category symbol ::comment straight face emoji ::last-char-repeatable True
 ::lexical :( ::token-category symbol ::comment sad emoji ::right-context-not (?:\pL|\d)
+::lexical :(( ::token-category symbol ::comment sad crying
 ::lexical :) ::token-category symbol ::comment smiley emoji ::last-char-repeatable True  # comment includes :)) etc.
 ::lexical :-) ::token-category symbol ::comment smiley emoticon
 ::lexical :--) ::token-category symbol ::comment smiley long nose emoticon
