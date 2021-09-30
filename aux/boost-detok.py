@@ -23,7 +23,7 @@ if __name__ == "__main__":
         line = re.sub(r'\s+@([-:/]\s)', r'\1', line)  # @-
         line = re.sub(r'\s+([.!?])$', r'\1', line)  # attach sentence-final .!?
         line = regex.sub(r'(\pL\pM*)\s+([,;]\s+)', r'\1\2', line)  # attach mid-sentence ,;
-        line = re.sub(r'\u00A0', ' ', line)
+        line = re.sub(r'(?:\u00A0|&#160;)+', ' ', line)
         for _ in range(2):
             line = re.sub(r" (['’])(d|em|m|re|s|ve) ", r'\1\2 ', line)
             line = re.sub(r'(\d) ([%]) ', r'\1\2 ', line)
