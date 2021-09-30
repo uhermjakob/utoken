@@ -52,11 +52,7 @@ if __name__ == "__main__":
                                'test1.eng.txt',
                                'test.mal.txt'])
         elif filename == 'set2':
-            filenames2.extend(['Bible-IRV-woid.hin.txt',  # if args.compare else 'Bible-IRV.hin.txt'
-                               'saral-dev.kaz.txt',
-                               'train46735.tgl.txt',
-                               'train99005.uig.txt',
-                               'NewTestament-430randVerses.ecg.txt',
+            filenames2.extend(['NewTestament-430randVerses.ecg.txt',
                                'OldTestament-sel.hbo.txt',
                                'Odyssey-Republic-sel.grc.txt',
                                'amh.txt',
@@ -86,6 +82,11 @@ if __name__ == "__main__":
                                'tur.txt',
                                'zul.txt'])
         elif filename == 'set3':
+            filenames2.extend(['Bible-IRV-woid.hin.txt',  # if args.compare else 'Bible-IRV.hin.txt'
+                               'saral-dev.kaz.txt',
+                               'train46735.tgl.txt',
+                               'train99005.uig.txt'])
+        elif filename == 'set4':
             filenames2.extend(['ELRC_wikipedia_health.tgl.txt',
                                'OPUS_ParaCrawl_v7_1.tgl.txt'])
         else:
