@@ -146,11 +146,22 @@
 ::auto-attach rd ::side left ::left-context 3 ::etym-lcode eng
 ::auto-attach s ::side left ::left-context 0 ::example 1950s
 
+::auto-attach ተኛው ::side left ::left-context \pN ::lcode amh ::comment ordinal particle ("th")
+::auto-attach ኛው ::side left ::left-context \pN ::lcode amh ::comment ordinal particle ("th")
+::auto-attach ኛ ::side left ::left-context \pN ::lcode amh ::comment ordinal particle ("th")
+::auto-attach ቱን ::side left ::left-context \pN ::lcode amh
+::auto-attach ከ ::side right ::right-context \pN ::lcode amh ::eng from; since ::comment prefix
+::auto-attach በ ::side right ::right-context \pN ::lcode amh ::eng in ::comment prefix
+::auto-attach ለ ::side right ::right-context \pN ::lcode amh ::eng for ::comment prefix
+::auto-attach የ ::side right ::right-context \pN ::lcode amh ::eng of ::comment prefix
+
 ::auto-attach م ::side left ::left-context \d ::lcode ara ::comment year particle ::eng AD ::example 2021م
 
-::auto-attach ৰ ::side left ::left-context \d ::lcode asm ::comment e.g. "s" in "1920s"
+::auto-attach ৰ ::side left ::left-context \d ::lcode asm ::comment of; maybe used like "s" in "1920s"
 ::auto-attach ৰ্থ ::side left ::left-context \d ::lcode asm ::comment ordinal particle ("th")
 ::auto-attach তম ::side left ::left-context \d ::lcode asm ::comment ordinal particle ("th")
+::auto-attach ত ::side left ::left-context \d ::lcode asm
+::auto-attach -ত ::side left ::left-context \d ::lcode asm
 
 ::auto-attach শ ::side left ::left-context \d ::lcode ben ::comment ordinal particle ("th")
 ::auto-attach ই ::side left ::left-context \d ::lcode ben ::comment ordinal particle ("th")
@@ -160,7 +171,10 @@
 ::auto-attach লা ::side left ::left-context \d ::lcode ben ::comment ordinal particle ("th")
 ::auto-attach তম ::side left ::left-context \d ::lcode ben ::comment ordinal particle ("th")
 ::auto-attach টি ::side left ::left-context \d ::lcode ben
-::auto-attach ( ::side left ::left-context \pL ::right-context s\s*\)(?!\s*he\b) ::lcode eng ::comment friend(s)
+::auto-attach 'র ::side left ::lcode ben ::eng of; in ::comment "r(a)" genitive/locative case suffix; possessive
+::auto-attach 'তে ::side left ::lcode ben ::eng in ::comment "te" locative case suffix
+::auto-attach 'য় ::side left ::lcode ben ::eng in ::comment "y(a)" locative case suffix
+::auto-attach 'কে ::side left ::lcode ben ::comment "ke" dative/accusative case suffix
 
 ::auto-attach er ::side left ::left-context \d ::lcode deu ::comment 1920er Jahre
 ::auto-attach ern ::side left ::left-context \d ::lcode deu ::comment in den 1920ern
@@ -170,6 +184,8 @@
 ::auto-attach ο ::side left ::left-context \d ::lcode ell ::comment ordinal particle ("th")
 ::auto-attach ου ::side left ::left-context \d ::lcode ell ::comment ordinal particle ("th")
 ::auto-attach ος ::side left ::left-context \d ::lcode ell ::comment ordinal particle ("th")
+
+::auto-attach ( ::side left ::left-context \pL ::right-context s\s*\)(?!\s*he\b) ::lcode eng ::comment friend(s)
 
 ::auto-attach e ::side left ::left-context \d ::lcode fra ::comment ordinal particle ("th")
 ::auto-attach er ::side left ::left-context \d ::lcode fra ::comment ordinal particle ("th")
