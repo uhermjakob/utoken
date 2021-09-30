@@ -28,6 +28,8 @@
 ::markup-attach -a- ::lcode tgl ::example pag-a-update
 
 ::auto-attach / ::side both
+::auto-attach ・ ::side both ::left-context [^:] ::comment katakana middle dot
+# ::auto-attach 'n' ::side both
 # ::auto-attach · ::side both ::comment middle dot
 
 ::auto-attach . ::side left
@@ -85,6 +87,10 @@
 ::auto-attach ‱ ::side left ::left-context \d
 ::auto-attach ٪ ::side left ::left-context \d ::comment Arabic percent sign
 ::auto-attach ° ::side left ::left-context \d
+::auto-attach °C ::side left ::left-context \d
+::auto-attach °F ::side left ::left-context \d
+::auto-attach C ::side left ::left-context °
+::auto-attach F ::side left ::left-context °
 ::auto-attach ′ ::side left ::left-context \d ::comment prime, used on geo-locations for minutes
 ::auto-attach º ::side left ::comment masculine ordinal indicator
 ::auto-attach .º ::side left ::comment period + masculine ordinal indicator
@@ -115,6 +121,7 @@
 ::auto-attach ¡ ::side right ::group True
 ::auto-attach ¿ ::side right ::group True
 ::auto-attach # ::side right ::right-context \d{1,4}\b
+::auto-attach № ::side right ::right-context \d
 ::auto-attach $ ::side right ::right-context \d
 ::auto-attach £ ::side right ::right-context \d
 ::auto-attach € ::side right ::right-context \d
@@ -129,6 +136,9 @@
 ::auto-attach S$ ::side right ::right-context \d
 ::auto-attach US$ ::side right ::right-context \d
 ::auto-attach RMB ::side right ::right-context \d
+::auto-attach ₱ ::side right ::right-context \d
+::auto-attach P ::side right ::right-context \d ::lcode tgl
+::auto-attach Php ::side right ::right-context \d ::lcode tgl ::comment Philippine Pesos
 
 ::auto-attach th ::side left ::left-context \d ::etym-lcode eng ::example 20th
 ::auto-attach st ::side left ::left-context 1 ::etym-lcode eng
@@ -169,14 +179,16 @@
 ::auto-attach वींं ::side left ::left-context \d ::lcode hin ::comment ordinal particle ("th")
 ::auto-attach वें ::side left ::left-context \d ::lcode hin ::comment ordinal particle ("th")
 ::auto-attach वाँ ::side left ::left-context \d ::lcode hin ::comment ordinal particle ("th")
+::auto-attach | ::side left ::lcode hin ::comment used as danda
+::auto-attach /- ::side left ::left-context \d ::lcode hin ::comment currency quantity, no sub-units
 
-# ::auto-attach ನೇ ::side left ::left-context \d ::lcode kan
-# ::auto-attach ರ ::side left ::left-context \d ::lcode kan
-# ::auto-attach ರಂದು ::side left ::left-context \d ::lcode kan
-# ::auto-attach ರಲ್ಲಿ ::side left ::left-context \d ::lcode kan
-# ::auto-attach ಕ್ಕೂ ::side left ::left-context \d ::lcode kan
-# ::auto-attach ನೆಯ ::side left ::left-context \d ::lcode kan
-# ::auto-attach ಕಿ ::side left ::left-context \d ::lcode kan
+::auto-attach ನೇ ::side left ::left-context \d ::lcode kan ::comment ordinal particle ("th") 10:0
+::auto-attach ರ ::side left ::left-context \d ::lcode kan ::comment 10:3
+::auto-attach ರಂದು ::side left ::left-context \d ::lcode kan ::comment 7:4
+::auto-attach ರಲ್ಲಿ ::side left ::left-context \d ::lcode kan ::comment 12:10
+::auto-attach ಕ್ಕೂ ::side left ::left-context \d ::lcode kan ::comment 4:1
+::auto-attach ನೆಯ ::side left ::left-context \d ::lcode kan ::comment 3:1
+::auto-attach ಕಿ ::side left ::left-context \d ::lcode kan ::comment 1:0
 # ::auto-attach XX ::side left ::left-context \d ::lcode kan
 
 ::auto-attach ന് ::side left ::left-context \d ::lcode mal
