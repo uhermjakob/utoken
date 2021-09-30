@@ -23,13 +23,13 @@
 ::abbrev এফ. ::lcode ben ::token-category phonetics ::eng F.
 ::abbrev জি. ::lcode ben ::token-category phonetics ::eng G.
 ::abbrev এইচ. ::lcode ben ::token-category phonetics ::eng H.
-::abbrev আম. ::lcode ben ::token-category phonetics ::eng I.
+::abbrev আই. ::lcode ben ::token-category phonetics ::eng I.
 ::abbrev জে. ::lcode ben ::token-category phonetics ::eng J.
 ::abbrev কে. ::lcode ben ::token-category phonetics ::eng K.
 ::abbrev এল. ::lcode ben ::token-category phonetics ::eng L.
 ::abbrev এম. ::lcode ben ::token-category phonetics ::eng M.
 ::abbrev এন. ::lcode ben ::token-category phonetics ::eng N.
-::abbrev হে. ::lcode ben ::token-category phonetics ::eng O.
+::abbrev ও. ::lcode ben ::token-category phonetics ::eng O.
 ::abbrev পি. ::lcode ben ::token-category phonetics ::eng P.
 ::abbrev কিউ. ::lcode ben ::token-category phonetics ::eng Q.
 ::abbrev আর. ::lcode ben ::token-category phonetics ::eng R.
