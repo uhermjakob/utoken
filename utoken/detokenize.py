@@ -12,6 +12,7 @@ import datetime
 import logging as log
 from pathlib import Path
 import re
+import regex
 import sys
 from typing import List, Optional, TextIO, Tuple
 from . import __version__, last_mod_date
@@ -108,6 +109,17 @@ class Detokenizer:
     re_ends_w_open_xml_tag = re.compile(r'.*<[a-z][-_:a-z0-9]*(?:\s+[a-z][-_:a-z0-9]*="[^"]*")*\s*>$',
                                         flags=re.IGNORECASE)
     re_starts_w_close_xml_tag = re.compile(r'</[a-z][-_a-z0-9]*>', flags=re.IGNORECASE)
+    re_could_end_in_name_initial = regex.compile(r'.*(?<!\pL|\pM)\p{Lu}\.$')
+    re_could_be_name_initial_or_name = regex.compile(r'\p{Lu}\pM*(?:\.|\p{Ll}.*)$')
+
+    def token_is_name_initial_to_be_attached_without_space(self, s: str, left_context: str, _right_context: str,
+                                                           lang_code: Optional[str]) -> bool:
+        if (lang_code in ('kaz', )
+                and self.re_could_be_name_initial_or_name.match(s)
+                and self.re_could_end_in_name_initial.match(left_context)):
+            return True
+        else:
+            return False
 
     def detokenize_string(self, s: str, lang_code: Optional[str] = None, _line_id: Optional[str] = None) -> str:
         markup_attach_re = self.detok_resource.markup_attach_re
@@ -151,7 +163,9 @@ class Detokenizer:
                     and (not (token_is_marked_up and token.startswith(attach_tag)))
                     and (not self.token_auto_attaches_to_left(token, result, right_context, lang_code))
                     and (not self.re_starts_w_close_xml_tag.match(token))
-                    and (not self.re_ends_w_open_xml_tag.match(result))):
+                    and (not self.re_ends_w_open_xml_tag.match(result))
+                    and (not self.token_is_name_initial_to_be_attached_without_space(token, result, right_context,
+                                                                                     lang_code))):
                 result += ' '
             # Add the token, stripped of any attach_tag
             result += token.strip(attach_tag) if token_is_marked_up else token
