@@ -1,6 +1,7 @@
 # utoken
 _utoken_ is a tokenizer that divides text into words, punctuation and special tokens such as numbers, URLs, XML tags, email-addresses and hashtags.
 The tokenizer comes with a companion detokenizer.
+Initial public release of beta version 0.1.0 on Oct. 1, 2021.
 
 ### Example
 #### Input
@@ -225,6 +226,7 @@ But we can't just blindly split off commas and periods, as this would break numb
 * Other challenges: symbols, variation selectors, non-standard whitespaces, special characters such as `zero width non-joiner`.
 * In general, it is hard to make a tokenizer work __universally__, for a wide range of languages, scripts and conventions.
 * _utoken_ uses a combination of general patterns and lists of specific tokens to solve many of the challenges above. (See more under topic _Tokenization data files_.)
+* Example for a language-specific challenge: In Modern Hebrew, acronyms are marked by placing a _gershayim_ between the last two characters, e.g. ארה״ב (USA). In practice, the _gershayim_ is often replaced by the more readily available quotation mark ("). However, quotation marks are also used for quotations, e.g. ה"סתום" (the "valve"), so care has to be taken to do justice to both acronymns (preserve as a single token) and quotes (separate into multiple tokens).
 </details>
 
 <details>
@@ -252,4 +254,41 @@ Exmaples of resource entries:
 ::auto-attach th ::side left ::left-context \d ::lcode eng ::example 20th
 ```
 </details>
-  
+
+<details>
+<summary>Speed</summary>
+
+### Speed
+210,000 characters per second (real time) on a 39k sentence English AMR corpus on a 2021 MacBook Pro using a single CPU.
+Parallelization is trivial as sentences are tokenized independent of each other.
+</details>
+
+<details>
+<summary>Testing</summary>
+
+### Testing
+_utoken_ has been tested on 48 corpora in 34 languages and 13 scripts (as of version 0.1.0).
+Tests include 
+* Manual review of lots of tokenization
+* Comparison to other tokenizers: [Sacremoses](https://github.com/alvations/sacremoses) and [ulf-tokenizer](https://github.com/isi-nlp/ulf-tokenizer)
+* Tokenization analysis scripts: wildebeest (text normalization and cleaning; analysis of types of characters used, encoding issues), aux/tok-analysis.py (looks for a number of potential problems such as tokens with mixed letters/digits, mixed letters/punctuation, potential abbreviations separated from period)
+* Comparisons to previous versions of all test corpora before release.
+</details>
+
+<details>
+<summary>Related software</summary>
+
+### Related software
+* [Universal romanizer _uroman_](https://github.com/isi-nlp/uroman), written by Ulf Hermjakob (same author)
+</details>
+
+<details>
+<summary>Future work — Feedback and contributions welcome</summary>
+
+### Future work — Feedback and contributions welcome
+Plans include 
+* Building resources, testing and fine-tuning of additional languages such as Tamil, Telegu, Indonesian, Italian.
+* Adding new special entity types such as IPA pronunciations, geographic coordinates, complex IDs such as 403(k).
+* Semi-supervised learning of lexical and abbreviation resources from large corpora.
+</details>
+
