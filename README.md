@@ -134,7 +134,7 @@ Note: Please make sure that your $PYTHONPATH includes the directory in which thi
 * More information in data files rather than program code.
 * Written in Python.
 * Maintains a chart data structure with detailed additional information that can also serve as a basis for further processing.
-* Preliminary (implementation started in mid-July 2021, current version 0.0.7)
+* First public release on Oct. 1, 2021: beta version 0.1.0
 
 ### Limitations
 * Currently excluded: no-space scripts like Chinese and Japanese
@@ -271,7 +271,9 @@ _utoken_ has been tested on 48 corpora in 34 languages and 13 scripts (as of ver
 Tests include 
 * Manual review of lots of tokenization
 * Comparison to other tokenizers: [Sacremoses](https://github.com/alvations/sacremoses) and [ulf-tokenizer](https://github.com/isi-nlp/ulf-tokenizer)
-* Tokenization analysis scripts: wildebeest (text normalization and cleaning; analysis of types of characters used, encoding issues), aux/tok-analysis.py (looks for a number of potential problems such as tokens with mixed letters/digits, mixed letters/punctuation, potential abbreviations separated from period)
+* Tokenization analysis scripts: 
+  * wildebeest (text normalization and cleaning; analysis of types of characters used, encoding issues) 
+  * aux/tok-analysis.py (looks for a number of potential problems such as tokens with mixed letters/digits, mixed letters/punctuation, potential abbreviations separated from period)
 * Comparisons to previous versions of all test corpora before release.
 </details>
 
