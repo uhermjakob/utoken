@@ -14,6 +14,7 @@
 ::abbrev bijz. ::lcode nld
 ::abbrev bv. ::lcode nld
 ::abbrev c.i. ::lcode nld
+::abbrev ca. ::lcode nld
 ::abbrev Chr. ::lcode nld
 ::abbrev d.i. ::exp dit is ::eng this is ::lcode nld
 ::abbrev d.w.z. ::exp dat wil zeggen ::eng that means, that is ::lcode nld
