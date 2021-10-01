@@ -80,7 +80,7 @@
 ::abbrev tint. ::lcode nld
 ::abbrev v.a. ::exp vanaf ::eng from ::lcode nld
 ::abbrev v.b. ::exp voorbeeld ::eng example, instance ::alt-spelling vb. ::lcode nld
-::abbrev v.Chr. ::exp voor Christus ::lcode nld ::eng BC ::alt-spelling v.C. ::lcode nld
+::abbrev v.Chr. ::exp voor Christus ::lcode nld ::eng BC ::alt-spelling v.C.
 ::abbrev v.w.t. ::lcode nld
 ::abbrev vgl. ::exp vergelijk ::eng compare; cf. ::lcode nld
 ::abbrev vnl. ::exp voornamelijk ::eng mainly, chiefly ::lcode nld
