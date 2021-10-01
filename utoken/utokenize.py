@@ -1027,7 +1027,7 @@ class Tokenizer:
     re_number = regex.compile(r'(.*?)'                                    # excludes integers
                               r'(?<![-−–+,]|\PL\.|\d[%\']?|[כבהלשומ])'    # negative lookbehind
                               r'([-−–+]?'                                 # plus/minus sign
-                              r'(?:\d{1,3}(?:,\d\d\d)+(?:\.\d+)?|'        # Western style, e.g. 12,345,678.90
+                              r'(?:\d{1,3}(?:[,،]\d\d\d)+(?:\.\d+)?|'     # Western style, e.g. 12,345,678.90
                               r'\d{1,2}(?:,\d\d)*,\d\d\d(?:\.\d+)?|'      # Indian style, e.g. 1,23,45,678.90
                               r'\d+\.\d+))'                               # floating point, e.g. 12345678.90
                               r'(?![.,]?\d)'                              # negative lookahead
