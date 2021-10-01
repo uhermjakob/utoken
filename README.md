@@ -226,7 +226,7 @@ But we can't just blindly split off commas and periods, as this would break numb
 * Other challenges: symbols, variation selectors, non-standard whitespaces, special characters such as `zero width non-joiner`.
 * In general, it is hard to make a tokenizer work __universally__, for a wide range of languages, scripts and conventions.
 * _utoken_ uses a combination of general patterns and lists of specific tokens to solve many of the challenges above. (See more under topic _Tokenization data files_.)
-* Example for a language-specific challenge: In Modern Hebrew, acronyms are marked by placing a _gershayim_ between the last two characters, e.g. ארה״ב (USA). In practice, the _gershayim_ is often replaced by the more readily available quotation mark ("). However, quotation marks are also used for quotations, e.g. <div dir="rtl">ה"סתום"</div> (the "valve"), so care has to be taken to do justice to both acronymns (preserve as a single token) and quotes (separate into multiple tokens).
+* Example for a language-specific challenge: In Modern Hebrew, acronyms are marked by placing a _gershayim_ between the last two characters, e.g. ארה״ב (USA). In practice, the _gershayim_ is often replaced by the more readily available quotation mark ("). However, quotation marks are also used for quotations, e.g. <span dir="rtl">ה"סתום"</span> (the "valve"), so care has to be taken to do justice to both acronymns (preserve as a single token) and quotes (separate into multiple tokens).
 </details>
 
 <details>
@@ -267,7 +267,7 @@ Parallelization is trivial as sentences are tokenized independent of each other.
 <summary>Testing</summary>
 
 ### Testing
-_utoken_ has been tested on 48 corpora in 34 languages and 13 scripts (as of version 0.1.0).
+_utoken_ has been tested on 45 corpora in 34 languages and 13 scripts (as of version 0.1.0).
 Tests include 
 * Manual review of lots of tokenization
 * Comparison to other tokenizers: [Sacremoses](https://github.com/alvations/sacremoses) and [ulf-tokenizer](https://github.com/isi-nlp/ulf-tokenizer)
@@ -289,7 +289,7 @@ Tests include
 
 ### Future work — Feedback and contributions welcome
 Plans include 
-* Building resources, testing and fine-tuning of additional languages such as Tamil, Telegu, Indonesian, Italian.
+* Building resources, testing and fine-tuning of additional languages such as Tamil, Telugu, Indonesian, Italian.
 * Adding new special entity types such as IPA pronunciations, geographic coordinates, complex IDs such as 403(k).
 * Semi-supervised learning of lexical and abbreviation resources from large corpora.
 </details>
