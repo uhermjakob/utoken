@@ -226,7 +226,7 @@ But we can't just blindly split off commas and periods, as this would break numb
 * Other challenges: symbols, variation selectors, non-standard whitespaces, special characters such as `zero width non-joiner`.
 * In general, it is hard to make a tokenizer work __universally__, for a wide range of languages, scripts and conventions.
 * _utoken_ uses a combination of general patterns and lists of specific tokens to solve many of the challenges above. (See more under topic _Tokenization data files_.)
-* Example for a language-specific challenge: In Modern Hebrew, acronyms are marked by placing a _gershayim_ between the last two characters, e.g. ארה״ב (USA). In practice, the _gershayim_ is often replaced by the more readily available quotation mark ("). However, quotation marks are also used for quotations, e.g. <div dir="rtl">ה"סתום"</div> (the "valve"), so care has to be taken to do justice to both acronymns (preserve as a single token) and quotes (separate into multiple tokens).
+* Example for a language-specific challenge: In Modern Hebrew, acronyms are marked by placing a _gershayim_ between the last two characters, e.g. ארה״ב (USA). In practice, the _gershayim_ is often replaced by the more readily available quotation mark ("). However, quotation marks are also used for quotations, e.g. <span dir="rtl">ה"סתום"</span> (the "valve"), so care has to be taken to do justice to both acronymns (preserve as a single token) and quotes (separate into multiple tokens).
 </details>
 
 <details>
