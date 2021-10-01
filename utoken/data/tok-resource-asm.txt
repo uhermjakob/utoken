@@ -1,4 +1,3 @@
-::punct-split : ::side both ::lcode asm ::left-context \pL\pM*\pL\pM*[)]* ::right-context [-\/(]*\pL\pM*\pL
 ::punct-split - ::side both ::lcode asm ::left-context \pL\pM*[)]* ::right-context \pL
 
 ::lexical কিল'মিটাৰ ::lcode asm ::sem-class unit-of-measurement ::eng kilometer

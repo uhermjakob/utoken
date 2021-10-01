@@ -1,4 +1,3 @@
-::punct-split : ::side both ::lcode kan ::left-context \pL\pM*\pL\pM*[)]* ::right-context [-\/(]*\pL\pM*\pL
 ::punct-split + ::side both ::lcode kan ::left-context \pL\pM*[,)]* ::right-context [-\/(]*\pL
 ::punct-split - ::side both ::lcode kan ::left-context \pL\pM*[,)]* ::right-context [-\/(]*\pL
 ::punct-split ' ::side both ::group True ::lcode kan ::left-context \pL\pM*[,)]* ::right-context [-\/(]*\pL

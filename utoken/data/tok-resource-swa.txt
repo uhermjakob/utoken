@@ -1,3 +1,1 @@
-::punct-split : ::side both ::lcode swa ::left-context \pL\pM*\pL\pM* ::right-context [-\/]*\pL\pM*\pL
-
 ::abbrev tar. ::lcode swa

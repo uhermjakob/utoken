@@ -1,4 +1,3 @@
-::punct-split : ::side both ::lcode kor ::left-context \pL\pM*\pL\pM* ::right-context \pL\pM*\pL
 ::punct-split ' ::side both ::lcode kor ::left-context (?:\pL\pM*|[.]) ::right-context \pL
 ::punct-split · ::side both ::lcode kor ::comment interpunct (Unicode middle dot), similar to comma
 ::punct-split ！ ::side both ::lcode kor ::group True ::comment full-width exclamation mark
