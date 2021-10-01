@@ -1,0 +1,32 @@
+::punct-split : ::side both ::lcode nld ::left-context \pL\pM*\pL\pM* ::right-context \pL\pM*\pL
+
+# ::lexical XX ::right-context \d ::lcode nld ::eng XX
+
+::abbrev a.s. ::exp aanstaande ::eng next
+::abbrev a.u.b. ::exp alstublieft ::eng please
+::abbrev b.h. ::exp bustehouder ::eng bra
+::abbrev b.v. ::exp bijvoorbeeld ::eng for instance ::alt-spelling b.v.b.; bv.; bvb.
+::abbrev d.i. ::exp dit is ::eng this is
+::abbrev d.w.z. ::exp dat wil zeggen ::eng that means, that is
+::abbrev e.a. ::exp en andere ::eng and others; et al.
+::abbrev e.d. ::exp en dergelijke ::eng and the like
+::abbrev enz. ::exp enzovoort ::eng et cetera
+::abbrev i.p.v. ::exp in plaats van ::eng instead of
+::abbrev m.a.w. ::exp met andere woorden ::eng in other words; i.e.
+::abbrev mvg ::exp met vriendelijke groeten ::eng with kind greetings; sincerely yours
+::abbrev nl. ::exp namelijk ::eng viz.
+::abbrev n.Chr. ::exp na Christus ::eng A.D. ::alt-spelling n.C.
+::abbrev n.v.d.a. ::exp noot van de auteur ::eng comment from the author
+::abbrev n.v.d.r. ::exp noot van de redactie ::eng comment from the editor ::alt-spelling nvdr
+::abbrev o.a. ::exp onder andere ::eng among others
+::abbrev o.m. ::exp onder meer ::eng among others
+::abbrev p.a. ::exp per adres ::eng c/o
+::abbrev s.v.p. ::exp s'il vous plait ::etym-lcode fra ::eng please
+::abbrev t.e.m. ::exp tot en met ::eng until ::comment itself included ::alt-spelling t/m
+::abbrev v.a. ::exp vanaf ::eng from
+::abbrev v.Chr. ::exp voor Christus ::lcode nld ::eng BC ::alt-spelling v.C.
+::abbrev vnl. ::exp voornamelijk ::eng mainly, chiefly
+::abbrev v.b. ::exp voorbeeld ::eng example, instance ::alt-spelling vb.
+::abbrev vgl. ::exp vergelijk ::eng compare; cf.
+::abbrev zgn. ::exp zogenaamd ::eng so-called ::alt-spelling z.n.; zn.
+::abbrev z.o.z. ::exp zie ommezijde ::eng see other side ::comment on a sheet of paper
