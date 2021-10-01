@@ -70,7 +70,7 @@
 ::punct-split © ::side both
 ::punct-split ® ::side both
 ::punct-split ™ ::side both
-::punct-split № ::side both
+::punct-split № ::side both ::group True ::comment №№ plural form in Russian, Georgian
 ::punct-split $ ::side both ::token-category prefix ::sem-class currency-unit ::group True
 ::punct-split — ::side both ::group True
 ::punct-split -- ::side both ::group True ::left-context (?:\pL\pM*|\d) ::right-context (?:\pL\pM*|\d)
