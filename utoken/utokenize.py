@@ -1090,7 +1090,7 @@ class Tokenizer:
     def resource_entry_fulfills_conditions(self, resource_entry: util.ResourceEntry,
                                            required_resource_entry_type: Type[util.ResourceEntry],
                                            token_surf: str, _s: str, start_position: int, end_position: int,
-                                           offset: int) -> bool:
+                                           offset: int, lang_code: Optional[str] = None) -> bool:
         """This method checks whether a resource-entry is of the proper type fulfills any conditions associated with it,
         including case-sensitive and positive and/or negative contexts to the left and/or right."""
         if not isinstance(resource_entry, required_resource_entry_type):
@@ -1115,6 +1115,10 @@ class Tokenizer:
         if re_r_n := resource_entry.right_context_not:
             if not re_r_n.match(_right_context_s := self.current_s[offset+end_position:]):
                 # log.info(f'resource-entry({token_surf}) no match right-context-not {re_r_n} with "{right_context_s}"')
+                return False
+        if lang_code:
+            lang_codes_not = resource_entry.lang_codes_not
+            if lang_codes_not and lang_code in lang_codes_not:
                 return False
         return True
 
@@ -1418,7 +1422,7 @@ class Tokenizer:
                                                                            left_context, right_context):
                     for resource_entry in self.tok_dict.resource_dict.get(token_candidate_lc, []):
                         if self.resource_entry_fulfills_conditions(resource_entry, util.ResourceEntry, token_candidate,
-                                                                   s, start_position, end_position, offset):
+                                                                   s, start_position, end_position, offset, lang_code):
                             sem_class = resource_entry.sem_class
                             resource_surf = resource_entry.s
                             clause = ''
@@ -1495,7 +1499,7 @@ class Tokenizer:
                                                                            left_context, right_context):
                     for resource_entry in self.tok_dict.resource_dict.get(token_candidate_lc, []):
                         if self.resource_entry_fulfills_conditions(resource_entry, util.LexicalEntry, token_candidate,
-                                                                   s, start_position, end_position, offset):
+                                                                   s, start_position, end_position, offset, lang_code):
                             if self.lexical_entry_fulfills_general_context_conditions(token_candidate, left_context,
                                                                                       right_context, resource_entry):
                                 return self.rec_tok([token_candidate], [start_position], s, offset,
@@ -1533,7 +1537,7 @@ class Tokenizer:
                     for resource_entry in self.tok_dict.resource_dict.get(token_candidate_lc, []):
                         if self.resource_entry_fulfills_conditions(resource_entry, util.PunctSplitEntry,
                                                                    token_candidate, s, start_position, end_position,
-                                                                   offset):
+                                                                   offset, lang_code):
                             side = resource_entry.side
                             end_position2 = end_position
                             if resource_entry.group:

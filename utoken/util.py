@@ -18,12 +18,13 @@ class ResourceEntry:
     """Annotated entries for abbreviations, contractions, repairs etc."""
     def __init__(self, s: str, tag: Optional[str] = None,
                  sem_class: Optional[str] = None, country: Optional[str] = None,
-                 lcode: Optional[str] = None, etym_lcode: Optional[str] = None,
+                 lcode: Optional[str] = None, lang_codes_not: List[str] = None, etym_lcode: Optional[str] = None,
                  left_context: Optional[Pattern[str]] = None, left_context_not: Optional[Pattern[str]] = None,
                  right_context: Optional[Pattern[str]] = None, right_context_not: Optional[Pattern[str]] = None,
                  case_sensitive: bool = False):
         self.s = s                      # e.g. Gen.
         self.lcode = lcode              # language code, e.g. eng
+        self.lang_codes_not = lang_codes_not
         self.etym_lcode = etym_lcode    # etymological language code, e.g. lat
         self.country = country          # country, e.g. Canada
         self.sem_class = sem_class      # e.g. pre-name-title
@@ -431,6 +432,8 @@ class ResourceDict:
                                 except regex.error:
                                     log.warning(f'Regex compile error in l.{line_number} for {s} ::right-context-not '
                                                 f'{right_context_not_s}')
+                            if lang_code_not_s := slot_value_in_double_colon_del_list(line, 'lcode-not'):
+                                resource_entry.lang_codes_not = re.split(r'[;,\s*]', lang_code_not_s)
                             abbreviation_entry_list = self.resource_dict.get(lc_s, [])
                             abbreviation_entry_list.append(resource_entry)
                             self.resource_dict[lc_s] = abbreviation_entry_list
