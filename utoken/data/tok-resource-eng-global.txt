@@ -461,6 +461,7 @@
 ::abbrev IT ::exp information technology ::lcode eng ::case-sensitive True
 ::abbrev j/k ::exp just kidding ::lcode eng
 ::abbrev k9 ::exp canine ::lcode eng
+::abbrev Kfz. ::exp Kraftfahrzeug ::lcode eng ::etym-lcode deu ::alt-spelling Kfz
 ::abbrev l/c ::exp lower case ::lcode eng
 ::abbrev lib ::exp liberal ::lcode eng
 ::abbrev LL.B. ::exp Bachelor of Laws ::lcode eng
