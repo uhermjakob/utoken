@@ -140,6 +140,7 @@
 ::auto-attach ₱ ::side right ::right-context \d
 ::auto-attach P ::side right ::right-context \d ::lcode tgl
 ::auto-attach Php ::side right ::right-context \d ::lcode tgl ::comment Philippine Pesos
+::auto-attach Rp ::side right ::right-context \d ::lcode ind ::comment Indonedian Rupiah
 
 ::auto-attach th ::side left ::left-context \d ::etym-lcode eng ::example 20th
 ::auto-attach st ::side left ::left-context 1 ::etym-lcode eng

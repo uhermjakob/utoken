@@ -65,6 +65,7 @@ if __name__ == "__main__":
                                'eng.txt',
                                'fra.txt',
                                'heb.txt',
+                               'ind.txt',
                                'kan.txt',
                                'kat.txt',
                                'kor.txt',

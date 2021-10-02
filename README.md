@@ -139,7 +139,7 @@ Note: Please make sure that your $PYTHONPATH includes the directory in which thi
 ### Limitations
 * Currently excluded: no-space scripts like Chinese and Japanese
 * Large set of resource entries (data file) currently for English only; limited resource entries for 50+ other languages
-* Languages tested so far: Amharic, Arabic, Assamese, Bengali, Bulgarian, Dutch, __English__, __Farsi__, French, Georgian, German, Greek (Ancient/Koine/Modern), Hebrew (Ancient/Modern), __Hindi__, Kannada, __Kazakh__, Korean, Lao, Lithuanian, Malayalam, Pashto, Portuguese, Russian, Somali, Spanish, Swahili, Swedish, __Tagalog__, Turkish, __Uyghur__, Zulu
+* Languages tested so far: Amharic, Arabic, Assamese, Bengali, Bulgarian, Dutch, __English__, __Farsi__, French, Georgian, German, Greek (Ancient/Koine/Modern), Hebrew (Ancient/Modern), __Hindi__, Indonesian, Kannada, __Kazakh__, Korean, Lao, Lithuanian, Malayalam, Pashto, Portuguese, Russian, Somali, Spanish, Swahili, Swedish, __Tagalog__, Turkish, __Uyghur__, Zulu
   * For languages in __bold__: large-scale testing of thousands to hundreds of thousands of sentences per language.
   * For other modern languages: a few hundred sentences from 100 Wikipedia articles per language.
   * For Ancient Hebrew and Koine Greek: a few hundred verses each from the Bible's Old and New Testament respectively.  
@@ -289,7 +289,7 @@ Tests include
 
 ### Future work — Feedback and contributions welcome
 Plans include 
-* Building resources, testing and fine-tuning of additional languages such as Tamil, Telugu, Indonesian, Italian.
+* Building resources, testing and fine-tuning of additional languages such as Tamil, Telugu, Italian.
 * Adding new special entity types such as IPA pronunciations, geographic coordinates, complex IDs such as 403(k).
 * Semi-supervised learning of lexical and abbreviation resources from large corpora.
 </details>
