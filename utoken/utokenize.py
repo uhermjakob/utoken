@@ -898,6 +898,9 @@ class Tokenizer:
             s = regex.sub(r'\u200D$', '', s)
             s = regex.sub(r'\u200D(\s|\pP)', r'\1', s)
             s = regex.sub(r'(\s|\pP)\u200D', r'\1', s)
+        # Remove variation selectors that follow most letters, numbers, punctuation. Keep after emoji etc.
+        if self.lv & self.char_is_variation_selector:
+            s = regex.sub(r'(?<=[\u0000-\u218F])[\uFE00-\uFE0F\U000E0100-\U000E01EF]+', '', s)
         self.current_s = s
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
