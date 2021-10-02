@@ -1102,7 +1102,7 @@ class Tokenizer:
                 return False
         if re_l := resource_entry.left_context:
             if not re_l.match(_left_context_s := self.current_s[:offset+start_position]):
-                # log.info(f'resource-entry({token_surf}) no match left-context {re_l} with "{left_context_s}"')
+                # log.info(f'   resource-entry({token_surf}) no match left-context {re_l} with "{left_context_s}"')
                 return False
         if re_l_n := resource_entry.left_context_not:
             if not re_l_n.match(_left_context_s := self.current_s[:offset+start_position]):
@@ -1110,7 +1110,7 @@ class Tokenizer:
                 return False
         if re_r := resource_entry.right_context:
             if not re_r.match(_right_context_s := self.current_s[offset+end_position:]):
-                # log.info(f'resource-entry({token_surf}) no match right-context {re_r} with "{right_context_s}"')
+                # log.info(f'   resource-entry({token_surf}) no match right-context {re_r} with "{right_context_s}"')
                 return False
         if re_r_n := resource_entry.right_context_not:
             if not re_r_n.match(_right_context_s := self.current_s[offset+end_position:]):
