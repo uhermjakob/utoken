@@ -1062,7 +1062,8 @@ class Tokenizer:
                 return self.rec_tok_m3(m3, s, offset, 'NUMBER-E', line_id, chart, lang_code, ht, this_function)
         if self.lv & self.char_is_digit:
             if m3 := self.re_number.match(s) \
-                     or ((lang_code not in ('kan', 'mal', 'hin', 'ben', 'asm')) and self.re_number2.match(s)) \
+                     or ((lang_code not in ('asm', 'ben', 'hin', 'kan', 'mal', 'tam', 'tel'))
+                         and self.re_number2.match(s)) \
                      or self.re_integer.match(s):
                 # log.info(f'A s: {s} offset: {offset} chart: {chart}')
                 return self.rec_tok_m3(m3, s, offset, 'NUMBER', line_id, chart, lang_code, ht, this_function)

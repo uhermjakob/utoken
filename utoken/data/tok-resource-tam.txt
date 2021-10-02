@@ -2,6 +2,7 @@
 ::abbrev திரு. ::lcode tam ::eng Mr.
 ::abbrev ஏ. ::lcode tam ::token-category phonetics ::eng A.
 ::abbrev பீ. ::lcode tam ::token-category phonetics ::eng B.
+::abbrev பி. ::lcode tam ::token-category phonetics ::eng B.
 ::abbrev சீ. ::lcode tam ::token-category phonetics ::eng C.
 ::abbrev டீ. ::lcode tam ::token-category phonetics ::eng D.
 ::abbrev ஈ. ::lcode tam ::token-category phonetics ::eng E.

@@ -275,3 +275,7 @@
 ::auto-attach :a ::side left ::left-context \d ::lcode swe ::comment ordinal particle ("th") ::syntax-checked True
 ::auto-attach :e ::side left ::left-context \d ::lcode swe ::comment ordinal particle ("th") ::syntax-checked True
 ::auto-attach :s ::side left ::left-context (?:\d|\p{Lu}) ::lcode swe ::comment possessive ("'s") ::syntax-checked True
+
+::auto-attach ம் ::side left ::left-context \d ::lcode tam
+::auto-attach வது ::side left ::left-context \d ::lcode tam
+# Note: mixed attachment for ஆம் and others
