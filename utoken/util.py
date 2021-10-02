@@ -368,6 +368,9 @@ class ResourceDict:
                                 resource_entry = LexicalEntry(s)
                         elif head_slot == 'punct-split':
                             side = slot_value_in_double_colon_del_list(line, 'side')
+                            if side not in ('start', 'end', 'both'):
+                                log.warning(f'Invalid side {side} in line {line_number} in {filename} '
+                                            f'(should be one of start/end/both)')
                             group = slot_value_in_double_colon_del_list(line, 'group', False)
                             resource_entry = PunctSplitEntry(s, side, group=bool(group))
                         elif head_slot == 'repair':
