@@ -33,11 +33,12 @@ _The ouput below is in the more human-friendly annotation format. Default format
 
 ### Usage &nbsp; (click below for details)
 <details>
-<summary>installation
+<summary>installation</summary>
+
 ```bash
 pip install utoken
 ```
-or
+_or_
 ```bash
 git clone https://github.com/uhermjakob/utoken.git
 ```
