@@ -171,7 +171,7 @@ class Chart:
 
 
 class Tokenizer:
-    def __init__(self, lang_code_s: Optional[str] = None, data_dir: Optional[Path] = None,
+    def __init__(self, lang_code: Optional[str] = None, data_dir: Optional[Path] = None,
                  verbose: Optional[bool] = False):
         # Ordered list of tokenization steps
         self.tok_step_functions = [self.normalize_characters,
@@ -324,7 +324,7 @@ class Tokenizer:
         self.simple_tok_p: bool = False  # simple tokenization: no MT-markup such as @-@
         self.first_token_is_line_id_p: bool = False
         self.verbose: bool = verbose
-        self.lang_codes = re.split(r'[;,\s*]', lang_code_s) if lang_code_s else []
+        self.lang_codes = re.split(r'[;,\s*]', lang_code) if lang_code else []
         self.lang_code: Optional[str] = self.lang_codes[0] if self.lang_codes else None
         self.n_lines_tokenized = 0
         self.tok_dict = util.ResourceDict()
@@ -337,9 +337,9 @@ class Tokenizer:
         self.annotation_json_elements: list[str] = []
         if data_dir is None:
             data_dir = self.default_data_dir()
-        # Load tokenization resource entries for language specified by 'lang_code'
-        for lang_code in self.lang_codes:
-            self.tok_dict.load_resource(data_dir / f'tok-resource-{lang_code}.txt', lang_code=lang_code,
+        # Load tokenization resource entries for language specified by 'lang_codes'
+        for lcode in self.lang_codes:
+            self.tok_dict.load_resource(data_dir / f'tok-resource-{lcode}.txt', lang_code=lcode,
                                         verbose=self.verbose)
         # Load any other tokenization resource entries, for the time being just (global) English
         for lcode in ['eng-global']:
@@ -360,13 +360,13 @@ class Tokenizer:
         # log.info(f're_mt_punct_preserve: {self.re_mt_punct_preserve}')
         # build regular expressions for phonetic initials as common in many Indian languages, store in phonetics_re_dict
         self.phonetics_re_dict = defaultdict(list)                 # key: lang_code
-        for lang_code in self.lang_codes:
-            phonetics_list = self.tok_dict.phonetics_list[lang_code]
+        for lcode in self.lang_codes:
+            phonetics_list = self.tok_dict.phonetics_list[lcode]
             if phonetics_list:
                 phonetics_list_wop = [x.rstrip('.') for x in phonetics_list]  # wop: without period
                 phonetics_alts_wop = '(?:' + '|'.join(phonetics_list_wop) + ')'
                 phonetics_alts = '(?:' + phonetics_alts_wop + r'\.)'
-                if pre_name_list := self.tok_dict.pre_name_title_list[lang_code]:
+                if pre_name_list := self.tok_dict.pre_name_title_list[lcode]:
                     pre_name_list_wop = [x.rstrip('.') for x in pre_name_list]
                     pre_name = '(?:(?:' + '|'.join(pre_name_list_wop) + r')\.)*'
                 else:
@@ -378,8 +378,8 @@ class Tokenizer:
                 re2_string = r'(.*(?<!(?:\pL\pM*|[.\u200C\u200D]))' + pre_name + ')' \
                              r'(' + phonetics_alts + '{2,})' \
                              r'(.*)$'
-                self.phonetics_re_dict[lang_code].append(regex.compile(re1_string, flags=regex.IGNORECASE | regex.V1))
-                self.phonetics_re_dict[lang_code].append(regex.compile(re2_string, flags=regex.IGNORECASE | regex.V1))
+                self.phonetics_re_dict[lcode].append(regex.compile(re1_string, flags=regex.IGNORECASE | regex.V1))
+                self.phonetics_re_dict[lcode].append(regex.compile(re2_string, flags=regex.IGNORECASE | regex.V1))
         # Challenge: top-domain names (e.g. at|be|im|in|is|it|my|no|so|to|US) that can also be regular words,
         #     e.g. G-20.In car.so
         top_level_domain_names_tuple = util.load_top_level_domains(data_dir / 'top-level-domain-codes.txt')
@@ -1797,7 +1797,7 @@ def main():
     args = parser.parse_args()
     lang_code = args.lc
     data_dir = Path(args.data_directory) if args.data_directory else None
-    tok = Tokenizer(lang_code_s=lang_code, data_dir=data_dir, verbose=bool(args.verbose))
+    tok = Tokenizer(lang_code=lang_code, data_dir=data_dir, verbose=bool(args.verbose))
     tok.chart_p = bool(args.annotation_file) or bool(args.chart)
     tok.simple_tok_p = bool(args.simple)
     tok.first_token_is_line_id_p = bool(args.first_token_is_line_id)
