@@ -62,7 +62,7 @@ optional arguments:
                         First token is line ID (and will be exempt from any tokenization)
   -v, --verbose         write change log etc. to STDERR
   -c, --chart           build annotation chart, even without annotation output
-  --simple              prevent MT-style output (e.g. @-@). Note: can degrade any detokinzation
+  --simple              prevent MT-style output (e.g. @-@). Note: can degrade any detokenization
   --version             show program's version number and exit
 ```
 Note: Please make sure that your $PYTHONPATH includes the directory in which this README file resides.

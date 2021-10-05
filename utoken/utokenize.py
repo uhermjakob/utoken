@@ -1791,7 +1791,7 @@ def main():
     parser.add_argument('-c', '--chart', action='count', default=0,
                         help='build annotation chart, even without annotation output')
     parser.add_argument('--simple', action='count', default=0,
-                        help='prevent MT-style output (e.g. @-@). Note: can degrade any detokinzation')
+                        help='prevent MT-style output (e.g. @-@). Note: can degrade any detokenization')
     parser.add_argument('--version', action='version',
                         version=f'%(prog)s {__version__} last modified: {last_mod_date}')
     args = parser.parse_args()
