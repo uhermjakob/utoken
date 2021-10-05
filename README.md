@@ -33,17 +33,6 @@ _The ouput below is in the more human-friendly annotation format. Default format
 
 ### Usage &nbsp; (click below for details)
 <details>
-<summary>installation
-```bash
-pip install utoken
-```
-or
-```bash
-git clone https://github.com/uhermjakob/utoken.git
-```
-</details>
-
-<details>
 <summary>utokenize (command line interface to tokenize a file)</summary>
 
 ```
@@ -136,6 +125,17 @@ Don't worry!
 Sold, for $9,999.99 on ebay.com.
 ```
 Note: Please make sure that your $PYTHONPATH includes the directory in which this README file resides.
+</details>
+
+<details>
+<summary>installation
+```bash
+pip install utoken
+```
+or
+```bash
+git clone https://github.com/uhermjakob/utoken.git
+```
 </details>
 
 ### Design
