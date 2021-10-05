@@ -1,5 +1,5 @@
 # utoken
-_utoken_ is a tokenizer that divides text into words, punctuation and special tokens such as numbers, URLs, XML tags, email-addresses and hashtags.
+_utoken_ is a multilingual tokenizer that divides text into words, punctuation and special tokens such as numbers, URLs, XML tags, email-addresses and hashtags.
 The tokenizer comes with a companion detokenizer.
 Initial public release of beta version 0.1.0 on Oct. 1, 2021.
 
@@ -140,13 +140,13 @@ git clone https://github.com/uhermjakob/utoken.git
 </details>
 
 ### Design
-* Written by Ulf Hermjakob, USC Information Sciences Institute, 2021
-* A universal tokenizer, i.e. designed to work with a wide variety of scripts and languages.
-* Modular, expandable architecture.
-* More information in data files rather than program code.
-* Written in Python.
+* A universal tokenizer/word segmenter, i.e. designed to work with a wide variety of scripts and languages.
+* Preserves special tokens such as URLs, XML tags, email addresses, hashtags, handles, filenames and more.
+* Modular, expandable architecture, with language-independent and language-specific rules and lists.
+* Written in Python, with both command line interface (to tokenize a file) and Python function call (to tokenize a string).
 * Maintains a chart data structure with detailed additional information that can also serve as a basis for further processing.
 * First public release on Oct. 1, 2021: beta version 0.1.0
+* Written by Ulf Hermjakob, USC Information Sciences Institute, 2021
 
 ### Limitations
 * Currently excluded: no-space scripts like Chinese and Japanese
