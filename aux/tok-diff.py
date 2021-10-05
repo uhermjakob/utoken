@@ -5,6 +5,7 @@
    Sample call: tok-diff.py      # will check default directories
    Sample call: tok-diff.py -u   # will update reference tokenizations (detokenizations with -d)
    Sample call: tok-diff.py -d   # detokenization instead of tokenization
+   Sample call: tok-diff.py -v0.1.1  # will save as ...v0.1.1 (unless it already exists)
 """
 
 from shutil import copyfile
@@ -61,6 +62,7 @@ if __name__ == "__main__":
     directories = []
     update_p = False
     detok_p = False
+    new_version = None
     for arg in sys.argv[1:]:
         path = Path(arg)
         if path.is_file():
@@ -78,6 +80,8 @@ if __name__ == "__main__":
             update_p = True
         elif re.match(r'-+[dr]', arg):  # d as in detokenize, r as in reverse
             detok_p = True
+        elif re.match(r'-*v\d+(\.\d+)(\.\d+)$', arg):
+            new_version = arg.lstrip('-')
         else:
             log.warning(f'Invalid arg {arg}')
     if not tok_filenames and not dcln_filenames and not detok_filenames and not directories:
@@ -123,8 +127,17 @@ if __name__ == "__main__":
                         n_updates += 1
                     else:
                         print(f'{Bcolors.FAIL}{rel_filename} {n_diff_lines}/{n_lines} lines differ{Bcolors.ENDC}')
+                elif new_version:
+                    pass
                 else:
                     print(f'{Bcolors.OKGREEN}{rel_filename} {n_diff_lines}/{n_lines} lines differ{Bcolors.ENDC}')
+                if new_version:
+                    version_filename = Path(str(filename) + f'.{new_version}')
+                    if version_filename.is_file():
+                        print(f'{Bcolors.FAIL}Warning: {version_filename} already exists. Not saved.{Bcolors.ENDC}')
+                    else:
+                        copyfile(filename, version_filename)
+                        print(f'{Bcolors.OKGREEN}Saved as {version_filename}{Bcolors.ENDC}')
     if n_updates:
         log.info(f"Updated {n_updates} file{'' if n_updates == 1 else 's'}")
     for filename in dcln_filenames:
