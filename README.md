@@ -128,7 +128,8 @@ Note: Please make sure that your $PYTHONPATH includes the directory in which thi
 </details>
 
 <details>
-<summary>installation
+<summary>installation</summary>
+
 ```bash
 pip install utoken
 ```
