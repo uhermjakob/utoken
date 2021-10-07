@@ -912,7 +912,8 @@ class Tokenizer:
                         r'(.*)$',
                         flags=re.IGNORECASE)
     re_BBCode = re.compile(r'(.*?)'
-                           r'(\[(?:QUOTE|URL)=[^\t\n\[\]]+]|\[/?(?:QUOTE|IMG|INDENT|URL)])'
+                           r'(\[(?:QUOTE|URL|COLOR|SIZE)=[^\t\n\[\]]+]|'
+                           r'\[/?(?:QUOTE|IMG|INDENT|URL|B|I|COLOR|CENTER|SIZE)])'
                            r'(.*)$',
                            flags=re.IGNORECASE)
 
