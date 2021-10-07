@@ -81,6 +81,7 @@ if __name__ == "__main__":
                                'swa.txt',
                                'swe.txt',
                                'tam.txt',
+                               'tel.txt',
                                'tgl.txt',
                                'tur.txt',
                                'zul.txt'])
