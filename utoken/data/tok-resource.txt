@@ -310,7 +310,7 @@
 ::abbrev kg ::exp kilogram ::sem-class unit-of-measurement ::alt-spelling kgs.
 ::abbrev km ::exp kilometer ::sem-class unit-of-measurement
 ::abbrev km² ::exp square kilometer ::sem-class unit-of-measurement ::alt-spelling km2; ㎢; km<sup>2</sup>
-::abbrev km³ ::exp cubic kilometer ::sem-class unit-of-measurement
+::abbrev km³ ::exp cubic kilometer ::sem-class unit-of-measurement ::alt-spelling km3; ㎢; km<sup>3</sup>
 ::abbrev kWh ::exp kilowatt-hour ::sem-class unit-of-measurement ::misspelling kW/h
 ::abbrev M ::exp molar ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
 ::abbrev m ::exp meter ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
