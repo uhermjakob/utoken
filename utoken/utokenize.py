@@ -962,7 +962,7 @@ class Tokenizer:
                                 flags=regex.IGNORECASE)
     re_abs_filename = regex.compile(r'(.*?)'
                                     r'(?<!\pL\pM*|\d|[-_.@])'  # negative lookbehind: no letters, digits, @ please
-                                    r"(\/(?:bin|etc|home|opt|sbin|tmp|usr|var)\/"
+                                    r"(\/(?:bin|etc|home\d*|opt|root/sbin|tmp|usr|var|wp-content)\/"
                                     r"(?:(?:\pL\pM*|\d|[-_./])*(?:\pL\pM*|\d))?)"
                                     r'(?!\pL|\d)'      # negative lookahead: no letters or digits please
                                     r'(.*)$',
