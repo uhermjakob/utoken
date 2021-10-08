@@ -259,6 +259,8 @@ class Tokenizer:
         bit_vector = bit_vector << 1
         self.char_is_at_sign = bit_vector
         bit_vector = bit_vector << 1
+        self.char_is_slash = bit_vector
+        bit_vector = bit_vector << 1
         self.char_is_apostrophe = bit_vector
         bit_vector = bit_vector << 1
         self.char_is_quote = bit_vector  # any of several quotes, quotation marks, apostrophe
@@ -481,6 +483,9 @@ class Tokenizer:
         # At sign
         self.char_type_vector_dict['['] \
             = self.char_type_vector_dict.get('[', 0) | self.char_is_left_square_bracket
+        # Slash
+        self.char_type_vector_dict['/'] \
+            = self.char_type_vector_dict.get('/', 0) | self.char_is_slash
         # Zero width space
         self.char_type_vector_dict['\u200B'] \
             = self.char_type_vector_dict.get('\u200B', 0) | self.char_is_zwsp
@@ -955,6 +960,13 @@ class Tokenizer:
                                 r'(?!\pL|\d)'      # negative lookahead: no letters or digits please
                                 r'(.*)$',
                                 flags=regex.IGNORECASE)
+    re_abs_filename = regex.compile(r'(.*?)'
+                                    r'(?<!\pL\pM*|\d|[-_.@])'  # negative lookbehind: no letters, digits, @ please
+                                    r"(\/(?:bin|etc|home|opt|sbin|tmp|usr|var)\/"
+                                    r"(?:(?:\pL\pM*|\d|[-_./])*(?:\pL\pM*|\d))?)"
+                                    r'(?!\pL|\d)'      # negative lookahead: no letters or digits please
+                                    r'(.*)$',
+                                    flags=regex.IGNORECASE)
 
     def tokenize_filenames(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                            line_id: Optional[str] = None, offset: int = 0) -> str:
@@ -962,6 +974,9 @@ class Tokenizer:
         this_function = self.tokenize_filenames
         if self.re_dot_ab.match(s):
             if m3 := self.re_filename.match(s):
+                return self.rec_tok_m3(m3, s, offset, 'FILENAME', line_id, chart, lang_code, ht, this_function)
+        if self.lv & self.char_is_slash:
+            if m3 := self.re_abs_filename.match(s):
                 return self.rec_tok_m3(m3, s, offset, 'FILENAME', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
