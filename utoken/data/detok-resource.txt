@@ -278,4 +278,11 @@
 
 ::auto-attach ம் ::side left ::left-context \d ::lcode tam
 ::auto-attach வது ::side left ::left-context \d ::lcode tam
-# Note: mixed attachment for ஆம் and others
+
+::auto-attach న ::side left ::left-context \d ::lcode tel
+::auto-attach లో ::side left ::left-context \d ::lcode tel
+::auto-attach ల ::side left ::left-context \d ::lcode tel
+::auto-attach వ ::side left ::left-context \d ::lcode tel
+::auto-attach లలో ::side left ::left-context \d ::lcode tel
+::auto-attach లకు ::side left ::left-context \d ::lcode tel
+::auto-attach దశకంలో ::side left ::left-context \d ::lcode tel
