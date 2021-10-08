@@ -10,7 +10,7 @@
 ::abbrev ಕ್ರಿ.ಪೂ ::lcode kan ::eng B.C.
 ::abbrev ಪ್ರ.ಶ.ಪು. ::lcode kan ::eng B.C.
 ::abbrev ಕ್ರಿ.ಶ ::lcode kan ::eng A.D.
-::abbrev ಡಾ. ::lcode kan ::sem-class pre-name-title ::eng Dr.
+::abbrev ಡಾ. ::lcode kan ::sem-class pre-name-title ::eng Dr. ::alt-spelling ಡಾ॥;ಡಾ||
 ::abbrev ಶ್ರೀ. ::lcode kan ::sem-class pre-name-title ::eng Mr.
 ::abbrev ಪಂ. ::lcode kan ::sem-class pre-name-title ::eng pundit
 ::abbrev ಪಿ‍ಎಚ್.ಡಿ. ::lcode kan ::eng Ph.D.
