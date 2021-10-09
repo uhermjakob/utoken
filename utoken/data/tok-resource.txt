@@ -421,6 +421,7 @@
 ::lexical Des Moines ::sem-class city
 ::lexical Duque de Caxias ::sem-class city
 ::lexical El Alto ::sem-class city
+::lexical Fontaine-l'Étalon ::sem-class city
 ::lexical Fort Lauderdale ::sem-class city
 ::lexical Fort Wayne ::sem-class city
 ::lexical Fort Worth ::sem-class city
@@ -479,6 +480,7 @@
 ::lexical Rostov-on-Don ::sem-class city
 ::lexical Saint-Denis ::sem-class city
 ::lexical Sainte-Etienne ::sem-class city
+::lexical Sainte-Mère-Église ::sem-class city
 ::lexical Saint Petersburg ::sem-class city
 ::lexical Salt Lake City ::sem-class city
 ::lexical San Antonio ::sem-class city

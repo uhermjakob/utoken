@@ -1,3 +1,14 @@
+::lexical all' ::lcode ita ::tag DECONTRACTION-L ::eng to
+::lexical d' ::lcode ita ::tag DECONTRACTION-L ::eng of
+::lexical dall' ::lcode ita ::tag DECONTRACTION-L ::eng of
+::lexical dell' ::lcode ita ::tag DECONTRACTION-L ::eng of
+::lexical nell' ::lcode ita ::tag DECONTRACTION-L ::eng in
+::lexical l' ::lcode ita ::tag DECONTRACTION-L ::eng the ::left-context-not [-]
+::lexical quest' ::lcode ita ::tag DECONTRACTION-L ::eng this
+::lexical s' ::lcode ita ::tag DECONTRACTION-L ::comment reflexive pronoun
+::lexical sull' ::lcode ita ::tag DECONTRACTION-L ::eng under
+::lexical un' ::lcode ita ::tag DECONTRACTION-L ::eng a
+
 ::abbrev Amn. ::lcode ita
 ::abbrev Arch. ::lcode ita
 ::abbrev Avv. ::lcode ita
@@ -70,10 +81,12 @@
 ::abbrev p.f. ::lcode ita
 ::abbrev p.r. ::lcode ita
 ::abbrev p.v. ::lcode ita
+::abbrev pag. ::lcode ita
 ::abbrev post. ::lcode ita
 ::abbrev pp. ::lcode ita
 ::abbrev racc. ::lcode ita
 ::abbrev ric. ::lcode ita
+::abbrev rus. ::lcode ita
 ::abbrev s.n.c. ::lcode ita
 ::abbrev seg. ::lcode ita
 ::abbrev sgg. ::lcode ita

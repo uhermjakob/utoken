@@ -123,6 +123,7 @@
 ::auto-attach ¿ ::side right ::group True
 ::auto-attach # ::side right ::right-context \d{1,4}\b
 ::auto-attach № ::side right ::right-context \d
+::auto-attach n° ::side right ::right-context \d
 ::auto-attach $ ::side right ::right-context \d
 ::auto-attach £ ::side right ::right-context \d
 ::auto-attach € ::side right ::right-context \d
@@ -199,6 +200,17 @@
 ::auto-attach वाँ ::side left ::left-context \d ::lcode hin ::comment ordinal particle ("th")
 ::auto-attach | ::side left ::lcode hin ::comment used as danda
 ::auto-attach /- ::side left ::left-context \d ::lcode hin ::comment currency quantity, no sub-units
+
+::auto-attach all' ::side right ::lcode ita
+::auto-attach d' ::side right ::lcode ita
+::auto-attach dall' ::side right ::lcode ita
+::auto-attach dell' ::side right ::lcode ita
+::auto-attach nell' ::side right ::lcode ita
+::auto-attach l' ::side right ::lcode ita
+::auto-attach quest' ::side right ::lcode ita
+::auto-attach s' ::side right ::lcode ita
+::auto-attach sull' ::side right ::lcode ita
+::auto-attach un' ::side right ::lcode ita
 
 ::auto-attach ನೇ ::side left ::left-context \d ::lcode kan ::comment ordinal particle ("th") 10:0
 ::auto-attach ರ ::side left ::left-context \d ::lcode kan ::comment 10:3
