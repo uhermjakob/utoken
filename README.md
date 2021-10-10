@@ -279,7 +279,7 @@ Parallelization is trivial as sentences are tokenized independent of each other.
 <summary>Testing</summary>
 
 ### Testing
-_utoken_ has been tested on 51 corpora in 40 languages and 15 scripts (as of Oct. 8, 2021).
+_utoken_ has been tested on 52 corpora in 41 languages and 15 scripts (as of Oct. 9, 2021).
 Tests include 
 * Manual review of lots of tokenization
 * Comparison to other tokenizers: [Sacremoses](https://github.com/alvations/sacremoses) and [ulf-tokenizer](https://github.com/isi-nlp/ulf-tokenizer)
