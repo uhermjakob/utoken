@@ -61,6 +61,7 @@ if __name__ == "__main__":
                                'ben.txt',
                                'bul.txt',
                                'ces.txt',
+                               'cym.txt',
                                'deu.txt',
                                'ell.txt',
                                'eng.txt',

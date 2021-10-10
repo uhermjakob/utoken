@@ -179,6 +179,20 @@
 ::auto-attach 'য় ::side left ::lcode ben ::eng in ::comment "y(a)" locative case suffix
 ::auto-attach 'কে ::side left ::lcode ben ::comment "ke" dative/accusative case suffix
 
+::auto-attach au ::side left ::lcode cym ::left-context \d0 ::comment [1920]s
+::auto-attach af ::side left ::lcode cym ::left-context \d ::comment ordinal particle ("th")
+::auto-attach ail ::side left ::lcode cym ::left-context \d ::comment ordinal particle ("th")
+::auto-attach ain ::side left ::lcode cym ::left-context \d ::comment ordinal particle ("th")
+::auto-attach ed ::side left ::lcode cym ::left-context \d ::comment ordinal particle ("th")
+::auto-attach eg ::side left ::lcode cym ::left-context \d ::comment ordinal particle ("th")
+::auto-attach fed ::side left ::lcode cym ::left-context \d ::comment ordinal particle ("th")
+::auto-attach ydd ::side left ::lcode cym ::left-context \d ::comment ordinal particle ("th")
+::auto-attach 'i ::side left ::lcode cym ::left-context [aâeiouwyŷ] ::eng his;him;its;it ::comment ei
+::auto-attach 'n ::side left ::lcode cym ::left-context [aâeiouwyŷ] ::eng in ::comment yn
+::auto-attach 'r ::side left ::lcode cym ::left-context [aâeiouwyŷ] ::eng the ::comment yr
+::auto-attach 'u ::side left ::lcode cym ::left-context [aâeiouwyŷ] ::eng their;them ::comment eu
+::auto-attach 'w ::side left ::lcode cym ::left-context \b[i] ::eng his;him;its;it;their;them ::comment ei;eu
+
 ::auto-attach er ::side left ::left-context \d ::lcode deu ::comment 1920er Jahre
 ::auto-attach ern ::side left ::left-context \d ::lcode deu ::comment in den 1920ern
 ::auto-attach ( ::side left ::left-context \pL ::right-context in\s*\) ::lcode deu ::comment Lehrer(in)
