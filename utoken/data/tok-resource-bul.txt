@@ -4,6 +4,7 @@
 ::abbrev р. ::lcode bul ::eng born
 ::abbrev ч. ::lcode bul ::eng o'clock
 ::abbrev Проф. ::lcode bul ::eng Prof.
+::abbrev и т.н. ::exp и така нататък ::lcode bul ::eng etc.
 
 ::abbrev Д-р ::lcode bul ::eng Dr.
 ::abbrev Г-н ::lcode bul ::eng Mr.

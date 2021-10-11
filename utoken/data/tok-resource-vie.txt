@@ -3,6 +3,7 @@
 ::abbrev k° ::exp không ::lcode vie ::eng no; not
 ::abbrev sg. ::exp sông ::lcode vie ::eng river
 ::abbrev TS. ::exp thạc sĩ ::lcode vie ::eng Master's degree
+::abbrev v.v. ::exp vân vân ::lcode vie ::eng etc.
 
 ::abbrev A. ::right-context \s*\S
 ::abbrev B. ::right-context \s*\S
