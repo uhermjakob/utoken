@@ -703,7 +703,7 @@ class Tokenizer:
         return util.join_tokens(tokenizations)
 
     re_starts_w_plus_minus = re.compile(r'[-−–+]')
-    re_ends_in_digit_plus = re.compile(r'.*\d[%\']?$')
+    re_ends_w_letter_digit_plus = regex.compile(r'.*(?:\d[%\']?|\pL\pM*)$')
 
     def m3_to_3s_w_adjustment(self, m3: Match[str], _s: str, offset: int, token_type: str, _line_id: str,
                               _chart: Optional[Chart]) -> [str, str, str]:
@@ -713,7 +713,7 @@ class Tokenizer:
         if token_type == 'NUMBER' and self.re_starts_w_plus_minus.match(token):
             token_start_position = offset + len(pre_token)
             left_context = current_s[:token_start_position]
-            if self.re_ends_in_digit_plus.match(left_context):
+            if self.re_ends_w_letter_digit_plus.match(left_context):
                 # log.info(f'm3_to_3s_w_adjustment {token_type} {offset} {left_context} :: {token}')
                 # +/- not part of number (as sign) after all, but rather range/addition: 3.5%-5.5% or 4+5
                 pre_token += token[:1]
