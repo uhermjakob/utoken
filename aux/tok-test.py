@@ -78,6 +78,7 @@ if __name__ == "__main__":
                                'nld.txt',
                                'por.txt',
                                'pus.txt',
+                               'que.txt',
                                'rus.txt',
                                'som.txt',
                                'spa.txt',

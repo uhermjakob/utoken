@@ -281,6 +281,8 @@
 # ::auto-attach ز ::side left ::left-context \d ::lcode pus ::comment year particle
 # ::auto-attach ل ::side left ::left-context \d ::lcode pus ::comment year particle
 
+::auto-attach ñ ::side left ::left-context \d ::lcode que ::comment ordinal particle
+
 # ::auto-attach гг ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
 # ::auto-attach г ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
 # ::auto-attach м ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
