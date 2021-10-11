@@ -301,7 +301,7 @@ Tests include
 
 ### Future work — Feedback and contributions welcome
 Plans include 
-* Building resources, testing and fine-tuning of additional languages such as Hausa, Hungarian, Marathi, Odia, Quechua, Xhosa.
+* Building resources, testing and fine-tuning of additional languages such as Hausa, Hungarian, Marathi, Odia, Quechua.
 * Adding new special entity types such as IPA pronunciations, geographic coordinates, complex IDs such as 403(k).
 * Semi-supervised learning of lexical and abbreviation resources from large corpora.
 </details>
