@@ -312,3 +312,10 @@
 ::auto-attach లలో ::side left ::left-context \d ::lcode tel
 ::auto-attach లకు ::side left ::left-context \d ::lcode tel
 ::auto-attach దశకంలో ::side left ::left-context \d ::lcode tel
+
+::auto-attach ngo ::side right ::right-context \d ::lcode xho ::eng in ::comment prefix: in [1920]
+::auto-attach yoo ::side right ::right-context \d ::lcode xho ::eng s ::comment prefix: [1920]s
+::auto-attach ka ::side right ::right-context \d ::lcode xho ::comment prefix
+::auto-attach wama ::side right ::right-context \d ::lcode xho ::comment prefix
+::auto-attach we ::side right ::right-context \d ::lcode xho ::comment prefix
+::auto-attach yama ::side right ::right-context \d ::lcode xho ::comment prefix

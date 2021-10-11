@@ -88,6 +88,7 @@ if __name__ == "__main__":
                                'tgl.txt',
                                'tur.txt',
                                'vie.txt',
+                               'xho.txt',
                                'zul.txt'])
         elif filename == 'set3':
             filenames2.extend(['Bible-IRV-woid.hin.txt',  # if args.compare else 'Bible-IRV.hin.txt'

@@ -151,7 +151,7 @@ git clone https://github.com/uhermjakob/utoken.git
 ### Limitations
 * Currently excluded: no-space scripts like Chinese and Japanese
 * Large set of resource entries (data file) currently for English only; limited resource entries for 60+ other languages
-* Languages tested so far: Amharic, Arabic, Assamese, Bengali, Bulgarian, Czech, Dutch, __English__, __Farsi__, French, Georgian, German, Greek (Ancient/Koine/Modern), Hebrew (Ancient/Modern), __Hindi__, Indonesian, Italian, Kannada, __Kazakh__, Korean, Lao, Lithuanian, Malayalam, Pashto, Portuguese, Russian, Somali, Spanish, Swahili, Swedish, __Tagalog__, Tamil, Telugu, Turkish, __Uyghur__, Vietnamese, Welsh, Zulu
+* Languages tested so far: Amharic, Arabic, Assamese, Bengali, Bulgarian, Czech, Dutch, __English__, __Farsi__, French, Georgian, German, Greek (Ancient/Koine/Modern), Hebrew (Ancient/Modern), __Hindi__, Indonesian, Italian, Kannada, __Kazakh__, Korean, Lao, Lithuanian, Malayalam, Pashto, Portuguese, Russian, Somali, Spanish, Swahili, Swedish, __Tagalog__, Tamil, Telugu, Turkish, __Uyghur__, Vietnamese, Welsh, Xhosa, Zulu
   * For languages in __bold__: large-scale testing of thousands to hundreds of thousands of sentences per language.
   * For other modern languages: a few hundred sentences from 100 Wikipedia articles per language.
   * For Ancient Hebrew and Koine Greek: a few hundred verses each from the Bible's Old and New Testament respectively.  
@@ -279,7 +279,7 @@ Parallelization is trivial as sentences are tokenized independent of each other.
 <summary>Testing</summary>
 
 ### Testing
-_utoken_ has been tested on 52 corpora in 41 languages and 15 scripts (as of Oct. 9, 2021).
+_utoken_ has been tested on 53 corpora in 42 languages and 15 scripts (as of Oct. 11, 2021).
 Tests include 
 * Manual review of lots of tokenization
 * Comparison to other tokenizers: [Sacremoses](https://github.com/alvations/sacremoses) and [ulf-tokenizer](https://github.com/isi-nlp/ulf-tokenizer)

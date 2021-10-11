@@ -1,0 +1,12 @@
+::punct-split . ::side both ::lcode xho ::left-context \pL\pM*\pL\pM* ::right-context \pL\pM*\pL
+::punct-split - ::side both ::group True ::lcode xho ::left-context (?<!\pL\pM*|\d)[eEiIuU] ::right-context (?:\pL|\d)
+::punct-split '' ::side both ::group True ::lcode xho
+
+::lexical ngo ::right-context \d ::lcode xho ::eng in ::comment prefix: in [1920]
+::lexical yoo ::right-context \d ::lcode xho ::eng s ::comment prefix: [1920]s
+::lexical ka ::right-context \d ::lcode xho ::comment prefix
+::lexical wama ::right-context \d ::lcode xho ::comment prefix
+::lexical we ::right-context \d ::lcode xho ::comment prefix
+::lexical yama ::right-context \d ::lcode xho ::comment prefix
+
+# ::abbrev c. ::lcode xho
