@@ -179,6 +179,7 @@
 ::punct-split _ ::side end ::group True
 ::punct-split / ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?'’‘])
 ::punct-split - ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?'’‘])
+::punct-split - ::side end ::group True ::left-context \pL\pM* ::right-context \d+[.,]\d
 ::punct-split = ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?'’‘])
 ::punct-split – ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?'’‘])
 ::punct-split · ::side end
