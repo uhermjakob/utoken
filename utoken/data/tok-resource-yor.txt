@@ -1,0 +1,14 @@
+# Note: The Yoruba alphabet contains letters ẹ, ọ, ṣ (for IPA ɛ, ɔ, ʃ) plus upper-case and accented forms thereof.
+# These letters are sometimes incorrectly encoded such as "Wón" instead of "Wọ́n",
+# using a non-standard Unicode character as a "dot below" diacritic, leading to rendering problems.
+# (Should be auto-correctable.)
+
+# ::punct-split . ::side both ::lcode yor ::left-context \pL\pM*\pL\pM* ::right-context \pL\pM*\pL
+# ::lexical XX ::lcode yor
+
+::abbrev c. ::lcode yor
+::abbrev I.A ::exp Ìpínlẹ̀ Asokan ::lcode yor ::eng U.S.
+::abbrev I.A.A ::exp Ìpínlẹ̀ Aṣọ̀kan Amẹ́ríkà ::lcode yor ::eng U.S.A.
+::abbrev K.J ::exp kia to bi Jesu ::lcode yor ::eng BC
+::abbrev tr. ::lcode yor
+
