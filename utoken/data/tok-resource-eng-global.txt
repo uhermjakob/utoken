@@ -36,6 +36,9 @@
 ::repair U.S ::target U.S. ::lcode eng ::right-context-not \s*[.] ::problem missing period
 ::repair D.C ::target D.C. ::lcode eng ::right-context-not \s*[.] ::problem missing period
 ::repair H. E. ::target H.E. ::lcode eng ::right-context-not \s*[.] ::problem spurious space
+::repair al . ::target al. ::lcode eng ::etym-lcode lat ::left-context \bet\.?\s* ::problem spurious space ::comment et al.
+::repair al ::target al. ::lcode eng ::etym-lcode lat ::left-context \bet\.?\s* ::right-context-not \. ::problem missing period ::comment et al.
+::repair et. ::target et ::lcode eng ::etym-lcode lat ::right-context \s*al\b ::problem spurious period ::comment et al.
 
 ::repair ca n't ::target can n't ::lcode eng ::problem previous tokenizer
 ::repair sha n't ::target shall n't ::lcode eng ::problem previous tokenizer
