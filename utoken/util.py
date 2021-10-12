@@ -452,13 +452,15 @@ class ResourceDict:
 
 
 class DetokenizationEntry:
-    def __init__(self, s: str, group: Optional[bool] = False, lang_codes: List[str] = None,
+    def __init__(self, s: str, group: Optional[bool] = False,
+                 lang_codes: List[str] = None, lang_codes_not: List[str] = None,
                  left_context: Optional[Pattern[str]] = None, left_context_not: Optional[Pattern[str]] = None,
                  right_context: Optional[Pattern[str]] = None, right_context_not: Optional[Pattern[str]] = None,
                  case_sensitive: bool = False):
         self.s = s
         self.group = group
         self.lang_codes = lang_codes
+        self.lang_codes_not = lang_codes_not
         self.left_context: Optional[Pattern[str]] = left_context
         self.left_context_not: Optional[Pattern[str]] = left_context_not
         self.right_context: Optional[Pattern[str]] = right_context
@@ -469,7 +471,9 @@ class DetokenizationEntry:
                                                  lang_code: Optional[str], group: Optional[bool] = False) -> bool:
         """This methods checks whether a detokenization-entry satisfies any context conditions."""
         lang_codes = self.lang_codes
+        lang_codes_not = self.lang_codes_not
         return ((not lang_code or not lang_codes or (lang_code in lang_codes))
+                and (not lang_code or not lang_codes_not or (lang_code not in lang_codes_not))
                 and (not self.case_sensitive or (token == self.s))
                 and (not group or self.group)
                 and (not (re_l := self.left_context) or re_l.match(left_context))
@@ -674,6 +678,8 @@ class DetokenizationResource:
                                 except regex.error:
                                     log.warning(f'Regex compile error in l.{line_number} for {s} ::right-context-not '
                                                 f'{right_context_not_s}')
+                            if lang_code_not_s := slot_value_in_double_colon_del_list(line, 'lcode-not'):
+                                detokenization_entry.lang_codes_not = re.split(r'[;,\s*]', lang_code_not_s)
                             n_entries += 1
                 if verbose:
                     log.info(f'Loaded {n_entries} entries from {line_number} lines in {filename}')
