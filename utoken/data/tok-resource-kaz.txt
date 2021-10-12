@@ -6,7 +6,7 @@
 
 ::abbrev ж. ::exp жыл ::lcode kaz ::eng year ::left-context \d\s*
 ::abbrev ж.т. ::lcode kaz ::eng born in ::case-sensitive True
-::abbrev т.б. ::lcode kaz ::eng etc.
+::abbrev т.б. ::lcode kaz ::eng etc. ::alt-spelling т/б
 ::abbrev т.б.б. ::lcode kaz ::eng etc.
 ::abbrev г. ::lcode kaz ::eng year
 ::abbrev Қ. ::lcode kaz
@@ -15,6 +15,9 @@
 ::abbrev млн. ::lcode kaz ::eng million
 ::abbrev млрд. ::lcode kaz ::eng billion
 ::abbrev кв.м. ::lcode kaz ::sem-class unit-of-measurement ::eng m²
+::abbrev тел. ::lcode kaz ::eng telephone
+::abbrev б. ::lcode kaz ::left-context-not \.\s* ::right-context-not \.\.
+::abbrev бағ. ::lcode kaz
 
 ::abbrev м/с ::lcode kaz ::sem-class unit-of-measurement ::eng m/s
 ::abbrev км/сағ ::lcode kaz ::sem-class unit-of-measurement ::eng km/h
