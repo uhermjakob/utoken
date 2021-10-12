@@ -148,6 +148,7 @@
 ::auto-attach nd ::side left ::left-context 2 ::etym-lcode eng
 ::auto-attach rd ::side left ::left-context 3 ::etym-lcode eng
 ::auto-attach s ::side left ::left-context 0 ::example 1950s
+::auto-attach 's ::side left ::left-context [\p{Latin}&&\p{Letter}]{2} ::example Harold's ::lcode-not nld
 
 ::auto-attach ተኛው ::side left ::left-context \pN ::lcode amh ::comment ordinal particle ("th")
 ::auto-attach ኛው ::side left ::left-context \pN ::lcode amh ::comment ordinal particle ("th")
