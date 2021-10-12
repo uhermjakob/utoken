@@ -703,7 +703,7 @@ class Tokenizer:
         return util.join_tokens(tokenizations)
 
     re_starts_w_plus_minus = re.compile(r'[-−–+]')
-    re_ends_w_letter_digit_plus = regex.compile(r'.*(?:\d[%\']?|\pL\pM*)$')
+    re_ends_w_letter_digit_plus = regex.compile(r'.*(?:\d[%\']?|\pL\pM*|[.])$')
 
     def m3_to_3s_w_adjustment(self, m3: Match[str], _s: str, offset: int, token_type: str, _line_id: str,
                               _chart: Optional[Chart]) -> [str, str, str]:
@@ -1081,7 +1081,7 @@ class Tokenizer:
                      or ((lang_code not in ('asm', 'ben', 'hin', 'kan', 'mal', 'tam', 'tel'))
                          and self.re_number2.match(s)) \
                      or self.re_integer.match(s):
-                # log.info(f'A s: {s} offset: {offset} chart: {chart}')
+                # log.info(f'A s: {s} n: {m3.group(2)} offset: {offset} chart: {chart}')
                 return self.rec_tok_m3(m3, s, offset, 'NUMBER', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
