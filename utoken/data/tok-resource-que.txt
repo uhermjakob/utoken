@@ -1,7 +1,9 @@
 # Note: In Quechua, an apostrophe (') after ch,k,p,q,t indicates "ejective" pronunciation,
 # so the apostrophe is part of the word.
+# Note: Quechua is often considered a language family, rather than an individual language.
 
 ::punct-split . ::side both ::lcode que ::left-context \pL\pM*\pL\pM* ::right-context \pL\pM*\pL
+# Common date format: 30-IX-2021
 ::punct-split - ::side both ::lcode que ::left-context \b(?:[012]?\d|3[01]) ::right-context (?:V?I{1,3}|I?V|IX|XI{0,2})\b ::comment day-month in a date
 ::punct-split - ::side both ::lcode que ::left-context \b(?:V?I{1,3}|I?V|IX|XI{0,2}) ::right-context (?:[12])\d\d\d\b ::comment month-year in a date
 
