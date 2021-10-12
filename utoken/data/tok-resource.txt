@@ -182,6 +182,7 @@
 ::punct-split - ::side end ::group True ::left-context \pL\pM* ::right-context \d+[.,]\d
 ::punct-split = ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?'’‘])
 ::punct-split – ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?'’‘])
+::punct-split + ::side end ::group True ::left-context [.,;:!?'’‘]
 ::punct-split · ::side end
 ::punct-split < ::side end ::left-context (?:\d|\pL\pM*)
 ::punct-split > ::side end ::left-context (?:\d|\pL\pM*)
@@ -317,6 +318,7 @@
 ::abbrev m ::exp meter ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
 ::abbrev m² ::exp square meter ::sem-class unit-of-measurement ::alt-spelling ㎡; sq.mtr.
 ::abbrev m³ ::exp cubic meter ::sem-class unit-of-measurement ::alt-spelling ㎥
+::abbrev M🜨 ::exp earth mass ::sem-class unit-of-measurement ::alt-spelling M⊕  # split by tokenize_symbol_group
 ::abbrev mg ::exp milligram ::sem-class unit-of-measurement ::case-sensitive True
 ::abbrev ml ::exp milliliter ::sem-class unit-of-measurement ::case-sensitive True
 ::abbrev mm ::exp millimeter ::sem-class unit-of-measurement ::case-sensitive True
@@ -528,6 +530,7 @@
 
 ::lexical Chick-fil-A ::sem-class company
 ::lexical eBay ::sem-class company
+::lexical E.ON ::sem-class company ::priority high
 ::lexical GlaxoSmithKline ::sem-class company
 ::lexical HarperCollins ::sem-class company
 ::lexical Hewlett-Packard ::sem-class company
