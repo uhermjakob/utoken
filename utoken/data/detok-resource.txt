@@ -80,7 +80,7 @@
 ::auto-attach ؟ ::side left ::comment Arabic question mark
 ::auto-attach ، ::side left ::comment Arabic comma
 ::auto-attach ؛ ::side left ::comment Arabic semicolon
-::auto-attach । ::side left ::comment Devanagari danda
+::auto-attach । ::side left ::comment Devanagari danda ::lcode-not ori
 ::auto-attach ॥ ::side left ::comment Devanagari double danda
 ::auto-attach ৷ ::side left ::group True ::comment Bengali currency numerator four, often operating as Bengali danda
 ::auto-attach % ::side left ::left-context \d
@@ -276,6 +276,15 @@
 
 ::auto-attach de ::side left ::left-context \d ::lcode nld ::comment ordinal particle
 ::auto-attach e ::side left ::left-context \d ::lcode nld ::comment ordinal particle
+
+::auto-attach ଟି ::side left ::left-context \d ::lcode ori
+::auto-attach ତମ ::side left ::left-context \d ::lcode ori
+::auto-attach ରେ ::side left ::left-context \d ::lcode ori
+::auto-attach ଶ ::side left ::left-context \d ::lcode ori
+::auto-attach ୟ ::side left ::left-context \d ::lcode ori
+::auto-attach ରୁ ::side left ::left-context \d ::lcode ori
+::auto-attach ତାର ::side left ::left-context \d ::lcode ori
+::auto-attach ଷ୍ଠ ::side left ::left-context \d ::lcode ori
 
 # Per sample Wikipedia docs, year markers are more often separate (but inconsistently so)
 # ::auto-attach م ::side left ::left-context \d ::lcode pus ::comment year particle ::eng AD ::example 2021م
