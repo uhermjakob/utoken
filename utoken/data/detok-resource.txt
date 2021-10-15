@@ -274,6 +274,10 @@
 ::auto-attach ലെ ::side left ::left-context \d ::lcode mal
 ::auto-attach ന്റെ ::side left ::left-context \d ::lcode mal
 
+::auto-attach वा ::side left ::left-context \d ::lcode mar ::comment ordinal particle
+::auto-attach व्या ::side left ::left-context \d ::lcode mar ::comment ordinal particle
+::auto-attach वे ::side left ::left-context \d ::lcode mar ::comment ordinal particle
+
 ::auto-attach de ::side left ::left-context \d ::lcode nld ::comment ordinal particle
 ::auto-attach e ::side left ::left-context \d ::lcode nld ::comment ordinal particle
 

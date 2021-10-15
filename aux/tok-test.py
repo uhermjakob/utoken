@@ -75,6 +75,7 @@ if __name__ == "__main__":
                                'lao.txt',
                                'lit.txt',
                                'mal.txt',
+                               'mar.txt',
                                'nld.txt',
                                'nor.txt',
                                'ori.txt',
