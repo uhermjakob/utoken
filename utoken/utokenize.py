@@ -1555,15 +1555,14 @@ class Tokenizer:
                 if self.resource_entry_fulfills_general_context_conditions(token_candidate,
                                                                            left_context, right_context):
                     for resource_entry in self.tok_dict.resource_dict.get(token_candidate_lc, []):
-                        if self.resource_entry_fulfills_conditions(resource_entry, util.PunctSplitEntry,
-                                                                   token_candidate, s, start_position, end_position,
-                                                                   offset, lang_code):
+                        end_position2 = end_position
+                        if resource_entry.group:
+                            while end_position2 < len_s and s[end_position2-1] == s[end_position2]:
+                                end_position2 += 1
+                        token = s[start_position:end_position2]  # includes any group reduplication
+                        if self.resource_entry_fulfills_conditions(resource_entry, util.PunctSplitEntry, token, s,
+                                                                   start_position, end_position2, offset, lang_code):
                             side = resource_entry.side
-                            end_position2 = end_position
-                            if resource_entry.group:
-                                while end_position2 < len_s and s[end_position2-1] == s[end_position2]:
-                                    end_position2 += 1
-                            token = s[start_position:end_position2]  # includes any group reduplication
                             if side == 'both':
                                 return self.rec_tok([token], [start_position], s, offset, 'PUNCT',
                                                     line_id, chart, lang_code, ht, this_function, [token],
