@@ -101,7 +101,7 @@
 ::abbrev BR ::exp Brazil ::lcode eng ::sem-class country-code ::case-sensitive True
 ::abbrev CA ::exp Canada ::lcode eng ::sem-class country-code ::case-sensitive True
 ::abbrev CG ::exp Republic of Congo ::lcode eng ::sem-class country-code ::case-sensitive True
-::abbrev CH ::exp Switzerland ::lcode eng ::sem-class country-code ::case-sensitive True
+::abbrev CH ::exp Switzerland ::lcode eng ::sem-class country-code ::case-sensitive True ::right-context-not ≡
 ::abbrev CN ::exp China ::lcode eng ::sem-class country-code ::case-sensitive True
 ::abbrev CR ::exp Costa Rica ::lcode eng ::sem-class country-code ::case-sensitive True
 ::abbrev CU ::exp Cuba ::lcode eng ::sem-class country-code ::case-sensitive True
