@@ -184,8 +184,8 @@
 ::punct-split – ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?'’‘])
 ::punct-split + ::side end ::group True ::left-context [.,;:!?'’‘]
 ::punct-split · ::side end
-::punct-split < ::side end ::left-context (?:\d|\pL\pM*)
-::punct-split > ::side end ::left-context (?:\d|\pL\pM*)
+::punct-split < ::side end ::group True ::left-context (?:\d|\pL\pM*)
+::punct-split > ::side end ::group True ::left-context (?:\d|\pL\pM*)
 ::punct-split \ ::side end ::left-context (?:\d|\pL\pM*)
 ::punct-split &lt; ::side end ::left-context (?:\d|\pL\pM*|[;])
 ::punct-split &gt; ::side end ::left-context (?:\d|\pL\pM*|[;])
@@ -779,6 +779,8 @@
 ::lexical 120.su ::sem-class url
 ::lexical GeoNames.Org ::sem-class url  # tricky: CamelCase
 
+# Some otherwise-symbols are part of can be of tokens, e.g. −8.5 and should not be marked as symbols
+# by heuristic tokenize_symbol_group, which (might) rank(s) above lexical entries.
 ::non-symbol − ::right-context \d
 ::non-symbol ≡ ::left-context \pL\d* ::right-context \pL
 ::non-symbol ⊕ ::left-context M
