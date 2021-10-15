@@ -778,3 +778,8 @@
 ::lexical x.org ::sem-class url
 ::lexical 120.su ::sem-class url
 ::lexical GeoNames.Org ::sem-class url  # tricky: CamelCase
+
+::non-symbol − ::right-context \d
+::non-symbol ≡ ::left-context \pL\d* ::right-context \pL
+::non-symbol ⊕ ::left-context M
+::non-symbol 🜨 ::left-context M
