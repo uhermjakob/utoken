@@ -92,6 +92,7 @@ if __name__ == "__main__":
                                'tel.txt',
                                'tgl.txt',
                                'tur.txt',
+                               'urd.txt',
                                'vie.txt',
                                'xho.txt',
                                'yor.txt',

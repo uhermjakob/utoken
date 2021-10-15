@@ -1,0 +1,7 @@
+::punct-split . ::side start ::lcode urd ::right-context \pL
+::punct-split ’ ::side both ::lcode urd ::left-context \pL\pM*\pL\pM* ::right-context \pL\pM*\pL
+
+# ::lexical XX ::lcode urd
+
+# ::abbrev c. ::lcode urd
+
