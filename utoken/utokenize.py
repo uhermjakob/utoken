@@ -1656,6 +1656,14 @@ class Tokenizer:
             return self.rec_tok_m3(m3, s, offset, 'NUMBER-2', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
+    def token_candidate_is_valid_symbol(self, s: str, token_candidate: str, lang_code: Optional[str], offset: int,
+                                        start_position: int, end_position: int):
+        for resource_entry in self.tok_dict.resource_dict.get(token_candidate, []):
+            if self.resource_entry_fulfills_conditions(resource_entry, util.NonSymbolEntry, token_candidate,
+                                                       s, start_position, end_position, offset, lang_code):
+                return False
+        return True
+
     def tokenize_symbol_group(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                               line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step handles groups such as dingbats."""
@@ -1671,13 +1679,20 @@ class Tokenizer:
                 elif char_type_vector & self.char_is_variation_selector:
                     continue
                 elif start_position is not None:  # found end of symbol group
-                    token_candidate = s[start_position:i]
-                    return self.rec_tok([token_candidate], [start_position], s, offset, 'SYMBOL', line_id,
-                                        chart, lang_code, ht, this_function, [token_candidate], left_done=True)
+                    end_position = i
+                    token_candidate = s[start_position:end_position]
+                    if self.token_candidate_is_valid_symbol(s, token_candidate, lang_code, offset, start_position,
+                                                            end_position):
+                        return self.rec_tok([token_candidate], [start_position], s, offset, 'SYMBOL', line_id,
+                                            chart, lang_code, ht, this_function, [token_candidate], left_done=True)
+                    else:
+                        start_position = None
             if start_position is not None:
                 token_candidate = s[start_position:]
-                return self.rec_tok([token_candidate], [start_position], s, offset, 'SYMBOL', line_id,
-                                    chart, lang_code, ht, this_function, [token_candidate], left_done=True)
+                if self.token_candidate_is_valid_symbol(s, token_candidate, lang_code, offset, start_position,
+                                                        len(s)):
+                    return self.rec_tok([token_candidate], [start_position], s, offset, 'SYMBOL', line_id,
+                                        chart, lang_code, ht, this_function, [token_candidate], left_done=True)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_contains_letter = regex.compile(r'.*\pL')

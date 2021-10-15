@@ -80,6 +80,11 @@ class PunctSplitEntry(ResourceEntry):
         self.group = group if group else False
 
 
+class NonSymbolEntry(ResourceEntry):
+    def __init__(self, s: str):
+        super().__init__(s)
+
+
 class ResourceDict:
     def __init__(self):
         """Dictionary of ResourceEntries. All dictionary keys are lower case."""
@@ -298,6 +303,7 @@ class ResourceDict:
                                                                               'left-context-not',
                                                                               'lexical',
                                                                               'misspelling',
+                                                                              'non-symbol',
                                                                               'nonstandard',
                                                                               'plural',
                                                                               'problem',
@@ -319,6 +325,7 @@ class ResourceDict:
                                                                                      'contraction': ['target'],
                                                                                      'lexical': [],
                                                                                      'misspelling': ['target'],
+                                                                                     'non-symbol': [],
                                                                                      'punct-split': ['side'],
                                                                                      'repair': ['target']})
                         if not valid:
@@ -377,6 +384,8 @@ class ResourceDict:
                             target = slot_value_in_double_colon_del_list(line, 'target')
                             resource_entry = RepairEntry(s, target)
                             self.register_resource_entry_in_reverse_resource_dict(resource_entry, [target])
+                        elif head_slot == 'non-symbol':
+                            resource_entry = NonSymbolEntry(s)
                         if resource_entry:  # register resource_entry with lowercase key
                             if len(s) > self.max_s_length:
                                 self.max_s_length = len(s)
@@ -562,6 +571,7 @@ class DetokenizationResource:
                                                                               'lexical',
                                                                               'markup-attach',
                                                                               'misspelling',
+                                                                              'non-symbol',
                                                                               'nonstandard',
                                                                               'paired-delimiter',
                                                                               'plural',
@@ -580,7 +590,8 @@ class DetokenizationResource:
                                                                                      'auto-attach': ['side'],
                                                                                      'contraction': ['target'],
                                                                                      'lexical': [],
-                                                                                     'markup-attach': []})
+                                                                                     'markup-attach': [],
+                                                                                     'non-symbol': []})
                         if not valid:
                             n_warnings += 1
                             continue
