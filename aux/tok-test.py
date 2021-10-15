@@ -79,6 +79,7 @@ if __name__ == "__main__":
                                'nld.txt',
                                'nor.txt',
                                'ori.txt',
+                               'pol.txt',
                                'por.txt',
                                'pus.txt',
                                'que.txt',
