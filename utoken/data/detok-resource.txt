@@ -4,6 +4,7 @@
 ::markup-attach - ::group True ::comment hyphen-minus
 ::markup-attach – ::group True ::comment en-dash
 ::markup-attach — ::group True ::comment em-dash
+::markup-attach − ::group True ::comment minus sign
 ::markup-attach ־ ::group True ::comment Hebrew maqaf (hyphen)
 ::markup-attach + ::group True ::comment originally auto-attach w/ left-context \d\s?[%‰kK]?
 
