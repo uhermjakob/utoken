@@ -181,6 +181,11 @@
 ::auto-attach 'য় ::side left ::lcode ben ::eng in ::comment "y(a)" locative case suffix
 ::auto-attach 'কে ::side left ::lcode ben ::comment "ke" dative/accusative case suffix
 
+::auto-attach d' ::side right ::lcode cat
+::auto-attach l' ::side right ::lcode cat
+::auto-attach n' ::side right ::lcode cat
+::auto-attach s' ::side right ::lcode cat
+
 ::auto-attach au ::side left ::lcode cym ::left-context \d0 ::comment [1920]s
 ::auto-attach af ::side left ::lcode cym ::left-context \d ::comment ordinal particle ("th")
 ::auto-attach ail ::side left ::lcode cym ::left-context \d ::comment ordinal particle ("th")
