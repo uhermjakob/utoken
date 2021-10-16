@@ -206,6 +206,17 @@
 
 ::auto-attach ( ::side left ::left-context \pL ::right-context s\s*\)(?!\s*he\b) ::lcode eng ::comment friend(s)
 
+::auto-attach :ään ::side left ::lcode fin ::comment suffix ::syntax-checked True
+::auto-attach :in ::side left ::lcode fin ::comment suffix ::syntax-checked True
+::auto-attach :lle ::side left ::lcode fin ::comment suffix ::syntax-checked True
+::auto-attach :lta ::side left ::lcode fin ::comment suffix ::syntax-checked True
+::auto-attach :n ::side left ::lcode fin ::comment suffix ::syntax-checked True
+::auto-attach :nä ::side left ::lcode fin ::comment suffix ::syntax-checked True
+::auto-attach :ssa ::side left ::lcode fin ::comment suffix ::syntax-checked True
+::auto-attach :ssä ::side left ::lcode fin ::comment suffix ::syntax-checked True
+::auto-attach :sta ::side left ::lcode fin ::comment suffix ::syntax-checked True
+::auto-attach :ta ::side left ::lcode fin ::comment suffix ::syntax-checked True
+
 ::auto-attach e ::side left ::left-context \d ::lcode fra ::comment ordinal particle ("th")
 ::auto-attach er ::side left ::left-context \d ::lcode fra ::comment ordinal particle ("th")
 
