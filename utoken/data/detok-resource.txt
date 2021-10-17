@@ -225,6 +225,19 @@
 ::auto-attach e ::side left ::left-context \d ::lcode fra ::comment ordinal particle ("th")
 ::auto-attach er ::side left ::left-context \d ::lcode fra ::comment ordinal particle ("th")
 
+::auto-attach માં ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach ના ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach મીની ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach ને ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach મો ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach ની ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach નું ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach નો ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach થી ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach જેનું ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach માંથી ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach મી ::side left ::left-context (?:\d|[)]) ::lcode guj
+
 ::auto-attach वां ::side left ::left-context \d ::lcode hin ::comment ordinal particle ("th")
 ::auto-attach वीं ::side left ::left-context \d ::lcode hin ::comment ordinal particle ("th")
 ::auto-attach वींं ::side left ::left-context \d ::lcode hin ::comment ordinal particle ("th")
