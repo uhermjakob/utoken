@@ -99,6 +99,7 @@
 ::punct-split . ::side both ::left-context \p{Lo}\pM*\p{Lo}\pM* ::right-context [-\/]*\p{Lo}\pM*\p{Lo}
 ::punct-split . ::side both ::left-context (?:[\p{Latin}&&\p{Letter}]\pM*){2,} ::right-context [-\/]*\p{Lo}\pM*\p{Lo}
 ::punct-split . ::side both ::left-context \p{Lo}\pM*\p{Lo}\pM* ::right-context [-\/]*(?:[\p{Latin}&&\p{Letter}]\pM*){2,}
+::punct-split . ::side both ::left-context [\)\]}] ::right-context \pL
 ::punct-split ؟ ::side both ::comment Arabic question mark
 ::punct-split ؛ ::side both ::comment Arabic semicolon
 ::punct-split ۔ ::side both ::comment Arabic period
