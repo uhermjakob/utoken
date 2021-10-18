@@ -43,6 +43,8 @@
 ::auto-attach ⁉ ::side left
 ::auto-attach ‽ ::side left
 ::auto-attach , ::side left
+::auto-attach ՝ ::side left ::comment Armenian comma
+::auto-attach ՛ ::side left ::comment Armenian emphasis mark
 ::auto-attach ; ::side left
 ::auto-attach ) ::side left
 ::auto-attach } ::side left
@@ -245,6 +247,12 @@
 ::auto-attach वाँ ::side left ::left-context \d ::lcode hin ::comment ordinal particle ("th")
 ::auto-attach | ::side left ::lcode hin ::comment used as danda
 ::auto-attach /- ::side left ::left-context \d ::lcode hin ::comment currency quantity, no sub-units
+
+::auto-attach -ի ::side left ::lcode hye
+::auto-attach -ը ::side left ::lcode hye
+::auto-attach -ն ::side left ::lcode hye
+::auto-attach թ.-ի ::side left ::lcode hye ::left-context \d
+::auto-attach թ.-ին ::side left ::lcode hye ::left-context \d
 
 ::auto-attach all' ::side right ::lcode ita
 ::auto-attach d' ::side right ::lcode ita

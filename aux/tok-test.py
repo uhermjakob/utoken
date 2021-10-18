@@ -71,6 +71,7 @@ if __name__ == "__main__":
                                'guj.txt',
                                'heb.txt',
                                'hun.txt',
+                               'hye.txt',
                                'ind.txt',
                                'ita.txt',
                                'kan.txt',
@@ -163,8 +164,10 @@ if __name__ == "__main__":
                 utokenize_system_call_args.extend(['-o', output_filename])
                 utokenize_system_call_args.extend(['-a', json_annotation_filename])
                 utokenize_system_call = ' '.join(utokenize_system_call_args)
-                sys.stderr.write(f"\nutokenize.py {filename} ...\n")
-                # sys.stderr.write(f"{' '.join(utokenize_system_call_args)} ...\n")
+                if args.verbose:
+                    sys.stderr.write(f"{utokenize_system_call} ...\n")
+                else:
+                    sys.stderr.write(f"\nutokenize.py {filename} ...\n")
                 subprocess.run(utokenize_system_call, shell=True)
 
                 # reformat-annotation-json2dcln.py call

@@ -1,3 +1,7 @@
+::lexical -ի ::lcode hye ::tag DECONTRACTION-R ::eng at
+::lexical -ը ::lcode hye ::tag DECONTRACTION-R
+::lexical -ն ::lcode hye ::tag DECONTRACTION-R
+
 ::abbrev կմ² ::lcode hye ::sem-class unit-of-measurement ::alt-spelling կմ2 ::eng km²
 ::abbrev անգլ. ::exp անգլերեն ::lcode hye ::eng English
 ::abbrev ռուս. ::exp ռուսերեն ::lcode hye ::eng Russian
@@ -6,10 +10,59 @@
 ::abbrev գերմ. ::exp գերմաներեն ::lcode hye ::eng German
 ::abbrev ադրբ. ::exp Ադրբեջաներեն ::lcode hye ::eng Azerbaijani
 ::abbrev ուկր. ::exp ուկրաիներեն ::lcode hye ::eng Ukrainian
+::abbrev եբր. ::lcode hye ::eng Hebrew
+::abbrev իսպ. ::lcode hye ::eng Spanish
+::abbrev լատ. ::lcode hye ::eng Latin
+::abbrev վրաց. ::lcode hye ::eng Georgian
+::abbrev պորտ. ::lcode hye ::eng Portuguese
 ::abbrev թ. ::exp թվականին ::lcode hye ::eng in the year
 ::abbrev թթ. ::exp թվականներին ::lcode hye ::eng in the years
 ::abbrev ծն. ::exp ծնված ::lcode hye ::eng born
+::abbrev ծնվ. ::exp ծնված ::lcode hye ::eng born
+::abbrev օս. ::lcode hye ::eng Ossetian
+::abbrev վ. ::lcode hye ::eng died
 ::abbrev Գր. ::lcode hye ::eng Gr.
 ::abbrev ա.մ. ::exp աստղագիտական միավոր ::lcode hye ::eng astronomical unit
 ::abbrev դ. ::lcode hye դարում ::eng century
 ::abbrev մլրդ. ::exp միլիարդ ::lcode hye ::eng billion
+::abbrev թ.-ի ::exp թվականի ::lcode hye ::eng of year
+::abbrev թ.-ին ::exp թվականին ::lcode hye ::eng in year
+
+::abbrev Ա. ::right-context \s*\S
+::abbrev Բ. ::right-context \s*\S
+::abbrev Գ. ::right-context \s*\S
+::abbrev Դ. ::right-context \s*\S
+::abbrev Ե. ::right-context \s*\S
+::abbrev Զ. ::right-context \s*\S
+::abbrev Է. ::right-context \s*\S
+::abbrev Ը. ::right-context \s*\S
+::abbrev Թ. ::right-context \s*\S
+::abbrev Ժ. ::right-context \s*\S
+::abbrev Ի. ::right-context \s*\S
+::abbrev Լ. ::right-context \s*\S
+::abbrev Խ. ::right-context \s*\S
+::abbrev Ծ. ::right-context \s*\S
+::abbrev Կ. ::right-context \s*\S
+::abbrev Հ. ::right-context \s*\S
+::abbrev Ձ. ::right-context \s*\S
+::abbrev Ղ. ::right-context \s*\S
+::abbrev Ճ. ::right-context \s*\S
+::abbrev Մ. ::right-context \s*\S
+::abbrev Յ. ::right-context \s*\S
+::abbrev Ն. ::right-context \s*\S
+::abbrev Շ. ::right-context \s*\S
+::abbrev Ո. ::right-context \s*\S
+::abbrev Չ. ::right-context \s*\S
+::abbrev Պ. ::right-context \s*\S
+::abbrev Ջ. ::right-context \s*\S
+::abbrev Ռ. ::right-context \s*\S
+::abbrev Ս. ::right-context \s*\S
+::abbrev Վ. ::right-context \s*\S
+::abbrev Տ. ::right-context \s*\S
+::abbrev Ր. ::right-context \s*\S
+::abbrev Ց. ::right-context \s*\S
+::abbrev Ւ. ::right-context \s*\S
+::abbrev Փ. ::right-context \s*\S
+::abbrev Ք. ::right-context \s*\S
+::abbrev Օ. ::right-context \s*\S
+::abbrev Ֆ. ::right-context \s*\S

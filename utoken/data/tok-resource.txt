@@ -159,6 +159,7 @@
 ::punct-split ׃ ::side end ::comment Hebrew sof pasuq (sentence period)
 ::punct-split ? ::side end ::group True
 ::punct-split ! ::side end ::group True
+::punct-split ՛ ::side end ::group True ::comment Armenian emphasis mark
 ::punct-split | ::side end ::group True
 ::punct-split ‼ ::side end
 ::punct-split ⁇ ::side end
@@ -167,6 +168,7 @@
 ::punct-split ‽ ::side end
 ::punct-split ، ::side end
 ::punct-split , ::side end
+::punct-split ՝ ::side end ::comment Armenian comma
 ::punct-split ; ::side end ::left-context-not &(?:amp|apos|gt|lt|nbsp|quot|#\d+|#x[0-9A-F]+)  # XML tags, e.g. &#x234;
 ::punct-split ！ ::side end
 ::punct-split ; ::side end
