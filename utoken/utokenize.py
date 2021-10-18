@@ -173,6 +173,7 @@ class Chart:
 class Tokenizer:
     def __init__(self, lang_code: Optional[str] = None, data_dir: Optional[Path] = None,
                  verbose: Optional[bool] = False):
+        # argument lang_code is actually a comma (or semicolon)-separated list of language codes, e.g. "spa, cat"
         # Ordered list of tokenization steps
         self.tok_step_functions = [self.normalize_characters,
                                    self.tokenize_xmls,
