@@ -216,7 +216,7 @@ def main():
     args = parser.parse_args()
     lang_code = args.lc
     data_dir = Path(args.data_directory) if args.data_directory else None
-    detok = Detokenizer(lang_code_s=lang_code, data_dir=data_dir, verbose=bool(args.verbose))
+    detok = Detokenizer(lang_code=lang_code, data_dir=data_dir, verbose=bool(args.verbose))
     detok.first_token_is_line_id_p = bool(args.first_token_is_line_id)
 
     # Open any input or output files. Make sure utf-8 encoding is properly set (in older Python3 versions).
