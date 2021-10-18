@@ -40,7 +40,15 @@ python -m utoken.utokenize [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-a ANN
                            [--annotation_format ANNOTATION_FORMAT] [-p PROFILE-FILENAME] 
                            [--profile_scope PROFILE_SCOPE] [-d DATA_DIRECTORY] [--lc LANGUAGE-CODE] 
                            [-f] [-v] [-c] [--simple] [--version]
-  
+```
+or simply
+```
+utokenize [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-a ANNOTATION-FILENAME] 
+          [--annotation_format ANNOTATION_FORMAT] [-p PROFILE-FILENAME] 
+          [--profile_scope PROFILE_SCOPE] [-d DATA_DIRECTORY] [--lc LANGUAGE-CODE] 
+          [-f] [-v] [-c] [--simple] [--version]  
+```
+```
 optional arguments:
   -h, --help            show this help message and exit
   -i INPUT-FILENAME, --input INPUT-FILENAME
@@ -66,6 +74,15 @@ optional arguments:
   --version             show program's version number and exit
 ```
 Note: Please make sure that your $PYTHONPATH includes the directory in which this README file resides.
+  
+Example:
+```
+echo "Wait,dont tell me!" | utokenize --lc eng
+```
+Output:
+```
+Wait , do n't tell me !
+```
 </details>
 
 <details>
@@ -74,6 +91,13 @@ Note: Please make sure that your $PYTHONPATH includes the directory in which thi
 ```
 python -m utoken.detokenize [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-d DATA_DIRECTORY] 
                             [--lc LANGUAGE-CODE] [-f] [-v] [--version]
+```
+or simply
+```
+detokenize [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-d DATA_DIRECTORY] 
+           [--lc LANGUAGE-CODE] [-f] [-v] [--version]
+```
+```
 optional arguments:
   -h, --help            show this help message and exit
   -i INPUT-FILENAME, --input INPUT-FILENAME
@@ -89,6 +113,15 @@ optional arguments:
   --version             show program's version number and exit
 ```
 Note: Please make sure that your $PYTHONPATH includes the directory in which this README file resides.
+  
+Example:
+```
+echo "Wait , do n't tell me !" | detokenize --lc eng
+```
+Output:
+```
+Wait, don't tell me!
+```
 </details>
 
 <details>
