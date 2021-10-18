@@ -151,7 +151,7 @@ git clone https://github.com/uhermjakob/utoken.git
 ### Limitations
 * Currently excluded: no-space scripts like Chinese and Japanese
 * Large set of resource entries (data file) currently for English only; limited resource entries for 60+ other languages
-* Languages tested so far: Amharic, Arabic, Armenian, Assamese, Bengali, Bulgarian, Catalan, Czech, Dutch, __English__, __Farsi__, Finnish, French, Georgian, German, Greek (Ancient/Koine/Modern), Gujarati, Hebrew (Ancient/Modern), __Hindi__, Hungarian, Indonesian, Italian, Kannada, __Kazakh__, Korean, Lao, Lithuanian, Malayalam, Marathi, Norwegian, Odia, Pashto, Polish, Portuguese, Quechua, Romanian, Russian, Somali, Spanish, Swahili, Swedish, __Tagalog__, Tamil, Telugu, Turkish, Urdu, __Uyghur__, Vietnamese, Welsh, Xhosa, Yoruba, Zulu
+* Languages tested so far: Amharic, Arabic, Armenian, Assamese, Bengali, Bulgarian, Catalan, Czech, Dutch, __English__, __Farsi__, Finnish, French, Georgian, German, Greek (Ancient/Koine/Modern), Gujarati, Hebrew (Ancient/Modern), __Hindi__, Hungarian, Indonesian, Italian, Kannada, __Kazakh__, Korean, Lao, Lithuanian, Malayalam, Marathi, Norwegian, Odia, Pashto, Polish, Portuguese, Quechua, Romanian, Russian, Slovak, Somali, Spanish, Swahili, Swedish, __Tagalog__, Tamil, Telugu, Turkish, Urdu, __Uyghur__, Vietnamese, Welsh, Xhosa, Yoruba, Zulu
   * For languages in __bold__: large-scale testing of thousands to hundreds of thousands of sentences per language.
   * For other modern languages: a few hundred sentences from 100 Wikipedia articles per language.
   * For Ancient Hebrew and Koine Greek: a few hundred verses each from the Bible's Old and New Testament respectively.  
@@ -279,9 +279,9 @@ Parallelization is trivial as sentences are tokenized independent of each other.
 <summary>Testing</summary>
 
 ### Testing
-_utoken_ has been tested on 66 corpora in 55 languages and 18 scripts (as of Oct. 16, 2021).
+_utoken_ has been tested on 67 corpora in 56 languages and 18 scripts (as of Oct. 18, 2021).
 Tests include 
-* Manual review of lots of tokenization
+* Manual review of tokenization
 * Comparison to other tokenizers: [Sacremoses](https://github.com/alvations/sacremoses) and [ulf-tokenizer](https://github.com/isi-nlp/ulf-tokenizer)
 * Tokenization analysis scripts: 
   * wildebeest (text normalization and cleaning; analysis of types of characters used, encoding issues) 

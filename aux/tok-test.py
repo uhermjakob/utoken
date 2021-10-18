@@ -90,6 +90,7 @@ if __name__ == "__main__":
                                'que.txt',
                                'ron.txt',
                                'rus.txt',
+                               'slk.txt',
                                'som.txt',
                                'spa.txt',
                                'swa.txt',
