@@ -245,6 +245,8 @@ class Tokenizer:
         bit_vector = bit_vector << 1
         self.char_is_non_standard_space = bit_vector
         bit_vector = bit_vector << 1
+        self.char_is_non_standard_punct = bit_vector
+        bit_vector = bit_vector << 1
         self.char_is_zwsp = bit_vector  # zero width space U+200B
         bit_vector = bit_vector << 1
         self.char_is_zwnj = bit_vector  # zero width non-joiner U+200C
@@ -456,6 +458,12 @@ class Tokenizer:
             char = chr(code_point)
             self.char_type_vector_dict[char] \
                 = self.char_type_vector_dict.get(char, 0) | self.char_is_non_standard_space
+        # Non-standard punct
+        for code_point in [0x2024]:
+            # 2024: ONE DOT LEADER (looks like period)
+            char = chr(code_point)
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_non_standard_punct
         # Miscellaneous symbols
         for code_point in chain(range(0x2190, 0x2C00),     # Arrows, Math, Boxes, Geometric, Miscellaneous Symbols
                                 range(0x1F300, 0x1F650)):  # Miscellaneous Symbols and Pictographs, Emoticons
@@ -810,6 +818,7 @@ class Tokenizer:
         # Replace &#160; &#xA0; &nbsp; with U+00A0 (non-breakable space)
         if self.lv & self.char_is_ampersand:
             s = re.sub(r'&#160;|&#xA0;|&nbsp;', u'\u00A0', s, flags=re.IGNORECASE)
+            self.lv |= self.char_is_non_standard_space
             if chart:
                 chart.s0 = s
                 chart.s = s
@@ -817,6 +826,12 @@ class Tokenizer:
         # replace micro sign (µ) by Greek letter mu (μ)
         if self.lv & self.char_is_micro_sign:
             s = re.sub('µ', 'μ', s)  # Yes, they look alike!
+            if chart:
+                chart.s = s
+
+        # replace one-dot-leader by ASCII period
+        if self.lv & self.char_is_non_standard_punct:
+            s = re.sub('․', '.', s)  # Yes, they look alike!
             if chart:
                 chart.s = s
 
