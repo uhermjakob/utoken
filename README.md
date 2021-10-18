@@ -77,11 +77,11 @@ Note: Please make sure that your $PYTHONPATH includes the directory in which thi
   
 Example:
 ```
-echo "Wait,dont tell me!" | utokenize --lc eng
+echo "Wait,dont tell me." | utokenize --lc eng
 ```
 Output:
 ```
-Wait , do n't tell me !
+Wait , do n't tell me .
 ```
 </details>
 
@@ -116,11 +116,11 @@ Note: Please make sure that your $PYTHONPATH includes the directory in which thi
   
 Example:
 ```
-echo "Wait , do n't tell me !" | detokenize --lc eng
+echo "Wait , do n't tell me ." | detokenize --lc eng
 ```
 Output:
 ```
-Wait, don't tell me!
+Wait, don't tell me.
 ```
 </details>
 
