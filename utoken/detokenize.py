@@ -22,10 +22,11 @@ log.basicConfig(level=log.INFO)
 
 
 class Detokenizer:
-    def __init__(self, lang_code_s: Optional[str] = None, data_dir: Optional[Path] = None,
+    def __init__(self, lang_code: Optional[str] = None, data_dir: Optional[Path] = None,
                  verbose: Optional[bool] = False):
+        # argument lang_code is actually a comma (or semicolon)-separated list of language codes, e.g. "spa, cat"
         self.number_of_lines = 0
-        self.lang_codes: List[str] = re.split(r'[;,\s*]', lang_code_s) if lang_code_s else []
+        self.lang_codes: List[str] = re.split(r'[;,\s*]', lang_code) if lang_code else []
         self.first_token_is_line_id_p = False
         if data_dir is None:
             data_dir = self.default_data_dir()
@@ -34,8 +35,8 @@ class Detokenizer:
         # Load detokenization resource entries
         self.detok_resource.load_resource(data_dir / f'detok-resource.txt', self.lang_codes, verbose=self.verbose)
         # Load tokenization resource entries for language specified by 'lang_code' (to harvest a few contractions)
-        for lang_code in self.lang_codes:
-            self.detok_resource.load_resource(data_dir / f'tok-resource-{lang_code}.txt', self.lang_codes,
+        for lcode in self.lang_codes:
+            self.detok_resource.load_resource(data_dir / f'tok-resource-{lcode}.txt', self.lang_codes,
                                               verbose=self.verbose)
         # Load language-independent tokenization resource entries
         self.detok_resource.load_resource(data_dir / f'tok-resource.txt', self.lang_codes, verbose=self.verbose)
