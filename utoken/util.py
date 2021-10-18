@@ -149,6 +149,17 @@ class ResourceDict:
                         for repl_char in repl_chars:
                             new_line = f'{m3.group(1)}{regex.sub(apostrophe, repl_char, m3.group(2))}{m3.group(3)}'
                             lines.append(new_line)
+        # expand resource entry with hyphen to alternatives with closely related characters (e.g. Armenian hyphen)
+        hyphen = "-"
+        n_lines = len(lines)
+        for line in lines[0:n_lines]:
+            if hyphen in line:
+                repl_chars = "–֊"  # en-dash, Aramenian hyphen
+                if (repl_chars != '') and (m3 := regex.match(r'(::\S+\s+)(\S|\S.*?\S)(\s+::\S.*|\s*)$', line)):
+                    if hyphen in m3.group(2):
+                        for repl_char in repl_chars:
+                            new_line = f'{m3.group(1)}{regex.sub(hyphen, repl_char, m3.group(2))}{m3.group(3)}'
+                            lines.append(new_line)
         # expand resource entry with ::plural
         n_lines = len(lines)
         for line in lines[0:n_lines]:
