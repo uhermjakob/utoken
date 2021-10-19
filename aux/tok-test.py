@@ -63,6 +63,7 @@ if __name__ == "__main__":
                                'cat.txt',
                                'ces.txt',
                                'cym.txt',
+                               'dan.txt',
                                'deu.txt',
                                'ell.txt',
                                'eng.txt',

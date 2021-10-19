@@ -202,6 +202,10 @@
 ::auto-attach 'u ::side left ::lcode cym ::left-context [aâeiouwyŷ] ::eng their;them ::comment eu
 ::auto-attach 'w ::side left ::lcode cym ::left-context \b[i] ::eng his;him;its;it;their;them ::comment ei;eu
 
+::auto-attach 'erne ::side left ::lcode dan ::left-context \d0 ::comment [1920]s
+::auto-attach 'ernes ::side left ::lcode dan ::left-context \d0 ::comment [1920]s
+::auto-attach 'erns ::side left ::lcode dan ::left-context \d0 ::comment [1920]s
+
 ::auto-attach er ::side left ::left-context \d ::lcode deu ::comment 1920er Jahre
 ::auto-attach ern ::side left ::left-context \d ::lcode deu ::comment in den 1920ern
 ::auto-attach ( ::side left ::left-context \pL ::right-context in\s*\) ::lcode deu ::comment Lehrer(in)

@@ -1,17 +1,25 @@
+::lexical 'erne ::lcode dan ::tag DECONTRACTION-R ::example 90'erne
+::lexical 'erns ::lcode dan ::tag DECONTRACTION-R ::example 1950'erns
+::lexical 'ernes ::lcode dan ::tag DECONTRACTION-R ::example 1930'ernes
+
+::abbrev 3-d ::exp tredimensionalt ::lcode dan
 ::abbrev a-s-l ::exp Age-sex-location; Alder, køn og bopæl ::lcode dan
 ::abbrev a.i. ::exp ad interim; indtil videre ::lcode dan
 ::abbrev a.m.b.a. ::exp andelsselskab med begrænset ansvar ::lcode dan
 ::abbrev A/B ::exp andelsboligforening ::lcode dan
+::abbrev a/s ::exp aktieselskab ::lcode dan
+::abbrev aarh. ::exp århundrede ::lcode dan
 ::abbrev adj. ::exp adjektiv ::lcode dan
 ::abbrev adr. ::exp adresse ::lcode dan
 ::abbrev afb. ::exp afbildet; afbildning ::lcode dan
+::abbrev afd. ::exp afdeling; afdød ::lcode dan
 ::abbrev afg. ::exp afgang ::lcode dan
 ::abbrev afk. ::exp afkortet ::lcode dan
 ::abbrev ags. ::exp angelsaksisk ::lcode dan
 ::abbrev alk. ::exp alkymi ::lcode dan
 ::abbrev am. ::exp amerikansk ::lcode dan
 ::abbrev amer. ::exp amerikansk ::lcode dan
-::abbrev ang. ::exp angående ::lcode dan
+::abbrev ang. ::exp angående ::lcode dan ::eng regarding
 ::abbrev anl. ::exp anlagt ::lcode dan
 ::abbrev ann. ::exp annonce ::lcode dan
 ::abbrev ansvh. ::exp ansvarshavende ::lcode dan
@@ -19,11 +27,9 @@
 ::abbrev arb. ::exp arbejde; arbejdere ::lcode dan
 ::abbrev arkæol. ::exp arkæologisk ::lcode dan
 ::abbrev art. ::exp artikel ::lcode dan
-::abbrev a/s ::exp aktieselskab ::lcode dan
 ::abbrev astrol. ::exp astrologi ::lcode dan
 ::abbrev att. ::exp attention bestemt til; modtager ::lcode dan
 ::abbrev aug. ::exp august ::lcode dan
-::abbrev afd. ::exp afdeling; afdød ::lcode dan
 ::abbrev bdt. ::exp bundt ::lcode dan
 ::abbrev beg. ::exp begyndelse ::lcode dan
 ::abbrev besl. ::exp beslægtet ::lcode dan
@@ -41,20 +47,19 @@
 ::abbrev bto. ::exp brutto ::lcode dan
 ::abbrev bygn. ::exp bygning ::lcode dan
 ::abbrev c/o ::exp care of; som bor hos ::lcode dan
+::abbrev ca. ::exp cirka ::lcode dan ::eng approximately
 ::abbrev cd-r ::exp compactdisk recordable ::lcode dan
 ::abbrev cf. ::exp confer; konferér; jævnfør ::lcode dan
-::abbrev ca. ::exp cirka ::lcode dan
 ::abbrev cirk. ::exp cirkulære ::lcode dan
 ::abbrev co. ::exp kompagni ::lcode dan
 ::abbrev CPR-nr. ::exp personnummer; nummer i Det Centrale Personregister ::lcode dan
-::abbrev cpr-nr. ::exp personnummer; nummer i Det Centrale Personregister ::lcode dan
-::abbrev d. ::exp den; død ::lcode dan
 ::abbrev d-l ::exp Download ::lcode dan
-::abbrev d/l ::exp Download ::lcode dan
+::abbrev d. ::exp den; død ::lcode dan
 ::abbrev d.d. ::exp dags dato ::lcode dan
 ::abbrev d.m. ::exp denne måned ::lcode dan
 ::abbrev d.s.s. ::exp det samme som ::lcode dan
 ::abbrev d.æ. ::exp den ældre ::lcode dan
+::abbrev d/l ::exp Download ::lcode dan
 ::abbrev da. ::exp dansk ::lcode dan
 ::abbrev dagl. ::exp daglig ::lcode dan
 ::abbrev dat. ::exp dateret ::lcode dan
@@ -65,39 +70,42 @@
 ::abbrev din. ::exp dinar; dinarer ::lcode dan
 ::abbrev disp. ::exp dispensation; disponent; disponibel; disputats ::lcode dan
 ::abbrev div. ::exp diverse ::lcode dan
-::abbrev dkr. ::exp Danske kroner ::lcode dan
+::abbrev dkr. ::exp danske kroner ::lcode dan ::eng Danish kroner (currency)
 ::abbrev do. ::exp ditto; det samme ::lcode dan
 ::abbrev Dr. ::exp Doctor ::lcode dan
 ::abbrev ds. ::exp dennes; dåse ::lcode dan
+::abbrev dvs. ::exp det vil sige ::lcode dan ::eng that is to say
 ::abbrev e.g. ::exp exempli gratia; for eksemplets skyld ::lcode dan
-::abbrev e.Kr. ::exp efter Kristus ::lcode dan
+::abbrev e.Kr. ::exp efter Kristus ::lcode dan ::eng AD ::comment year
 ::abbrev e.l. ::exp eller lignende ::lcode dan
-::abbrev el.lign. ::exp eller lignende ::lcode dan
-::abbrev e.v.t. ::exp efter vor tidsregning ::lcode dan
+::abbrev e.v.t. ::exp efter vor tidsregning ::lcode dan ::eng CE; common era
 ::abbrev eftf. ::exp efterfølger ::lcode dan
 ::abbrev eg. ::exp egentlig ::lcode dan
 ::abbrev egl. ::exp egentlig ::lcode dan
+::abbrev eks. ::lcode dan ::eng example
 ::abbrev eksam. ::exp eksamineret ::lcode dan
 ::abbrev eksp. ::exp ekspederet; ekspedition ::lcode dan
+::abbrev el. ::exp eller ::lcode dan ::eng or
 ::abbrev el.lign. ::exp eller lignende ::lcode dan
 ::abbrev emer. ::exp emeritus ::lcode dan
 ::abbrev eng. ::exp engelsk ::lcode dan
 ::abbrev et al. ::exp et alia; og andre ting; et alii; og andre ::lcode dan
 ::abbrev etc. ::exp et cetera; og så videre ::lcode dan
-::abbrev evt. ::exp eventuelt ::lcode dan
+::abbrev evt. ::exp eventuelt ::lcode dan ::eng possibly
 ::abbrev f. ::exp født; og følgende; for ::lcode dan
-::abbrev f.Kr. ::exp før Kristus ::lcode dan
-::abbrev f.eks. ::exp for eksempel ::lcode dan
+::abbrev f.eks. ::exp for eksempel ::lcode dan ::eng e.g.
+::abbrev f.Kr. ::exp før Kristus ::lcode dan ::eng BC ::comment year
 ::abbrev f.m. ::exp foregående måned ::lcode dan
 ::abbrev f.o. ::exp fra oven ::lcode dan
 ::abbrev f.s.v. ::exp for så vidt ::lcode dan
-::abbrev f.v.t. ::exp før vor tidsregning ::lcode dan
+::abbrev f.v.t. ::exp før vor tidsregning ::lcode dan ::eng BCE
 ::abbrev fakt. ::exp Faktura ::lcode dan
 ::abbrev fec. ::exp fecit; udført af ::lcode dan
 ::abbrev ff. ::exp og flere følgende ::lcode dan
 ::abbrev fhv. ::exp forhenværende ::lcode dan
 ::abbrev filol. ::exp filologi ::lcode dan
 ::abbrev fl. ::exp flaske ::lcode dan
+::abbrev flg. ::lcode dan ::eng following
 ::abbrev fmd. ::exp formand ::lcode dan
 ::abbrev forb. ::exp forbindelse; forbund ::lcode dan
 ::abbrev foren. ::exp forening ::lcode dan
@@ -115,24 +123,25 @@
 ::abbrev gr. ::exp grad; grund; gruppe ::lcode dan
 ::abbrev gross. ::exp grosserer; grossist ::lcode dan
 ::abbrev h.a. ::exp hoc anno; hujus anni; i dette år ::lcode dan
-::abbrev hhv. ::exp henholdsvis ::lcode dan
 ::abbrev H.K.H. ::exp Hans Kongelige Højhed; Hendes Kongelige Højhed ::lcode dan
+::abbrev hhv. ::exp henholdsvis ::lcode dan ::eng respectively
 ::abbrev hosp. ::exp hospital ::lcode dan
 ::abbrev hr. ::exp herre ::lcode dan
 ::abbrev hrs. ::exp højesteretssagfører ::lcode dan
 ::abbrev i alm. ::exp i almindelighed ::lcode dan
 ::abbrev i henh. til ::exp i henhold til ::lcode dan
-::abbrev iht. ::exp i henhold til ::lcode dan
-::abbrev I/S ::exp interessentskab ::lcode dan
+::abbrev i.f.m. ::exp i forbindelse med ::lcode dan ::eng in connection with
+::abbrev i.f.t. ::exp i forhold til ::lcode dan ::eng in relation to
 ::abbrev i/s ::exp interessentskab ::lcode dan
 ::abbrev ib. ::exp indbundet ::lcode dan
-::abbrev indb. ::exp indbundet ::lcode dan
 ::abbrev IC-tog ::exp intercity-tog ::lcode dan
-::abbrev if. ::exp ifølge ::lcode dan
-::abbrev iflg. ::exp ifølge ::lcode dan
-::abbrev iht. ::exp i henhold til. kan også forkortes i henh. til ::lcode dan
+::abbrev if. ::exp ifølge ::lcode dan ::eng in accordance with
+::abbrev iflg. ::exp ifølge ::lcode dan ::eng in accordance with
+::abbrev ifm. ::exp i forbindelse med ::lcode dan ::eng in connection with
+::abbrev ift. ::exp i forhold til ::lcode dan ::eng in relation to
+::abbrev iht. ::exp i henhold til ::lcode dan ::eng referring to
 ::abbrev ill. ::exp illustration; illustreret ::lcode dan
-::abbrev ib. ::exp indbundet ::lcode dan
+::abbrev indb. ::exp indbundet ::lcode dan
 ::abbrev indreg. ::exp indregistreret ::lcode dan
 ::abbrev inkl. ::exp inklusiv ::lcode dan
 ::abbrev insp. ::exp inspektør ::lcode dan
@@ -141,43 +150,44 @@
 ::abbrev isl. ::exp islandsk ::lcode dan
 ::abbrev itk. ::exp intetkøn ::lcode dan
 ::abbrev j-k ::exp Just Kidding; Kun for sjov; bare en vittighed. Kan ::lcode dan
+::abbrev j.nr. ::exp journalnummer ::lcode dan
 ::abbrev jap. ::exp japansk ::lcode dan
 ::abbrev jf. ::exp jævnfør ::lcode dan
 ::abbrev jfr. ::exp jævnfør ::lcode dan
 ::abbrev jnr. ::exp journalnummer ::lcode dan
-::abbrev j.nr. ::exp journalnummer ::lcode dan
 ::abbrev jr. ::exp junior ::lcode dan
-::abbrev jun. ::exp junior ::lcode dan
-::abbrev jun. ::exp juni ::lcode dan
+::abbrev jun. ::exp juni; junior ::lcode dan
 ::abbrev jvf. ::exp jævnfør ::lcode dan
 ::abbrev K. ::exp kommandør ::lcode dan
 ::abbrev kat. ::exp katalog; katolsk ::lcode dan
-::abbrev kgl. ::exp kongelig ::lcode dan
+::abbrev kgl. ::exp kongelig ::lcode dan ::eng royal
 ::abbrev kin. ::exp kinesisk ::lcode dan
 ::abbrev kl. ::exp klasse; klokken ::lcode dan
 ::abbrev kons. ::exp konservativ ::lcode dan
 ::abbrev kp. ::exp kogepunkt ::lcode dan
 ::abbrev Kprs. ::exp kronprinsesse ::lcode dan
-::abbrev kr. ::exp kreds; kroner ::lcode dan
-::abbrev kr. ::exp kroner ::lcode dan
+::abbrev kr. ::exp krone ::lcode dan ::eng (Danish) krone (currency)
 ::abbrev kt. ::exp karat; konto; kontor ::lcode dan
 ::abbrev kvt. ::exp kvartal ::lcode dan
 ::abbrev kz-lejr ::exp Konzentrationslejr ::lcode dan
 ::abbrev l. ::exp linje ::lcode dan
 ::abbrev l.c. ::exp loco citato; på det anførte sted ::lcode dan
-::abbrev loc.cit. ::exp loco citato; på det anførte sted ::lcode dan
 ::abbrev lat. ::exp latin; latinsk ::lcode dan
 ::abbrev lb.m ::exp løbende meter ::lcode dan
 ::abbrev lejl. ::exp lejlighed ::lcode dan
 ::abbrev lign. ::exp lignende ::lcode dan
 ::abbrev lin. ::exp linjeret ::lcode dan
 ::abbrev litt. ::exp litteratur; litterær ::lcode dan
+::abbrev loc.cit. ::exp loco citato; på det anførte sted ::lcode dan
 ::abbrev lrs. ::exp landsretssagfører ::lcode dan
 ::abbrev ltr. ::exp litra; bogstav ::lcode dan
 ::abbrev lø. ::exp lørdag ::lcode dan
 ::abbrev m. ::exp med; monsieur ::lcode dan ::left-types-context /^(.*[^Aa1-3 ])?\s*$/ # 7,5 m.
 ::abbrev m.a.o. ::exp med andre ord ::lcode dan
-::abbrev m.m. ::exp med mere ::lcode dan
+::abbrev m.fl. ::exp med flere ::lcode dan ::eng and others
+::abbrev m.h.t. ::exp med hensyn til ::lcode dan ::eng with regard to
+::abbrev m.m. ::exp med mere ::lcode dan ::eng and other things
+::abbrev m.v. ::exp med videre ::lcode dan ::eng etc.
 ::abbrev m.v.h. ::exp med venlig hilsen ::lcode dan
 ::abbrev m/s ::exp meter pr. sekund ::lcode dan
 ::abbrev m/sek. ::exp meter pr. sekund ::lcode dan
@@ -189,71 +199,67 @@
 ::abbrev medd. ::exp meddelelse ::lcode dan
 ::abbrev medl. ::exp medlem ::lcode dan
 ::abbrev merc. ::exp mercaturae; kandidat i handelsvidenskab ::lcode dan
-::abbrev mfl. ::exp med flere ::lcode dan
-::abbrev m.fl. ::exp med flere ::lcode dan
-::abbrev mht. ::exp med hensyn til ::lcode dan
-::abbrev m.h.t. ::exp med hensyn til ::lcode dan
-::abbrev mia. ::exp milliard ::lcode dan
-::abbrev mio. ::exp million; millioner ::lcode dan
+::abbrev mfl. ::exp med flere ::lcode dan ::eng and others
+::abbrev mht. ::exp med hensyn til ::lcode dan ::eng with regard to
+::abbrev mia. ::exp milliard ::lcode dan ::eng billion
+::abbrev mio. ::exp million; millioner ::lcode dan ::eng million
 ::abbrev ml. ::exp mellem ::lcode dan
-::abbrev m.m. ::exp med mere ::lcode dan
 ::abbrev modsv. ::exp modsvarende ::lcode dan
 ::abbrev mr. ::exp mister; hr. ::lcode dan
 ::abbrev mrs. ::exp fru ::lcode dan
 ::abbrev ms. ::exp manuskript ::lcode dan
 ::abbrev mul. ::exp mulig; muligvis ::lcode dan
-::abbrev mv. ::exp med videre ::lcode dan
-::abbrev m.v. ::exp med videre ::lcode dan
+::abbrev mv. ::exp med videre ::lcode dan ::eng etc.
 ::abbrev n. ::exp neutrum ::lcode dan
-::abbrev neutr. ::exp neutrum ::lcode dan
 ::abbrev n.f. ::exp nord for ::lcode dan
 ::abbrev nb. ::exp notabene; bemærk; vel at mærke ::lcode dan
 ::abbrev nedenn. ::exp nedennævnte ::lcode dan
 ::abbrev nederl. ::exp nederlandsk ::lcode dan
+::abbrev neutr. ::exp neutrum ::lcode dan
 ::abbrev nord. ::exp nordisk ::lcode dan
 ::abbrev nov. ::exp november ::lcode dan
-::abbrev nr. ::exp nummer ::lcode dan
+::abbrev nr. ::exp nummer ::lcode dan ::eng number
 ::abbrev nto. ::exp netto ::lcode dan
 ::abbrev o.a. ::exp og andet; oversætterens anmærkning ::lcode dan
+::abbrev o.fl. ::exp og flere ::lcode dan
 ::abbrev o.fl.st. ::exp og flere steder ::lcode dan
 ::abbrev o.h. ::exp over havoverfladen ::lcode dan
+::abbrev o.l. ::exp og lignende ::lcode dan ::eng and similar
 ::abbrev o.m.a. ::exp og meget andet ::lcode dan
+::abbrev o.s.fr. ::exp og så fremdeles ::lcode dan
+::abbrev o.s.v. ::exp og så videre ::lcode dan
 ::abbrev o/m ::exp omdrejninger pr. minut ::lcode dan
 ::abbrev obl. ::exp obligatorisk ::lcode dan
 ::abbrev oecon. ::exp oeconomiae; økonomi ::lcode dan
 ::abbrev ofl. ::exp og flere ::lcode dan
-::abbrev o.fl. ::exp og flere ::lcode dan
 ::abbrev okt. ::exp oktantal; oktober ::lcode dan
 ::abbrev omg. ::exp omgang; omgående ::lcode dan
 ::abbrev omr. ::exp område ::lcode dan
 ::abbrev on. ::exp onsdag ::lcode dan
 ::abbrev op.cit. ::exp opus citatum; opere citato; (i) det anførte værk ::lcode dan
 ::abbrev opl. ::exp oplag; oplysning; opløse; opløsning ::lcode dan
+::abbrev opr. ::exp oprindeligt ::lcode dan ::eng originally
 ::abbrev org. ::exp organisation; organiseret; organisk ::lcode dan
 ::abbrev osfr. ::exp og så fremdeles ::lcode dan
-::abbrev o.s.fr. ::exp og så fremdeles ::lcode dan
-::abbrev osv. ::exp og så videre ::lcode dan
-::abbrev o.s.v. ::exp og så videre ::lcode dan
+::abbrev osv. ::exp og så videre ::lcode dan ::eng etc.
 ::abbrev ovenn. ::exp ovennævnte ::lcode dan
 ::abbrev overs. ::exp oversat; oversættelse; oversætter ::lcode dan
 ::abbrev oz. ::exp ounce ::lcode dan
 ::abbrev p. ::exp pagina; side ::lcode dan
-::abbrev pag. ::exp pagina; side ::lcode dan
 ::abbrev p.b.v. ::exp på bestyrelsens vegne ::lcode dan
-::abbrev pct. ::exp procent ::lcode dan
 ::abbrev p.m. ::exp post meridiem; efter middag ::lcode dan
 ::abbrev p.p. ::exp per procura; ifølge fuldmagt; praeter plura; med flere titler ::lcode dan
 ::abbrev p.s. ::exp postskriptum; efterskrift ::lcode dan
+::abbrev p.t. ::exp pro tempore; for tiden; lige nu ::lcode dan
 ::abbrev p.v.c. ::exp pro vera copia; bekræftelse af afskrift ::lcode dan
+::abbrev pag. ::exp pagina; side ::lcode dan
 ::abbrev partc. ::exp participium ::lcode dan
-::abbrev ptc. ::exp participium ::lcode dan
+::abbrev pct. ::exp procent ::lcode dan
 ::abbrev perf. ::exp perfektum ::lcode dan
 ::abbrev pf. ::exp perfektum ::lcode dan
 ::abbrev pft. ::exp på forhånd tak ::lcode dan
-::abbrev pga. ::exp på grund af ::lcode dan
-::abbrev på gr. af ::exp på grund af ::lcode dan
+::abbrev pga. ::exp på grund af ::lcode dan ::eng because of
 ::abbrev pgl. ::exp pågældende ::lcode dan
-::abbrev påg. ::exp pågældende ::lcode dan
 ::abbrev ph.d. ::exp philosophiae doctor; akademisk grad mellem kandidat- og doktorgrad ::lcode dan
 ::abbrev phil. ::exp philosophiae ::lcode dan
 ::abbrev pinx. ::exp pinxit; malet af ::lcode dan
@@ -262,7 +268,7 @@
 ::abbrev polyt. ::exp polytechnices; ingeniørvidenskab ::lcode dan
 ::abbrev pos. ::exp positiv ::lcode dan
 ::abbrev ppm. ::exp parts per million; milliontedele ::lcode dan
-::abbrev pr. ::exp per; præcis ::lcode dan
+::abbrev pr. ::exp per; præcis ::lcode dan  ::eng per; as of; precisesly
 ::abbrev prc. ::exp præcis ::lcode dan
 ::abbrev priv. ::exp privat ::lcode dan
 ::abbrev prof. ::exp professionel; professor ::lcode dan
@@ -270,9 +276,11 @@
 ::abbrev præp. ::exp præposition ::lcode dan
 ::abbrev præs. ::exp præsens; præsident ::lcode dan
 ::abbrev psych. ::exp psychologiae; psykologi ::lcode dan
-::abbrev p.t. ::exp pro tempore; for tiden; lige nu ::lcode dan
 ::abbrev pt. ::exp pro tempore; for tiden; lige nu ::lcode dan
+::abbrev ptc. ::exp participium ::lcode dan
+::abbrev på gr. af ::exp på grund af ::lcode dan
 ::abbrev pæd. ::exp paedagogiae; pædagogik; pædagogisk ::lcode dan
+::abbrev påg. ::exp pågældende ::lcode dan
 ::abbrev q.e.d. ::exp Qoud erat demonstrandum; hvilket var det der skulle bevises ::lcode dan
 ::abbrev r.i.p. ::exp rest in peace; Hvil i fred ::lcode dan
 ::abbrev red. ::exp redaktion; redaktør; redigeret ::lcode dan
@@ -287,17 +295,17 @@
 ::abbrev s. ::exp side ::lcode dan
 ::abbrev s.d. ::exp se denne ::lcode dan
 ::abbrev s.f. ::exp syd for ::lcode dan
-::abbrev s.u. ::exp svar udbedes ::lcode dan
+::abbrev s.u. ::exp svar udbedes ::lcode dan ::eng R.S.V.P.
 ::abbrev s/h ::exp sort-hvid ::lcode dan
+::abbrev S/M ::exp sadomasochisme ::lcode dan
 ::abbrev sc. ::exp sculpsit; hugget af; stukket af ::lcode dan
 ::abbrev scient. pol. ::exp scientiarum politicarum; kandidat i statsvidenskab ::lcode dan
 ::abbrev Sct. ::exp Sankt ::lcode dan
-::abbrev Skt. ::exp Sankt ::lcode dan
 ::abbrev sekr. ::exp sekretariat; sekretær ::lcode dan
 ::abbrev sen. ::exp senere; senior ::lcode dan
 ::abbrev sign. ::exp signatur; signeret ::lcode dan
 ::abbrev skr. ::exp skriftlig ::lcode dan
-::abbrev S/M ::exp sadomasochisme ::lcode dan
+::abbrev Skt. ::exp Sankt ::lcode dan
 ::abbrev smp. ::exp smeltepunkt ::lcode dan
 ::abbrev sms. ::exp sammensætning ::lcode dan
 ::abbrev soc. ::exp socialistisk ::lcode dan
@@ -305,20 +313,22 @@
 ::abbrev spm. ::exp spørgsmål ::lcode dan
 ::abbrev spsk. ::exp spiseskefuld ::lcode dan
 ::abbrev st. ::exp stuen; stødt ::lcode dan
-::abbrev str. ::exp størrelse ::lcode dan
+::abbrev stk. ::exp styk ::lcode dan ::eng units
+::abbrev str. ::exp størrelse ::lcode dan ::eng size
 ::abbrev suff. ::exp suffiks ::lcode dan
 ::abbrev suppl. ::exp supplement ::lcode dan
 ::abbrev sædv. ::exp sædvanlig; sædvanligvis ::lcode dan
 ::abbrev sø. ::exp søndag ::lcode dan
 ::abbrev t. ::exp time; tara ::lcode dan
+::abbrev t.h. ::exp til højre ::lcode dan
+::abbrev t.o.m. ::exp til og med ::lcode dan ::eng up to and including
 ::abbrev t.v. ::exp til venstre ::lcode dan
-::abbrev tv. ::exp til venstre ::lcode dan
+::abbrev t/r ::exp tur-retur ::lcode dan ::eng round trip
 ::abbrev tab. ::exp tabel ::lcode dan
 ::abbrev td. ::exp tønde ::lcode dan
 ::abbrev tdr. ::exp tønder ::lcode dan
 ::abbrev tekn. ::exp teknisk ::lcode dan
 ::abbrev th. ::exp til højre ::lcode dan
-::abbrev t.h. ::exp til højre ::lcode dan
 ::abbrev tidl. ::exp tidligere ::lcode dan
 ::abbrev tilh. ::exp tilhørende ::lcode dan
 ::abbrev tilsv. ::exp tilsvarende ::lcode dan
@@ -326,6 +336,7 @@
 ::abbrev to. ::exp torsdag ::lcode dan
 ::abbrev tr. ::exp tillidsrepræsentant; translitteration ::lcode dan
 ::abbrev trp. ::exp transport ::lcode dan
+::abbrev tv. ::exp til venstre ::lcode dan
 ::abbrev ty. ::exp tysk ::lcode dan
 ::abbrev u. ::exp uden; under ::lcode dan
 ::abbrev u.st. ::exp uden stedsangivelse ::lcode dan
@@ -340,14 +351,42 @@
 ::abbrev var. ::exp variabel; variant; varierede; varietet ::lcode dan
 ::abbrev vbsb. ::exp verbalsubstantiv ::lcode dan
 ::abbrev vedk. ::exp vedkommende ::lcode dan
-::abbrev vedl. ::exp vedlagt; vedligeholde ::lcode dan
+::abbrev vedl. ::exp vedlagt; vedligeholde ::lcode dan ::eng enclosed
+::abbrev vedr. ::exp vedrørende ::lcode dan ::eng regarding
 ::abbrev vejl. ::exp vejledende ::lcode dan
 ::abbrev vh. ::exp venlig hilsen ::lcode dan
+::abbrev vha. ::exp ved hjælp af ::lcode dan ::eng by means of
 ::abbrev vs. ::exp versus ::lcode dan
 ::abbrev vær. ::exp værelse ::lcode dan
+::abbrev årh. ::exp århundrede ::lcode dan
+::abbrev årst. ::exp årstal; årstallet ::lcode dan
 ::abbrev ø.lgd. ::exp østlig længde ::lcode dan
 ::abbrev øv. ::exp øverst ::lcode dan
-::abbrev årh. ::exp århundrede ::lcode dan
-::abbrev aarh. ::exp århundrede ::lcode dan
-::abbrev årst. ::exp årstal; årstallet ::lcode dan
-::abbrev 3-d ::exp tredimensionalt ::lcode dan
+
+::abbrev A. ::right-context \s*\S
+::abbrev B. ::right-context \s*\S
+::abbrev C. ::right-context \s*\S
+::abbrev D. ::right-context \s*\S
+::abbrev E. ::right-context \s*\S
+::abbrev F. ::right-context \s*\S
+::abbrev G. ::right-context \s*\S
+::abbrev H. ::right-context \s*\S
+::abbrev I. ::right-context \s*\S
+::abbrev J. ::right-context \s*\S
+::abbrev K. ::right-context \s*\S
+::abbrev L. ::right-context \s*\S
+::abbrev M. ::right-context \s*\S
+::abbrev N. ::right-context \s*\S
+::abbrev O. ::right-context \s*\S
+::abbrev P. ::right-context \s*\S
+::abbrev Q. ::right-context \s*\S
+::abbrev R. ::right-context \s*\S
+::abbrev S. ::right-context \s*\S
+::abbrev T. ::right-context \s*\S
+::abbrev Th. ::right-context \s*\S
+::abbrev U. ::right-context \s*\S
+::abbrev V. ::right-context \s*\S
+::abbrev W. ::right-context \s*\S
+::abbrev X. ::right-context \s*\S
+::abbrev Y. ::right-context \s*\S
+::abbrev Z. ::right-context \s*\S
