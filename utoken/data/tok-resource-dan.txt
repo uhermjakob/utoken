@@ -216,7 +216,7 @@
 ::abbrev nedenn. ::exp nedennævnte ::lcode dan
 ::abbrev nederl. ::exp nederlandsk ::lcode dan
 ::abbrev neutr. ::exp neutrum ::lcode dan
-::abbrev nord. ::exp nordisk ::lcode dan
+::abbrev nord. ::exp nordisk ::lcode dan ::right-context-not \s*\p{Lu} ::comment nord is also a Danish word, possibly sentence final
 ::abbrev nov. ::exp november ::lcode dan
 ::abbrev nr. ::exp nummer ::lcode dan ::eng number
 ::abbrev nto. ::exp netto ::lcode dan
