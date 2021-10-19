@@ -93,6 +93,7 @@ if __name__ == "__main__":
                                'ron.txt',
                                'rus.txt',
                                'slk.txt',
+                               'slv.txt',
                                'som.txt',
                                'spa.txt',
                                'swa.txt',

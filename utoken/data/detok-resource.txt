@@ -49,8 +49,8 @@
 ::auto-attach ) ::side left
 ::auto-attach } ::side left
 ::auto-attach ] ::side left
-::auto-attach › ::side left ::group True
-::auto-attach » ::side left
+::auto-attach › ::side left ::group True ::lcode-not slv ::comment Slovenians uses ›ABC‹
+::auto-attach » ::side left ::lcode-not slv ::comment Slovenians uses »ABC«
 ::auto-attach 〉 ::side left
 ::auto-attach ） ::side left
 ::auto-attach ］ ::side left
@@ -108,7 +108,7 @@
 ::auto-attach „ ::side right
 ::auto-attach ( ::side right
 ::auto-attach { ::side right
-::auto-attach « ::side right
+::auto-attach « ::side right ::lcode-not slv ::comment Slovenians uses »ABC«
 ::auto-attach [ ::side right
 ::auto-attach 〈 ::side right
 ::auto-attach （ ::side right
@@ -121,7 +121,7 @@
 ::auto-attach 〖 ::side right
 ::auto-attach 〘 ::side right
 ::auto-attach 〚 ::side right
-::auto-attach ‹ ::side right ::group True
+::auto-attach ‹ ::side right ::group True ::lcode-not slv ::comment Slovenians uses ›ABC‹
 ::auto-attach ¡ ::side right ::group True
 ::auto-attach ¿ ::side right ::group True
 ::auto-attach # ::side right ::right-context \d{1,4}\b
@@ -358,6 +358,11 @@
 # ::auto-attach кг ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
 # ::auto-attach т ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
 # ::auto-attach мг ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+
+::auto-attach › ::side right ::group True ::lcode slv ::comment Slovenians uses ›ABC‹
+::auto-attach ‹ ::side left ::group True ::lcode slv ::comment Slovenians uses ›ABC‹
+::auto-attach » ::side right ::lcode slv ::comment Slovenians uses »ABC«
+::auto-attach « ::side left ::lcode slv ::comment Slovenians uses »ABC«
 
 ::auto-attach aad ::side left ::left-context \d ::lcode som ::comment ordinal particle ("th")
 ::auto-attach ka ::side left ::left-context \d ::lcode som ::eng from
