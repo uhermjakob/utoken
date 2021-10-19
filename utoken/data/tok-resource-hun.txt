@@ -11,7 +11,7 @@
 ::abbrev kb. ::lcode hun
 ::abbrev max. ::lcode hun
 ::abbrev min. ::lcode hun
-::ebbrev mint pl. ::exp mint például ::lcode hun ::eng such as
+::abbrev mint pl. ::exp mint például ::lcode hun ::eng such as
 ::abbrev pl. ::lcode hun
 ::abbrev Prof. ::lcode hun
 ::abbrev St. ::lcode hun
