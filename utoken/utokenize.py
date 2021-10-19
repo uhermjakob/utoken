@@ -372,8 +372,8 @@ class Tokenizer:
                 phonetics_alts_wop = '(?:' + '|'.join(phonetics_list_wop) + ')'
                 phonetics_alts = '(?:' + phonetics_alts_wop + r'\.)'
                 if pre_name_list := self.tok_dict.pre_name_title_list[lcode]:
-                    pre_name_list_wop = [x.rstrip('.') for x in pre_name_list]
-                    pre_name = '(?:(?:' + '|'.join(pre_name_list_wop) + r')\.)*'
+                    esc_pre_name_list = [re.escape(x) for x in pre_name_list]
+                    pre_name = '(?:' + '|'.join(esc_pre_name_list) + r')*'
                 else:
                     pre_name = ''
                 re1_string = r'(.*(?<!(?:\pL\pM*|[.\u200C\u200D]))' + pre_name + ')'\
@@ -1795,6 +1795,7 @@ class Tokenizer:
         line_number = 0
         for line in input_file:
             line_number += 1
+            # log.info(f'line {line_number} {line}')
             ht['NUMBER-OF-LINES'] = line_number
             if self.first_token_is_line_id_p:
                 if m := self.re_id_snt.match(line):
