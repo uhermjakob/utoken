@@ -79,6 +79,7 @@ if __name__ == "__main__":
                                'kat.txt',
                                'kor.txt',
                                'lao.txt',
+                               'lav.txt',
                                'lit.txt',
                                'mal.txt',
                                'mar.txt',
