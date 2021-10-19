@@ -182,7 +182,7 @@
 ::abbrev lrs. ::exp landsretssagfører ::lcode dan
 ::abbrev ltr. ::exp litra; bogstav ::lcode dan
 ::abbrev lø. ::exp lørdag ::lcode dan
-::abbrev m. ::exp med; monsieur ::lcode dan ::left-types-context /^(.*[^Aa1-3 ])?\s*$/ # 7,5 m.
+::abbrev m. ::exp med; monsieur ::lcode dan ::left-context-not \d\s*  ::comment not 7,5 m.
 ::abbrev m.a.o. ::exp med andre ord ::lcode dan
 ::abbrev m.fl. ::exp med flere ::lcode dan ::eng and others
 ::abbrev m.h.t. ::exp med hensyn til ::lcode dan ::eng with regard to
