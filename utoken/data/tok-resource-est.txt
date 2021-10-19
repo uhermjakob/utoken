@@ -1,3 +1,14 @@
+::lexical 'i ::lcode est ::tag DECONTRACTION-R
+::lexical 'ist ::lcode est ::tag DECONTRACTION-R
+
+::lexical -d ::lcode est ::left-context (?:\pL\pM*|\d) ::comment suffix
+::lexical -e ::lcode est ::left-context (?:\pL\pM*|\d) ::comment suffix
+::lexical -i ::lcode est ::left-context (?:\pL\pM*|\d) ::comment suffix
+::lexical -ist ::lcode est ::left-context (?:\pL\pM*|\d) ::comment suffix
+::lexical -l ::lcode est ::left-context (?:\pL\pM*|\d) ::comment suffix
+::lexical -ni ::lcode est ::left-context (?:\pL\pM*|\d) ::comment suffix
+::lexical -s ::lcode est ::left-context (?:\pL\pM*|\d) ::comment suffix
+
 ::abbrev alik. ::lcode est
 ::abbrev alil. ::lcode est
 ::abbrev amir. ::lcode est
@@ -28,6 +39,7 @@
 ::abbrev hammaslääket. ::lcode est
 ::abbrev jatk. ::lcode est
 ::abbrev jääk. ::lcode est
+::abbrev k. ::lcode est
 ::abbrev kansaned. ::lcode est
 ::abbrev kapt. ::lcode est
 ::abbrev kapt.luutn. ::lcode est
@@ -35,6 +47,7 @@
 ::abbrev kenr.luutn. ::lcode est
 ::abbrev kenr.maj. ::lcode est
 ::abbrev kers. ::lcode est
+::abbrev Kfz. ::lcode est
 ::abbrev kirjeenv. ::lcode est
 ::abbrev kom. ::lcode est
 ::abbrev kom.kapt. ::lcode est
@@ -50,13 +63,17 @@
 ::abbrev M.Sc. ::lcode est
 ::abbrev neuv. ::lcode est
 ::abbrev nimim. ::lcode est
+::abbrev nr. ::lcode est
 ::abbrev Ph.D. ::lcode est
+::abbrev pr. ::lcode est
 ::abbrev prof. ::lcode est
 ::abbrev puh.joht. ::lcode est
 ::abbrev pääll. ::lcode est
 ::abbrev res. ::lcode est
 ::abbrev san. ::lcode est
+::abbrev Sd. ::lcode est
 ::abbrev siht. ::lcode est
+::abbrev s.t. ::lcode est ::alt-spelling s.t ::eng i.e.
 ::abbrev suom. ::lcode est
 ::abbrev sähköp. ::lcode est
 ::abbrev säv. ::lcode est

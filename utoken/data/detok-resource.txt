@@ -213,6 +213,17 @@
 
 ::auto-attach ( ::side left ::left-context \pL ::right-context s\s*\)(?!\s*he\b) ::lcode eng ::comment friend(s)
 
+::auto-attach 'i ::side left ::left-context (?:\pL\pM*|\d) ::lcode est ::comment suffix
+::auto-attach 'ist ::side left ::left-context (?:\pL\pM*|\d) ::lcode est ::comment suffix
+
+::auto-attach -d ::side left ::left-context (?:\pL\pM*|\d) ::lcode est ::comment suffix
+::auto-attach -e ::side left ::left-context (?:\pL\pM*|\d) ::lcode est ::comment suffix
+::auto-attach -i ::side left ::left-context (?:\pL\pM*|\d) ::lcode est ::comment suffix
+::auto-attach -ist ::side left ::left-context (?:\pL\pM*|\d) ::lcode est ::comment suffix
+::auto-attach -l ::side left ::left-context (?:\pL\pM*|\d) ::lcode est ::comment suffix
+::auto-attach -ni ::side left ::left-context (?:\pL\pM*|\d) ::lcode est ::comment suffix
+::auto-attach -s ::side left ::left-context (?:\pL\pM*|\d) ::lcode est ::comment suffix
+
 ::auto-attach :ään ::side left ::lcode fin ::comment suffix ::syntax-checked True
 ::auto-attach :in ::side left ::lcode fin ::comment suffix ::syntax-checked True
 ::auto-attach :lle ::side left ::lcode fin ::comment suffix ::syntax-checked True
