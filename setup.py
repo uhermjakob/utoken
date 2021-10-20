@@ -42,7 +42,7 @@ setup(
         ],
     },
     install_requires=[
-        'regex==2021.8.3',
+        'regex>=2021.8.3',
         'tqdm>=4.40',
     ],
     include_package_data=True,
