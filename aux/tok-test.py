@@ -138,6 +138,7 @@ if __name__ == "__main__":
                 lang_code = None
             input_filename = os.path.join(test_dir, filename)
             output_filename = os.path.join(test_dir, 'utoken-out', f'{core_filename}.tok')
+            input_path = Path(input_filename)
             ref_file_s = None
             ref_legend_s = None
             if lang_code and lang_code != 'eng' and re.match(r'.*\.[a-z]{3}\.txt$', input_filename):
@@ -168,6 +169,8 @@ if __name__ == "__main__":
                 utokenize_system_call_args.extend(['-i', input_filename])
                 utokenize_system_call_args.extend(['-o', output_filename])
                 utokenize_system_call_args.extend(['-a', json_annotation_filename])
+                if input_path.is_file() and input_path.stat().st_size >= 1000000:
+                    utokenize_system_call_args.append('-pb')
                 utokenize_system_call = ' '.join(utokenize_system_call_args)
                 if args.verbose:
                     sys.stderr.write(f"{utokenize_system_call} ...\n")
