@@ -334,7 +334,6 @@ class Tokenizer:
         self.verbose: bool = verbose
         self.lang_codes = re.split(r'[;,\s*]', lang_code) if lang_code else []
         self.lang_code: Optional[str] = self.lang_codes[0] if self.lang_codes else None
-        self.n_lines_tokenized = 0
         self.tok_dict = util.ResourceDict()
         self.detok_resource = util.DetokenizationResource()
         self.current_orig_s: Optional[str] = None
@@ -1874,12 +1873,9 @@ class Tokenizer:
         chart = Chart(s, line_id) if self.chart_p else None
         # Call the first tokenization step function, which then recursively call all other tokenization step functions.
         s = self.next_tok(None, s, chart, ht, lang_code, line_id)
-        self.n_lines_tokenized += 1
         if chart:
             if self.verbose:
                 log.info(chart.print_short())  # Will print short version of chart to STDERR.
-            elif (log.INFO >= log.root.level) and (self.n_lines_tokenized % 1000 == 0):
-                sys.stderr.write('+' if self.n_lines_tokenized % 10000 == 0 else '.')
             if annotation_file:
                 if annotation_format == 'json':
                     self.annotation_json_elements.append(json.dumps(chart.build_json_snt_annotation_object(),
@@ -2005,8 +2001,6 @@ def main():
                         annotation_format=args.annotation_format, lang_code=lang_code, total_bytes=args.total_bytes,
                         progress_bar=args.progress_bar)
 
-    if (log.INFO >= log.root.level) and (tok.n_lines_tokenized >= 1000):
-        sys.stderr.write('\n')
     # Log some change stats.
     if args.profile or tok.profile_scope:
         if tok.profile_scope is None:
