@@ -193,7 +193,8 @@ git clone https://github.com/uhermjakob/utoken.git
 
 ### Requirements
 * Python 3.8 or higher
-* regex module (https://pypi.org/project/regex/) &nbsp; ```import regex```
+* regex module (https://pypi.org/project/regex/) for advanced regular expressions &nbsp; ```import regex```
+* tqdm module (https://pypi.org/project/tqdm/) for progress meter &nbsp; ```import tdqm```
 
 ### More topics &nbsp; (click below for details)
 <details>
