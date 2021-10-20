@@ -336,6 +336,21 @@ class Tokenizer:
         self.detok_resource = util.DetokenizationResource()
         self.current_orig_s: Optional[str] = None
         self.current_s: Optional[str] = None
+        self.current_recursion_depth = 0
+        self.current_recursion_depth_alert_threshold = 150
+        self.current_recursion_depth_warning_threshold = 250
+        self.current_recursion_depth_alert_issued = False
+        self.current_recursion_depth_warning_issued = False
+        self.current_recursion_depth_number = 0
+        self.current_recursion_depth_number_alert_threshold = 100
+        self.current_recursion_depth_number_warning_threshold = 200
+        self.current_recursion_depth_number_alert_issued = False
+        self.current_recursion_depth_number_warning_issued = False
+        self.current_recursion_depth_symbol = 0
+        self.current_recursion_depth_symbol_alert_threshold = 100
+        self.current_recursion_depth_symbol_warning_threshold = 200
+        self.current_recursion_depth_symbol_alert_issued = False
+        self.current_recursion_depth_symbol_warning_issued = False
         self.profile = None
         self.profile_active: bool = False
         self.profile_scope: Optional[str] = None
@@ -682,6 +697,26 @@ class Tokenizer:
         #          f'start_positions: {start_positions} s: {s} offset: {offset}')
         tokenizations = []
         position = 0
+        self.current_recursion_depth += 1
+        if self.current_recursion_depth > self.current_recursion_depth_warning_threshold:
+            if not self.current_recursion_depth_warning_issued:
+                sys.stderr.write(f'Warning: Exceeded general tokenization recursion depth of '
+                                 f'{self.current_recursion_depth_warning_threshold} '
+                                 f'in line {line_id}. Will skip remaining tokenization steps for this sentence.\n')
+                self.current_recursion_depth_warning_issued = True
+            # To prevent Python recursion error, skip ahead to final tokenization step.
+            return self.tokenize_main(s, chart, ht, lang_code, line_id, offset)
+        elif self.current_recursion_depth > self.current_recursion_depth_alert_threshold:
+            # Just an alert, no action.
+            if not (self.current_recursion_depth_alert_issued
+                    or self.current_recursion_depth_symbol_alert_issued
+                    or self.current_recursion_depth_number_alert_issued):
+                n_chars = len(self.current_orig_s)
+                n_words = len(self.current_orig_s.split())
+                sys.stderr.write(f'Alert:   Exceeded general tokenization recursion depth of '
+                                 f'{self.current_recursion_depth_alert_threshold} in line {line_id} '
+                                 f'({n_chars} characters, {n_words} words).\n')
+                self.current_recursion_depth_alert_issued = True
         for i in range(len(token_surfs)):
             token_surf = token_surfs[i]
             orig_token_surf = orig_token_surfs[i] if orig_token_surfs else token_surf
@@ -709,6 +744,7 @@ class Tokenizer:
             position = end_position
         if post := s[position:]:
             tokenizations.append(calling_function(post, chart, ht, lang_code, line_id, offset+position))
+        self.current_recursion_depth -= 1
         return util.join_tokens(tokenizations)
 
     re_starts_w_plus_minus = re.compile(r'[-−–+]')
@@ -1089,16 +1125,41 @@ class Tokenizer:
                          line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off numbers such as 12,345,678.90"""
         this_function = self.tokenize_numbers
-        if self.lv & self.char_is_ethiopic_number:
-            if m3 := self.re_ethiopic_number.match(s):
-                return self.rec_tok_m3(m3, s, offset, 'NUMBER-E', line_id, chart, lang_code, ht, this_function)
-        if self.lv & self.char_is_digit:
-            if m3 := self.re_number.match(s) \
-                     or ((lang_code not in ('asm', 'ben', 'hin', 'kan', 'mal', 'tam', 'tel'))
-                         and self.re_number2.match(s)) \
-                     or self.re_integer.match(s):
-                # log.info(f'A s: {s} n: {m3.group(2)} offset: {offset} chart: {chart}')
-                return self.rec_tok_m3(m3, s, offset, 'NUMBER', line_id, chart, lang_code, ht, this_function)
+        self.current_recursion_depth_number += 1
+        if self.current_recursion_depth_number > self.current_recursion_depth_number_warning_threshold:
+            if not self.current_recursion_depth_number_warning_issued:
+                sys.stderr.write(f'Warning: Exceeded number tokenization recursion depth of '
+                                 f'{self.current_recursion_depth_number_warning_threshold} '
+                                 f'in line {line_id}. Will skip remaining number tokenization for this sentence.\n')
+                self.current_recursion_depth_number_warning_issued = True
+            # skip any other tokenize_numbers calls and move on to next tokenization step.
+        else:
+            if self.current_recursion_depth_number > self.current_recursion_depth_number_alert_threshold:
+                # Just an alert, no action.
+                if not self.current_recursion_depth_number_alert_issued:
+                    n_chars = len(self.current_orig_s)
+                    n_words = len(self.current_orig_s.split())
+                    n_digits = len(regex.findall(r'\d', self.current_orig_s))
+                    pl_s1 = '' if n_digits == 1 else 's'
+                    sys.stderr.write(f'Alert:   Exceeded number tokenization recursion depth of '
+                                     f'{self.current_recursion_depth_number_alert_threshold} in line {line_id} '
+                                     f'({n_chars} characters, {n_words} words, {n_digits} digit{pl_s1}).\n')
+                    self.current_recursion_depth_number_alert_issued = True
+            if self.lv & self.char_is_ethiopic_number:
+                if m3 := self.re_ethiopic_number.match(s):
+                    res_rec_num = self.rec_tok_m3(m3, s, offset, 'NUMBER-E', line_id, chart, lang_code, ht, this_function)
+                    self.current_recursion_depth_number -= 1
+                    return res_rec_num
+            if self.lv & self.char_is_digit:
+                if m3 := self.re_number.match(s) \
+                         or ((lang_code not in ('asm', 'ben', 'hin', 'kan', 'mal', 'tam', 'tel'))
+                             and self.re_number2.match(s)) \
+                         or self.re_integer.match(s):
+                    # log.info(f'A s: {s} n: {m3.group(2)} offset: {offset} chart: {chart}')
+                    res_rec_num = self.rec_tok_m3(m3, s, offset, 'NUMBER', line_id, chart, lang_code, ht, this_function)
+                    self.current_recursion_depth_number -= 1
+                    return res_rec_num
+        self.current_recursion_depth_number -= 1
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_ell_contraction = regex.compile(r"(?V1)(.*?)(?<!\pL|['‘’`‛])([\p{Greek}&&\p{Letter}]+[’'])(.*)")
@@ -1683,31 +1744,59 @@ class Tokenizer:
                               line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step handles groups such as dingbats."""
         this_function = self.tokenize_symbol_group
-        if self.lv & self.char_is_miscellaneous_symbol:
-            len_s = len(s)
-            start_position = None
-            for i in range(0, len_s):
-                char_type_vector = self.char_type_vector_dict.get(s[i], 0)
-                if char_type_vector & self.char_is_miscellaneous_symbol:
-                    if start_position is None:
-                        start_position = i
-                elif char_type_vector & self.char_is_variation_selector:
-                    continue
-                elif start_position is not None:  # found end of symbol group
-                    end_position = i
-                    token_candidate = s[start_position:end_position]
+        self.current_recursion_depth_symbol += 1
+        # log.info(f'tok_symbol {self.current_recursion_depth_symbol} o: {offset} l.{line_id}')
+        if self.current_recursion_depth_symbol > self.current_recursion_depth_symbol_warning_threshold:
+            if not self.current_recursion_depth_symbol_warning_issued:
+                sys.stderr.write(f'Warning: Exceeded symbol tokenization recursion depth of '
+                                 f'{self.current_recursion_depth_symbol_warning_threshold} '
+                                 f'in line {line_id}. Will skip remaining symbol tokenization for this sentence.\n')
+                self.current_recursion_depth_symbol_warning_issued = True
+            # skip any other tokenize_symbol_group calls and move on to next tokenization step.
+        else:
+            if self.current_recursion_depth_symbol > self.current_recursion_depth_symbol_alert_threshold:
+                # Just an alert, no action.
+                if not self.current_recursion_depth_symbol_alert_issued:
+                    n_chars = len(self.current_orig_s)
+                    n_words = len(self.current_orig_s.split())
+                    n_symbols = len(regex.findall(r'\pS', self.current_orig_s))
+                    pl_s1 = '' if n_symbols == 1 else 's'
+                    sys.stderr.write(f'Alert:   Exceeded symbol tokenization recursion depth of '
+                                     f'{self.current_recursion_depth_symbol_alert_threshold} in line {line_id} '
+                                     f'({n_chars} characters, {n_words} words, {n_symbols} symbol{pl_s1}).\n')
+                    self.current_recursion_depth_symbol_alert_issued = True
+            if self.lv & self.char_is_miscellaneous_symbol:
+                len_s = len(s)
+                start_position = None
+                for i in range(0, len_s):
+                    char_type_vector = self.char_type_vector_dict.get(s[i], 0)
+                    if char_type_vector & self.char_is_miscellaneous_symbol:
+                        if start_position is None:
+                            start_position = i
+                    elif char_type_vector & self.char_is_variation_selector:
+                        continue
+                    elif start_position is not None:  # found end of symbol group
+                        end_position = i
+                        token_candidate = s[start_position:end_position]
+                        if self.token_candidate_is_valid_symbol(s, token_candidate, lang_code, offset, start_position,
+                                                                end_position):
+                            result_rec_symb = self.rec_tok([token_candidate], [start_position], s, offset, 'SYMBOL',
+                                                           line_id, chart, lang_code, ht, this_function,
+                                                           [token_candidate], left_done=True)
+                            self.current_recursion_depth_symbol -= 1
+                            return result_rec_symb
+                        else:
+                            start_position = None
+                if start_position is not None:
+                    token_candidate = s[start_position:]
                     if self.token_candidate_is_valid_symbol(s, token_candidate, lang_code, offset, start_position,
-                                                            end_position):
-                        return self.rec_tok([token_candidate], [start_position], s, offset, 'SYMBOL', line_id,
-                                            chart, lang_code, ht, this_function, [token_candidate], left_done=True)
-                    else:
-                        start_position = None
-            if start_position is not None:
-                token_candidate = s[start_position:]
-                if self.token_candidate_is_valid_symbol(s, token_candidate, lang_code, offset, start_position,
-                                                        len(s)):
-                    return self.rec_tok([token_candidate], [start_position], s, offset, 'SYMBOL', line_id,
-                                        chart, lang_code, ht, this_function, [token_candidate], left_done=True)
+                                                            len(s)):
+                        result_rec_symb = self.rec_tok([token_candidate], [start_position], s, offset, 'SYMBOL',
+                                                       line_id, chart, lang_code, ht, this_function,
+                                                       [token_candidate], left_done=True)
+                        self.current_recursion_depth_symbol -= 1
+                        return result_rec_symb
+        self.current_recursion_depth_symbol -= 1
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_contains_letter = regex.compile(r'.*\pL')
@@ -1760,6 +1849,15 @@ class Tokenizer:
                          annotation_format: Optional[str] = None) -> str:
         self.current_orig_s = s
         self.current_s = s
+        self.current_recursion_depth = 0
+        self.current_recursion_depth_alert_issued = False
+        self.current_recursion_depth_warning_issued = False
+        self.current_recursion_depth_number = 0
+        self.current_recursion_depth_number_alert_issued = False
+        self.current_recursion_depth_number_warning_issued = False
+        self.current_recursion_depth_symbol = 0
+        self.current_recursion_depth_symbol_alert_issued = False
+        self.current_recursion_depth_symbol_warning_issued = False
         self.lv = 0  # line_char_type_vector
         # Each bit in this vector is to capture character type info, e.g. char_is_arabic
         # Build a bit-vector for the whole line, as the bitwise 'or' of all character bit-vectors.
