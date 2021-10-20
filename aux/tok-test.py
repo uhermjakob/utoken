@@ -28,8 +28,9 @@ if __name__ == "__main__":
     parser.add_argument('-c', '--compare', action='count', default=0, help='(compare results with other tokenizers)')
     parser.add_argument('-o', '--orig_compare', action='count', default=0, help='(compare original text w/ utoken)')
     parser.add_argument('-d', '--detokenize', action='count', default=0, help='(detokenize results)')
-    parser.add_argument('-r', '--detokenize_only', action='count', default=0,
-                        help='(detokenize without new tokenization; \'r\' as in reverse)')
+    parser.add_argument('-D', '--detokenize_only', action='count', default=0,
+                        help='(detokenize without new tokenization)')
+    parser.add_argument('-r', '--reformat', action='count', default=0, help='(reformat json to dcln)')
     parser.add_argument('-v', '--verbose', action='count', default=0)
     args = parser.parse_args()
     if args.detokenize_only:
@@ -179,11 +180,12 @@ if __name__ == "__main__":
                 subprocess.run(utokenize_system_call, shell=True)
 
                 # reformat-annotation-json2dcln.py call
-                reformat_system_call_args = \
-                    f'reformat-annotation-json2dcln.py < {json_annotation_filename} > {dcln_annotation_filename}'
-                sys.stderr.write(f"reformat ...\n")
-                # sys.stderr.write(f'{reformat_system_call_args} ...\n')
-                subprocess.run(reformat_system_call_args, shell=True)
+                if args.reformat:
+                    reformat_system_call_args = \
+                        f'reformat-annotation-json2dcln.py < {json_annotation_filename} > {dcln_annotation_filename}'
+                    sys.stderr.write(f"reformat ...\n")
+                    # sys.stderr.write(f'{reformat_system_call_args} ...\n')
+                    subprocess.run(reformat_system_call_args, shell=True)
 
                 if args.compare:
                     # build sacremoses tokenization, if it does not already exist
