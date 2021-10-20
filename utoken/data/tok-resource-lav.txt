@@ -1,27 +1,35 @@
+::abbrev a.l. ::lcode lav
+::abbrev akad. ::lcode lav
 ::abbrev Dr. ::lcode lav
-::abbrev med. ::lcode lav
-::abbrev Prof. ::lcode lav
+::abbrev Dž. ::lcode lav ::eng J.
+::abbrev folkl. ::lcode lav
+::abbrev galv. ::lcode lav
+::abbrev gs. ::exp gadsimtā ::lcode lav ::eng century
+::abbrev hum. ::lcode lav
+::abbrev inv. ::lcode lav
 ::abbrev Inž. ::lcode lav
 ::abbrev Ist.loc. ::lcode lav
 ::abbrev Kor.loc. ::lcode lav
-::abbrev v.i. ::lcode lav
-::abbrev Vietn. ::lcode lav
-::abbrev a.l. ::lcode lav
-::abbrev t.p. ::lcode lav
-::abbrev pārb. ::lcode lav
-::abbrev vec. ::lcode lav
-::abbrev inv. ::lcode lav
-::abbrev sk. ::lcode lav
-::abbrev spec. ::lcode lav
-::abbrev vienk. ::lcode lav
-::abbrev virz. ::lcode lav
+::abbrev m ::lcode lav ::sem-class unit-of-measurement
+::abbrev m/s ::lcode lav ::sem-class unit-of-measurement
+::abbrev med. ::lcode lav
 ::abbrev māksl. ::lcode lav
 ::abbrev mūz. ::lcode lav
-::abbrev akad. ::lcode lav
-::abbrev soc. ::lcode lav
-::abbrev galv. ::lcode lav
-::abbrev vad. ::lcode lav
-::abbrev sertif. ::lcode lav
-::abbrev folkl. ::lcode lav
-::abbrev hum. ::lcode lav
 ::abbrev Nr. ::lcode lav
+::abbrev p.m.ē. ::lcode lav ::eng BC ::comment year
+::abbrev Prof. ::lcode lav
+::abbrev pārb. ::lcode lav
+::abbrev sertif. ::lcode lav
+::abbrev sk. ::lcode lav
+::abbrev skat. ::lcode lav
+::abbrev soc. ::lcode lav
+::abbrev spec. ::lcode lav
+::abbrev sv. ::lcode lav ::eng St. ::comment saint
+::abbrev t.p. ::lcode lav
+::abbrev u.c. ::lcode lav ::eng etc. ::alt-spelling u.c
+::abbrev v.i. ::lcode lav
+::abbrev vad. ::lcode lav
+::abbrev vec. ::lcode lav
+::abbrev vienk. ::lcode lav
+::abbrev Vietn. ::lcode lav
+::abbrev virz. ::lcode lav

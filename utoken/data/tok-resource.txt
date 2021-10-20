@@ -53,6 +53,7 @@
 ::punct-split ፠ ::side both
 ::punct-split । ::side both ::comment Devanagari danda
 ::punct-split ॥ ::side both ::comment Devanagari double danda
+::punct-split ৷ ::side both ::group True ::comment Bengali currency numerator four, often operating as Bengali danda
 ::punct-split ། ::side both ::comment Tibetan mark Shad (danda)
 ::punct-split ༎ ::side both ::comment Tibetan mark Nyis Shad (double danda)
 ::punct-split % ::side both
@@ -69,34 +70,50 @@
 ::punct-split © ::side both
 ::punct-split ® ::side both
 ::punct-split ™ ::side both
-::punct-split № ::side both
+::punct-split № ::side both ::group True ::comment №№ plural form in Russian, Georgian
 ::punct-split $ ::side both ::token-category prefix ::sem-class currency-unit ::group True
 ::punct-split — ::side both ::group True
 ::punct-split -- ::side both ::group True ::left-context (?:\pL\pM*|\d) ::right-context (?:\pL\pM*|\d)
+::punct-split ־ ::side both ::group True ::comment Hebrew maqaf (hyphen)
 ::punct-split … ::side both ::group True
 ::punct-split .. ::side both ::group True
 ::punct-split ، ::side both ::left-context (?:\pL\pM*|\d)[-_+*'’‘`]* ::right-context (?:\pL|[‘])
 ::punct-split , ::side both ::left-context (?:\pL\pM*|\d)[-_+*'’‘`]* ::right-context (?:\pL|[‘])
 ::punct-split | ::side both ::left-context (?:\pL\pM*|\d)[-_+*'’‘`]* ::right-context (?:\pL|[‘]) ::group True
+::punct-split ׀ ::side both ::group True ::comment Hebrew paseq (separator), typically at the end of words
 ::punct-split ! ::side both ::left-context (?:\pL\pM*|\d)[-_+*'’‘`?]* ::right-context (?:\pL|[‘?]) ::group True
 ::punct-split ? ::side both ::left-context (?:\pL\pM*|\d)[-_+*'’‘`!]* ::right-context (?:\pL|[‘!]) ::group True
+::punct-split : ::side both ::left-context \pL\pM*\pL\pM*[)]* ::right-context [-\/(]*\pL\pM*\pL ::lcode-not hin;swe;fin
+::punct-split = ::side both ::group True ::left-context \pL\pM*\pL\pM*[)]* ::right-context [-=\/(]*\pL\pM*\pL
 ::punct-split , ::side both ::left-context \d:\d{1,2} ::right-context \d{1,2}[-]\d  # Genesis 1:1,26-28
 ::punct-split , ::side both ::left-context \d\.\d{1,2} ::right-context \d
-::punct-split , ::side both ::left-context \d:\d{1,2} ::right-context \d{1,2}[-]\d  # Genesis 1:1,26-28
+::punct-split , ::side both ::left-context \pL\pM* ::right-context \d
 ::punct-split , ::side both ::left-context \d ::right-context \pL\pM*\pL
-::punct-split / ::side both ::left-context \pL\pM*(?:\pL\pM*|\d) ::right-context \pL\pM*\pL  #right-context-not (?:hr|yr)\b
+::punct-split / ::side both ::left-context \pL\pM*(?:\pL\pM*|\d) ::right-context (?:\pL\pM*\pL|[㎀-㏟])  #right-context-not (?:hr|yr)\b
 ::punct-split ; ::side both ::left-context \pL\pM*\pL\pM* ::right-context [-\/]*\pL\pM*\pL ::left-context-not &(?:amp|apos|gt|lt|nbsp|quot|#\d+|#x[0-9A-F]+)  # xml tags
 ::punct-split / ::side both ::left-context -\d+ ::right-context \d+-
 ::punct-split \ ::side both ::left-context (?:\pL\pM*|/d) ::right-context (?:\pL|/d)
 ::punct-split ~ ::side both ::left-context \pL\pM* ::right-context \pL
 ::punct-split . ::side both ::left-context (?:\p{Ll}\p{Ll}|\d|[IVXL]+) ::right-context \p{Lu}\p{Ll}
+::punct-split . ::side both ::left-context (?<!\pL|\d|[-_.])\d+ ::right-context \pL
+::punct-split . ::side both ::left-context \p{Lo}\pM*\p{Lo}\pM* ::right-context [-\/]*\p{Lo}\pM*\p{Lo}
+::punct-split . ::side both ::left-context (?:[\p{Latin}&&\p{Letter}]\pM*){2,} ::right-context [-\/]*\p{Lo}\pM*\p{Lo}
+::punct-split . ::side both ::left-context \p{Lo}\pM*\p{Lo}\pM* ::right-context [-\/]*(?:[\p{Latin}&&\p{Letter}]\pM*){2,}
+::punct-split . ::side both ::left-context [\)\]}] ::right-context \pL
 ::punct-split ؟ ::side both ::comment Arabic question mark
 ::punct-split ؛ ::side both ::comment Arabic semicolon
 ::punct-split ۔ ::side both ::comment Arabic period
 ::punct-split § ::side both ::comment section sign
 ::punct-split ¶ ::side both ::comment pillcrow
+::punct-split × ::side both ::comment multiplication sign
+::punct-split ± ::side both ::comment plus-minus sign
+::punct-split ° ::side both ::group True ::comment degree sign
+::punct-split º ::side both ::comment masculine ordinal indicator, sometimes used as degree sign
+::punct-split ・ ::side both ::group True ::comment Katakana middle dot
+::punct-split ¬ ::side both
 
 # split off punctuation from start of token
+::punct-split &apos; ::side start ::group True
 ::punct-split ' ::side start ::group True
 ::punct-split ‘ ::side start ::group True
 ::punct-split ’ ::side start ::group True
@@ -105,33 +122,44 @@
 ::punct-split ¡ ::side start ::group True
 ::punct-split ¿ ::side start ::group True
 ::punct-split ~ ::side start ::group True
+::punct-split ～ ::side start ::group True ::comment full-width tilde
 ::punct-split _ ::side start ::group True
 ::punct-split | ::side start ::group True
+::punct-split ¦ ::side start ::group True
 ::punct-split / ::side start ::group True ::right-context \pL
 ::punct-split * ::side start ::right-context (?:\pL|['‘])  # don't group, because of ****ing
 ::punct-split - ::side start ::group True ::right-context -*\pL\pM*\pL
 ::punct-split – ::side start ::group True ::right-context -*\pL\pM*\pL
 ::punct-split ; ::side start ::group True ::right-context [-\/]*\pL\pM*\pL
+::punct-split = ::side start ::group True ::right-context [-\/]*\pL\pM*\pL
 ::punct-split : ::side start ::left-context \d ::right-context \d+[-,]\d  # Genesis 1:26-28
+::punct-split : ::side start ::left-context \d ::right-context \pL
 ::punct-split , ::side start
 ::punct-split • ::side start
+::punct-split ※ ::side start
 ::punct-split · ::side start
 ::punct-split ، ::side start
-::punct-split < ::side start ::right-context (?:\d|\pL)
-::punct-split > ::side start ::right-context (?:\d|\pL)
+::punct-split < ::side start ::group True ::right-context (?:\d|\pL)
+::punct-split > ::side start ::group True ::right-context (?:\d|\pL)
+::punct-split &lt; ::side start ::right-context (?:\d|\pL|[&])
+::punct-split &gt; ::side start ::right-context (?:\d|\pL|[&])
 ::punct-split \ ::side start ::right-context (?:\pL|/d)
 ::punct-split � ::side start
 ::punct-split † ::side start
 ::punct-split ″ ::side start ::comment double prime
+::punct-split . ::side start ::left-context \s ::right-context (?:18|19|20)\d\d(?!\d)  # .year -- but not .45 caliber
 
 # split off punctuation from end of token
+::punct-split &apos; ::side end ::group True
 ::punct-split ' ::side end ::group True
 ::punct-split ’ ::side end ::group True
 ::punct-split ‘ ::side end ::group True
 ::punct-split ` ::side end ::group True
 ::punct-split . ::side end
+::punct-split ׃ ::side end ::comment Hebrew sof pasuq (sentence period)
 ::punct-split ? ::side end ::group True
 ::punct-split ! ::side end ::group True
+::punct-split ՛ ::side end ::group True ::comment Armenian emphasis mark
 ::punct-split | ::side end ::group True
 ::punct-split ‼ ::side end
 ::punct-split ⁇ ::side end
@@ -140,6 +168,7 @@
 ::punct-split ‽ ::side end
 ::punct-split ، ::side end
 ::punct-split , ::side end
+::punct-split ՝ ::side end ::comment Armenian comma
 ::punct-split ; ::side end ::left-context-not &(?:amp|apos|gt|lt|nbsp|quot|#\d+|#x[0-9A-F]+)  # XML tags, e.g. &#x234;
 ::punct-split ！ ::side end
 ::punct-split ; ::side end
@@ -148,19 +177,32 @@
 ::punct-split : ::side end
 ::punct-split ： ::side end
 ::punct-split ~ ::side end
+::punct-split ～ ::side end ::comment full-width tilde
 ::punct-split * ::side end ::left-context (?:\pL\pM*|[’,.])
 ::punct-split _ ::side end ::group True
 ::punct-split / ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?'’‘])
 ::punct-split - ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?'’‘])
+::punct-split - ::side end ::group True ::left-context \pL\pM* ::right-context \d+[.,]\d
 ::punct-split = ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?'’‘])
 ::punct-split – ::side end ::group True ::left-context (?:\pL\pM*\pL\pM*|[.,;:!?'’‘])
+::punct-split + ::side end ::group True ::left-context [.,;:!?'’‘]
 ::punct-split · ::side end
-::punct-split < ::side end ::left-context (?:\d|\pL\pM*)
-::punct-split > ::side end ::left-context (?:\d|\pL\pM*)
+::punct-split < ::side end ::group True ::left-context (?:\d|\pL\pM*)
+::punct-split > ::side end ::group True ::left-context (?:\d|\pL\pM*)
 ::punct-split \ ::side end ::left-context (?:\d|\pL\pM*)
+::punct-split &lt; ::side end ::left-context (?:\d|\pL\pM*|[;])
+::punct-split &gt; ::side end ::left-context (?:\d|\pL\pM*|[;])
 ::punct-split � ::side end
 ::punct-split † ::side end
+::punct-split ′ ::side end ::comment prime
 ::punct-split ″ ::side end ::comment double prime
+
+::repair & gt ; ::target &gt; ::lcode eng ::problem previous tokenizer
+::repair & lt ; ::target &lt; ::lcode eng ::problem previous tokenizer
+::repair & quot ; ::target &quot; ::lcode eng ::problem previous tokenizer
+::repair & amp ; ::target &amp; ::lcode eng ::problem previous tokenizer
+::repair ፡፡ ::target ። ::problem Ethiopic period look-alike
+::repair ፡- ::target ፦ ::problem Ethiopic preface-colon look-alike
 
 ::abbrev AT&T ::sem-class company
 ::abbrev ES&S ::sem-class company
@@ -266,20 +308,20 @@
 ::abbrev H2O ::exp water ::sem-class substance
 ::abbrev TNT ::exp trinitrotoluene ::sem-class substance
 
-::abbrev cm ::exp centimeter ::sem-class unit-of-measurement
+::abbrev cm ::exp centimeter ::sem-class unit-of-measurement ::alt-spelling ㎝
 ::abbrev cm² ::exp square centimeter ::sem-class unit-of-measurement
 ::abbrev cm³ ::exp cubic centimeter ::sem-class unit-of-measurement
 ::abbrev g ::exp gram ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
 ::abbrev kg ::exp kilogram ::sem-class unit-of-measurement ::alt-spelling kgs.
 ::abbrev km ::exp kilometer ::sem-class unit-of-measurement
-::abbrev km2 ::exp square kilometer ::sem-class unit-of-measurement
-::abbrev km² ::exp square kilometer ::sem-class unit-of-measurement ::alt-spelling ㎢; km<sup>2</sup>
-::abbrev km³ ::exp cubic kilometer ::sem-class unit-of-measurement
+::abbrev km² ::exp square kilometer ::sem-class unit-of-measurement ::alt-spelling km2; ㎢; km<sup>2</sup>
+::abbrev km³ ::exp cubic kilometer ::sem-class unit-of-measurement ::alt-spelling km3; ㎢; km<sup>3</sup>
 ::abbrev kWh ::exp kilowatt-hour ::sem-class unit-of-measurement ::misspelling kW/h
 ::abbrev M ::exp molar ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
 ::abbrev m ::exp meter ::sem-class unit-of-measurement ::case-sensitive True ::left-context \d\s?
-::abbrev m² ::exp square meter ::sem-class unit-of-measurement ::alt-spelling sq.mtr.
-::abbrev m³ ::exp cubic meter ::sem-class unit-of-measurement
+::abbrev m² ::exp square meter ::sem-class unit-of-measurement ::alt-spelling ㎡; sq.mtr.
+::abbrev m³ ::exp cubic meter ::sem-class unit-of-measurement ::alt-spelling ㎥
+::abbrev M🜨 ::exp earth mass ::sem-class unit-of-measurement ::alt-spelling M⊕  # split by tokenize_symbol_group
 ::abbrev mg ::exp milligram ::sem-class unit-of-measurement ::case-sensitive True
 ::abbrev ml ::exp milliliter ::sem-class unit-of-measurement ::case-sensitive True
 ::abbrev mm ::exp millimeter ::sem-class unit-of-measurement ::case-sensitive True
@@ -340,12 +382,14 @@
 ::abbrev 2D ::exp two-dimensional ::case-sensitive True
 ::abbrev 3D ::exp three-dimensional ::case-sensitive True
 ::abbrev 4D ::exp four-dimensional ::case-sensitive True
+::abbrev 4x4 ::exp four-wheel drive
 ::abbrev CD ::exp compact disc ::case-sensitive True
 ::abbrev CD-ROM ::exp compact disc read-only memory
 ::abbrev COP21 ::exp United Nations Climate Change Conference ::comment conference of the parties, 21st century ::alt-spelling COP-21
 ::abbrev CPU ::exp central processing unit
 ::abbrev DDoS ::exp distributed denial of service (attack)
 ::abbrev DVD ::exp digital versatile disc
+::abbrev ISO 3166-2
 ::abbrev Mφ ::exp macrophage ::alt-spelling MΦ; MØ
 ::abbrev MφCM ::exp macrophage-conditioned medium ::alt-spelling MΦCM; MØCM
 
@@ -383,6 +427,7 @@
 ::lexical Des Moines ::sem-class city
 ::lexical Duque de Caxias ::sem-class city
 ::lexical El Alto ::sem-class city
+::lexical Fontaine-l'Étalon ::sem-class city
 ::lexical Fort Lauderdale ::sem-class city
 ::lexical Fort Wayne ::sem-class city
 ::lexical Fort Worth ::sem-class city
@@ -441,6 +486,7 @@
 ::lexical Rostov-on-Don ::sem-class city
 ::lexical Saint-Denis ::sem-class city
 ::lexical Sainte-Etienne ::sem-class city
+::lexical Sainte-Mère-Église ::sem-class city
 ::lexical Saint Petersburg ::sem-class city
 ::lexical Salt Lake City ::sem-class city
 ::lexical San Antonio ::sem-class city
@@ -487,6 +533,7 @@
 
 ::lexical Chick-fil-A ::sem-class company
 ::lexical eBay ::sem-class company
+::lexical E.ON ::sem-class company ::priority high
 ::lexical GlaxoSmithKline ::sem-class company
 ::lexical HarperCollins ::sem-class company
 ::lexical Hewlett-Packard ::sem-class company
@@ -663,12 +710,15 @@
 ::lexical Western Australia ::sem-class state
 ::lexical West Virginia ::sem-class state
 
+::lexical 49ers ::sem-class team
+::lexical 76ers ::sem-class team
+
 ::lexical START-II ::sem-class treaty
 
 ::lexical Middle East ::sem-class world-region
 ::lexical Sub-Saharan Africa ::sem-class world-region
 
-::lexical E. coli ::taxon species ::misspelling E.coli
+::lexical E. coli ::taxon species
 ::lexical SARS-CoV-2 ::taxon species
 
 ::lexical http:// ::token-category URL-prefix
@@ -684,6 +734,7 @@
 ::lexical :| ::token-category symbol ::comment neutral face emoji ::last-char-repeatable True
 ::lexical :-| ::token-category symbol ::comment straight face emoji ::last-char-repeatable True
 ::lexical :( ::token-category symbol ::comment sad emoji ::right-context-not (?:\pL|\d)
+::lexical :(( ::token-category symbol ::comment sad crying
 ::lexical :) ::token-category symbol ::comment smiley emoji ::last-char-repeatable True  # comment includes :)) etc.
 ::lexical :-) ::token-category symbol ::comment smiley emoticon
 ::lexical :--) ::token-category symbol ::comment smiley long nose emoticon
@@ -695,13 +746,16 @@
 ::lexical =) ::token-category symbol ::comment equal smile emoji ::last-char-repeatable True
 ::lexical :( ::token-category symbol ::comment frown emoji ::right-context-not (?:\pL|\d)
 ::lexical :'( ::token-category symbol ::comment cry emoji ::right-context-not (?:\pL|\d)
+::lexical °C ::token-category symbol ::comment degree celsius ::alt-spelling ºC; °С; ºС; ℃
 ::lexical :D ::token-category symbol ::comment emoji grin ::case-sensitive True
 ::lexical :-D ::token-category symbol ::comment emoji nose grin ::case-sensitive True
 ::lexical =D ::token-category symbol ::comment emoji equal grin ::case-sensitive True
+::lexical °F ::token-category symbol ::comment degree fahrenheit ::alt-spelling ºF; ℉
 ::lexical :facepalm: ::token-category symbol ::comment emoji
 ::lexical :headbang: ::token-category symbol ::comment emoji
 ::lexical :lol: ::token-category symbol ::comment emoji
 ::lexical \m/ ::token-category symbol ::comment rock out emoji
+::lexical Nº ::token-category symbol ::alt-spelling N° ::comment variant of numero sign (№)
 ::lexical :P ::token-category symbol ::comment tongue-out emoji
 ::lexical %pw ::token-category symbol
 ::lexical :rofl: ::token-category symbol ::comment emoji
@@ -725,4 +779,12 @@
 ::lexical pm.kz ::sem-class url
 ::lexical sk.kz ::sem-class url
 ::lexical x.org ::sem-class url
+::lexical 120.su ::sem-class url
 ::lexical GeoNames.Org ::sem-class url  # tricky: CamelCase
+
+# Some otherwise-symbols are part of can be of tokens, e.g. −8.5 and should not be marked as symbols
+# by heuristic tokenize_symbol_group, which (might) rank(s) above lexical entries.
+::non-symbol − ::right-context \d
+::non-symbol ≡ ::left-context \pL\d* ::right-context \pL
+::non-symbol ⊕ ::left-context M
+::non-symbol 🜨 ::left-context M

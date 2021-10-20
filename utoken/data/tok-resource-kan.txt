@@ -1,15 +1,30 @@
+::punct-split + ::side both ::lcode kan ::left-context \pL\pM*[,)]* ::right-context [-\/(]*\pL
+::punct-split - ::side both ::lcode kan ::left-context \pL\pM*[,)]* ::right-context [-\/(]*\pL
+::punct-split ' ::side both ::group True ::lcode kan ::left-context \pL\pM*[,)]* ::right-context [-\/(]*\pL
+::punct-split . ::side both ::lcode kan ::left-context \pL\pM*\pL\pM* ::right-context \pL
+::punct-split . ::side both ::lcode kan ::left-context \pL\pM* ::right-context \pL\pM*\pL
+
+::punct-split , ::side both ::lcode kan ::left-context \d ::right-context \d\d\d\d
+
 ::abbrev ರೂ. ::lcode kan ::eng Rs.; rupee ::sem-class currency-unit
 ::abbrev ಕ್ರಿ.ಪೂ ::lcode kan ::eng B.C.
+::abbrev ಪ್ರ.ಶ.ಪು. ::lcode kan ::eng B.C.
 ::abbrev ಕ್ರಿ.ಶ ::lcode kan ::eng A.D.
-::abbrev ಯು.ಪಿ.ಎ. ::lcode kan ::eng UPA ::sem-class political-party
-::abbrev ಎನ್.ಡಿ.ಎ ::lcode kan ::eng NDA ::sem-class political-party
+::abbrev ಡಾ. ::lcode kan ::sem-class pre-name-title ::eng Dr. ::alt-spelling ಡಾ॥;ಡಾ||
+::abbrev ಶ್ರೀ. ::lcode kan ::sem-class pre-name-title ::eng Mr.
+::abbrev ಪಂ. ::lcode kan ::sem-class pre-name-title ::eng pundit
+::abbrev ಪಿ‍ಎಚ್.ಡಿ. ::lcode kan ::eng Ph.D.
 ::abbrev ಚ.ಕಿಮಿ ::lcode kan ::eng sq. km ::sem-class unit-of-measurement
 ::abbrev ಚ.ಮೈ. ::lcode kan ::eng sq. mi. ::sem-class unit-of-measurement
-::abbrev ಡಾ. ::eng Dr. ::lcode kan ::sem-class pre-name-title
-::abbrev ಶ್ರೀ. ::eng Mr. ::lcode kan ::sem-class pre-name-title
-::abbrev ಪಿ‍ಎಚ್.ಡಿ. ::eng Ph.D. :lcode kan
+::abbrev ಕಿಮಿ. ::lcode kan ::eng km ::sem-class unit-of-measurement ::alt-spelling ಕಿ.ಮಿ.
+::abbrev ಮಿ.ಮಿ. ::lcode kan ::eng mm ::sem-class unit-of-measurement
+::abbrev ಉದಾ. ::lcode kan ::eng e.g.
+::abbrev ಶೇ. ::lcode kan ::right-context \s*\d ::eng percent ::alt-spelling ಶೇ
+
+::lexical ರಂದು ::lcode kan ::left-context \d ::eng on ::comment suffix
 
 ::abbrev ಎ. ::token-category phonetics ::eng A. ::lcode kan
+::abbrev ಏ. ::token-category phonetics ::eng A. ::lcode kan
 ::abbrev ಬಿ. ::token-category phonetics ::eng B. ::lcode kan
 ::abbrev ಸಿ. ::token-category phonetics ::eng C. ::lcode kan
 ::abbrev ಡಿ. ::token-category phonetics ::eng D. ::lcode kan
@@ -37,3 +52,19 @@
 ::abbrev ಎಕ್ಸ್. ::token-category phonetics ::eng X. ::lcode kan
 ::abbrev ವೈ. ::token-category phonetics ::eng Y. ::lcode kan
 ::abbrev ಜೆಡ್. ::token-category phonetics ::eng Z. ::lcode kan
+
+::abbrev ಕ. ::token-category phonetics ::eng K. ::lcode kan ::comment local-style
+::abbrev ಗ. ::token-category phonetics ::eng G. ::lcode kan ::comment local-style
+::abbrev ತ. ::token-category phonetics ::eng T. ::lcode kan ::comment local-style
+::abbrev ದ. ::token-category phonetics ::eng D. ::lcode kan ::comment local-style
+::abbrev ನ. ::token-category phonetics ::eng N. ::lcode kan ::comment local-style
+::abbrev ಪ. ::token-category phonetics ::eng P. ::lcode kan ::comment local-style
+::abbrev ಬ. ::token-category phonetics ::eng B. ::lcode kan ::comment local-style
+::abbrev ಮ. ::token-category phonetics ::eng M. ::lcode kan ::comment local-style
+::abbrev ಯ. ::token-category phonetics ::eng Y. ::lcode kan ::comment local-style
+::abbrev ರ. ::token-category phonetics ::eng R. ::lcode kan ::comment local-style
+::abbrev ಲ. ::token-category phonetics ::eng L. ::lcode kan ::comment local-style
+::abbrev ವ. ::token-category phonetics ::eng V. ::lcode kan ::comment local-style
+::abbrev ಶ. ::token-category phonetics ::eng Sh. ::lcode kan ::comment local-style
+::abbrev ಸ. ::token-category phonetics ::eng S. ::lcode kan ::comment local-style
+::abbrev ಹ. ::token-category phonetics ::eng H. ::lcode kan ::comment local-style

@@ -36,6 +36,7 @@ class TokenizationAnalysis:
         self.token_count = defaultdict(int)
         self.case_anomalies = {}
         self.letter_punct_anomalies = {}
+        self.letter_number_anomalies = {}
         self.letters_wo_period_anomalies = {}
         self.pre_number_anomalies = {}
         self.post_number_anomalies = {}
@@ -44,6 +45,7 @@ class TokenizationAnalysis:
     re_contains_letter = regex.compile(r'.*\pL', flags=regex.V1)
     re_ends_w_letter = regex.compile(r'.*\pL\pM*$', flags=regex.V1)
     re_contains_punct = regex.compile(r'.*\pP', flags=regex.V1)
+    re_contains_number = regex.compile(r'.*\pN', flags=regex.V1)
     re_span_components = regex.compile(r'(\d+)-(\d+)$')
 
     def analyze_tokenization(self, input_file: TextIO) -> None:
@@ -79,8 +81,11 @@ class TokenizationAnalysis:
                             TokenizationAnomaly.register_anomaly(surf, snt_id, self.case_anomalies)
                         if self.re_contains_letter.match(surf) and self.re_contains_punct.match(surf) \
                                 and not regex.match(r"(?:\p{Lu}\.|'n'|@?&quot;@?)$", surf)\
-                                and not (self.lcode in ('som', 'tgl')  and regex.match(r"(?:\pL|['’])+$", surf)):
+                                and not (self.lcode in ('asm', 'heb', 'som', 'tgl')
+                                         and regex.match(r"(?:\pL\pM*|['’])+$", surf)):
                             TokenizationAnomaly.register_anomaly(surf, snt_id, self.letter_punct_anomalies)
+                        if self.re_contains_letter.match(surf) and self.re_contains_number.match(surf):
+                            TokenizationAnomaly.register_anomaly(surf, snt_id, self.letter_number_anomalies)
                         if len(surf) <= 4 and self.re_ends_w_letter.match(surf) and right_context.startswith('.'):
                             right_context_token = regex.sub(r'\s.*$', '', right_context)
                             TokenizationAnomaly.register_anomaly(surf + ' ' + right_context_token,
@@ -127,9 +132,10 @@ class TokenizationAnalysis:
             return 0
 
     def print_tokenization_analysis(self) -> None:
-        dicts = (self.case_anomalies, self.letter_punct_anomalies, self.letters_wo_period_anomalies,
-                 self.pre_number_anomalies, self.post_number_anomalies)
-        legends = ('lower/upper case', 'letter+punct', 'letter w/o period', 'pre-number', 'post-number')
+        dicts = (self.case_anomalies, self.letter_punct_anomalies, self.letter_number_anomalies,
+                 self.letters_wo_period_anomalies, self.pre_number_anomalies, self.post_number_anomalies)
+        legends = ('lower/upper case', 'letter+punct', 'letter+number', 'letter w/o period',
+                   'pre-number', 'post-number')
         for i in range(len(dicts)):
             print('###', legends[i])
             anomalies = list(dicts[i].values())

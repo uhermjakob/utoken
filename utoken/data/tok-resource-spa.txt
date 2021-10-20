@@ -109,7 +109,7 @@
 ::abbrev Mtro. ::exp Ministro ::lcode spa
 ::abbrev n. ::exp número ::lcode spa
 ::abbrev N.B. ::lcode spa
-::abbrev NN.UU. Naciones Unidas ::exp ::lcode spa ::eng U.N.
+::abbrev NN.UU. ::exp Naciones Unidas ::lcode spa ::eng U.N.
 ::abbrev no. ::exp número ::lcode spa
 ::abbrev nov. ::exp noviembre ::lcode spa
 ::abbrev núm. ::exp número ::lcode spa

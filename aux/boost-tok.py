@@ -4,6 +4,7 @@
 with utoken. Usage: boost-tok.py < STDIN > STDOUT. Suitable for -b in colot-mt-diff.pl"""
 
 import re
+import regex
 import sys
 
 if __name__ == "__main__":
@@ -27,4 +28,5 @@ if __name__ == "__main__":
         line = re.sub(r"\bwon (['’])t\b", r"will n\1t", line, flags=re.IGNORECASE)
         line = re.sub(r"\b(can)(not)\b", r"\1 \2", line, flags=re.IGNORECASE)
         line = re.sub(r" @-@ (in) @-@ (law)\b", r"-\1-\2", line, flags=re.IGNORECASE)
+        line = regex.sub(r"\b(d|l|n|s)\s+(['’])(\pL|\d)", r"\1\2 \3", line, flags=re.IGNORECASE)
         print(line.strip())

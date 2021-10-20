@@ -1,29 +1,34 @@
-::abbrev Dr. ::lcode slv
-::abbrev itd. ::lcode slv
-::abbrev itn. ::lcode slv
-::abbrev št. ::lcode slv ::right-context \s*\d
-::abbrev d. ::lcode slv
-::abbrev jan. ::lcode slv
-::abbrev feb. ::lcode slv
-::abbrev mar. ::lcode slv
-::abbrev apr. ::lcode slv
-::abbrev jun. ::lcode slv
-::abbrev jul. ::lcode slv
-::abbrev avg. ::lcode slv
-::abbrev sept. ::lcode slv
-::abbrev sep. ::lcode slv
-::abbrev okt. ::lcode slv
-::abbrev nov. ::lcode slv
-::abbrev dec. ::lcode slv
-::abbrev tj. ::lcode slv
-::abbrev npr. ::lcode slv
-::abbrev sl. ::lcode slv
-::abbrev op. ::lcode slv
-::abbrev gl. ::lcode slv
-::abbrev oz. ::lcode slv
-::abbrev prev. ::lcode slv
-::abbrev dipl. ::lcode slv
-::abbrev ing. ::lcode slv
-::abbrev prim. ::lcode slv
+::abbrev ang. ::lcode slv ::eng English
+::abbrev apr. ::lcode slv ::eng April
+::abbrev avg. ::lcode slv ::eng August
 ::abbrev cf. ::lcode slv
+::abbrev d. ::lcode slv
+::abbrev dec. ::lcode slv ::eng December
+::abbrev dipl. ::lcode slv
+::abbrev Dr. ::lcode slv
+::abbrev feb. ::lcode slv ::eng February
 ::abbrev gl. ::lcode slv
+::abbrev ing. ::lcode slv
+::abbrev itd. ::lcode slv
+::abbrev itn. ::lcode slv ::eng etc.
+::abbrev izd. ::lcode slv ::eng edition
+::abbrev jan. ::lcode slv ::eng January
+::abbrev jul. ::lcode slv ::eng July
+::abbrev jun. ::lcode slv ::eng June
+::abbrev mar. ::lcode slv ::eng March
+::abbrev nov. ::lcode slv ::eng November
+::abbrev npr. ::lcode slv
+::abbrev okt. ::lcode slv ::eng October
+::abbrev op. ::lcode slv
+::abbrev oz. ::lcode slv
+::abbrev pr.n.št. ::lcode slv ::eng BC ::comment year
+::abbrev prev. ::lcode slv
+::abbrev prim. ::lcode slv
+::abbrev sep. ::lcode slv ::eng September
+::abbrev sept. ::lcode slv ::eng September
+::abbrev sl. ::lcode slv
+::abbrev st. ::exp stoletja ::lcode slv ::eng century
+::abbrev str. ::exp stran ::lcode slv ::eng page
+::abbrev Sv. ::exp Sveti ::lcode slv ::eng Saint
+::abbrev tj. ::lcode slv ::eng i.e.
+::abbrev št. ::lcode slv ::right-context \s*\d

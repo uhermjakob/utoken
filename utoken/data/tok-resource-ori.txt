@@ -1,4 +1,15 @@
+::punct-split ' ::side both ::lcode ori ::left-context \pL\pM*[)]* ::right-context \pL
+::punct-split ’ ::side both ::lcode ori ::left-context \pL\pM*[)]* ::right-context \pL
+::punct-split : ::side start ::lcode ori ::right-context \pL
+
+::abbrev ଡ. ::lcode ori ::eng Dr.
 ::abbrev ରୀ. ::lcode ori ::eng Mr.
+::abbrev କି.ମି. ::lcode ori ::eng km ::alt-spelling କି.ମି
+::abbrev ଡି.ସି. ::lcode ori ::eng DC ::comment Washington, DC
+::abbrev ଆଇ.ଟି. ::lcode ori ::eng IT ::comment information technology
+
+::abbrev ଆଇ. ::lcode ori ::token-category phonetics ::eng I.
+
 ::abbrev କ. ::lcode ori ::token-category consonant
 ::abbrev ଖ. ::lcode ori ::token-category consonant
 ::abbrev ଗ. ::lcode ori ::token-category consonant

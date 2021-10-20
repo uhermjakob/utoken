@@ -1,6 +1,7 @@
 # utoken
-_utoken_ is a tokenizer that divides text into words, punctuation and special tokens such as numbers, URLs, XML tags, email-addresses and hashtags.
+_utoken_ is a multilingual tokenizer that divides text into words, punctuation and special tokens such as numbers, URLs, XML tags, email-addresses and hashtags.
 The tokenizer comes with a companion detokenizer.
+Initial public release of beta version 0.1.0 on Oct. 1, 2021.
 
 ### Example
 #### Input
@@ -16,7 +17,7 @@ Capt. O'Connor 's car can n't 've cost $ 100,000 .
 #### Optional annotation output
 _The ouput below is in the more human-friendly annotation format. Default format is the more computer-friendly JSON._
 ```
-::line 1 ::s Capt. O'Connor's car can't've cost $100,000.
+::line 1 ::s Capt. O'Connor's car can't've cost$100,000.
 ::span 0-5 ::type ABBREV ::sem-class military-rank ::surf Capt.
 ::span 6-14 ::type LEXICAL ::sem-class person-last-name ::surf O'Connor
 ::span 14-16 ::type DECONTRACTION ::surf 's
@@ -25,19 +26,29 @@ _The ouput below is in the more human-friendly annotation format. Default format
 ::span 23-26 ::type DECONTRACTION ::surf n't
 ::span 26-29 ::type DECONTRACTION-R ::surf 've
 ::span 30-34 ::type WORD-B ::surf cost
-::span 35-36 ::type PUNCT ::sem-class currency-unit ::surf $
-::span 36-43 ::type NUMBER ::surf 100,000
-::span 43-44 ::type PUNCT-E ::surf .
+::span 34-35 ::type PUNCT ::sem-class currency-unit ::surf $
+::span 35-42 ::type NUMBER ::surf 100,000
+::span 42-43 ::type PUNCT-E ::surf .
 ```
 
-### Usage
+### Usage &nbsp; (click below for details)
 <details>
-<summary>utokenize.py</summary>
-  
+<summary>utokenize (command line interface to tokenize a file)</summary>
+
 ```
-utokenize.py [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-a ANNOTATION-FILENAME] [--annotation_format ANNOTATION_FORMAT]
-             [-p PROFILE-FILENAME] [--profile_scope PROFILE_SCOPE] [-d DATA_DIRECTORY] [--lc LANGUAGE-CODE] [-f] [-v] [--simple]
-             [--version]
+python -m utoken.utokenize [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-a ANNOTATION-FILENAME] 
+                           [--annotation_format ANNOTATION_FORMAT] [-p PROFILE-FILENAME] 
+                           [--profile_scope PROFILE_SCOPE] [-d DATA_DIRECTORY] [--lc LANGUAGE-CODE] 
+                           [-f] [-v] [-c] [--simple] [--version]
+```
+or simply
+```
+utokenize [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-a ANNOTATION-FILENAME] 
+          [--annotation_format ANNOTATION_FORMAT] [-p PROFILE-FILENAME] 
+          [--profile_scope PROFILE_SCOPE] [-d DATA_DIRECTORY] [--lc LANGUAGE-CODE] 
+          [-f] [-v] [-c] [--simple] [--version]  
+```
+```
 optional arguments:
   -h, --help            show this help message and exit
   -i INPUT-FILENAME, --input INPUT-FILENAME
@@ -58,16 +69,35 @@ optional arguments:
   -f, --first_token_is_line_id
                         First token is line ID (and will be exempt from any tokenization)
   -v, --verbose         write change log etc. to STDERR
-  --simple              prevent MT-style output (e.g. @-@). Note: can degrade any detokinzation
+  -c, --chart           build annotation chart, even without annotation output
+  --simple              prevent MT-style output (e.g. @-@). Note: can degrade any detokenization
   --version             show program's version number and exit
+```
+Note: Please make sure that your $PYTHONPATH includes the directory in which this README file resides.
+  
+Example:
+```
+echo "Wait,dont tell me." | utokenize --lc eng
+```
+Output:
+```
+Wait , do n't tell me .
 ```
 </details>
 
 <details>
-<summary>detokenize.py</summary>
+<summary>detokenize (command line interface to detokenize a file)</summary>
 
-  ```
-detokenize.py [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-d DATA_DIRECTORY] [--lc LANGUAGE-CODE] [-f] [-v] [--version]
+```
+python -m utoken.detokenize [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-d DATA_DIRECTORY] 
+                            [--lc LANGUAGE-CODE] [-f] [-v] [--version]
+```
+or simply
+```
+detokenize [-h] [-i INPUT-FILENAME] [-o OUTPUT-FILENAME] [-d DATA_DIRECTORY] 
+           [--lc LANGUAGE-CODE] [-f] [-v] [--version]
+```
+```
 optional arguments:
   -h, --help            show this help message and exit
   -i INPUT-FILENAME, --input INPUT-FILENAME
@@ -82,28 +112,89 @@ optional arguments:
   -v, --verbose         write change log etc. to STDERR
   --version             show program's version number and exit
 ```
+Note: Please make sure that your $PYTHONPATH includes the directory in which this README file resides.
+  
+Example:
+```
+echo "Wait , do n't tell me ." | detokenize --lc eng
+```
+Output:
+```
+Wait, don't tell me.
+```
+</details>
+
+<details>
+<summary>utokenize_string (Python function call to tokenize a string)</summary>
+  
+```python
+from utoken import utokenize
+  
+tok = utokenize.Tokenizer(lang_code='eng')  # Initialize tokenizer, load resources
+print(tok.utokenize_string("Dont worry!"))
+print(tok.utokenize_string("Sold,for $9,999.99 on ebay.com."))
+```
+Output:
+```
+Do n't worry !
+Sold , for $ 9,999.99 on ebay.com .
+```
+Note: Please make sure that your $PYTHONPATH includes the directory in which this README file resides.
+</details>
+
+<details>
+<summary>detokenize_string (Python function call to detokenize a string)</summary>
+ 
+```python
+from utoken import detokenize
+
+detok = detokenize.Detokenizer(lang_code='eng')  # Initialize detokenizer, load resources
+print(detok.detokenize_string("Do n't worry !"))
+print(detok.detokenize_string("Sold , for $ 9,999.99 on ebay.com ."))
+```
+Output:
+```
+Don't worry!
+Sold, for $9,999.99 on ebay.com.
+```
+Note: Please make sure that your $PYTHONPATH includes the directory in which this README file resides.
+</details>
+
+<details>
+<summary>installation</summary>
+
+```bash
+pip install utoken
+```
+or
+```bash
+git clone https://github.com/uhermjakob/utoken.git
+```
 </details>
 
 ### Design
-* Written by Ulf Hermjakob, USC Information Sciences Institute, 2021
-* A universal tokenizer, i.e. designed to work with a wide variety of scripts and languages.
-* Modular, expandable architecture.
-* More information in data files rather than program code.
-* Written in Python.
+* A universal tokenizer/word segmenter, i.e. designed to work with a wide variety of scripts and languages.
+* Preserves special tokens such as URLs, XML tags, email addresses, hashtags, handles, filenames and more.
+* Modular, expandable architecture, with language-independent and language-specific rules and lists.
+* Written in Python, with both command line interface (to tokenize a file) and Python function call (to tokenize a string).
 * Maintains a chart data structure with detailed additional information that can also serve as a basis for further processing.
-* Preliminary (implementation started in mid-July 2021, current version 0.0.5)
+* First public release on Oct. 1, 2021: beta version 0.1.0
+* Written by Ulf Hermjakob, USC Information Sciences Institute, 2021
 
 ### Limitations
-* Currently excluded: no-space scripts like Chinese
-* Large set of resource entries (data file) currently for English only; limited resource entries for 40+ other languages
-* Languages with substantial testing so far: English, Farsi, Hindi, Kazakh, Tagalog and Uyghur
-  * Limited testing (a few hundred Wikipedia sentences each) for: Arabic, French, Georgian, German, Pashto, Russian, Somali, Spanish, Swahili, Swedish, Turkish
+* Currently excluded: no-space scripts like Chinese and Japanese
+* Large set of resource entries (data file) currently for English only; limited resource entries for 60+ other languages
+* Languages tested so far: Amharic, Arabic, Armenian, Assamese, Bengali, Bulgarian, Catalan, Czech, Danish, Dutch, __English__, Estonian, __Farsi__, Finnish, French, Georgian, German, Greek (Ancient/Koine/Modern), Gujarati, Hebrew (Ancient/Modern), __Hindi__, Hungarian, Indonesian, Italian, Kannada, __Kazakh__, Korean, Lao, Latvian, Lithuanian, Malayalam, Marathi, Norwegian, Odia, Pashto, Polish, Portuguese, Quechua, Romanian, Russian, Slovak, Slovenian, Somali, Spanish, Swahili, Swedish, __Tagalog__, Tamil, Telugu, Turkish, Urdu, __Uyghur__, Vietnamese, Welsh, Xhosa, Yoruba, Zulu
+  * For languages in __bold__: large-scale testing of thousands to hundreds of thousands of sentences per language.
+  * For other modern languages: a few hundred sentences from 100 Wikipedia articles per language.
+  * For Ancient Hebrew and Koine Greek: a few hundred verses each from the Bible's Old and New Testament respectively.  
+  * For Ancient Greek: a few hundred sentences from Homer's _Odyssey_ and Plato's _Republic_.
 
 ### Requirements
 * Python 3.8 or higher
 * regex module (https://pypi.org/project/regex/) &nbsp; ```import regex```
 
-### More topics
+### More topics &nbsp; (click below for details)
 <details>
 <summary>What gets split and what not</summary>
 
@@ -180,6 +271,7 @@ But we can't just blindly split off commas and periods, as this would break numb
 * Other challenges: symbols, variation selectors, non-standard whitespaces, special characters such as `zero width non-joiner`.
 * In general, it is hard to make a tokenizer work __universally__, for a wide range of languages, scripts and conventions.
 * _utoken_ uses a combination of general patterns and lists of specific tokens to solve many of the challenges above. (See more under topic _Tokenization data files_.)
+* Example for a language-specific challenge: In Modern Hebrew, acronyms are marked by placing a _gershayim_ between the last two characters, e.g. ארה״ב (USA). In practice, the _gershayim_ is often replaced by the more readily available quotation mark ("). However, quotation marks are also used for quotations, e.g. <span dir="rtl">ה"סתום"</span> (the "valve"), so care has to be taken to do justice to both acronymns (preserve as a single token) and quotes (separate into multiple tokens).
 </details>
 
 <details>
@@ -207,22 +299,43 @@ Exmaples of resource entries:
 ::auto-attach th ::side left ::left-context \d ::lcode eng ::example 20th
 ```
 </details>
-  
+
 <details>
-<summary>Sample call of utoken from another Python program</summary>
+<summary>Speed</summary>
 
-### Sample call of utoken from another Python program
-Script:
-```
-import utokenize
-
-tok = utokenize.Tokenizer(lang_code='eng')  # Initialize tokenizer, load resources
-print(tok.tokenize_string("Dont worry!"))
-print(tok.tokenize_string("Sold,for $9,999.99 on ebay.com."))
-```
-Output:
-```
-Do n't worry !
-Sold , for $ 9,999.99 on ebay.com .
-```
+### Speed
+210,000 characters per second (real time) on a 39k sentence English AMR corpus on a 2021 MacBook Pro using a single CPU.
+Parallelization is trivial as sentences are tokenized independent of each other.
 </details>
+
+<details>
+<summary>Testing</summary>
+
+### Testing
+_utoken_ has been tested on 71 corpora in 60 languages and 18 scripts (as of Oct. 18, 2021).
+Tests include 
+* Manual review of tokenization
+* Comparison to other tokenizers: [Sacremoses](https://github.com/alvations/sacremoses) and [ulf-tokenizer](https://github.com/isi-nlp/ulf-tokenizer)
+* Tokenization analysis scripts: 
+  * wildebeest (text normalization and cleaning; analysis of types of characters used, encoding issues) 
+  * aux/tok-analysis.py (looks for a number of potential problems such as tokens with mixed letters/digits, mixed letters/punctuation, potential abbreviations separated from period)
+* Comparisons to previous versions of all test corpora before release.
+</details>
+
+<details>
+<summary>Related software</summary>
+
+### Related software
+* [Universal romanizer _uroman_](https://github.com/isi-nlp/uroman), written by Ulf Hermjakob (same author)
+</details>
+
+<details>
+<summary>Future work — Feedback and contributions welcome</summary>
+
+### Future work — Feedback and contributions welcome
+Plans include 
+* Building resources, testing and fine-tuning of additional languages such as Hausa and Serbian.
+* Adding new special entity types such as IPA pronunciations, geographic coordinates, complex IDs such as 403(k).
+* Semi-supervised learning of lexical and abbreviation resources from large corpora.
+</details>
+

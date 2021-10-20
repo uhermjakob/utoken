@@ -1,0 +1,13 @@
+::punct-split - ::side both ::group True ::lcode amh ::left-context (?<!\pL\pM*|\d)[eEiIuU] ::right-context \pL
+
+::repair ፡፡ ::target ። ::lcode amh ::problem look-alike
+::repair :: ::target ። ::lcode amh ::problem look-alike
+::repair :- ::target ፦ ::lcode amh ::problem look-alike
+
+::lexical በ ::right-context \d ::lcode amh ::eng in ::comment "be" prefix
+::lexical ከ ::right-context \d ::lcode amh ::eng since ::comment "ke" prefix
+::lexical ለ ::right-context \d ::lcode amh ::eng for ::comment "le" prefix
+::lexical የ ::right-context \d ::lcode amh ::eng of ::comment "ye" prefix
+
+::abbrev ዓ.ም. ::lcode amh ::eng AD ::alt-spelling ዓ/ም
+::abbrev ዶ/ር ::lcode amh ::eng Dr.

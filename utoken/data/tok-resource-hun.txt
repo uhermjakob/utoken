@@ -1,19 +1,25 @@
-::abbrev Dr. ::lcode hun
-::abbrev Prof. ::lcode hun
-::abbrev Szt. ::lcode hun
-::abbrev St. ::lcode hun
-::abbrev kb. ::lcode hun
-::abbrev vö. ::lcode hun
-::abbrev pl. ::lcode hun
+::punct-split - ::side both ::left-context (?:\pL\pM*|\d)[.%]? ::right-context (?:a|án|át|é|én|ig|n|t)\b ::lcode hun
+
+::abbrev c. ::exp cim; című ::lcode hun ::eng title; titled
 ::abbrev ca. ::lcode hun
-::abbrev min. ::lcode hun
-::abbrev max. ::lcode hun
-::abbrev ún. ::lcode hun
 ::abbrev db. ::lcode hun
 ::abbrev d.e. ::lcode hun
+::abbrev Dr. ::lcode hun
 ::abbrev du. ::lcode hun
-::abbrev tel. ::lcode hun
 ::abbrev fax. ::lcode hun
+::abbrev ifj. ::exp ifjabb ::lcode hun ::eng Jr. ::comment precedes the name
+::abbrev kb. ::lcode hun
+::abbrev max. ::lcode hun
+::abbrev min. ::lcode hun
+::abbrev mint pl. ::exp mint például ::lcode hun ::eng such as
+::abbrev pl. ::lcode hun
+::abbrev Prof. ::lcode hun
+::abbrev St. ::lcode hun
+::abbrev Szt. ::lcode hun
+::abbrev tel. ::lcode hun
+::abbrev ún. ::exp úgynevezett ::lcode hun ::eng so-called
+::abbrev vö. ::lcode hun
+
 ::abbrev jan. ::lcode hun ::right-context \s*\d
 ::abbrev feb. ::lcode hun ::right-context \s*\d
 ::abbrev márc. ::lcode hun ::right-context \s*\d

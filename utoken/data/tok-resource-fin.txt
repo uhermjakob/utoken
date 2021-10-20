@@ -1,3 +1,16 @@
+::lexical :ään ::lcode fin ::syntax-checked True ::comment suffix
+::lexical :in ::lcode fin ::syntax-checked True ::comment suffix
+::lexical :lle ::lcode fin ::syntax-checked True ::comment suffix
+::lexical :lta ::lcode fin ::syntax-checked True ::comment suffix
+::lexical :n ::lcode fin ::syntax-checked True ::comment suffix
+::lexical :nä ::lcode fin ::syntax-checked True ::comment suffix
+::lexical :ssa ::lcode fin ::syntax-checked True ::comment suffix
+::lexical :ssä ::lcode fin ::syntax-checked True ::comment suffix
+::lexical :sta ::lcode fin ::syntax-checked True ::comment suffix
+::lexical :ta ::lcode fin ::syntax-checked True ::comment suffix
+
+::lexical Iso-Britannia ::lcode fin ::sem-class country ::eng Great Britain
+
 ::abbrev A. ::lcode fin ::eng any single upper case letter  followed by a period is not a sentence ender.
 ::abbrev B. ::lcode fin
 ::abbrev C. ::lcode fin
@@ -27,12 +40,15 @@
 ::abbrev Å. ::lcode fin
 ::abbrev Ä. ::lcode fin
 ::abbrev Ö. ::lcode fin
+
 ::abbrev alik. ::lcode fin ::eng List of titles. These are often followed by upper-case names, but do not indicate sentence breaks.
 ::abbrev alil. ::lcode fin
+::abbrev alk. ::exp alkaen ::lcode fin ::eng from; since
 ::abbrev amir. ::lcode fin
 ::abbrev apul. ::lcode fin
 ::abbrev apul.prof. ::lcode fin
 ::abbrev arkkit. ::lcode fin
+::abbrev as. ::exp asukkaat ::lcode fin ::eng inhabitants
 ::abbrev ass. ::lcode fin
 ::abbrev assist. ::lcode fin
 ::abbrev dipl. ::lcode fin
@@ -44,10 +60,12 @@
 ::abbrev dipl.kosm. ::lcode fin
 ::abbrev dipl.urk. ::lcode fin
 ::abbrev dos. ::lcode fin
+::abbrev engl. ::lcode fin
 ::abbrev erikoiseläinl. ::lcode fin
 ::abbrev erikoishammasl. ::lcode fin
 ::abbrev erikoisl. ::lcode fin
 ::abbrev erikoist. ::lcode fin
+::abbrev esim. ::lcode fin
 ::abbrev ev.luutn. ::lcode fin
 ::abbrev evp. ::lcode fin
 ::abbrev fil. ::lcode fin
@@ -55,6 +73,7 @@
 ::abbrev hallinton. ::lcode fin
 ::abbrev hallintot. ::lcode fin
 ::abbrev hammaslääket. ::lcode fin
+::abbrev jap. ::lcode fin
 ::abbrev jatk. ::lcode fin
 ::abbrev jääk. ::lcode fin
 ::abbrev kansaned. ::lcode fin
@@ -70,32 +89,41 @@
 ::abbrev komm. ::lcode fin
 ::abbrev konst. ::lcode fin
 ::abbrev korpr. ::lcode fin
+::abbrev lat. ::lcode fin
 ::abbrev luutn. ::lcode fin
+::abbrev lyh. ::exp lyhenne ::lcode fin ::eng abbrev.
 ::abbrev maist. ::lcode fin
 ::abbrev maj. ::lcode fin
 ::abbrev Mr. ::lcode fin
 ::abbrev Mrs. ::lcode fin
 ::abbrev Ms. ::lcode fin
 ::abbrev M.Sc. ::lcode fin
+::abbrev n. ::exp noin ::lcode fin ::eng approximately
 ::abbrev neuv. ::lcode fin
 ::abbrev nimim. ::lcode fin
+::abbrev ns. ::exp niin sanottu ::lcode fin ::eng so-called
+::abbrev o.s. ::exp omaa sukua ::lcode fin ::eng née
 ::abbrev Ph.D. ::lcode fin
 ::abbrev prof. ::lcode fin
 ::abbrev puh.joht. ::lcode fin
 ::abbrev pääll. ::lcode fin
 ::abbrev res. ::lcode fin
+::abbrev s. ::lcode fin ::eng born
 ::abbrev san. ::lcode fin
 ::abbrev siht. ::lcode fin
 ::abbrev suom. ::lcode fin
 ::abbrev sähköp. ::lcode fin
 ::abbrev säv. ::lcode fin
+::abbrev tms. ::exp tai muuta sellaista ::lcode fin ::eng or something like that
 ::abbrev toht. ::lcode fin
 ::abbrev toim. ::lcode fin
 ::abbrev toim.apul. ::lcode fin
 ::abbrev toim.joht. ::lcode fin
 ::abbrev toim.siht. ::lcode fin
 ::abbrev tuom. ::lcode fin
+::abbrev ukr. ::lcode fin
 ::abbrev ups. ::lcode fin
+::abbrev ven. ::exp venäjää ::lcode fin ::eng Russian
 ::abbrev vänr. ::lcode fin
 ::abbrev vääp. ::lcode fin
 ::abbrev ye.ups. ::lcode fin
@@ -109,7 +137,6 @@
 ::abbrev yliv. ::lcode fin
 ::abbrev e.g. ::lcode fin ::eng into this category - it sometimes ends a sentence).
 ::abbrev ent. ::lcode fin
-::abbrev esim. ::lcode fin
 ::abbrev huom. ::lcode fin
 ::abbrev i.e. ::lcode fin
 ::abbrev ilm. ::lcode fin
@@ -122,3 +149,4 @@
 ::abbrev po. ::lcode fin
 ::abbrev t. ::lcode fin
 ::abbrev v. ::lcode fin
+

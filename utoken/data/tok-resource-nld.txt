@@ -1,0 +1,97 @@
+# ::lexical XX ::right-context \d ::lcode nld ::eng XX
+
+::abbrev a.g.v. ::lcode nld
+::abbrev a.s. ::exp aanstaande ::eng next ::lcode nld
+::abbrev a.u.b. ::exp alstublieft ::eng please ::lcode nld
+::abbrev b.h. ::exp bustehouder ::eng bra ::lcode nld
+::abbrev b.v. ::exp bijvoorbeeld ::eng for instance ::alt-spelling b.v.b.; bv.; bvb. ::lcode nld
+::abbrev bacc. ::lcode nld
+::abbrev bc. ::lcode nld
+::abbrev bgen. ::lcode nld
+::abbrev bijv. ::lcode nld
+::abbrev bijz. ::lcode nld
+::abbrev bv. ::lcode nld
+::abbrev c.i. ::lcode nld
+::abbrev ca. ::lcode nld
+::abbrev Chr. ::lcode nld
+::abbrev d.i. ::exp dit is ::eng this is ::lcode nld
+::abbrev d.w.z. ::exp dat wil zeggen ::eng that means, that is ::lcode nld
+::abbrev dhr. ::lcode nld
+::abbrev dr. ::lcode nld
+::abbrev dr.h.c. ::lcode nld
+::abbrev drs. ::lcode nld
+::abbrev ds. ::lcode nld
+::abbrev e.a. ::exp en andere ::eng and others; et al. ::lcode nld
+::abbrev e.c. ::lcode nld
+::abbrev e.d. ::exp en dergelijke ::eng and the like ::lcode nld
+::abbrev e.g. ::lcode nld
+::abbrev e.k. ::lcode nld
+::abbrev eint. ::lcode nld
+::abbrev enz. ::exp enzovoort ::eng et cetera ::lcode nld
+::abbrev ev. ::lcode nld
+::abbrev fa. ::lcode nld
+::abbrev fam. ::lcode nld
+::abbrev gen. ::lcode nld
+::abbrev genm. ::lcode nld
+::abbrev i.p.v. ::exp in plaats van ::eng instead of ::lcode nld
+::abbrev i.s.m. ::lcode nld
+::abbrev i.t.t. ::lcode nld
+::abbrev i.v.m. ::lcode nld
+::abbrev ing. ::lcode nld
+::abbrev ir. ::lcode nld
+::abbrev jhr. ::lcode nld
+::abbrev jkvr. ::lcode nld
+::abbrev jr. ::lcode nld
+::abbrev kand. ::lcode nld
+::abbrev kol. ::lcode nld
+::abbrev lgen. ::lcode nld
+::abbrev lkol. ::lcode nld
+::abbrev Lt. ::lcode nld
+::abbrev m.a.w. ::exp met andere woorden ::eng in other words; i.e. ::lcode nld
+::abbrev m.b.t. ::lcode nld
+::abbrev m.b.v. ::lcode nld
+::abbrev m.h.o. ::lcode nld
+::abbrev m.i. ::lcode nld
+::abbrev m.i.v. ::lcode nld
+::abbrev maj. ::lcode nld
+::abbrev Mej. ::lcode nld
+::abbrev mevr. ::lcode nld
+::abbrev Mme. ::lcode nld ::etym-lcode fra ::eng Mrs.
+::abbrev mr. ::lcode nld
+::abbrev mvg ::exp met vriendelijke groeten ::eng with kind greetings; sincerely yours ::lcode nld
+::abbrev Mw. ::lcode nld
+::abbrev n.Chr. ::exp na Christus ::eng A.D. ::alt-spelling n.C. ::lcode nld
+::abbrev n.v.d.a. ::exp noot van de auteur ::eng comment from the author ::lcode nld
+::abbrev n.v.d.r. ::exp noot van de redactie ::eng comment from the editor ::alt-spelling nvdr ::lcode nld
+::abbrev nl. ::exp namelijk ::eng viz. ::lcode nld
+::abbrev nr. ::lcode nld
+::abbrev nrs. ::lcode nld
+::abbrev o.a. ::exp onder andere ::eng among others ::lcode nld
+::abbrev o.b.s. ::lcode nld
+::abbrev o.m. ::exp onder meer ::eng among others ::lcode nld
+::abbrev p.a. ::exp per adres ::eng c/o ::lcode nld
+::abbrev plv. ::lcode nld
+::abbrev prof. ::lcode nld
+::abbrev ritm. ::lcode nld
+::abbrev s.v.p. ::exp s'il vous plait ::etym-lcode fra ::eng please ::lcode nld
+::abbrev t.e.m. ::exp tot en met ::eng until ::comment itself included ::alt-spelling t/m ::lcode nld
+::abbrev tint. ::lcode nld
+::abbrev v.a. ::exp vanaf ::eng from ::lcode nld
+::abbrev v.b. ::exp voorbeeld ::eng example, instance ::alt-spelling vb. ::lcode nld
+::abbrev v.Chr. ::exp voor Christus ::lcode nld ::eng BC ::alt-spelling v.C.
+::abbrev v.w.t. ::lcode nld
+::abbrev vgl. ::exp vergelijk ::eng compare; cf. ::lcode nld
+::abbrev vnl. ::exp voornamelijk ::eng mainly, chiefly ::lcode nld
+::abbrev Vz. ::lcode nld
+::abbrev Z.D. ::lcode nld
+::abbrev Z.D.H. ::lcode nld
+::abbrev Z.E. ::lcode nld
+::abbrev Z.Em. ::lcode nld
+::abbrev Z.H. ::lcode nld
+::abbrev Z.K.H. ::lcode nld
+::abbrev Z.K.M. ::lcode nld
+::abbrev Z.M. ::lcode nld
+::abbrev z.o.z. ::exp zie ommezijde ::eng see other side ::comment on a sheet of paper ::lcode nld
+::abbrev z.v. ::lcode nld
+::abbrev zgn. ::exp zogenaamd ::eng so-called ::alt-spelling z.n.; zn. ::lcode nld
+

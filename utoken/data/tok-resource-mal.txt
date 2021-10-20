@@ -1,10 +1,28 @@
-::punct-split : ::side both ::left-context \pL\pM*\pL\pM* ::right-context [-\/]*\pL\pM*\pL
-::punct-split - ::side start ::group True ::right-context (?:ൽ|ല്|ന്|ലെ|ആം|നു)(?!\pL|\d)
+::punct-split - ::side start ::lcode mal ::group True ::right-context (?:ൽ|ല്|ന്|ലെ|ആം|നു)(?!\pL|\d)
+::punct-split . ::side both ::lcode mal ::left-context \pL\pM*\pL\pM* ::right-context \pL
+::punct-split . ::side both ::lcode mal ::left-context \pL\pM* ::right-context \pL\pM*\pL
 
-::abbrev ഡോ. ::exp ഡോക്ടർ ::lcode mal ::sem-class pre-name-title ::comment Dr.
-::abbrev പ്രസ്. ::exp പ്രസിഡന്റ് ::lcode mal ::sem-class pre-name-title ::comment Pres.
-::abbrev പ്രൊഫ. ::exp പ്രൊഫസർ ::lcode mal ::sem-class pre-name-title ::comment Prof.
-::abbrev ശ്രീ. ::eng Mr.
+::abbrev ഡോ. ::exp ഡോക്ടർ ::lcode mal ::sem-class pre-name-title ::eng Dr.
+::abbrev പ്രസ്. ::exp പ്രസിഡന്റ് ::lcode mal ::sem-class pre-name-title ::eng President
+::abbrev പ്രൊഫ. ::exp പ്രൊഫസർ ::lcode mal ::sem-class pre-name-title ::eng Professor
+::abbrev ശ്രീ. ::exp മിസ്റ്റർ ::lcode mal ::sem-class pre-name-title ::eng Mr.
+::abbrev സെന്റ്. ::lcode mal ::sem-class pre-name-title ::eng St.
+
+::abbrev ഉദാ. ::exp ഉദാഹരണത്തിന് ::lcode mal ::eng e.g.
+
+::abbrev ജനു. ::exp ജനുവരി ::lcode mal ::sem-class month-of-the-year ::eng January
+::abbrev ഫെബ്രു. ::exp ഫെബ്രുവരി ::lcode mal ::sem-class month-of-the-year ::eng February
+::abbrev മാർ. ::exp മാർച്ച് ::lcode mal ::sem-class month-of-the-year ::eng March
+::abbrev ഏപ്രി. ::exp ഏപ്രിൽ ::lcode mal ::sem-class month-of-the-year ::eng April
+# ::abbrev X. ::exp മേയ് ::lcode mal ::sem-class month-of-the-year ::eng May
+# ::abbrev X. ::exp ജൂൺ ::lcode mal ::sem-class month-of-the-year ::eng June
+# ::abbrev X. ::exp ജൂലൈ ::lcode mal ::sem-class month-of-the-year ::eng July
+::abbrev ഓഗ. ::exp ഓഗസ്റ്റ് ::lcode mal ::sem-class month-of-the-year ::eng August
+::abbrev സെപ്റ്റം. ::exp സെപ്റ്റംബർ ::lcode mal ::sem-class month-of-the-year ::eng September
+::abbrev ഒക്ടോ. ::exp ഒക്ടോബർ ::lcode mal ::sem-class month-of-the-year ::eng October
+::abbrev നവം. ::exp നവംബർ ::lcode mal ::sem-class month-of-the-year ::eng November
+::abbrev ഡിസം. ::exp ഡിസംബർ ::lcode mal ::sem-class month-of-the-year ::eng December
+
 ::abbrev എ. ::token-category phonetics ::lcode mal ::eng A.
 ::abbrev ബി. ::token-category phonetics ::lcode mal ::eng B.
 ::abbrev സി. ::token-category phonetics ::lcode mal ::eng C.
@@ -13,6 +31,7 @@
 ::abbrev എഫ്. ::token-category phonetics ::lcode mal ::eng F.
 ::abbrev ജി. ::token-category phonetics ::lcode mal ::eng G.
 ::abbrev എച്ച്. ::token-category phonetics ::lcode mal ::eng H.
+::abbrev എച്. ::token-category phonetics ::lcode mal ::eng H.  # OK?
 ::abbrev ഐ. ::token-category phonetics ::lcode mal ::eng I.
 ::abbrev ജെ. ::token-category phonetics ::lcode mal ::eng J.
 ::abbrev കെ. ::token-category phonetics ::lcode mal ::eng K.
@@ -22,6 +41,7 @@
 ::abbrev ഒ. ::token-category phonetics ::lcode mal ::eng O.
 ::abbrev പി. ::token-category phonetics ::lcode mal ::eng P.
 ::abbrev ക്യൂ. ::token-category phonetics ::lcode mal ::eng Q.
+::abbrev ക്യു. ::token-category phonetics ::lcode mal ::eng Q.
 ::abbrev ആർ. ::token-category phonetics ::lcode mal ::eng R.
 ::abbrev എസ്. ::token-category phonetics ::lcode mal ::eng S.
 ::abbrev ടി. ::token-category phonetics ::lcode mal ::eng T.

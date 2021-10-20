@@ -12,18 +12,19 @@ import regex
 import sys
 from typing import Dict, List, Optional, Pattern
 from . import __version__, last_mod_date
-# from __init__ import __version__, last_mod_date
+
 
 class ResourceEntry:
     """Annotated entries for abbreviations, contractions, repairs etc."""
     def __init__(self, s: str, tag: Optional[str] = None,
                  sem_class: Optional[str] = None, country: Optional[str] = None,
-                 lcode: Optional[str] = None, etym_lcode: Optional[str] = None,
+                 lcode: Optional[str] = None, lang_codes_not: List[str] = None, etym_lcode: Optional[str] = None,
                  left_context: Optional[Pattern[str]] = None, left_context_not: Optional[Pattern[str]] = None,
                  right_context: Optional[Pattern[str]] = None, right_context_not: Optional[Pattern[str]] = None,
                  case_sensitive: bool = False):
         self.s = s                      # e.g. Gen.
         self.lcode = lcode              # language code, e.g. eng
+        self.lang_codes_not = lang_codes_not
         self.etym_lcode = etym_lcode    # etymological language code, e.g. lat
         self.country = country          # country, e.g. Canada
         self.sem_class = sem_class      # e.g. pre-name-title
@@ -79,6 +80,11 @@ class PunctSplitEntry(ResourceEntry):
         self.group = group if group else False
 
 
+class NonSymbolEntry(ResourceEntry):
+    def __init__(self, s: str):
+        super().__init__(s)
+
+
 class ResourceDict:
     def __init__(self):
         """Dictionary of ResourceEntries. All dictionary keys are lower case."""
@@ -88,6 +94,8 @@ class ResourceDict:
         self.prefix_dict_lexical: Dict[str, bool] = {}
         self.prefix_dict_punct: Dict[str, bool] = {}
         self.max_s_length: int = 0
+        self.pre_name_title_list = defaultdict(list)  # key: lang_code  value: ["Mr.", "Dr."]
+        self.phonetics_list = defaultdict(list)       # key: lang_code  value: ["Ey.", "Bi.", "Si."]
 
     def register_resource_entry_in_reverse_resource_dict(self, resource_entry: ResourceEntry, rev_anchors: List[str]):
         for rev_anchor in rev_anchors:
@@ -104,8 +112,23 @@ class ResourceDict:
                 return m1.group(1) + m2.group(1)
         return line
 
-    @staticmethod
-    def expand_resource_lines(orig_line: str) -> List[str]:
+    def abbrev_space_expansions(self, abbrev: str) -> List[str]:
+        """'e.g.' -> ['e.g.', 'e. g.']"""
+        if m3 := regex.match(r'((?:\pL\pM*|\d|[-_])+) ?([.·]) ?((?:\pL|\d).*)$', abbrev):
+            first_elem = m3.group(1)
+            punct = m3.group(2)
+            result_list = []
+            for sub_expansion in self.abbrev_space_expansions(m3.group(3)):
+                result_list.append(first_elem + punct + sub_expansion)
+                if punct in '·':
+                    result_list.append(first_elem + ' ' + punct + ' ' + sub_expansion)
+                else:
+                    result_list.append(first_elem + punct + ' ' + sub_expansion)
+            return result_list
+        else:
+            return [abbrev]
+
+    def expand_resource_lines(self, orig_line: str) -> List[str]:
         lines = [orig_line]
         # expand resource entry with apostophe to alternatives with closely related characters (e.g. single quotes)
         apostrophe = "'"
@@ -125,6 +148,17 @@ class ResourceDict:
                     if apostrophe in m3.group(2):
                         for repl_char in repl_chars:
                             new_line = f'{m3.group(1)}{regex.sub(apostrophe, repl_char, m3.group(2))}{m3.group(3)}'
+                            lines.append(new_line)
+        # expand resource entry with hyphen to alternatives with closely related characters (e.g. Armenian hyphen)
+        hyphen = "-"
+        n_lines = len(lines)
+        for line in lines[0:n_lines]:
+            if hyphen in line:
+                repl_chars = "–֊"  # en-dash, Aramenian hyphen
+                if (repl_chars != '') and (m3 := regex.match(r'(::\S+\s+)(\S|\S.*?\S)(\s+::\S.*|\s*)$', line)):
+                    if hyphen in m3.group(2):
+                        for repl_char in repl_chars:
+                            new_line = f'{m3.group(1)}{regex.sub(hyphen, repl_char, m3.group(2))}{m3.group(3)}'
                             lines.append(new_line)
         # expand resource entry with ::plural
         n_lines = len(lines)
@@ -167,11 +201,24 @@ class ResourceDict:
                     # remove ::alt-spelling ...
                     new_line = re.sub(r'::alt-spelling\s+(?:\S|\S.*\S)\s*(::\S.*|)$', r'\1', new_line)
                     lines.append(new_line)
+        # expand resource entry with extra spaces in punctuation e.g. -> e. g.
+        n_lines = len(lines)
+        for line in lines[0:n_lines]:
+            if m3 := regex.match(r'::(abbrev|lexical)\s+(\S|\S.*?\S)(\s+::\S.*)$', line):
+                abbreviation = m3.group(2)  # Could also be lexical item such as "St. Petersburg"
+                if regex.match(r'.*[.·] ?\S', abbreviation) \
+                        and slot_value_in_double_colon_del_list(line, 'sem-class') != 'url'\
+                        and (line.startswith('::abbrev ') or line.startswith('::lexical ')):
+                    for expanded_abbreviation in self.abbrev_space_expansions(abbreviation):
+                        if expanded_abbreviation != abbreviation:
+                            new_line = f'::repair {expanded_abbreviation} ::target {abbreviation}{m3.group(3)}'
+                            lines.append(new_line)
+                            # log.info(f'Expanding {abbreviation} TO {expanded_abbreviation}')
         # expand resource entry with ::last-char-repeatable
         n_lines = len(lines)
         for line in lines[0:n_lines]:
             if slot_value_in_double_colon_del_list(line, 'last-char-repeatable'):
-                 if m3 := regex.match(r'(::\S+\s+)(\S|\S.*?\S)(\s+::\S.*)$', line):
+                if m3 := regex.match(r'(::\S+\s+)(\S|\S.*?\S)(\s+::\S.*)$', line):
                     token = m3.group(2)
                     last_char = token[-1]
                     for _ in range(127):
@@ -267,6 +314,7 @@ class ResourceDict:
                                                                               'left-context-not',
                                                                               'lexical',
                                                                               'misspelling',
+                                                                              'non-symbol',
                                                                               'nonstandard',
                                                                               'plural',
                                                                               'problem',
@@ -279,6 +327,7 @@ class ResourceDict:
                                                                               'side',
                                                                               'substandard',
                                                                               'suffix-variations',
+                                                                              'syntax-checked',
                                                                               'tag',
                                                                               'target',
                                                                               'taxon',
@@ -287,6 +336,7 @@ class ResourceDict:
                                                                                      'contraction': ['target'],
                                                                                      'lexical': [],
                                                                                      'misspelling': ['target'],
+                                                                                     'non-symbol': [],
                                                                                      'punct-split': ['side'],
                                                                                      'repair': ['target']})
                         if not valid:
@@ -336,12 +386,17 @@ class ResourceDict:
                                 resource_entry = LexicalEntry(s)
                         elif head_slot == 'punct-split':
                             side = slot_value_in_double_colon_del_list(line, 'side')
+                            if side not in ('start', 'end', 'both'):
+                                log.warning(f'Invalid side {side} in line {line_number} in {filename} '
+                                            f'(should be one of start/end/both)')
                             group = slot_value_in_double_colon_del_list(line, 'group', False)
                             resource_entry = PunctSplitEntry(s, side, group=bool(group))
                         elif head_slot == 'repair':
                             target = slot_value_in_double_colon_del_list(line, 'target')
                             resource_entry = RepairEntry(s, target)
                             self.register_resource_entry_in_reverse_resource_dict(resource_entry, [target])
+                        elif head_slot == 'non-symbol':
+                            resource_entry = NonSymbolEntry(s)
                         if resource_entry:  # register resource_entry with lowercase key
                             if len(s) > self.max_s_length:
                                 self.max_s_length = len(s)
@@ -355,6 +410,13 @@ class ResourceDict:
                                     self.prefix_dict[lc_s[:prefix_length]] = True
                             if sem_class := slot_value_in_double_colon_del_list(line, 'sem-class'):
                                 resource_entry.sem_class = sem_class
+                                if (sem_class == "pre-name-title") \
+                                        and (lcode := slot_value_in_double_colon_del_list(line, 'lcode')):
+                                    self.pre_name_title_list[lcode].append(lc_s)
+                            if (token_category := slot_value_in_double_colon_del_list(line, 'token-category')) \
+                                    and (token_category == 'phonetics') \
+                                    and (lcode := slot_value_in_double_colon_del_list(line, 'lcode')):
+                                self.phonetics_list[lcode].append(lc_s)
                             if slot_value_in_double_colon_del_list(line, 'case-sensitive'):
                                 resource_entry.case_sensitive = True
                             if tag := slot_value_in_double_colon_del_list(line, 'tag'):
@@ -393,6 +455,8 @@ class ResourceDict:
                                 except regex.error:
                                     log.warning(f'Regex compile error in l.{line_number} for {s} ::right-context-not '
                                                 f'{right_context_not_s}')
+                            if lang_code_not_s := slot_value_in_double_colon_del_list(line, 'lcode-not'):
+                                resource_entry.lang_codes_not = re.split(r'[;,\s*]', lang_code_not_s)
                             abbreviation_entry_list = self.resource_dict.get(lc_s, [])
                             abbreviation_entry_list.append(resource_entry)
                             self.resource_dict[lc_s] = abbreviation_entry_list
@@ -408,13 +472,15 @@ class ResourceDict:
 
 
 class DetokenizationEntry:
-    def __init__(self, s: str, group: Optional[bool] = False, lang_codes: List[str] = None,
+    def __init__(self, s: str, group: Optional[bool] = False,
+                 lang_codes: List[str] = None, lang_codes_not: List[str] = None,
                  left_context: Optional[Pattern[str]] = None, left_context_not: Optional[Pattern[str]] = None,
                  right_context: Optional[Pattern[str]] = None, right_context_not: Optional[Pattern[str]] = None,
                  case_sensitive: bool = False):
         self.s = s
         self.group = group
         self.lang_codes = lang_codes
+        self.lang_codes_not = lang_codes_not
         self.left_context: Optional[Pattern[str]] = left_context
         self.left_context_not: Optional[Pattern[str]] = left_context_not
         self.right_context: Optional[Pattern[str]] = right_context
@@ -425,7 +491,9 @@ class DetokenizationEntry:
                                                  lang_code: Optional[str], group: Optional[bool] = False) -> bool:
         """This methods checks whether a detokenization-entry satisfies any context conditions."""
         lang_codes = self.lang_codes
+        lang_codes_not = self.lang_codes_not
         return ((not lang_code or not lang_codes or (lang_code in lang_codes))
+                and (not lang_code or not lang_codes_not or (lang_code not in lang_codes_not))
                 and (not self.case_sensitive or (token == self.s))
                 and (not group or self.group)
                 and (not (re_l := self.left_context) or re_l.match(left_context))
@@ -462,27 +530,30 @@ class DetokenizationResource:
         self.attach_tag = '@'  # default
         self.auto_attach_left = defaultdict(list)
         self.auto_attach_right = defaultdict(list)
+        self.auto_attach_left_w_lc = {}
+        self.auto_attach_right_w_lc = {}
         self.markup_attach = defaultdict(list)
         self.markup_attach_re_elements = set()
         self.markup_attach_re_string = None
         self.markup_attach_re = None   # compiled regular expression
         self.contraction_dict = defaultdict(list)
 
-    def load_resource(self, filename: Path, lang_codes: Optional[List[str]] = None, verbose: bool = True) -> None:
+    def load_resource(self, filename: Path, doc_lang_codes: List[str], verbose: bool = True) -> None:
         """Loads detokenization resources such as auto-attach, markup-attach etc.
         Example input file: data/detok-resource.txt
-        This file is also loaded and by the tokenizer to produce appropriate mt-style @...@ tokens."""
+        This file is also loaded by the tokenizer to produce appropriate mt-style @...@ tokens."""
         try:
             with open(filename) as f_in:
                 line_number = 0
                 n_warnings = 0
                 n_entries = 0
+                resource_dict = ResourceDict()
                 for orig_line in f_in:
                     line_number += 1
-                    line_without_comment = ResourceDict.line_without_comment(orig_line)
+                    line_without_comment = resource_dict.line_without_comment(orig_line)
                     if line_without_comment.strip() == '':
                         continue
-                    lines = ResourceDict.expand_resource_lines(line_without_comment)
+                    lines = resource_dict.expand_resource_lines(line_without_comment)
                     for line in lines:
                         if re.match(r'^\uFEFF?\s*(?:#.*)?$', line):  # ignore empty or comment line
                             continue
@@ -503,6 +574,7 @@ class DetokenizationResource:
                                                                               'example',
                                                                               'except',
                                                                               'group',
+                                                                              'last-char-repeatable',
                                                                               'lcode',
                                                                               'lcode-not',
                                                                               'left-context',
@@ -510,6 +582,7 @@ class DetokenizationResource:
                                                                               'lexical',
                                                                               'markup-attach',
                                                                               'misspelling',
+                                                                              'non-symbol',
                                                                               'nonstandard',
                                                                               'paired-delimiter',
                                                                               'plural',
@@ -528,7 +601,8 @@ class DetokenizationResource:
                                                                                      'auto-attach': ['side'],
                                                                                      'contraction': ['target'],
                                                                                      'lexical': [],
-                                                                                     'markup-attach': []})
+                                                                                     'markup-attach': [],
+                                                                                     'non-symbol': []})
                         if not valid:
                             n_warnings += 1
                             continue
@@ -536,27 +610,35 @@ class DetokenizationResource:
                             head_slot = m1.group(1)
                         else:
                             continue
-                        if lang_codes:
-                            if line_lang_code_s := slot_value_in_double_colon_del_list(line, 'lcode'):
-                                line_lang_codes = re.split(r'[;,\s*]', line_lang_code_s)
-                                if not lists_share_element(lang_codes, line_lang_codes):
-                                    continue
+                        line_lang_code_s = slot_value_in_double_colon_del_list(line, 'lcode')
+                        line_lang_codes = re.split(r'[;,\s*]', line_lang_code_s) if line_lang_code_s else []
+                        if doc_lang_codes and line_lang_codes:
+                            if not lists_share_element(doc_lang_codes, line_lang_codes):
+                                continue
                         s = slot_value_in_double_colon_del_list(line, head_slot)
                         lc_s = s.lower()
                         detokenization_entry = None
                         if head_slot == 'auto-attach':
                             side = slot_value_in_double_colon_del_list(line, 'side')
                             group = bool(slot_value_in_double_colon_del_list(line, 'group', False))
-                            lang_code_s = slot_value_in_double_colon_del_list(line, 'lcode')
-                            lang_codes = lang_code_s.split(r'[;,]\s') if lang_code_s else []
-                            detokenization_entry = DetokenizationEntry(s, group, lang_codes)
+                            detokenization_entry = DetokenizationEntry(s, group, line_lang_codes)
                             if side == 'left' or side == 'both':
-                                if self.auto_attach_left.get(lc_s, None):
-                                    log.warning(f'Duplicate ::auto-attach {lc_s} ::side left')
+                                for line_lang_code in (line_lang_codes if line_lang_codes else [None]):
+                                    key = f'{line_lang_code} {lc_s}'
+                                    if self.auto_attach_left_w_lc.get(key, False):
+                                        lcode_clause = f' ::lcode {line_lang_code}' if line_lang_code else ''
+                                        log.warning(f'Duplicate ::auto-attach {lc_s} ::side left{lcode_clause}')
+                                    else:
+                                        self.auto_attach_left_w_lc[key] = True
                                 self.auto_attach_left[lc_s].append(detokenization_entry)
                             if side == 'right' or side == 'both':
-                                if self.auto_attach_right.get(lc_s, None):
-                                    log.warning(f'Duplicate ::auto-attach {lc_s} ::side right')
+                                for line_lang_code in (line_lang_codes if line_lang_codes else [None]):
+                                    key = f'{line_lang_code} {lc_s}'
+                                    if self.auto_attach_right_w_lc.get(key, False):
+                                        lcode_clause = f' ::lcode {line_lang_code}' if line_lang_code else ''
+                                        log.warning(f'Duplicate ::auto-attach {lc_s} ::side right{lcode_clause}')
+                                    else:
+                                        self.auto_attach_right_w_lc[key] = True
                                 self.auto_attach_right[lc_s].append(detokenization_entry)
                         elif head_slot == 'markup-attach':
                             paired_delimiter = bool(slot_value_in_double_colon_del_list(line, 'paired-delimiter',
@@ -618,6 +700,8 @@ class DetokenizationResource:
                                 except regex.error:
                                     log.warning(f'Regex compile error in l.{line_number} for {s} ::right-context-not '
                                                 f'{right_context_not_s}')
+                            if lang_code_not_s := slot_value_in_double_colon_del_list(line, 'lcode-not'):
+                                detokenization_entry.lang_codes_not = re.split(r'[;,\s*]', lang_code_not_s)
                             n_entries += 1
                 if verbose:
                     log.info(f'Loaded {n_entries} entries from {line_number} lines in {filename}')
@@ -721,6 +805,7 @@ def load_top_level_domains(filename: Path) -> (List[str], List[str], List[str]):
                                                          valid_slots=['code',
                                                                       'comment',
                                                                       'country-name',
+                                                                      'example',
                                                                       'reliability'],
                                                          required_slot_dict={'code': []})
                 if not valid:

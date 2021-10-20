@@ -1,0 +1,19 @@
+::abbrev г. ::lcode bul ::eng year
+::abbrev млн. ::lcode bul ::eng million ::alt-spelling мил.
+::abbrev т.нар. ::lcode bul ::eng so-called ::alt-spelling т. нар.
+::abbrev р. ::lcode bul ::eng born
+::abbrev ч. ::lcode bul ::eng o'clock
+::abbrev Проф. ::lcode bul ::eng Prof.
+::abbrev и т.н. ::exp и така нататък ::lcode bul ::eng etc.
+
+::abbrev Д-р ::lcode bul ::eng Dr.
+::abbrev Г-н ::lcode bul ::eng Mr.
+::abbrev Г-жа ::lcode bul ::eng Mrs.
+
+::abbrev ян. ::lcode bul ::sem-class month-of-the-year ::eng January
+::abbrev февр. ::lcode bul ::sem-class month-of-the-year ::eng February
+::abbrev авг. ::lcode bul ::sem-class month-of-the-year ::eng August
+::abbrev септ. ::lcode bul ::sem-class month-of-the-year ::eng September
+::abbrev окт. ::lcode bul ::sem-class month-of-the-year ::eng October
+::abbrev ноем. ::lcode bul ::sem-class month-of-the-year ::eng November
+::abbrev дек. ::lcode bul ::sem-class month-of-the-year ::eng December

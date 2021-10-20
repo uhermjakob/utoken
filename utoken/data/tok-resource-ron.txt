@@ -1,8 +1,51 @@
-::abbrev dpdv. ::lcode ron
-::abbrev etc. ::lcode ron
-::abbrev șamd. ::lcode ron
-::abbrev M.Ap.N. ::lcode ron
+::punct-split - ::side both ::left-context \b(?:s) ::right-context \pL ::lcode ron
+::punct-split - ::side both ::left-context \pL\pM* ::right-context (?:a|au|i|lea|o)\b ::lcode ron
+
+::abbrev acad. ::lcode ron
+::abbrev d. ::exp decedat ::lcode ron ::eng died
+::abbrev de ex. ::exp de exemplu ::lcode ron ::eng e.g.
+::abbrev d.Hr. ::lcode ron ::eng AD ::comment year
 ::abbrev dl. ::lcode ron
 ::abbrev d-na. ::lcode ron
+::abbrev doc. ::lcode ron ::eng docent
+::abbrev dpdv. ::lcode ron
+::abbrev dr.doc. ::lcode ron ::eng Dr. Docent
 ::abbrev dvs. ::lcode ron
+::abbrev etc. ::lcode ron
+::abbrev ex. ::lcode ron ::eng e.g.
+::abbrev î.e.n. ::exp înaintea erei noastre ::lcode ron ::eng BCE ::comment year
+::abbrev î.Hr. ::lcode ::eng BC ::comment year
+::abbrev m. ::exp murit ::lcode ron ::eng died
+::abbrev M.Ap.N. ::lcode ron
+::abbrev n. ::exp născut ::lcode ron ::eng born
 ::abbrev pt. ::lcode ron
+::abbrev rom. ::lcode ron
+::abbrev șamd. ::lcode ron
+::abbrev S.U.A. ::lcode ron ::eng USA ::alt-spelling S.U.A
+
+::abbrev A. ::right-context \s*\S
+::abbrev B. ::right-context \s*\S
+::abbrev C. ::right-context \s*\S
+::abbrev D. ::right-context \s*\S
+::abbrev E. ::right-context \s*\S
+::abbrev F. ::right-context \s*\S
+::abbrev G. ::right-context \s*\S
+::abbrev H. ::right-context \s*\S
+::abbrev I. ::right-context \s*\S
+::abbrev J. ::right-context \s*\S
+::abbrev K. ::right-context \s*\S
+::abbrev L. ::right-context \s*\S
+::abbrev M. ::right-context \s*\S
+::abbrev N. ::right-context \s*\S
+::abbrev O. ::right-context \s*\S
+::abbrev P. ::right-context \s*\S
+::abbrev Q. ::right-context \s*\S
+::abbrev R. ::right-context \s*\S
+::abbrev S. ::right-context \s*\S
+::abbrev T. ::right-context \s*\S
+::abbrev U. ::right-context \s*\S
+::abbrev V. ::right-context \s*\S
+::abbrev W. ::right-context \s*\S
+::abbrev X. ::right-context \s*\S
+::abbrev Y. ::right-context \s*\S
+::abbrev Z. ::right-context \s*\S

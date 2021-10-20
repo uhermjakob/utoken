@@ -1,3 +1,8 @@
+::lexical :a ::lcode swe ::left-context \d ::eng th ::comment ordinal suffix ::syntax-checked True
+::lexical :an ::lcode swe ::left-context \d ::eng th ::comment ordinal suffix ::syntax-checked True
+::lexical :e ::lcode swe ::left-context \d ::eng th ::comment ordinal suffix ::syntax-checked True
+::lexical :en ::lcode swe ::left-context \d ::eng th ::comment ordinal suffix ::syntax-checked True
+
 ::abbrev A. ::right-context \s*\S
 ::abbrev B. ::right-context \s*\S
 ::abbrev C. ::right-context \s*\S

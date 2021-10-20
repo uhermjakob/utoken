@@ -1,3 +1,8 @@
+::lexical .º ::lcode por ::eng th ::comment ordinal suffix
+
+::lexical Grã-Bretanha ::lcode por ::sem-class country
+::lexical Grã-Colômbia ::lcode por ::sem-class country
+
 ::abbrev a. ::lcode por
 ::abbrev b. ::lcode por
 ::abbrev c. ::lcode por

@@ -1,12 +1,13 @@
-::punct-split : ::side both ::lcode kaz ::left-context \pL\pM*\pL\pM* ::right-context \pL\pM*\pL
 ::punct-split - ::side both ::lcode kaz ::right-context (?:і|ы|сі)\b
+::punct-split . ::side start ::left-context-not \S ::right-context \pL\pM*\pL
 
 ::repair Tengrinews.kzтілшісі ::target Tengrinews.kz тілшісі ::lcode kaz
 ::repair Тengrinews.kzтілшісі ::target Tengrinews.kz тілшісі ::lcode kaz ::comment Cyrillic Т
 
 ::abbrev ж. ::exp жыл ::lcode kaz ::eng year ::left-context \d\s*
-::abbrev ж.т. ::lcode kaz ::eng born in
-::abbrev т.б. ::lcode kaz ::eng etc.
+::abbrev ж.т. ::lcode kaz ::eng born in ::case-sensitive True
+::abbrev т.б. ::lcode kaz ::eng etc. ::alt-spelling т/б
+::abbrev т.б.б. ::lcode kaz ::eng etc.
 ::abbrev г. ::lcode kaz ::eng year
 ::abbrev Қ. ::lcode kaz
 ::abbrev Ә. ::lcode kaz
@@ -14,6 +15,9 @@
 ::abbrev млн. ::lcode kaz ::eng million
 ::abbrev млрд. ::lcode kaz ::eng billion
 ::abbrev кв.м. ::lcode kaz ::sem-class unit-of-measurement ::eng m²
+::abbrev тел. ::lcode kaz ::eng telephone
+::abbrev б. ::lcode kaz ::left-context-not \.\s* ::right-context-not \.\.
+::abbrev бағ. ::lcode kaz
 
 ::abbrev м/с ::lcode kaz ::sem-class unit-of-measurement ::eng m/s
 ::abbrev км/сағ ::lcode kaz ::sem-class unit-of-measurement ::eng km/h

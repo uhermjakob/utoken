@@ -101,7 +101,6 @@
 ::abbrev laic. ::lcode pol
 ::abbrev łac. ::lcode pol
 ::abbrev niem. ::lcode pol
-::abbrev woj. ::lcode pol
 ::abbrev nb. ::lcode pol
 ::abbrev np. ::lcode pol
 ::abbrev pol. ::lcode pol
@@ -111,13 +110,16 @@
 ::abbrev ps. ::lcode pol
 ::abbrev cdn. ::lcode pol
 ::abbrev jw. ::lcode pol
+::abbrev r. ::lcode pol
 ::abbrev ryc. ::lcode pol
 ::abbrev rys. ::lcode pol
 ::abbrev Ryc. ::lcode pol
 ::abbrev Rys. ::lcode pol
 ::abbrev tj. ::lcode pol
+::abbrev tys. ::lcode pol ::eng thousand
 ::abbrev tzw. ::lcode pol
 ::abbrev tzn. ::lcode pol
+::abbrev woj. ::lcode pol
 ::abbrev zob. ::lcode pol
 ::abbrev ang. ::lcode pol
 ::abbrev ub. ::lcode pol
@@ -205,3 +207,20 @@
 ::abbrev s. ::lcode pol ::right-context \s*\d
 ::abbrev najśw. ::lcode pol
 ::abbrev Dz. ::lcode pol
+::abbrev ok. ::lcode pol ::eng approximately
+::abbrev ukr. ::lcode pol
+::abbrev ros. ::lcode pol
+::abbrev alb. ::lcode pol
+::abbrev hebr. ::lcode pol
+::abbrev hisz. ::lcode pol
+::abbrev kaszub. ::lcode pol
+::abbrev j. ::lcode pol
+::abbrev jap. ::lcode pol
+::abbrev lit. ::lcode pol
+::abbrev oryg. ::lcode pol
+::abbrev os. ::lcode pol
+::abbrev szw. ::lcode pol
+::abbrev zł. ::lcode pol
+::abbrev właśc. ::lcode pol
+
+::abbrev вул. ::lcode ukr

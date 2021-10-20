@@ -1,0 +1,47 @@
+::punct-split ' ::side both ::lcode kor ::left-context (?:\pL\pM*|[.]) ::right-context \pL
+::punct-split · ::side both ::lcode kor ::comment interpunct (Unicode middle dot), similar to comma
+::punct-split ！ ::side both ::lcode kor ::group True ::comment full-width exclamation mark
+::punct-split ／ ::side both ::lcode kor ::group True ::comment full-width slash
+::punct-split / ::side both ::lcode kor ::group True ::left-context \pL\pM*  ::comment slash
+::punct-split ！ ::side both ::lcode kor ::group True ::comment full-width exclamation mark
+::punct-split ! ::side both ::left-context (?:\pL\pM*|\d)[-_+*'’‘`?]* ::right-context (?:\pL|[‘?]) ::group True ::lcode kor
+::punct-split !! ::side both ::lcode kor ::group True
+::punct-split &lt; ::side both ::lcode kor
+::punct-split &gt; ::side both ::lcode kor
+
+::lexical 제 ::right-context \d ::lcode kor ::eng th ::comment ordinal prefix "je"
+::lexical 第 ::right-context \d ::lcode kor ::eng number ::comment Chinese prefix
+
+::lexical 은 ::lcode kor ::left-context (?:\d|[\p{Latin}&&\p{Letter}])[.]? ::comment topic/subject postposition suffix "neun"
+::lexical 는 ::lcode kor ::left-context (?:\d|[\p{Latin}&&\p{Letter}])[.]? ::comment topic/subject postposition suffix "eun"
+::lexical 와 ::lcode kor ::left-context (?:\d|[\p{Latin}&&\p{Letter}])[.]? ::eng with; and ::comment postposition suffix "wa"
+::lexical 의 ::lcode kor ::left-context (?:\d|[\p{Latin}&&\p{Letter}])[.]? ::eng of ::comment possessive postposition suffix "ui"
+::lexical 로 ::lcode kor ::left-context (?:\d|[\p{Latin}&&\p{Letter}])[.]? ::eng to ::comment postposition suffix "lo"
+::lexical 에서 ::lcode kor ::left-context (?:\d|[\p{Latin}&&\p{Letter}])[.]? ::eng in; from ::comment location/time suffix "eseo"
+
+::abbrev A. ::right-context \s*\S
+::abbrev B. ::right-context \s*\S
+::abbrev C. ::right-context \s*\S
+::abbrev D. ::right-context \s*\S
+::abbrev E. ::right-context \s*\S
+::abbrev F. ::right-context \s*\S
+::abbrev G. ::right-context \s*\S
+::abbrev H. ::right-context \s*\S
+::abbrev I. ::right-context \s*\S
+::abbrev J. ::right-context \s*\S
+::abbrev K. ::right-context \s*\S
+::abbrev L. ::right-context \s*\S
+::abbrev M. ::right-context \s*\S
+::abbrev N. ::right-context \s*\S
+::abbrev O. ::right-context \s*\S
+::abbrev P. ::right-context \s*\S
+::abbrev Q. ::right-context \s*\S
+::abbrev R. ::right-context \s*\S
+::abbrev S. ::right-context \s*\S
+::abbrev T. ::right-context \s*\S
+::abbrev U. ::right-context \s*\S
+::abbrev V. ::right-context \s*\S
+::abbrev W. ::right-context \s*\S
+::abbrev X. ::right-context \s*\S
+::abbrev Y. ::right-context \s*\S
+::abbrev Z. ::right-context \s*\S

@@ -1,0 +1,93 @@
+::punct-split / ::side both ::lcode nor ::left-context \pL\pM*- ::right-context \pL
+
+# ::lexical :a ::lcode swe ::left-context \d ::eng th ::comment ordinal suffix ::syntax-checked True
+# ::lexical :an ::lcode swe ::left-context \d ::eng th ::comment ordinal suffix ::syntax-checked True
+# ::lexical :e ::lcode swe ::left-context \d ::eng th ::comment ordinal suffix ::syntax-checked True
+# ::lexical :en ::lcode swe ::left-context \d ::eng th ::comment ordinal suffix ::syntax-checked True
+
+::abbrev A. ::right-context \s*\S
+::abbrev B. ::right-context \s*\S
+::abbrev C. ::right-context \s*\S
+::abbrev D. ::right-context \s*\S
+::abbrev E. ::right-context \s*\S
+::abbrev F. ::right-context \s*\S
+::abbrev G. ::right-context \s*\S
+::abbrev H. ::right-context \s*\S
+::abbrev I. ::right-context \s*\S
+::abbrev J. ::right-context \s*\S
+::abbrev K. ::right-context \s*\S
+::abbrev L. ::right-context \s*\S
+::abbrev M. ::right-context \s*\S
+::abbrev N. ::right-context \s*\S
+::abbrev O. ::right-context \s*\S
+::abbrev P. ::right-context \s*\S
+::abbrev Q. ::right-context \s*\S
+::abbrev R. ::right-context \s*\S
+::abbrev S. ::right-context \s*\S
+::abbrev T. ::right-context \s*\S
+::abbrev U. ::right-context \s*\S
+::abbrev V. ::right-context \s*\S
+::abbrev W. ::right-context \s*\S
+::abbrev X. ::right-context \s*\S
+::abbrev Y. ::right-context \s*\S
+::abbrev Z. ::right-context \s*\S
+::abbrev Å. ::right-context \s*\S
+::abbrev Æ. ::right-context \s*\S
+::abbrev Ø. ::right-context \s*\S
+
+# based on Swedish:
+::abbrev A/S ::exp Aksjeselskap ::lcode nor
+::abbrev AB. ::lcode nor
+::abbrev VG. ::lcode nor
+::abbrev ca. ::lcode nor
+::abbrev cand.real. ::exp candidatus realium ::lcode nor
+::abbrev d. ::lcode nor
+::abbrev dvs. ::lcode nor
+::abbrev d.v.s. ::lcode nor
+::abbrev etc. ::lcode nor
+::abbrev f.eks. ::lcode nor
+::abbrev from. ::lcode nor
+::abbrev fr.o.m. ::lcode nor
+::abbrev iaf. ::lcode nor
+::abbrev i.a.f. ::lcode nor
+::abbrev jfr. ::lcode nor
+::abbrev kl. ::lcode nor
+::abbrev kr. ::lcode nor
+::abbrev mao. ::lcode nor
+::abbrev m.a.o. ::lcode nor
+::abbrev mfl. ::lcode nor
+::abbrev m.fl. ::lcode nor
+::abbrev mm. ::lcode nor
+::abbrev m.m. ::lcode nor
+::abbrev osv. ::lcode nor
+::abbrev o.s.v. ::lcode nor
+::abbrev pga. ::exp på grunn av ::lcode nor
+::abbrev p.g.a. ::lcode nor
+::abbrev tom. ::lcode nor ::eng tom. is risky, as tom is a word, and can be at end of sentence. One recent text has 9 tom., and 52 tom not at end of sentence..
+::abbrev t.o.m. ::lcode nor
+::abbrev vs. ::lcode nor
+::abbrev adv. ::lcode nor
+::abbrev jur. ::lcode nor
+::abbrev kand. ::lcode nor
+::abbrev mag. ::lcode nor
+::abbrev fil. ::lcode nor
+::abbrev lic. ::lcode nor
+::abbrev prop. ::lcode nor
+::abbrev d. ::lcode nor
+::abbrev f. ::lcode nor
+::abbrev s. ::lcode nor
+::abbrev mha. ::lcode nor
+::abbrev m.h.a. ::lcode nor
+::abbrev Stockh. ::lcode nor
+::abbrev vol. ::lcode nor
+::abbrev jan. ::lcode nor
+::abbrev feb. ::lcode nor
+::abbrev mar. ::lcode nor
+::abbrev apr. ::lcode nor
+::abbrev jun. ::lcode nor
+::abbrev jul. ::lcode nor
+::abbrev aug. ::lcode nor
+::abbrev sep. ::lcode nor
+::abbrev okt. ::lcode nor
+::abbrev nov. ::lcode nor
+::abbrev dec. ::lcode nor

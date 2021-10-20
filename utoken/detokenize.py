@@ -12,10 +12,9 @@ import datetime
 import logging as log
 from pathlib import Path
 import re
+import regex
 import sys
-from typing import Optional, TextIO
-# import util
-# from __init__ import __version__, last_mod_date
+from typing import List, Optional, TextIO, Tuple
 from . import __version__, last_mod_date
 from . import util
 
@@ -23,43 +22,53 @@ log.basicConfig(level=log.INFO)
 
 
 class Detokenizer:
-    def __init__(self, lang_code: Optional[str] = None, data_dir: Optional[Path] = None):
+    def __init__(self, lang_code: Optional[str] = None, data_dir: Optional[Path] = None,
+                 verbose: Optional[bool] = False):
+        # argument lang_code is actually a comma (or semicolon)-separated list of language codes, e.g. "spa, cat"
         self.number_of_lines = 0
-        self.lang_code: Optional[str] = lang_code
-        lang_codes = [lang_code] if lang_code else []
+        self.lang_codes: List[str] = re.split(r'[;,\s*]', lang_code) if lang_code else []
         self.first_token_is_line_id_p = False
         if data_dir is None:
             data_dir = self.default_data_dir()
+        self.verbose: bool = verbose
         self.detok_resource = util.DetokenizationResource()
         # Load detokenization resource entries
-        self.detok_resource.load_resource(data_dir / f'detok-resource.txt')
+        self.detok_resource.load_resource(data_dir / f'detok-resource.txt', self.lang_codes, verbose=self.verbose)
         # Load tokenization resource entries for language specified by 'lang_code' (to harvest a few contractions)
-        if lang_code:
-            self.detok_resource.load_resource(data_dir / f'tok-resource-{lang_code}.txt', lang_codes)
+        for lcode in self.lang_codes:
+            self.detok_resource.load_resource(data_dir / f'tok-resource-{lcode}.txt', self.lang_codes,
+                                              verbose=self.verbose)
         # Load language-independent tokenization resource entries
-        self.detok_resource.load_resource(data_dir / f'tok-resource.txt')
+        self.detok_resource.load_resource(data_dir / f'tok-resource.txt', self.lang_codes, verbose=self.verbose)
         # Load any other tokenization resource entries, for the time being just (global) English
         for lcode in ['eng-global']:
-            if lcode != lang_code:
-                self.detok_resource.load_resource(data_dir / f'tok-resource-{lcode}.txt', lang_codes)
+            if lcode not in self.lang_codes:
+                self.detok_resource.load_resource(data_dir / f'tok-resource-{lcode}.txt', self.lang_codes,
+                                                  verbose=self.verbose)
         # Now that all resource files have been loaded, form regex for all marked-up attachment elements
         self.detok_resource.build_markup_attach_re()
         attach_tag = self.detok_resource.attach_tag
-        xml_tag_re_s = r'\s*(' + attach_tag + r'?</?[a-zA-Z][^<>]*>' + attach_tag + r'?)(\s.*|)$'
+        xml_tag_re_s = r'(\s*)(' + attach_tag + r'?</?[a-zA-Z][^<>]*>' + attach_tag + r'?)(\s.*|)$'
         # log.info(f'xml_tag_re_s {xml_tag_re_s}')
         self.xml_tag_re = re.compile(xml_tag_re_s)
-        self.non_whitespace_re = re.compile(r'\s*(\S+)(.*)$')
+        self.non_whitespace_re = re.compile(r'(\s*)(\S+)(.*)$')
 
     @staticmethod
     def default_data_dir() -> Path:
         return Path(__file__).parent / "data"
 
-    def tokens_in_tokenized_string(self, s: str):
+    def tokens_in_tokenized_string(self, s: str) -> Tuple[List[str], List[int]]:
         tokens = []
-        while m2 := self.xml_tag_re.match(s) or self.non_whitespace_re.match(s):
-            tokens.append(m2.group(1))
-            s = m2.group(2)
-        return tokens
+        offsets = []
+        offset = 0
+        might_contain_xml_tag = ('<' in s)
+        while m3 := (might_contain_xml_tag and self.xml_tag_re.match(s)) or self.non_whitespace_re.match(s):
+            offset += len(m3.group(1))
+            offsets.append(offset)
+            tokens.append(m3.group(2))
+            offset += len(m3.group(2))
+            s = m3.group(3)
+        return tokens, offsets
 
     def token_auto_attaches_to_left(self, s: str, left_context: str, right_context: str,
                                     lang_code: Optional[str]) -> bool:
@@ -101,18 +110,26 @@ class Detokenizer:
     re_ends_w_open_xml_tag = re.compile(r'.*<[a-z][-_:a-z0-9]*(?:\s+[a-z][-_:a-z0-9]*="[^"]*")*\s*>$',
                                         flags=re.IGNORECASE)
     re_starts_w_close_xml_tag = re.compile(r'</[a-z][-_a-z0-9]*>', flags=re.IGNORECASE)
+    re_could_end_in_name_initial = regex.compile(r'.*(?<!\pL|\pM)\p{Lu}\.$')
+    re_could_be_name_initial_or_name = regex.compile(r'\p{Lu}\pM*(?:\.|\p{Ll}.*)$')
 
-    def detokenize_string(self, s: str, lang_code: Optional[str], _line_id: Optional[str]) -> str:
+    def token_is_name_initial_to_be_attached_without_space(self, s: str, left_context: str, _right_context: str,
+                                                           lang_code: Optional[str]) -> bool:
+        if (lang_code in ('kaz', )
+                and self.re_could_be_name_initial_or_name.match(s)
+                and self.re_could_end_in_name_initial.match(left_context)):
+            return True
+        else:
+            return False
+
+    def detokenize_string(self, s: str, lang_code: Optional[str] = None, _line_id: Optional[str] = None) -> str:
         markup_attach_re = self.detok_resource.markup_attach_re
         attach_tag = self.detok_resource.attach_tag
         s = s.strip()
         # log.info(f's: {s}')
         if s == '':
             return ''
-        if '<' in s:
-            tokens = self.tokens_in_tokenized_string(s)
-        else:
-            tokens = re.split(r'\s+', s)
+        tokens, offsets = self.tokens_in_tokenized_string(s)
         # log.info(f"tokens: {' :: '.join(tokens)} ({len(tokens)})")
         eliminate_space_based_on_previous_token = True  # no space before first token
         result = ''
@@ -123,6 +140,8 @@ class Detokenizer:
             token = tokens[i]
             next_token = tokens[i+1] if i+1 < n_tokens else ''
             next_token2 = tokens[i+2] if i+2 < n_tokens else ''
+            next_offset = offsets[i+1] if i+1 < n_tokens else len(s)
+            right_context = s[next_offset:]
             # Contract the next 3 tokens if appropriate, e.g. "jusque" + "à" + "le" -> "jusqu'au".
             if next_token2:
                 three_tokens = ' '.join((token, next_token, next_token2))
@@ -143,9 +162,11 @@ class Detokenizer:
             # Add space between tokens with certain exceptions.
             if ((not eliminate_space_based_on_previous_token)
                     and (not (token_is_marked_up and token.startswith(attach_tag)))
-                    and (not self.token_auto_attaches_to_left(token, result, next_token, lang_code))
+                    and (not self.token_auto_attaches_to_left(token, result, right_context, lang_code))
                     and (not self.re_starts_w_close_xml_tag.match(token))
-                    and (not self.re_ends_w_open_xml_tag.match(result))):
+                    and (not self.re_ends_w_open_xml_tag.match(result))
+                    and (not self.token_is_name_initial_to_be_attached_without_space(token, result, right_context,
+                                                                                     lang_code))):
                 result += ' '
             # Add the token, stripped of any attach_tag
             result += token.strip(attach_tag) if token_is_marked_up else token
@@ -195,7 +216,7 @@ def main():
     args = parser.parse_args()
     lang_code = args.lc
     data_dir = Path(args.data_directory) if args.data_directory else None
-    detok = Detokenizer(lang_code=lang_code, data_dir=data_dir)
+    detok = Detokenizer(lang_code=lang_code, data_dir=data_dir, verbose=bool(args.verbose))
     detok.first_token_is_line_id_p = bool(args.first_token_is_line_id)
 
     # Open any input or output files. Make sure utf-8 encoding is properly set (in older Python3 versions).

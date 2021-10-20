@@ -2,7 +2,10 @@
 
 """Script checks tokenization for changes.
    Sample call: tok-diff.py <filename.tok> ... <dir> ...
-   Sample call: tok-diff.py    # will check default directories
+   Sample call: tok-diff.py      # will check default directories
+   Sample call: tok-diff.py -u   # will update reference tokenizations (detokenizations with -d)
+   Sample call: tok-diff.py -d   # detokenization instead of tokenization
+   Sample call: tok-diff.py -v0.1.1  # will save as ...v0.1.1 (unless it already exists)
 """
 
 from shutil import copyfile
@@ -55,13 +58,18 @@ if __name__ == "__main__":
     cwd = Path.cwd()
     tok_filenames = []
     dcln_filenames = []
+    detok_filenames = []
     directories = []
     update_p = False
+    detok_p = False
+    new_version = None
     for arg in sys.argv[1:]:
         path = Path(arg)
         if path.is_file():
             if re.match(r'.*\.tok$', arg):
                 tok_filenames.append(path)
+            elif re.match(r'.*\.detok$', arg):
+                detok_filenames.append(path)
             elif re.match(r'.*\.dcln$', arg):
                 dcln_filenames.append(path)
             else:
@@ -70,9 +78,13 @@ if __name__ == "__main__":
             directories.append(path)
         elif re.match(r'-+u', arg):
             update_p = True
+        elif re.match(r'-+[dr]', arg):  # d as in detokenize, r as in reverse
+            detok_p = True
+        elif re.match(r'-*v\d+(\.\d+)(\.\d+)$', arg):
+            new_version = arg.lstrip('-')
         else:
             log.warning(f'Invalid arg {arg}')
-    if not tok_filenames and not dcln_filenames and not directories:
+    if not tok_filenames and not dcln_filenames and not detok_filenames and not directories:
         directories = [public_test_data_dir / 'utoken-out',
                        private_test_data_dir / 'utoken-out',
                        wiki_test_data_dir / 'utoken-out']
@@ -82,7 +94,10 @@ if __name__ == "__main__":
     #     log.info(f'filenames: {dcln_filenames}')
     n_updates = 0
     for directory in directories:
-        filenames = list(directory.glob('*.tok')) + list(directory.glob('*.dcln'))
+        if detok_p:
+            filenames = list(directory.glob('*.detok'))
+        else:
+            filenames = list(directory.glob('*.tok')) + list(directory.glob('*.dcln'))
         filenames.sort()
         for filename in filenames:
             save_filename = Path(str(filename) + '~save')
@@ -91,7 +106,7 @@ if __name__ == "__main__":
                 rel_filename = Path(os.path.relpath(filename, cwd))
                 n_lines = 0
                 n_diff_lines = 0
-                if str(filename).endswith('.tok'):
+                if str(filename).endswith('tok'):  # .tok or .detok
                     with open(save_filename) as f1, open(filename) as f2:
                         for line1, line2 in zip(f1, f2):
                             n_lines += 1
@@ -112,8 +127,17 @@ if __name__ == "__main__":
                         n_updates += 1
                     else:
                         print(f'{Bcolors.FAIL}{rel_filename} {n_diff_lines}/{n_lines} lines differ{Bcolors.ENDC}')
+                elif new_version:
+                    pass
                 else:
                     print(f'{Bcolors.OKGREEN}{rel_filename} {n_diff_lines}/{n_lines} lines differ{Bcolors.ENDC}')
+                if new_version:
+                    version_filename = Path(str(filename) + f'.{new_version}')
+                    if version_filename.is_file():
+                        print(f'{Bcolors.FAIL}Warning: {version_filename} already exists. Not saved.{Bcolors.ENDC}')
+                    else:
+                        copyfile(filename, version_filename)
+                        print(f'{Bcolors.OKGREEN}Saved as {version_filename}{Bcolors.ENDC}')
     if n_updates:
         log.info(f"Updated {n_updates} file{'' if n_updates == 1 else 's'}")
     for filename in dcln_filenames:
@@ -159,6 +183,11 @@ if __name__ == "__main__":
             log.info(f'{n_diff_lines}/{n_lines} lines differed.')
     if len(tok_filenames) == 1:
         filename = tok_filenames[0]
+    elif len(detok_filenames) == 1:
+        filename = detok_filenames[0]
+    else:
+        filename = None
+    if filename:
         save_filename = Path(str(filename) + '~save')
         if filename.is_file() and save_filename.is_file():
             command = f'color-mt-diffs.pl {save_filename} {filename}'
@@ -168,13 +197,23 @@ if __name__ == "__main__":
             if txt_filename.is_file():
                 command += f' {txt_filename}'
                 legend += ' txt'
+            eng_filename = None
+            eng_legend = 'eng'
             if re.match(r'.*\.[a-z]{3}$', file_stem):
                 eng_filename_name = re.sub(r'\.[a-z]{3}$', '.eng.txt', file_stem)
                 if eng_filename_name != filename.name:
-                    eng_filename = filename.parent.parent / eng_filename_name
-                    if eng_filename.is_file():
-                        command += f' {eng_filename}'
-                        legend += ' eng'
+                    eng_filename_cand = filename.parent.parent / eng_filename_name
+                    if eng_filename_cand.is_file():
+                        eng_filename = eng_filename_cand
+            if not eng_filename:
+                google_dir = filename.parent.parent / 'google-translations'
+                eng_filename_cand = google_dir / f'{file_stem}.eng.txt'
+                if eng_filename_cand.is_file():
+                    eng_filename = eng_filename_cand
+                    eng_legend = 'google'
+            if eng_filename:
+                command += f' {eng_filename}'
+                legend += ' ' + eng_legend
             command += legend
             command += ' -o /Users/ulf/utoken/test/data/viz/out.html'
             # log.info(f'command: {command}')

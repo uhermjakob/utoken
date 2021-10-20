@@ -17,6 +17,13 @@ if __name__ == "__main__":
         line = re.sub('', '“', line)
         line = re.sub('', '–', line)
         line = re.sub('', '—', line)
+        line = re.sub(r'(?: |\t|&#160;)+', ' ', line)
+        line = re.sub(r'\s+@([-:/])@\s+', r'\1', line)  # @-@
+        line = re.sub(r'(\s[-:/])@\s+', r'\1', line)  # -@
+        line = re.sub(r'\s+@([-:/]\s)', r'\1', line)  # @-
+        line = re.sub(r'\s+([.!?])$', r'\1', line)  # attach sentence-final .!?
+        line = regex.sub(r'(\pL\pM*)\s+([,;]\s+)', r'\1\2', line)  # attach mid-sentence ,;
+        line = re.sub(r'(?:\u00A0|&#160;)+', ' ', line)
         for _ in range(2):
             line = re.sub(r" (['’])(d|em|m|re|s|ve) ", r'\1\2 ', line)
             line = re.sub(r'(\d) ([%]) ', r'\1\2 ', line)
@@ -31,4 +38,3 @@ if __name__ == "__main__":
             line = re.sub(r"\b(are|ca|could|did|do|does|had|has|have|is|sha|should|was|were|wo|would) ?n['’]?t\b",
                           r"\1n't", line, flags=re.IGNORECASE)
         print(line.strip())
-

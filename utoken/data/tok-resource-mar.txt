@@ -1,12 +1,21 @@
+::punct-split . ::side both ::lcode mar ::left-context \p{Lo}\pM*\p{Lo}\pM*[,)]* ::right-context [-\/(]*\p{Lo}
+::punct-split ' ::side both ::group True ::lcode mar ::left-context \p{Lo}\pM*[,)]* ::right-context [-\/(]*\p{Lo}
+::punct-split ’ ::side both ::group True ::lcode mar ::left-context \p{Lo}\pM*[,)]* ::right-context [-\/(]*\p{Lo}
+
 ::abbrev रु. ::lcode mar ::eng Rs.
 ::abbrev डॉ. ::lcode mar ::eng Dr.
 ::abbrev डा. ::lcode mar ::eng Dr.
 ::abbrev श्री. ::lcode mar ::eng Mr.
+::abbrev इ.स.पू. ::lcode mar ::eng BC ::comment year
+::abbrev इ.स. ::lcode mar ::eng AD ::comment year
+::abbrev कि.मी.  ::lcode mar ::eng km
+
 ::abbrev ए. ::lcode mar ::token-category phonetics ::eng A.
 ::abbrev ऐ. ::lcode mar ::token-category phonetics ::eng A.
 ::abbrev बी. ::lcode mar ::token-category phonetics ::eng B.
 ::abbrev सी. ::lcode mar ::token-category phonetics ::eng C.
 ::abbrev डी. ::lcode mar ::token-category phonetics ::eng D.
+::abbrev दि. ::lcode mar ::token-category phonetics ::eng D.
 ::abbrev ई. ::lcode mar ::token-category phonetics ::eng E.
 ::abbrev ऐफ. ::lcode mar ::token-category phonetics ::eng F.
 ::abbrev एफ. ::lcode mar ::token-category phonetics ::eng F.
@@ -70,3 +79,7 @@
 ::abbrev ष. ::lcode mar ::token-category consonant
 ::abbrev स. ::lcode mar ::token-category consonant
 ::abbrev ह. ::lcode mar ::token-category consonant
+
+::abbrev ग. ::token-category phonetics ::eng G. ::lcode mar ::comment local-style
+::abbrev ह. ::token-category phonetics ::eng H. ::lcode mar ::comment local-style
+::abbrev मो. ::token-category phonetics ::eng M. ::lcode mar ::comment local-style

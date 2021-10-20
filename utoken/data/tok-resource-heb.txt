@@ -1,0 +1,30 @@
+::punct-split - ::side both ::lcode heb ::left-context \pL\pM*['\"]?\pL\pM*[']? ::right-context \pL\pM*['\"]?\pL
+::punct-split - ::side both ::lcode heb ::group True ::left-context (?<!\pL\pM*|\d)[כבהלשומ] ::right-context (?:\d|[\p{Latin}&&\p{Letter}])
+::punct-split . ::side both ::lcode heb ::left-context (?<!\pL|\d|[-_.])(?:[כבהלשומ]-)?\d+ ::right-context \pL
+
+::abbrev A. ::right-context \s*\S
+::abbrev B. ::right-context \s*\S
+::abbrev C. ::right-context \s*\S
+::abbrev D. ::right-context \s*\S
+::abbrev E. ::right-context \s*\S
+::abbrev F. ::right-context \s*\S
+::abbrev G. ::right-context \s*\S
+::abbrev H. ::right-context \s*\S
+::abbrev I. ::right-context \s*\S
+::abbrev J. ::right-context \s*\S
+::abbrev K. ::right-context \s*\S
+::abbrev L. ::right-context \s*\S
+::abbrev M. ::right-context \s*\S
+::abbrev N. ::right-context \s*\S
+::abbrev O. ::right-context \s*\S
+::abbrev P. ::right-context \s*\S
+::abbrev Q. ::right-context \s*\S
+::abbrev R. ::right-context \s*\S
+::abbrev S. ::right-context \s*\S
+::abbrev T. ::right-context \s*\S
+::abbrev U. ::right-context \s*\S
+::abbrev V. ::right-context \s*\S
+::abbrev W. ::right-context \s*\S
+::abbrev X. ::right-context \s*\S
+::abbrev Y. ::right-context \s*\S
+::abbrev Z. ::right-context \s*\S

@@ -1,5 +1,3 @@
-::punct-split : ::side both ::left-context \pL\pM*\pL\pM* ::right-context [-\/]*\pL\pM*\pL
-
 # Tricky: der Laden in dem er arbeitete (nicht "im er")
 # ::contraction am ::target an dem ::lcode deu
 # ::contraction ans ::target an das ::lcode deu ::nonstandard True
@@ -56,7 +54,7 @@
 ::abbrev Anw. ::exp Anweisung ::lcode deu ::eng instruction
 ::abbrev Anz. ::exp Anzeiger ::lcode deu ::eng information
 ::abbrev AOK ::exp Allgemeine Ortskrankenkasse ::lcode deu ::eng local health insurance company
-::abbrev a.o.Prof. ::exp außerordentlicher Professor ::lcode deu ::eng associate professor
+::abbrev a.o. Prof. ::exp außerordentlicher Professor ::lcode deu ::eng associate professor
 ::abbrev Apr. ::exp April ::lcode deu ::eng April
 ::abbrev Art. ::exp Artikel ::lcode deu ::right-context \s*(?:[-.\/]|\pL\pM*)*\d ::eng article
 ::abbrev AT ::exp Altes Testament ::lcode deu ::eng Old Testament
@@ -137,17 +135,17 @@
 ::abbrev Doz. ::exp Dozent ::lcode deu ::eng university lecturer
 ::abbrev dpa ::exp Deutsche Presseagentur ::lcode deu ::eng German Press Agency
 ::abbrev Dr. ::exp Doktor ::lcode deu ::eng doctor
-::abbrev Dr.h.c. ::exp Doktor honoris causa ::lcode deu ::eng honorary doctorate
+::abbrev Dr. h.c. ::exp Doktor honoris causa ::lcode deu ::eng honorary doctorate
 ::abbrev Dr.-Ing. ::exp Doktor der Ingenieurwissenschaft ::lcode deu ::eng Doctor of Engineering
-::abbrev Dr.jur. ::exp Doktor juris ::lcode deu ::eng Doctor of Law (LLD)
-::abbrev Dr.med. ::exp Doktor der Medizin ::lcode deu ::eng Doctor of Medicine
-::abbrev Dr.phil. ::exp Doktor der Philosophie ::lcode deu ::eng Doctor of Philosophy (PhD)
-::abbrev Dr.rer.nat. ::exp Doktor der Naturwissenschaften ::lcode deu ::eng Doctor of Natural Sciences
-::abbrev Dr.theol. ::exp Doktor der Theologie ::lcode deu ::eng Doctor of Theology
+::abbrev Dr. jur. ::exp Doktor juris ::lcode deu ::eng Doctor of Law (LLD)
+::abbrev Dr. med. ::exp Doktor der Medizin ::lcode deu ::eng Doctor of Medicine
+::abbrev Dr. phil. ::exp Doktor der Philosophie ::lcode deu ::eng Doctor of Philosophy (PhD)
+::abbrev Dr. rer. nat. ::exp Doktor der Naturwissenschaften ::lcode deu ::eng Doctor of Natural Sciences
+::abbrev Dr. theol. ::exp Doktor der Theologie ::lcode deu ::eng Doctor of Theology
 ::abbrev dt. ::exp deutsch ::lcode deu ::eng German
 ::abbrev dtsch. ::exp deutsch ::lcode deu ::eng German
 ::abbrev d.U. ::exp der/die Unterzeichnete ::lcode deu ::eng the undersigned
-::abbrev d.Verf. ::exp der Verfasser ::lcode deu ::eng the author
+::abbrev d. Verf. ::exp der Verfasser ::lcode deu ::eng the author
 ::abbrev dz. ::exp derzeit ::lcode deu ::eng at present
 ::abbrev E. ::lcode deu
 ::abbrev e. ::lcode deu
@@ -251,7 +249,7 @@
 ::abbrev I. ::lcode deu
 ::abbrev i. ::exp in; im ::lcode deu ::eng in the
 ::abbrev i.A. ::exp im Auftrag ::lcode deu ::eng on behalf of
-::abbrev i.allg. ::exp im allgemeinen ::lcode deu ::eng in general
+::abbrev i. allg. ::exp im allgemeinen ::lcode deu ::eng in general
 ::abbrev i.B. ::exp im Bau ::lcode deu ::eng under construction
 ::abbrev i.b. ::exp im besonderen ::lcode deu ::eng in particular
 ::abbrev i.D. ::exp im Durchschnitt ::lcode deu ::eng on average
@@ -397,8 +395,8 @@
 ::abbrev Nachtr. ::exp Nachtrag ::lcode deu ::eng appendix, supplement
 ::abbrev nat. ::exp national ::lcode deu ::eng national
 ::abbrev naturw. ::exp naturwissenschaftlich ::lcode deu ::eng scientific
-::abbrev n.Br. ::exp nördlicher Breite ::lcode deu ::eng of northern latitude
-::abbrev n.Chr. ::exp nach Christus ::lcode deu ::eng after Christ (AD)
+::abbrev n. Br. ::exp nördlicher Breite ::lcode deu ::eng of northern latitude
+::abbrev n. Chr. ::exp nach Christus ::lcode deu ::eng after Christ (AD)
 ::abbrev NDR ::exp Norddeutscher Rundfunk ::lcode deu ::eng North German Radio
 ::abbrev n.J. ::exp nächsten Jahres ::lcode deu ::eng of next year
 ::abbrev n.M. ::exp nächsten Monats ::lcode deu ::eng of next month
@@ -438,8 +436,8 @@
 ::abbrev OÖ ::exp Oberösterreich ::lcode deu ::eng Upper Austria
 ::abbrev OP ::exp Operationssaal; Originalpackung ::lcode deu ::eng operating theater; original packing
 ::abbrev Op. ::lcode deu
-::abbrev o.Pr. ::exp ordentlicher Professor ::lcode deu ::eng full professor
-::abbrev o.Prof. ::exp ordentlicher Professor ::lcode deu ::eng (ordinary) professor
+::abbrev o. Pr. ::exp ordentlicher Professor ::lcode deu ::eng full professor
+::abbrev o. Prof. ::exp ordentlicher Professor ::lcode deu ::eng (ordinary) professor
 ::abbrev ORF ::exp Österreicher Rundfunk ::lcode deu ::eng Austrian Radio
 ::abbrev organ. ::exp organisch ::lcode deu ::eng organic
 ::abbrev Orig. ::exp Original ::lcode deu
@@ -481,7 +479,7 @@
 ::abbrev rd. ::exp rund ::lcode deu ::eng roughly
 ::abbrev Red. ::exp Redakteur ::lcode deu ::eng editor
 ::abbrev Reg. ::exp Regierung ::lcode deu ::eng government
-::abbrev Reg.Bez. ::exp Regierungsbezirk ::lcode deu ::eng adminstrative district
+::abbrev Reg. Bez. ::exp Regierungsbezirk ::lcode deu ::eng adminstrative district
 ::abbrev Rel. ::exp Religion ::lcode deu
 ::abbrev Rep. ::exp Republik ::lcode deu ::eng republic
 ::abbrev resp. ::exp respektiv ::lcode deu ::eng as the case may be
@@ -501,7 +499,7 @@
 ::abbrev SB ::exp Selbstbedienung ::lcode deu ::eng self-service
 ::abbrev S-Bahn ::exp Schnellbahn ::lcode deu ::eng urban railway
 ::abbrev SBB ::exp Schweizerische Bundesbahn ::lcode deu ::eng Swiss Federal Railways
-::abbrev s.Br. ::exp südliche Breite ::lcode deu ::eng southern latitude
+::abbrev s. Br. ::exp südliche Breite ::lcode deu ::eng southern latitude
 ::abbrev SDR ::exp Süddeutscher Rundfunk ::lcode deu ::eng South German Radio
 ::abbrev Sek. ::exp Sekunde ::lcode deu ::eng second
 ::abbrev Sekr. ::exp Sekretär ::lcode deu ::eng secretary
@@ -569,7 +567,7 @@
 ::abbrev U-Boot ::exp Unterseeboot ::lcode deu ::eng submarine
 ::abbrev u.d.M. ::exp unter dem Meeresspiegel ::lcode deu ::eng below sea level
 ::abbrev ü.d.M. ::exp über dem Meeresspiegel ::lcode deu ::eng above sea level
-::abbrev u.dsgl. ::exp und desgleichen ::lcode deu ::eng and things like that
+::abbrev u. dsgl. ::exp und desgleichen ::lcode deu ::eng and things like that
 ::abbrev u.E. ::exp unseres Erachtens ::lcode deu ::eng in our opinion
 ::abbrev ue. ::exp unehelich ::lcode deu ::eng illegitimate
 ::abbrev ult. ::exp ultimo ::lcode deu ::eng on the last day of the month
@@ -591,7 +589,7 @@
 ::abbrev v.a. ::exp vor allem ::lcode deu ::eng above all
 ::abbrev var. ::exp variabel ::lcode deu ::eng variable
 ::abbrev v.A.w. ::exp von Amts wegen ::lcode deu ::eng officially
-::abbrev v.Chr. ::exp vor Christus ::lcode deu ::eng before Christ (BC)
+::abbrev v. Chr. ::exp vor Christus ::lcode deu ::eng before Christ (BC)
 ::abbrev v.D. ::exp vom Dienst ::lcode deu ::eng on duty
 ::abbrev VDS ::exp Verband deutscher Studentenschaften ::lcode deu ::eng Association of German Students
 ::abbrev verb. ::exp verbessert ::lcode deu ::eng corrected
@@ -667,7 +665,7 @@
 ::abbrev ZDF ::exp Zweites Deutsches Fernsehen ::lcode deu ::eng German Television's Second Channel
 ::abbrev zgl. ::exp zugleich ::lcode deu ::eng at the same time
 ::abbrev z.H. ::exp zu Händen ::lcode deu ::eng for the attention of
-::abbrev z.Hd. ::exp zu Händen ::lcode deu ::eng for the attention of
+::abbrev z. Hd. ::exp zu Händen ::lcode deu ::eng for the attention of
 ::abbrev Zi. ::exp Zimmer ::lcode deu ::eng room
 ::abbrev Ziff. ::exp Ziffer ::lcode deu ::eng figure
 ::abbrev z.K. ::exp zur Kenntnisnahme ::lcode deu ::eng for information
@@ -682,11 +680,11 @@
 ::abbrev zus. ::exp zusammen ::lcode deu ::eng together
 ::abbrev z.V. ::exp zum Verkauf ::lcode deu ::eng for sale
 ::abbrev zw. ::exp zwischen ::lcode deu ::eng between
-::abbrev z.Wv. ::exp zur Wiedervorlage ::lcode deu ::eng for renewed submission
+::abbrev z. Wv. ::exp zur Wiedervorlage ::lcode deu ::eng for renewed submission
 ::abbrev z.w.V. ::exp zur weiteren Veranlassung ::lcode deu ::eng for further action
 ::abbrev z.Z. ::exp zur Zeit ::lcode deu ::eng at present
 ::abbrev zzgl. ::exp zuzüglich ::lcode deu ::eng plus
-::abbrev z.Zt. ::exp zur Zeit ::lcode deu ::eng at present ::alt-spelling zzt.
+::abbrev z. Zt. ::exp zur Zeit ::lcode deu ::eng at present ::alt-spelling zzt.
 
 ::abbrev AfD ::exp Alternative für Deutschland ::sem-class political-party ::lcode deu
 ::lexical Bündnis 90/Die Grünen ::sem-class political-party ::lcode deu

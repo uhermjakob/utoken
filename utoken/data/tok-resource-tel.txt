@@ -1,15 +1,22 @@
+::punct-split ' ::side both ::group True ::lcode tel ::left-context \pL\pM*[,)]* ::right-context [-\/(]*\pL
 ::abbrev ర. ::lcode tel ::eng Rs.
 ::abbrev శ్రీ. ::lcode tel ::eng Mr.
+::abbrev నం. ::lcode tel ::eng number
+::abbrev మ. ::lcode tel ::eng died
+::abbrev కి.మీ. ::lcode tel ::eng kilometer ::alt-spelling కి.మీ
+::abbrev కి.మీ.² ::lcode tel ::eng squqre kilometer ::alt-spelling కి.మీ²; కి.మీ2; కి.మీ.2
 ::abbrev ఎ. ::lcode tel ::token-category phonetics ::eng A.
 ::abbrev బి. ::lcode tel ::token-category phonetics ::eng B.
 ::abbrev సి. ::lcode tel ::token-category phonetics ::eng C.
 ::abbrev డి. ::lcode tel ::token-category phonetics ::eng D.
+::abbrev డీ. ::lcode tel ::token-category phonetics ::eng D.
 ::abbrev ఇ. ::lcode tel ::token-category phonetics ::eng E.
 ::abbrev ఎఫ్. ::lcode tel ::token-category phonetics ::eng F.
 ::abbrev జి. ::lcode tel ::token-category phonetics ::eng G.
 ::abbrev హెచ్‌. ::lcode tel ::token-category phonetics ::eng H.
 ::abbrev ఐ. ::lcode tel ::token-category phonetics ::eng I.
 ::abbrev జె. ::lcode tel ::token-category phonetics ::eng J.
+::abbrev జే. ::lcode tel ::token-category phonetics ::eng J.
 ::abbrev కె. ::lcode tel ::token-category phonetics ::eng K.
 ::abbrev ఎల్. ::lcode tel ::token-category phonetics ::eng L.
 ::abbrev ఎం. ::lcode tel ::token-category phonetics ::eng M.
@@ -21,6 +28,7 @@
 ::abbrev ఆర్. ::lcode tel ::token-category phonetics ::eng R.
 ::abbrev ఎస్. ::lcode tel ::token-category phonetics ::eng S.
 ::abbrev టి. ::lcode tel ::token-category phonetics ::eng T.
+::abbrev టీ. ::lcode tel ::token-category phonetics ::eng T.
 ::abbrev యు. ::lcode tel ::token-category phonetics ::eng U.
 ::abbrev వి. ::lcode tel ::token-category phonetics ::eng V.
 ::abbrev డబ్ల్యూ. ::lcode tel ::token-category phonetics ::eng W.

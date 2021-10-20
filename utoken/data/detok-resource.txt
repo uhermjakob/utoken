@@ -4,6 +4,8 @@
 ::markup-attach - ::group True ::comment hyphen-minus
 ::markup-attach – ::group True ::comment en-dash
 ::markup-attach — ::group True ::comment em-dash
+::markup-attach − ::group True ::comment minus sign
+::markup-attach ־ ::group True ::comment Hebrew maqaf (hyphen)
 ::markup-attach + ::group True ::comment originally auto-attach w/ left-context \d\s?[%‰kK]?
 
 ::markup-attach .. ::group True
@@ -27,6 +29,8 @@
 ::markup-attach -a- ::lcode tgl ::example pag-a-update
 
 ::auto-attach / ::side both
+::auto-attach ・ ::side both ::left-context [^:] ::comment katakana middle dot
+# ::auto-attach 'n' ::side both
 # ::auto-attach · ::side both ::comment middle dot
 
 ::auto-attach . ::side left
@@ -39,12 +43,14 @@
 ::auto-attach ⁉ ::side left
 ::auto-attach ‽ ::side left
 ::auto-attach , ::side left
+::auto-attach ՝ ::side left ::comment Armenian comma
+::auto-attach ՛ ::side left ::comment Armenian emphasis mark
 ::auto-attach ; ::side left
 ::auto-attach ) ::side left
 ::auto-attach } ::side left
 ::auto-attach ] ::side left
-::auto-attach › ::side left ::group True
-::auto-attach » ::side left
+::auto-attach › ::side left ::group True ::lcode-not slv ::comment Slovenians uses ›ABC‹
+::auto-attach » ::side left ::lcode-not slv ::comment Slovenians uses »ABC«
 ::auto-attach 〉 ::side left
 ::auto-attach ） ::side left
 ::auto-attach ］ ::side left
@@ -71,24 +77,38 @@
 ::auto-attach ፦ ::side left ::comment Ethiopic preface colon
 ::auto-attach ፧ ::side left ::comment Ethiopic question mark
 ::auto-attach ; ::side left ::comment Greek question mark
+::auto-attach ׃ ::side left ::comment Hebrew sof pasuq (sentence period)
+::auto-attach ׀ ::side left ::comment Hebrew paseq (separator), typically at the end of words
+::auto-attach ۔ ::side left ::comment Arabic period
 ::auto-attach ؟ ::side left ::comment Arabic question mark
 ::auto-attach ، ::side left ::comment Arabic comma
 ::auto-attach ؛ ::side left ::comment Arabic semicolon
-::auto-attach । ::side left ::comment Devanagari danda
+::auto-attach । ::side left ::comment Devanagari danda ::lcode-not ori
 ::auto-attach ॥ ::side left ::comment Devanagari double danda
+::auto-attach ৷ ::side left ::group True ::comment Bengali currency numerator four, often operating as Bengali danda
 ::auto-attach % ::side left ::left-context \d
 ::auto-attach ‰ ::side left ::left-context \d
 ::auto-attach ‱ ::side left ::left-context \d
 ::auto-attach ٪ ::side left ::left-context \d ::comment Arabic percent sign
 ::auto-attach ° ::side left ::left-context \d
+::auto-attach °C ::side left ::left-context \d
+::auto-attach °F ::side left ::left-context \d
+::auto-attach C ::side left ::left-context °
+::auto-attach F ::side left ::left-context °
+::auto-attach ′ ::side left ::left-context \d ::comment prime, used on geo-locations for minutes
+::auto-attach º ::side left ::comment masculine ordinal indicator
+::auto-attach .º ::side left ::comment period + masculine ordinal indicator
+::auto-attach ª ::side left ::comment feminine ordinal indicator
 ::auto-attach © ::side left
 ::auto-attach ® ::side left
 ::auto-attach ™ ::side left
+::auto-attach k ::side left ::left-context \d ::example 10k run
+::auto-attach M ::side left ::left-context \d ::case-sensitive True ::example $10M deficit
 
 ::auto-attach „ ::side right
 ::auto-attach ( ::side right
 ::auto-attach { ::side right
-::auto-attach « ::side right
+::auto-attach « ::side right ::lcode-not slv ::comment Slovenians uses »ABC«
 ::auto-attach [ ::side right
 ::auto-attach 〈 ::side right
 ::auto-attach （ ::side right
@@ -101,10 +121,12 @@
 ::auto-attach 〖 ::side right
 ::auto-attach 〘 ::side right
 ::auto-attach 〚 ::side right
-::auto-attach ‹ ::side right ::group True
+::auto-attach ‹ ::side right ::group True ::lcode-not slv ::comment Slovenians uses ›ABC‹
 ::auto-attach ¡ ::side right ::group True
 ::auto-attach ¿ ::side right ::group True
 ::auto-attach # ::side right ::right-context \d{1,4}\b
+::auto-attach № ::side right ::right-context \d
+::auto-attach n° ::side right ::right-context \d
 ::auto-attach $ ::side right ::right-context \d
 ::auto-attach £ ::side right ::right-context \d
 ::auto-attach € ::side right ::right-context \d
@@ -119,41 +141,257 @@
 ::auto-attach S$ ::side right ::right-context \d
 ::auto-attach US$ ::side right ::right-context \d
 ::auto-attach RMB ::side right ::right-context \d
+::auto-attach ₱ ::side right ::right-context \d
+::auto-attach P ::side right ::right-context \d ::lcode tgl
+::auto-attach Php ::side right ::right-context \d ::lcode tgl ::comment Philippine Pesos
+::auto-attach Rp ::side right ::right-context \d ::lcode ind ::comment Indonedian Rupiah
 
-::auto-attach th ::side left ::left-context \d ::lcode eng ::example 20th
-::auto-attach st ::side left ::left-context 1 ::lcode eng
-::auto-attach nd ::side left ::left-context 2 ::lcode eng
-::auto-attach rd ::side left ::left-context 3 ::lcode eng
+::auto-attach th ::side left ::left-context \d ::etym-lcode eng ::example 20th
+::auto-attach st ::side left ::left-context 1 ::etym-lcode eng
+::auto-attach nd ::side left ::left-context 2 ::etym-lcode eng
+::auto-attach rd ::side left ::left-context 3 ::etym-lcode eng
 ::auto-attach s ::side left ::left-context 0 ::example 1950s
+::auto-attach 's ::side left ::left-context [\p{Latin}&&\p{Letter}]{2} ::example Harold's ::lcode-not nld
+
+::auto-attach ተኛው ::side left ::left-context \pN ::lcode amh ::comment ordinal particle ("th")
+::auto-attach ኛው ::side left ::left-context \pN ::lcode amh ::comment ordinal particle ("th")
+::auto-attach ኛ ::side left ::left-context \pN ::lcode amh ::comment ordinal particle ("th")
+::auto-attach ቱን ::side left ::left-context \pN ::lcode amh
+::auto-attach ከ ::side right ::right-context \pN ::lcode amh ::eng from; since ::comment prefix
+::auto-attach በ ::side right ::right-context \pN ::lcode amh ::eng in ::comment prefix
+::auto-attach ለ ::side right ::right-context \pN ::lcode amh ::eng for ::comment prefix
+::auto-attach የ ::side right ::right-context \pN ::lcode amh ::eng of ::comment prefix
 
 ::auto-attach م ::side left ::left-context \d ::lcode ara ::comment year particle ::eng AD ::example 2021م
 
+::auto-attach ৰ ::side left ::left-context \d ::lcode asm ::comment of; maybe used like "s" in "1920s"
+::auto-attach ৰ্থ ::side left ::left-context \d ::lcode asm ::comment ordinal particle ("th")
+::auto-attach তম ::side left ::left-context \d ::lcode asm ::comment ordinal particle ("th")
+::auto-attach ত ::side left ::left-context \d ::lcode asm
+::auto-attach -ত ::side left ::left-context \d ::lcode asm
+
+::auto-attach শ ::side left ::left-context \d ::lcode ben ::comment ordinal particle ("th")
+::auto-attach ই ::side left ::left-context \d ::lcode ben ::comment ordinal particle ("th")
+::auto-attach র্থ ::side left ::left-context \d ::lcode ben ::comment ordinal particle ("th")
+::auto-attach ম ::side left ::left-context \d ::lcode ben ::comment ordinal particle ("th")
+::auto-attach য় ::side left ::left-context \d ::lcode ben ::comment ordinal particle ("th")
+::auto-attach লা ::side left ::left-context \d ::lcode ben ::comment ordinal particle ("th")
+::auto-attach তম ::side left ::left-context \d ::lcode ben ::comment ordinal particle ("th")
+::auto-attach টি ::side left ::left-context \d ::lcode ben
+::auto-attach 'র ::side left ::lcode ben ::eng of; in ::comment "r(a)" genitive/locative case suffix; possessive
+::auto-attach 'তে ::side left ::lcode ben ::eng in ::comment "te" locative case suffix
+::auto-attach 'য় ::side left ::lcode ben ::eng in ::comment "y(a)" locative case suffix
+::auto-attach 'কে ::side left ::lcode ben ::comment "ke" dative/accusative case suffix
+
+::auto-attach d' ::side right ::lcode cat
+::auto-attach l' ::side right ::lcode cat
+::auto-attach n' ::side right ::lcode cat
+::auto-attach s' ::side right ::lcode cat
+
+::auto-attach au ::side left ::lcode cym ::left-context \d0 ::comment [1920]s
+::auto-attach af ::side left ::lcode cym ::left-context \d ::comment ordinal particle ("th")
+::auto-attach ail ::side left ::lcode cym ::left-context \d ::comment ordinal particle ("th")
+::auto-attach ain ::side left ::lcode cym ::left-context \d ::comment ordinal particle ("th")
+::auto-attach ed ::side left ::lcode cym ::left-context \d ::comment ordinal particle ("th")
+::auto-attach eg ::side left ::lcode cym ::left-context \d ::comment ordinal particle ("th")
+::auto-attach fed ::side left ::lcode cym ::left-context \d ::comment ordinal particle ("th")
+::auto-attach ydd ::side left ::lcode cym ::left-context \d ::comment ordinal particle ("th")
+::auto-attach 'i ::side left ::lcode cym ::left-context [aâeiouwyŷ] ::eng his;him;its;it ::comment ei
+::auto-attach 'n ::side left ::lcode cym ::left-context [aâeiouwyŷ] ::eng in ::comment yn
+::auto-attach 'r ::side left ::lcode cym ::left-context [aâeiouwyŷ] ::eng the ::comment yr
+::auto-attach 'u ::side left ::lcode cym ::left-context [aâeiouwyŷ] ::eng their;them ::comment eu
+::auto-attach 'w ::side left ::lcode cym ::left-context \b[i] ::eng his;him;its;it;their;them ::comment ei;eu
+
+::auto-attach 'erne ::side left ::lcode dan ::left-context \d0 ::comment [1920]s
+::auto-attach 'ernes ::side left ::lcode dan ::left-context \d0 ::comment [1920]s
+::auto-attach 'erns ::side left ::lcode dan ::left-context \d0 ::comment [1920]s
+
+::auto-attach er ::side left ::left-context \d ::lcode deu ::comment 1920er Jahre
+::auto-attach ern ::side left ::left-context \d ::lcode deu ::comment in den 1920ern
+::auto-attach ( ::side left ::left-context \pL ::right-context in\s*\) ::lcode deu ::comment Lehrer(in)
+
+::auto-attach η ::side left ::left-context \d ::lcode ell ::comment ordinal particle ("th")
+::auto-attach ο ::side left ::left-context \d ::lcode ell ::comment ordinal particle ("th")
+::auto-attach ου ::side left ::left-context \d ::lcode ell ::comment ordinal particle ("th")
+::auto-attach ος ::side left ::left-context \d ::lcode ell ::comment ordinal particle ("th")
+
+::auto-attach ( ::side left ::left-context \pL ::right-context s\s*\)(?!\s*he\b) ::lcode eng ::comment friend(s)
+
+::auto-attach 'i ::side left ::left-context (?:\pL\pM*|\d) ::lcode est ::comment suffix
+::auto-attach 'ist ::side left ::left-context (?:\pL\pM*|\d) ::lcode est ::comment suffix
+
+::auto-attach -d ::side left ::left-context (?:\pL\pM*|\d) ::lcode est ::comment suffix
+::auto-attach -e ::side left ::left-context (?:\pL\pM*|\d) ::lcode est ::comment suffix
+::auto-attach -i ::side left ::left-context (?:\pL\pM*|\d) ::lcode est ::comment suffix
+::auto-attach -ist ::side left ::left-context (?:\pL\pM*|\d) ::lcode est ::comment suffix
+::auto-attach -l ::side left ::left-context (?:\pL\pM*|\d) ::lcode est ::comment suffix
+::auto-attach -ni ::side left ::left-context (?:\pL\pM*|\d) ::lcode est ::comment suffix
+::auto-attach -s ::side left ::left-context (?:\pL\pM*|\d) ::lcode est ::comment suffix
+
+::auto-attach :ään ::side left ::lcode fin ::comment suffix ::syntax-checked True
+::auto-attach :in ::side left ::lcode fin ::comment suffix ::syntax-checked True
+::auto-attach :lle ::side left ::lcode fin ::comment suffix ::syntax-checked True
+::auto-attach :lta ::side left ::lcode fin ::comment suffix ::syntax-checked True
+::auto-attach :n ::side left ::lcode fin ::comment suffix ::syntax-checked True
+::auto-attach :nä ::side left ::lcode fin ::comment suffix ::syntax-checked True
+::auto-attach :ssa ::side left ::lcode fin ::comment suffix ::syntax-checked True
+::auto-attach :ssä ::side left ::lcode fin ::comment suffix ::syntax-checked True
+::auto-attach :sta ::side left ::lcode fin ::comment suffix ::syntax-checked True
+::auto-attach :ta ::side left ::lcode fin ::comment suffix ::syntax-checked True
+
 ::auto-attach e ::side left ::left-context \d ::lcode fra ::comment ordinal particle ("th")
 ::auto-attach er ::side left ::left-context \d ::lcode fra ::comment ordinal particle ("th")
+
+::auto-attach માં ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach ના ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach મીની ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach ને ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach મો ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach ની ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach નું ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach નો ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach થી ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach જેનું ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach માંથી ::side left ::left-context (?:\d|[)]) ::lcode guj
+::auto-attach મી ::side left ::left-context (?:\d|[)]) ::lcode guj
 
 ::auto-attach वां ::side left ::left-context \d ::lcode hin ::comment ordinal particle ("th")
 ::auto-attach वीं ::side left ::left-context \d ::lcode hin ::comment ordinal particle ("th")
 ::auto-attach वींं ::side left ::left-context \d ::lcode hin ::comment ordinal particle ("th")
 ::auto-attach वें ::side left ::left-context \d ::lcode hin ::comment ordinal particle ("th")
 ::auto-attach वाँ ::side left ::left-context \d ::lcode hin ::comment ordinal particle ("th")
+::auto-attach | ::side left ::lcode hin ::comment used as danda
+::auto-attach /- ::side left ::left-context \d ::lcode hin ::comment currency quantity, no sub-units
 
-::auto-attach гг ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
-::auto-attach г ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
-::auto-attach м ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
-::auto-attach мм ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
-::auto-attach см ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
-::auto-attach дм ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
-::auto-attach л ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
-::auto-attach км ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
-::auto-attach га ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
-::auto-attach кг ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
-::auto-attach т ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
-::auto-attach мг ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
-::auto-attach гг ::side left ::left-context \d ::lcode rus ::comment ordinal particle ("th")
+::auto-attach -ի ::side left ::lcode hye
+::auto-attach -ը ::side left ::lcode hye
+::auto-attach -ն ::side left ::lcode hye
+::auto-attach թ.-ի ::side left ::lcode hye ::left-context \d
+::auto-attach թ.-ին ::side left ::lcode hye ::left-context \d
+
+::auto-attach all' ::side right ::lcode ita
+::auto-attach d' ::side right ::lcode ita
+::auto-attach dall' ::side right ::lcode ita
+::auto-attach dell' ::side right ::lcode ita
+::auto-attach nell' ::side right ::lcode ita
+::auto-attach l' ::side right ::lcode ita
+::auto-attach quest' ::side right ::lcode ita
+::auto-attach s' ::side right ::lcode ita
+::auto-attach sull' ::side right ::lcode ita
+::auto-attach un' ::side right ::lcode ita
+
+::auto-attach ನೇ ::side left ::left-context \d ::lcode kan ::comment ordinal particle ("th") 10:0
+::auto-attach ರ ::side left ::left-context \d ::lcode kan ::comment 10:3
+::auto-attach ರಂದು ::side left ::left-context \d ::lcode kan ::comment 7:4
+::auto-attach ರಲ್ಲಿ ::side left ::left-context \d ::lcode kan ::comment 12:10
+::auto-attach ಕ್ಕೂ ::side left ::left-context \d ::lcode kan ::comment 4:1
+::auto-attach ನೆಯ ::side left ::left-context \d ::lcode kan ::comment 3:1
+::auto-attach ಕಿ ::side left ::left-context \d ::lcode kan ::comment 1:0
+
+::auto-attach 분 ::side left ::left-context \d ::lcode kor ::eng minute
+::auto-attach 분에 ::side left ::left-context \d ::lcode kor ::eng at (time) minute
+::auto-attach 시 ::side left ::left-context \d ::lcode kor ::eng o'clock
+::auto-attach 시에 ::side left ::left-context \d ::lcode kor ::eng at (time) o'clock
+::auto-attach 일 ::side left ::left-context \d ::lcode kor ::eng day
+::auto-attach 일에 ::side left ::left-context \d ::lcode kor ::eng on day
+::auto-attach 월 ::side left ::left-context \d ::lcode kor ::eng month
+::auto-attach 월에 ::side left ::left-context \d ::lcode kor ::eng in month
+::auto-attach 년 ::side left ::left-context \d ::lcode kor ::eng year
+::auto-attach 년에 ::side left ::left-context \d ::lcode kor ::eng in year
+::auto-attach 년부터 ::side left ::left-context \d ::lcode kor ::eng from year
+::auto-attach 회 ::side left ::left-context \d ::lcode kor ::eng day-of-the-month
+::auto-attach 은 ::side left ::left-context (?:\d|[)〉》]) ::lcode kor ::comment topic postposition
+::auto-attach 는 ::side left ::left-context (?:\d|[)〉》]) ::lcode kor ::comment topic postposition
+::auto-attach 이 ::side left ::left-context (?:\d|[)〉》]) ::lcode kor ::comment subject postposition
+::auto-attach 가 ::side left ::left-context (?:\d|[)〉》]) ::lcode kor ::comment subject postposition
+::auto-attach 으로 ::side left ::left-context (?:\d|[)〉》]) ::lcode kor ::comment instrumental postposition
+::auto-attach 로 ::side left ::left-context (?:\d|[)〉》]) ::lcode kor ::comment instrumental postposition
+::auto-attach 의 ::side left ::left-context (?:\d|[)〉》]) ::lcode kor ::comment possessive postposition
+::auto-attach 에 ::side left ::left-context (?:\d|[)〉》]) ::lcode kor ::comment time/location postposition
+::auto-attach 기 ::side left ::left-context \d ::lcode kor ::comment ordinal
+::auto-attach 차 ::side left ::left-context \d ::lcode kor ::comment ordinal
+::auto-attach 번째 ::side left ::left-context \d ::lcode kor ::comment ordinal
+::auto-attach 세기 ::side left ::left-context \d ::lcode kor ::eng th century
+::auto-attach 년대 ::side left ::left-context 0 ::lcode kor ::comment (1920)s
+::auto-attach 년대에 ::side left ::left-context 0 ::lcode kor ::comment in the (1920)s
+::auto-attach 년대의 ::side left ::left-context 0 ::lcode kor ::comment of the (1920)s
+::auto-attach 개 ::side left ::left-context \d ::lcode kor ::comment counter - general
+::auto-attach 명 ::side left ::left-context \d ::lcode kor ::comment counter - people
+::auto-attach 대 ::side left ::left-context \d ::lcode kor ::comment counter - vehicles
+::auto-attach 조 ::side left ::left-context \d ::lcode kor ::comment counter - articles
+::auto-attach 제 ::side right ::right-context \d ::lcode kor ::comment ordinal particle
+
+::auto-attach ന് ::side left ::left-context \d ::lcode mal
+::auto-attach ലാണ് ::side left ::left-context \d ::lcode mal
+::auto-attach ൽ ::side left ::left-context \d ::lcode mal
+::auto-attach ലെ ::side left ::left-context \d ::lcode mal
+::auto-attach ന്റെ ::side left ::left-context \d ::lcode mal
+
+::auto-attach वा ::side left ::left-context \d ::lcode mar ::comment ordinal particle
+::auto-attach व्या ::side left ::left-context \d ::lcode mar ::comment ordinal particle
+::auto-attach वे ::side left ::left-context \d ::lcode mar ::comment ordinal particle
+
+::auto-attach de ::side left ::left-context \d ::lcode nld ::comment ordinal particle
+::auto-attach e ::side left ::left-context \d ::lcode nld ::comment ordinal particle
+
+::auto-attach ଟି ::side left ::left-context \d ::lcode ori
+::auto-attach ତମ ::side left ::left-context \d ::lcode ori
+::auto-attach ରେ ::side left ::left-context \d ::lcode ori
+::auto-attach ଶ ::side left ::left-context \d ::lcode ori
+::auto-attach ୟ ::side left ::left-context \d ::lcode ori
+::auto-attach ରୁ ::side left ::left-context \d ::lcode ori
+::auto-attach ତାର ::side left ::left-context \d ::lcode ori
+::auto-attach ଷ୍ଠ ::side left ::left-context \d ::lcode ori
+
+# Per sample Wikipedia docs, year markers are more often separate (but inconsistently so)
+# ::auto-attach م ::side left ::left-context \d ::lcode pus ::comment year particle ::eng AD ::example 2021م
+# ::auto-attach ز ::side left ::left-context \d ::lcode pus ::comment year particle
+# ::auto-attach ل ::side left ::left-context \d ::lcode pus ::comment year particle
+
+::auto-attach ñ ::side left ::left-context \d ::lcode que ::comment ordinal particle
+
+# ::auto-attach гг ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+# ::auto-attach г ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+# ::auto-attach м ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+# ::auto-attach мм ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+# ::auto-attach см ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+# ::auto-attach дм ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+# ::auto-attach л ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+# ::auto-attach км ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+# ::auto-attach га ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+# ::auto-attach кг ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+# ::auto-attach т ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+# ::auto-attach мг ::side left ::left-context \d ::lcode rus ::comment unit-of-measurement
+
+::auto-attach › ::side right ::group True ::lcode slv ::comment Slovenians uses ›ABC‹
+::auto-attach ‹ ::side left ::group True ::lcode slv ::comment Slovenians uses ›ABC‹
+::auto-attach » ::side right ::lcode slv ::comment Slovenians uses »ABC«
+::auto-attach « ::side left ::lcode slv ::comment Slovenians uses »ABC«
 
 ::auto-attach aad ::side left ::left-context \d ::lcode som ::comment ordinal particle ("th")
+::auto-attach ka ::side left ::left-context \d ::lcode som ::eng from
 ::auto-attach kii ::side left ::left-context \d ::lcode som ::example 1950kii
 
 ::auto-attach :a ::side left ::left-context \d ::lcode swe ::comment ordinal particle ("th") ::syntax-checked True
 ::auto-attach :e ::side left ::left-context \d ::lcode swe ::comment ordinal particle ("th") ::syntax-checked True
 ::auto-attach :s ::side left ::left-context (?:\d|\p{Lu}) ::lcode swe ::comment possessive ("'s") ::syntax-checked True
+
+::auto-attach ம் ::side left ::left-context \d ::lcode tam
+::auto-attach வது ::side left ::left-context \d ::lcode tam
+
+::auto-attach న ::side left ::left-context \d ::lcode tel
+::auto-attach లో ::side left ::left-context \d ::lcode tel
+::auto-attach ల ::side left ::left-context \d ::lcode tel
+::auto-attach వ ::side left ::left-context \d ::lcode tel
+::auto-attach లలో ::side left ::left-context \d ::lcode tel
+::auto-attach లకు ::side left ::left-context \d ::lcode tel
+::auto-attach దశకంలో ::side left ::left-context \d ::lcode tel
+
+::auto-attach ء ::side left ::left-context \d ::lcode urd
+
+::auto-attach ngo ::side right ::right-context \d ::lcode xho ::eng in ::comment prefix: in [1920]
+::auto-attach yoo ::side right ::right-context \d ::lcode xho ::eng s ::comment prefix: [1920]s
+::auto-attach ka ::side right ::right-context \d ::lcode xho ::comment prefix
+::auto-attach wama ::side right ::right-context \d ::lcode xho ::comment prefix
+::auto-attach we ::side right ::right-context \d ::lcode xho ::comment prefix
+::auto-attach yama ::side right ::right-context \d ::lcode xho ::comment prefix

@@ -1,7 +1,25 @@
+::punct-split . ::side both ::lcode guj ::left-context \p{Lo}\pM*\p{Lo}\pM*[,)]* ::right-context [-\/(]*\p{Lo}
+::punct-split . ::side both ::lcode guj ::left-context \b(?:છે|હતી|હતા|હતો) ::right-context (?:\pL|\d) ::right-context-not (?:\pL\pM*)+\.
+::punct-split ' ::side both ::group True ::lcode guj ::left-context \p{Lo}\pM*[,)]* ::right-context [-\/(]*\p{Lo}
+::punct-split ’ ::side both ::group True ::lcode guj ::left-context \p{Lo}\pM*[,)]* ::right-context [-\/(]*\p{Lo}
+::punct-split : ::side both ::group True ::lcode guj ::left-context \pL\pM* ::right-context \pL\pM*\pL\pM*\pL
+
 ::abbrev રૂ. ::lcode guj ::eng Rs.
 ::abbrev ડો. ::lcode guj ::eng Dr.
 ::abbrev ડૉ. ::lcode guj ::eng Dr.
 ::abbrev શ્રી. ::lcode guj ::eng Mr.
+::abbrev ઈ.સ. ::lcode guj ::eng AD ::comment year
+::abbrev ઇ.સ. ::lcode guj ::eng AD ::comment year
+::abbrev સે.મ ::lcode guj ::eng cm
+::abbrev કિ.મી ::lcode guj ::eng km
+::abbrev કિ.મી૨ ::lcode guj ::eng km²
+::abbrev કિ.ગ્ર ::lcode guj ::eng kg
+::abbrev યુ.એસ. ::lcode guj ::eng U.S. ::alt-spelling યુ.એસ
+::abbrev ડી.સી. ::lcode guj ::eng D.C.
+::abbrev તા. ::exp તાલુકા ::lcode guj ::eng Taluka
+::abbrev લિ. ::lcode guj ::eng Ltd.
+::abbrev દા.ત. ::exp દાખલા તરીકે ::lcode guj ::eng e.g.
+
 ::abbrev એ. ::lcode guj ::token-category phonetics ::eng A.
 ::abbrev બી. ::lcode guj ::token-category phonetics ::eng B.
 ::abbrev સી. ::lcode guj ::token-category phonetics ::eng C.
