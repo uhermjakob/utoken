@@ -8,7 +8,6 @@ When using STDIN and/or STDOUT, if might be necessary, particularly for older ve
 """
 # -*- encoding: utf-8 -*-
 import argparse
-import math
 import time
 from itertools import chain
 import cProfile
@@ -22,7 +21,7 @@ import pstats
 import re
 import regex
 import sys
-from typing import Callable, List, Match, Optional, TextIO, Tuple, Type
+from typing import Callable, IO, List, Match, Optional, TextIO, Tuple, Type
 from tqdm.auto import tqdm
 import unicodedata as ud
 from . import __version__, last_mod_date
@@ -1149,7 +1148,8 @@ class Tokenizer:
                     self.current_recursion_depth_number_alert_issued = True
             if self.lv & self.char_is_ethiopic_number:
                 if m3 := self.re_ethiopic_number.match(s):
-                    res_rec_num = self.rec_tok_m3(m3, s, offset, 'NUMBER-E', line_id, chart, lang_code, ht, this_function)
+                    res_rec_num = self.rec_tok_m3(m3, s, offset, 'NUMBER-E', line_id, chart, lang_code, ht,
+                                                  this_function)
                     self.current_recursion_depth_number -= 1
                     return res_rec_num
             if self.lv & self.char_is_digit:
@@ -1886,7 +1886,7 @@ class Tokenizer:
 
     re_id_snt = re.compile(r'(\S+)(\s+)(\S|\S.*\S)\s*$')
 
-    def utokenize_lines(self, ht: dict, input_file: TextIO, output_file: TextIO, annotation_file: Optional[TextIO],
+    def utokenize_lines(self, ht: dict, input_file: IO, output_file: TextIO, annotation_file: Optional[TextIO],
                         annotation_format: Optional[str] = None, lang_code: Optional[str] = None,
                         total_bytes=None, progress_bar=True):
         """Apply normalization/cleaning to a file (or STDIN/STDOUT)."""
@@ -1908,12 +1908,12 @@ class Tokenizer:
                         line_id, line_id_sep, core_line = m.group(1, 2, 3)
                         output_file.write(line_id + line_id_sep
                                           + self.utokenize_string(core_line, line_id, lang_code, ht,
-                                                                 annotation_file, annotation_format)
+                                                                  annotation_file, annotation_format)
                                           + "\n")
                 else:
                     line_id = str(line_number)
                     output_file.write(self.utokenize_string(line.rstrip("\n"), line_id, lang_code, ht,
-                                                           annotation_file, annotation_format)
+                                                            annotation_file, annotation_format)
                                       + "\n")
             if annotation_file and annotation_format == 'json':
                 annotation_file.write('[' + ',\n'.join(self.annotation_json_elements) + ']\n')
@@ -2014,7 +2014,7 @@ def main():
     lines = 'line' if number_of_lines == 1 else 'lines'
     if args.verbose:
         log.info(f'End: {end_time}  Elapsed time: {elapsed_time}  Processed {str(number_of_lines)} {lines}')
-    elif elapsed_time.seconds >= 10:
+    elif not args.progress_bar and elapsed_time.seconds >= 10:
         log.info(f'Elapsed time: {elapsed_time.seconds} seconds for {number_of_lines:,} {lines}')
 
 
