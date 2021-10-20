@@ -1,3 +1,4 @@
+*.egg-info
 .idea
 aux/exp.py
 aux/surf-field.py

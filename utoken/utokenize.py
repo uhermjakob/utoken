@@ -8,6 +8,8 @@ When using STDIN and/or STDOUT, if might be necessary, particularly for older ve
 """
 # -*- encoding: utf-8 -*-
 import argparse
+import math
+import time
 from itertools import chain
 import cProfile
 import datetime
@@ -20,6 +22,7 @@ import re
 import regex
 import sys
 from typing import Callable, List, Match, Optional, TextIO, Tuple, Type
+from tqdm.auto import tqdm
 import unicodedata as ud
 from . import __version__, last_mod_date
 from . import util
@@ -1439,33 +1442,44 @@ class Tokenizer:
     re_id_snt = re.compile(r'(\S+)(\s+)(\S|\S.*\S)\s*$')
 
     def tokenize_lines(self, ht: dict, input_file: TextIO, output_file: TextIO, annotation_file: Optional[TextIO],
-                       annotation_format: Optional[str] = None, lang_code: Optional[str] = None):
+                       annotation_format: Optional[str] = None, lang_code: Optional[str] = None,
+                       total_bytes=None, progress_bar=True):
         """Apply normalization/cleaning to a file (or STDIN/STDOUT)."""
         line_number = 0
-        for line in input_file:
-            line_number += 1
-            ht['NUMBER-OF-LINES'] = line_number
-            if self.first_token_is_line_id_p:
-                if m := self.re_id_snt.match(line):
-                    line_id, line_id_sep, core_line = m.group(1, 2, 3)
-                    output_file.write(line_id + line_id_sep
-                                      + self.tokenize_string(core_line, line_id, lang_code, ht,
-                                                             annotation_file, annotation_format)
+        st = time.time()
+        prefix = 'Tokenizing'
+        with tqdm(input_file, total=total_bytes, disable=not progress_bar, unit='b', unit_scale=True,
+                  dynamic_ncols=True, desc=prefix) as data_bar:
+            for line in data_bar:
+                line_number += 1
+                if progress_bar:
+                    line_speed = int(line_number / (time.time() - st))
+                    data_bar.set_postfix_str(f'{line_speed}L/s', refresh=False)
+                    data_bar.set_description_str(f'{prefix} {line_number}', refresh=False)
+                    data_bar.update(len(line.encode()))  # bytes
+                ht['NUMBER-OF-LINES'] = line_number
+                if self.first_token_is_line_id_p:
+                    if m := self.re_id_snt.match(line):
+                        line_id, line_id_sep, core_line = m.group(1, 2, 3)
+                        output_file.write(line_id + line_id_sep
+                                          + self.tokenize_string(core_line, line_id, lang_code, ht,
+                                                                 annotation_file, annotation_format)
+                                          + "\n")
+                else:
+                    line_id = str(line_number)
+                    output_file.write(self.tokenize_string(line.rstrip("\n"), line_id, lang_code, ht,
+                                                           annotation_file, annotation_format)
                                       + "\n")
-            else:
-                line_id = str(line_number)
-                output_file.write(self.tokenize_string(line.rstrip("\n"), line_id, lang_code, ht,
-                                                       annotation_file, annotation_format)
-                                  + "\n")
-        if annotation_file and annotation_format == 'json':
-            annotation_file.write('[' + ',\n'.join(self.annotation_json_elements) + ']\n')
+            if annotation_file and annotation_format == 'json':
+                annotation_file.write('[' + ',\n'.join(self.annotation_json_elements) + ']\n')
+            data_bar.close()
 
 
 def main():
     """Wrapper around tokenization that takes care of argument parsing and prints change stats to STDERR."""
     # parse arguments
     parser = argparse.ArgumentParser(description='Tokenizes a given text')
-    parser.add_argument('-i', '--input', type=argparse.FileType('r', encoding='utf-8', errors='surrogateescape'),
+    parser.add_argument('-i', '--input', type=Path,
                         default=sys.stdin, metavar='INPUT-FILENAME', help='(default: STDIN)')
     parser.add_argument('-o', '--output', type=argparse.FileType('w', encoding='utf-8', errors='ignore'),
                         default=sys.stdout, metavar='OUTPUT-FILENAME', help='(default: STDOUT)')
@@ -1483,6 +1497,7 @@ def main():
     parser.add_argument('-f', '--first_token_is_line_id', action='count', default=0,
                         help='First token is line ID (and will be exempt from any tokenization)')
     parser.add_argument('-v', '--verbose', action='count', default=0, help='write change log etc. to STDERR')
+    parser.add_argument('-pb', '--progress-bar', action='store_true', default=False, help='Show progress bar')
     parser.add_argument('-c', '--chart', action='count', default=0,
                         help='build annotation chart, even without annotation output')
     parser.add_argument('--simple', action='count', default=0,
@@ -1502,11 +1517,20 @@ def main():
         if tok.profile_scope is None:
             tok.profile.enable()
             tok.profile_active = True
+    if args.input is sys.stdin:
+        args.total_bytes = None
+        if not re.search('utf-8', sys.stdin.encoding, re.IGNORECASE):
+            log.error(f"Bad STDIN encoding '{sys.stdin.encoding}' as opposed to 'utf-8'. \
+                        Suggestion: 'export PYTHONIOENCODING=UTF-8' or use '--input FILENAME' option")
+    else:
+        inp_path = args.input
+        assert isinstance(inp_path, Path)
+        if not inp_path.exists():
+            raise ValueError(f"{inp_path} does not exist.")
+        args.total_bytes = inp_path.stat().st_size
+        args.input = argparse.FileType('r', encoding='utf-8', errors='surrogateescape')(str(inp_path))
 
-# Open any input or output files. Make sure utf-8 encoding is properly set (in older Python3 versions).
-    if args.input is sys.stdin and not re.search('utf-8', sys.stdin.encoding, re.IGNORECASE):
-        log.error(f"Bad STDIN encoding '{sys.stdin.encoding}' as opposed to 'utf-8'. \
-                    Suggestion: 'export PYTHONIOENCODING=UTF-8' or use '--input FILENAME' option")
+    # Open any input or output files. Make sure utf-8 encoding is properly set (in older Python3 versions).
     if args.output is sys.stdout and not re.search('utf-8', sys.stdout.encoding, re.IGNORECASE):
         log.error(f"Error: Bad STDIN/STDOUT encoding '{sys.stdout.encoding}' as opposed to 'utf-8'. \
                     Suggestion: 'export PYTHONIOENCODING=UTF-8' or use use '--output FILENAME' option")
@@ -1529,7 +1553,8 @@ def main():
             log_info += f'  ISO 639-3 language code: {lang_code}'
         log.info(log_info)
     tok.tokenize_lines(ht, input_file=args.input, output_file=args.output, annotation_file=args.annotation_file,
-                       annotation_format=args.annotation_format, lang_code=lang_code)
+                       annotation_format=args.annotation_format, lang_code=lang_code, total_bytes=args.total_bytes,
+                       progress_bar=args.progress_bar)
     if (log.INFO >= log.root.level) and (tok.n_lines_tokenized >= 1000):
         sys.stderr.write('\n')
     # Log some change stats.
