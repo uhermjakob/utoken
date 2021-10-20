@@ -1897,7 +1897,7 @@ class Tokenizer:
         line_number = 0
         st = time.time()
         prefix = 'Tokenizing'
-        with tqdm(input_file, total=total_bytes, disable=not progress_bar, unit='b', unit_scale=True, unit_divisor=1024,
+        with tqdm(input_file, total=total_bytes, disable=not progress_bar, unit='b', unit_scale=True,
                   dynamic_ncols=True, desc=prefix) as data_bar:
             for line in data_bar:
                 line_number += 1
