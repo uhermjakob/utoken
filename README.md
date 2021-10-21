@@ -1,4 +1,5 @@
-# utoken
+# utoken  
+[![image alt >](http://img.shields.io/pypi/v/utoken.svg)](https://pypi.python.org/pypi/utoken/)  
 _utoken_ is a multilingual tokenizer that divides text into words, punctuation and special tokens such as numbers, URLs, XML tags, email-addresses and hashtags.
 The tokenizer comes with a companion detokenizer.
 Initial public release of beta version 0.1.0 on Oct. 1, 2021.
