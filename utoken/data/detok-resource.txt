@@ -242,6 +242,15 @@
 ::auto-attach e ::side left ::left-context \d ::lcode fra ::comment ordinal particle ("th")
 ::auto-attach er ::side left ::left-context \d ::lcode fra ::comment ordinal particle ("th")
 
+::auto-attach í ::side left ::lcode gle ::left-context \d
+::auto-attach idí ::side left ::lcode gle ::left-context \d
+::auto-attach ú ::side left ::lcode gle ::left-context \d
+::auto-attach d' ::side right ::lcode gle ::left-context \pL
+::auto-attach d´ ::side right ::lcode gle ::left-context \pL
+::auto-attach h- ::side right ::lcode gle ::left-context \pL
+::auto-attach n- ::side right ::lcode gle ::left-context \pL
+::auto-attach t- ::side right ::lcode gle ::left-context \pL
+
 ::auto-attach માં ::side left ::left-context (?:\d|[)]) ::lcode guj
 ::auto-attach ના ::side left ::left-context (?:\d|[)]) ::lcode guj
 ::auto-attach મીની ::side left ::left-context (?:\d|[)]) ::lcode guj

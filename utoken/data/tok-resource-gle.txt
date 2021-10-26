@@ -1,13 +1,23 @@
-::abbrev Uacht. ::lcode gle
-::abbrev Dr. ::lcode gle
+::lexical d' ::lcode gle ::tag DECONTRACTION-L ::alt-spelling d´
+::lexical h- ::lcode gle ::tag DECONTRACTION-L ::comment Irish prothesis
+::lexical n- ::lcode gle ::tag DECONTRACTION-L ::comment Irish eclipsis
+::lexical t- ::lcode gle ::tag DECONTRACTION-L ::comment Irish prothesis
+
+::abbrev b. ::lcode gle ::eng born
 ::abbrev B.Arch. ::lcode gle
-::abbrev m.sh. ::lcode gle
-::abbrev Co. ::lcode gle
-::abbrev Cf. ::lcode gle
+::abbrev c. ::lcode gle
 ::abbrev cf. ::lcode gle
-::abbrev i.e. ::lcode gle
-::abbrev r. ::lcode gle
 ::abbrev Chr. ::lcode gle
+::abbrev Co. ::lcode gle
+::abbrev Dr. ::lcode gle
+::abbrev i.e. ::lcode gle
 ::abbrev lch. ::lcode gle ::right-context \s*\d
 ::abbrev lgh. ::lcode gle ::right-context \s*\d
+::abbrev m.sh. ::lcode gle
+::abbrev r. ::lcode gle
+::abbrev Uacht. ::lcode gle
 ::abbrev uimh. ::lcode gle ::right-context \s*\d
+
+::ipa-trigger-left fuaimníodh mar ::lcode gle
+::ipa-trigger-left fuaimníodh ::lcode gle
+::ipa-trigger-left fuaimniú ::lcode gle
