@@ -94,8 +94,9 @@ class ResourceDict:
         self.prefix_dict_lexical: Dict[str, bool] = {}
         self.prefix_dict_punct: Dict[str, bool] = {}
         self.max_s_length: int = 0
-        self.pre_name_title_list = defaultdict(list)  # key: lang_code  value: ["Mr.", "Dr."]
-        self.phonetics_list = defaultdict(list)       # key: lang_code  value: ["Ey.", "Bi.", "Si."]
+        self.pre_name_title_list = defaultdict(list)      # key: lang_code  value: ["Mr.", "Dr."]
+        self.phonetics_list = defaultdict(list)           # key: lang_code  value: ["Ey.", "Bi.", "Si."]
+        self.ipa_trigger_left_list = defaultdict(list)    # key: lang_code  value: ["pronounciation", "pronounced"]
 
     def register_resource_entry_in_reverse_resource_dict(self, resource_entry: ResourceEntry, rev_anchors: List[str]):
         for rev_anchor in rev_anchors:
@@ -307,6 +308,7 @@ class ResourceDict:
                                                                               'exp',
                                                                               'group',
                                                                               'inflections',
+                                                                              'ipa-trigger-left',
                                                                               'last-char-repeatable',
                                                                               'lcode',
                                                                               'lcode-not',
@@ -334,6 +336,7 @@ class ResourceDict:
                                                                               'token-category'],
                                                                  required_slot_dict={'abbrev': [],
                                                                                      'contraction': ['target'],
+                                                                                     'ipa-trigger-left': [],
                                                                                      'lexical': [],
                                                                                      'misspelling': ['target'],
                                                                                      'non-symbol': [],
@@ -397,6 +400,9 @@ class ResourceDict:
                             self.register_resource_entry_in_reverse_resource_dict(resource_entry, [target])
                         elif head_slot == 'non-symbol':
                             resource_entry = NonSymbolEntry(s)
+                        elif head_slot == 'ipa-trigger-left':
+                            lcode = slot_value_in_double_colon_del_list(line, 'lcode')
+                            self.ipa_trigger_left_list[lcode].append(s.lower())
                         if resource_entry:  # register resource_entry with lowercase key
                             if len(s) > self.max_s_length:
                                 self.max_s_length = len(s)
@@ -574,6 +580,7 @@ class DetokenizationResource:
                                                                               'example',
                                                                               'except',
                                                                               'group',
+                                                                              'ipa-trigger-left',
                                                                               'last-char-repeatable',
                                                                               'lcode',
                                                                               'lcode-not',
@@ -600,6 +607,7 @@ class DetokenizationResource:
                                                                  required_slot_dict={'attach-tag': [],
                                                                                      'auto-attach': ['side'],
                                                                                      'contraction': ['target'],
+                                                                                     'ipa-trigger-left': [],
                                                                                      'lexical': [],
                                                                                      'markup-attach': [],
                                                                                      'non-symbol': []})
