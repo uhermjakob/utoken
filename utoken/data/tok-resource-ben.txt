@@ -40,3 +40,5 @@
 ::abbrev এক্স. ::lcode ben ::token-category phonetics ::eng X.
 ::abbrev ওয়াই. ::lcode ben ::token-category phonetics ::eng Y.
 ::abbrev জেড. ::lcode ben ::token-category phonetics ::eng Z.
+
+::ipa-trigger-left উচ্চারণ ::lcode ben

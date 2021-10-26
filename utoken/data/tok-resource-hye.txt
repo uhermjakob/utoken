@@ -66,3 +66,5 @@
 ::abbrev Ք. ::right-context \s*\S
 ::abbrev Օ. ::right-context \s*\S
 ::abbrev Ֆ. ::right-context \s*\S
+
+::ipa-trigger-left Միջազգային հնչյունական այբուբեն  ::lcode hye

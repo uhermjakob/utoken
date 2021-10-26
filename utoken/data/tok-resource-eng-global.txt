@@ -433,6 +433,8 @@
 ::abbrev decr. ::exp decrease ::lcode eng
 ::abbrev Dept. ::exp Department ::lcode eng
 ::abbrev DH ::exp dear husband ::lcode eng
+::abbrev D.Lit. ::exp doctor of letters ::lcode eng
+::abbrev D.Litt. ::exp doctor of letters ::lcode eng
 ::abbrev DS ::exp dear son ::lcode eng
 ::abbrev D.Sc. ::exp Doctor of Science ::lcode eng
 ::abbrev DW ::exp dear wife ::lcode eng
@@ -467,6 +469,8 @@
 ::abbrev Kfz. ::exp Kraftfahrzeug ::lcode eng ::etym-lcode deu ::alt-spelling Kfz
 ::abbrev l/c ::exp lower case ::lcode eng
 ::abbrev lib ::exp liberal ::lcode eng
+::abbrev Lit.D. ::exp doctor of letters ::lcode eng
+::abbrev Litt.D. ::exp doctor of letters ::lcode eng
 ::abbrev LL.B. ::exp Bachelor of Laws ::lcode eng
 ::abbrev lol ::exp laughing out loud ::lcode eng
 ::abbrev l8r ::exp later ::lcode eng
@@ -1038,3 +1042,8 @@
 ::misspelling whereever ::target wherever ::lcode eng
 ::misspelling wich ::target which ::lcode eng
 ::misspelling wierd ::target weird ::lcode eng
+
+::ipa-trigger-left IPA ::lcode eng
+::ipa-trigger-left pronunciation ::lcode eng
+::ipa-trigger-left pronounced ::lcode eng
+::ipa-trigger-left listen ::lcode eng

@@ -115,3 +115,5 @@
 ::abbrev Nr. ::lcode por
 ::abbrev p. ::lcode por ::right-context \s*\d
 ::abbrev pp. ::lcode por ::right-context \s*\d
+
+::ipa-trigger-left pronunciado ::lcode por

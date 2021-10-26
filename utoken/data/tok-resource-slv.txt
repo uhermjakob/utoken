@@ -32,3 +32,5 @@
 ::abbrev Sv. ::exp Sveti ::lcode slv ::eng Saint
 ::abbrev tj. ::lcode slv ::eng i.e.
 ::abbrev št. ::lcode slv ::right-context \s*\d
+
+::ipa-trigger-left izgovorjava ::lcode slv

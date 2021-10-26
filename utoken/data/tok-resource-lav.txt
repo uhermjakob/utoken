@@ -33,3 +33,5 @@
 ::abbrev vienk. ::lcode lav
 ::abbrev Vietn. ::lcode lav
 ::abbrev virz. ::lcode lav
+
+::ipa-trigger-left izrunā ::lcode lav

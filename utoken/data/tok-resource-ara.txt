@@ -3,3 +3,5 @@
 ::abbrev م.ت.ف. ::exp منظمة التحرير الفلسطينية ::lcode ara ::comment Palestine Liberation Organization ::eng PLO
 
 ::abbrev كم² ::lcode ara ::eng km²
+
+::ipa-trigger-left تلفظ ::lcode ara

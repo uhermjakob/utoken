@@ -12,3 +12,5 @@
 ::abbrev K.J ::exp kia to bi Jesu ::lcode yor ::eng BC
 ::abbrev tr. ::lcode yor
 
+::ipa-trigger-left pìpè ::lcode yor
+::ipa-trigger-left pípè ::lcode yor

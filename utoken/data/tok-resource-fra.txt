@@ -178,3 +178,5 @@
 ::abbrev Z. ::lcode fra
 ::abbrev z. ::lcode fra
 ::abbrev Z.I. ::lcode fra
+
+::ipa-trigger-left prononciation ::lcode fra

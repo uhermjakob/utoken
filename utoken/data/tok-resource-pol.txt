@@ -223,4 +223,6 @@
 ::abbrev zł. ::lcode pol
 ::abbrev właśc. ::lcode pol
 
-::abbrev вул. ::lcode ukr
+::abbrev вул. ::lcode pol
+
+::ipa-trigger-left wymowa ::lcode pol

@@ -2,3 +2,6 @@
 ::punct-split - ::side both ::group True ::lcode zul ::left-context (?<!\pL\pM*|\d)[eEiIuU] ::right-context \pL
 
 ::abbrev c. ::lcode zul
+
+::ipa-trigger-left lalela ::lcode zul
+::ipa-trigger-left listeni ::lcode zul

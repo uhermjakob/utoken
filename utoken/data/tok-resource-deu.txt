@@ -702,3 +702,5 @@
 ::misspelling einzigste ::target einzige ::lcode deu
 ::misspelling nähmlich ::target nämlich ::lcode deu
 ::misspelling Wiederstand ::target Widerstand ::lcode deu
+
+::ipa-trigger-left Aussprache ::lcode deu
