@@ -184,6 +184,7 @@ class Tokenizer:
                                    self.tokenize_filenames,
                                    self.tokenize_symbol_group,
                                    self.tokenize_hashtags_and_handles,
+                                   self.tokenize_pronunciations,
                                    self.tokenize_complexes,
                                    self.tokenize_abbreviation_patterns,
                                    self.tokenize_according_to_resource_entries,
@@ -319,6 +320,10 @@ class Tokenizer:
         self.char_is_lower_upper_unstable = bit_vector
         bit_vector = bit_vector << 1
         self.char_is_miscode_elem = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_ipa_letter = bit_vector
+        bit_vector = bit_vector << 1
+        self.char_is_ipa_punct = bit_vector
         # import math; log.info(f'bit_vector length = {round(math.log2(bit_vector)) + 1}')
 
         self.char_is_dash_or_digit = self.char_is_dash | self.char_is_digit
@@ -352,6 +357,8 @@ class Tokenizer:
         self.current_recursion_depth_symbol_warning_threshold = 200
         self.current_recursion_depth_symbol_alert_issued = False
         self.current_recursion_depth_symbol_warning_issued = False
+        self.string_has_ipa_delimiters = False
+        self.string_has_ipa_trigger = False
         self.profile = None
         self.profile_active: bool = False
         self.profile_scope: Optional[str] = None
@@ -601,6 +608,14 @@ class Tokenizer:
             char = chr(code_point)
             self.char_type_vector_dict[char] \
                 = self.char_type_vector_dict.get(char, 0) | self.char_is_hangul
+        # IPA (International Phonetic Alphabet) extensions
+        for code_point in chain(range(0x0250, 0x02B0), range(0x1D00, 0x1DC0)):
+            char = chr(code_point)
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_ipa_letter
+        for char in "ˈˌː":
+            self.char_type_vector_dict[char] \
+                = self.char_type_vector_dict.get(char, 0) | self.char_is_ipa_punct
         # alpha, digit
         for code_point in range(0x0000, 0xE0200):  # All Unicode points
             char = chr(code_point)
@@ -729,7 +744,9 @@ class Tokenizer:
             if not self.simple_tok_p:
                 token_surf = self.add_any_mt_tok_delimiter(token_surf, offset2, offset3, lang_code)
             if pre := s[position:start_position]:
-                if i == 0 and kwargs.get('left_done', False):
+                if kwargs.get('all_done', False):
+                    tokenizations.append(self.next_tok(calling_function, pre, chart, ht, lang_code, line_id, offset1))
+                elif i == 0 and kwargs.get('left_done', False):
                     tokenizations.append(self.next_tok(calling_function, pre, chart, ht, lang_code, line_id, offset1))
                 else:
                     tokenizations.append(calling_function(pre, chart, ht, lang_code, line_id, offset1))
@@ -744,7 +761,11 @@ class Tokenizer:
                 chart.register_token(new_token)
             position = end_position
         if post := s[position:]:
-            tokenizations.append(calling_function(post, chart, ht, lang_code, line_id, offset+position))
+            if kwargs.get('all_done', False):
+                tokenizations.append(self.next_tok(calling_function, post, chart, ht, lang_code, line_id,
+                                                   offset+position))
+            else:
+                tokenizations.append(calling_function(post, chart, ht, lang_code, line_id, offset+position))
         self.current_recursion_depth -= 1
         return util.join_tokens(tokenizations)
 
@@ -1090,6 +1111,128 @@ class Tokenizer:
                 return self.rec_tok_m3(m3, s, offset, token_type, line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
+    re_contains_slash_ipa_delimiters = regex.compile(r'.*(?<!(?:\pL\pM*|\d))'
+                                                     r'\/(?:\pL\pM*|.{2,50})\/'
+                                                     r'(?!(?:\pL|\d))')
+    re_contains_bracket_ipa_delimiters = regex.compile(r'.*(?<!(?:\pL\pM*|\d))'
+                                                       r'\[(?:\pL\pM*|.{2,50})\]'
+                                                       r'(?!(?:\pL|\d))')
+
+    def sentence_level_lv_init(self, s: str, _line_id: Optional[str] = None, _lang_code: Optional[str] = None) -> None:
+        self.string_has_ipa_delimiters = False
+        if self.lv & self.char_is_slash and self.re_contains_slash_ipa_delimiters.match(s):
+            self.string_has_ipa_delimiters = True
+        elif self.lv & self.char_is_left_square_bracket and self.re_contains_bracket_ipa_delimiters.match(s):
+            self.string_has_ipa_delimiters = True
+
+    @staticmethod
+    def reject_pronunciation(s: str, ipa_trigger_left: Optional[str], n_reg_letters: int, n_ipa_letters: int,
+                             _n_reg_puncts: int, n_ipa_puncts: int, _n_ipa_comb_marks: int, n_other: int,
+                             _line_id: Optional[str] = None) -> str:
+        if n_reg_letters == 0 and n_ipa_letters == 0:
+            return "no qualifying letter"
+        if ipa_trigger_left is None and n_ipa_letters == 0 and n_ipa_puncts == 0:
+            return "no IPA letter/punct/trigger"
+        if n_ipa_letters == 0 and n_ipa_puncts == 0 and (s[1] in ' ' or s[len(s)-2] in ' '):
+            return "no IPA letter/punct, but space at end"
+        if ipa_trigger_left is None and n_other > n_ipa_letters + n_ipa_puncts + 1:
+            return "too many other characters"
+        return ""
+
+    def tokenize_pronunciations(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
+                                line_id: Optional[str] = None, offset: int = 0) -> str:
+        """This tokenization step splits off pronunciations, incl. IPA"""
+        this_function = self.tokenize_pronunciations
+        if self.string_has_ipa_delimiters:
+            len_s = len(s)
+            tokens = []
+            start_positions = []
+            next_start_position = 0
+            while next_start_position < len_s:
+                start_position = next_start_position
+                next_start_position = start_position + 1
+                end_position = None
+                c_open = s[start_position]
+                if c_open in '/[':
+                    left_context = s[:start_position]
+                    c_close = '/' if c_open == '/' else ']'
+                    if not self.re_ends_w_letter_or_digit.match(left_context):
+                        position = start_position
+                        max_position = min(len_s, start_position+50)
+                        n_reg_letters = 0
+                        n_ipa_letters = 0
+                        n_reg_puncts = 0
+                        n_ipa_puncts = 0
+                        n_ipa_comb_marks = 0
+                        n_other = 0
+                        other_s = ""
+                        while position + 1 < max_position:
+                            position += 1
+                            c = s[position]
+                            if c == c_close:
+                                end_position = position
+                                break
+                            elif c in '/[]':
+                                break
+                            else:
+                                char_type_vector = self.char_type_vector_dict.get(c, 0)
+                                if self.char_is_ipa_letter & char_type_vector:
+                                    n_ipa_letters += 1
+                                elif c in 'ʰʲǀ':
+                                    n_ipa_letters += 1
+                                elif self.char_is_ipa_punct & char_type_vector:
+                                    n_ipa_puncts += 1
+                                elif self.re_is_lc_latin_letter.match(c):
+                                    n_reg_letters += 1
+                                elif c in "βθ":
+                                    n_reg_letters += 1
+                                elif c in ' .':
+                                    n_reg_puncts += 1
+                                elif c in '̩̞̪̃̀͡':
+                                    n_ipa_comb_marks += 1
+                                else:
+                                    other_s += c
+                                    n_other += 1
+                        if end_position:
+                            right_context = s[end_position+1:]
+                            if not self.re_starts_w_letter_or_digit.match(right_context):
+                                lang_codes = self.lang_codes
+                                for lcode in ['eng', None]:
+                                    if lcode not in lang_codes:
+                                        lang_codes.append(lcode)
+                                ipa_trigger_left = None
+                                left_context2 = left_context[max(0, len(left_context)-30):].lower()
+                                for lcode in lang_codes:
+                                    ipa_trigger_left_list = self.tok_dict.ipa_trigger_left_list[lcode]
+                                    for ipa_trigger_cand in ipa_trigger_left_list:
+                                        esc_regex = '.*\\b' + regex.escape(ipa_trigger_cand) + '\\b'
+                                        # log.info(f' {lcode} {esc_regex}  lc: {left_context2}')
+                                        if regex.match(esc_regex, left_context2):
+                                            ipa_trigger_left = ipa_trigger_cand
+                                            break
+                                    if ipa_trigger_left:
+                                        break
+                                token = s[start_position:end_position+1]
+                                rejection_reason = self.reject_pronunciation(s, ipa_trigger_left,
+                                                                             n_reg_letters, n_ipa_letters,
+                                                                             n_reg_puncts, n_ipa_puncts,
+                                                                             n_ipa_comb_marks, n_other, line_id)
+                                if rejection_reason:
+                                    if '*' in rejection_reason:
+                                        log.info(f'IPA L.{line_id} {lang_code} {token} reject: {rejection_reason}')
+                                    pass
+                                else:
+                                    next_start_position = end_position + 1
+                                    tokens.append(token)
+                                    start_positions.append(start_position)
+                                    # log.info(f'IPA L.{line_id} {lang_code} {token} ({start_position}-{end_position}) '
+                                    #          f'{ipa_trigger_left} {n_ipa_letters}/{n_reg_letters}/{n_ipa_puncts}/'
+                                    #          f'{n_reg_puncts}/{n_ipa_comb_marks}/{n_other}/{other_s}')
+            if tokens:
+                return self.rec_tok(tokens, start_positions, s, offset, 'IPA', line_id, chart,
+                                    lang_code, ht, this_function, tokens, all_done=True)
+        return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
+
     def tokenize_complexes(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                            line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off: ..."""
@@ -1154,7 +1297,8 @@ class Tokenizer:
                     return res_rec_num
             if self.lv & self.char_is_digit:
                 if m3 := self.re_number.match(s) \
-                         or ((lang_code not in ('asm', 'ben', 'hin', 'kan', 'mal', 'tam', 'tel'))
+                         or ((lang_code not in ('asm', 'ben', 'guj', 'hin', 'kan', 'mal', 'mar',
+                                                'ori', 'pan', 'tam', 'tel'))
                              and self.re_number2.match(s)) \
                          or self.re_integer.match(s):
                     # log.info(f'A s: {s} n: {m3.group(2)} offset: {offset} chart: {chart}')
@@ -1335,6 +1479,7 @@ class Tokenizer:
     re_ends_w_non_whitespace = regex.compile(r'.*\S$')
     re_ends_w_dash = regex.compile(r'.*[-−–]$')
     re_ends_w_punct = regex.compile(r'.*\pP$')
+    re_is_lc_latin_letter = regex.compile(r'(?V1)[\p{Latin}&&\p{Ll}]$')
     re_is_short_letter_token = regex.compile(r'(?:\pL\pM*){1,2}$')
     re_is_all_whitespaces = regex.compile(r'\s*$')
     re_starts_w_single_hebrew_letter = regex.compile(r'(?V1)[\p{Hebrew}&&\p{Letter}]\pM*(?!\'?\pL)')
@@ -1869,6 +2014,7 @@ class Tokenizer:
                 # So we will easily know whether e.g. a line contains a digit.
                 # If not, some digit-specific tokenization steps can be skipped to improve run-time.
                 self.lv = self.lv | char_type_vector
+        self.sentence_level_lv_init(s, line_id, lang_code)
         # Initialize chart.
         chart = Chart(s, line_id) if self.chart_p else None
         # Call the first tokenization step function, which then recursively call all other tokenization step functions.
