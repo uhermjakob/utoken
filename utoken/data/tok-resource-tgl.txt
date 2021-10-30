@@ -22,6 +22,7 @@
 ::abbrev Sec. ::lcode tgl ::case-sensitive True ::sem-class pre-name-title
 ::abbrev Apok. ::lcode tgl ::case-sensitive True ::eng Apocalypse
 ::abbrev blg. ::lcode tgl ::eng number
+::abbrev Ftel. ::lcode tgl
 
 ::abbrev M/Gen. ::exp Major General ::lcode tgl ::sem-class military-rank
 ::abbrev C/Supt. ::exp Chief Superintendent ::sem-class pre-name-title

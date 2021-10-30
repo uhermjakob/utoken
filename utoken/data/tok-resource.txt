@@ -87,6 +87,7 @@
 ::punct-split = ::side both ::group True ::left-context \pL\pM*\pL\pM*[)]* ::right-context [-=\/(]*\pL\pM*\pL
 ::punct-split , ::side both ::left-context \d:\d{1,2} ::right-context \d{1,2}[-]\d  # Genesis 1:1,26-28
 ::punct-split , ::side both ::left-context \d\.\d{1,2} ::right-context \d
+::punct-split , ::side both ::left-context \d-\d+ ::right-context \d+-\d ::example 2015-16,2019-20
 ::punct-split , ::side both ::left-context \pL\pM* ::right-context \d
 ::punct-split , ::side both ::left-context \d ::right-context \pL\pM*\pL
 ::punct-split / ::side both ::left-context \pL\pM*(?:\pL\pM*|\d) ::right-context (?:\pL\pM*\pL|[㎀-㏟])  #right-context-not (?:hr|yr)\b
@@ -97,6 +98,7 @@
 ::punct-split ~ ::side both ::group True ::right-context \pL
 ::punct-split . ::side both ::left-context (?:\p{Ll}\p{Ll}|\d|[IVXL]+) ::right-context \p{Lu}\p{Ll}
 ::punct-split . ::side both ::left-context (?<!\pL|\d|[-_.])\d+ ::right-context \pL
+::punct-split . ::side both ::left-context \d ::right-context \pL\pM*\pL
 ::punct-split . ::side both ::left-context \p{Lo}\pM*\p{Lo}\pM* ::right-context [-\/]*\p{Lo}\pM*\p{Lo}
 ::punct-split . ::side both ::left-context (?:[\p{Latin}&&\p{Letter}]\pM*){2,} ::right-context [-\/]*\p{Lo}\pM*\p{Lo}
 ::punct-split . ::side both ::left-context \p{Lo}\pM*\p{Lo}\pM* ::right-context [-\/]*(?:[\p{Latin}&&\p{Letter}]\pM*){2,}
@@ -112,6 +114,8 @@
 ::punct-split º ::side both ::comment masculine ordinal indicator, sometimes used as degree sign
 ::punct-split ・ ::side both ::group True ::comment Katakana middle dot
 ::punct-split ¬ ::side both
+# ::punct-split - ::side both ::left-context (?<!\d)(?:19|20)\d\d ::right-context \d\d(?!\d)
+::punct-split - ::side both ::left-context \d ::right-context \d
 
 # split off punctuation from start of token
 ::punct-split &apos; ::side start ::group True

@@ -77,9 +77,9 @@
 ::abbrev chaps. ::exp chapters ::lcode eng ::sem-class corpus-component
 ::abbrev Fig. ::exp figure ::lcode eng ::sem-class corpus-component
 ::abbrev fig. ::exp figure ::lcode eng ::sem-class corpus-component
-::abbrev No. ::exp number ::lcode eng ::sem-class corpus-component ::case-sensitive True ::right-context \s*\d
-::abbrev no. ::exp number ::lcode eng ::sem-class corpus-component ::case-sensitive True ::right-context \s*\d
-::abbrev Nos. ::exp numbers ::lcode eng ::sem-class corpus-component ::case-sensitive True ::right-context \s*\d
+::abbrev No. ::exp number ::lcode eng ::sem-class corpus-component ::case-sensitive True ::right-context \s*-?\d
+::abbrev no. ::exp number ::lcode eng ::sem-class corpus-component ::case-sensitive True ::right-context \s*-?\d
+::abbrev Nos. ::exp numbers ::lcode eng ::sem-class corpus-component ::case-sensitive True ::right-context \s*-?\d
 ::abbrev Nr. ::exp number ::lcode eng ::sem-class corpus-component
 ::abbrev op. ::exp opus ::lcode eng ::sem-class corpus-component ::case-sensitive True ::left-context-not [.] ::right-context \s*\d
 ::abbrev p. ::exp page ::lcode eng ::sem-class corpus-component ::case-sensitive True ::left-context-not [.] ::right-context \s*\d
@@ -523,6 +523,7 @@
 ::abbrev Sq. ::exp Square ::lcode eng
 ::abbrev Ste. ::exp suite ::lcode eng ::case-sensitive True
 ::abbrev TCP/IP ::exp Transmission Control Protocol/Internet Protocol ::lcode eng
+::abbrev tel. ::exp telephone ::lcode eng ::right-context \s*\d
 ::abbrev tl;dr ::exp too long, didn't read ::lcode eng
 ::abbrev TV ::exp television ::lcode eng
 ::abbrev ?4u ::exp question for you ::lcode eng

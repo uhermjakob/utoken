@@ -27,3 +27,4 @@
 ::abbrev м/а ::lcode kaz
 
 ::abbrev Art. ::lcode kaz ::case-sensitive True ::eng Article
+::abbrev S. ::lcode kaz
