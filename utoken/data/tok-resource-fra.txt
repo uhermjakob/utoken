@@ -1,3 +1,5 @@
+::punct-split - ::side both ::left-context \pL\pM* ::right-context (?:y)\b ::lcode fra
+
 ::contraction au ::target à le ::lcode fra ::char-split 1,1
 ::contraction aux ::target à les ::lcode fra  ::char-split 1,2
 ::contraction des ::target de les ::lcode fra ::char-split 1,2
@@ -13,8 +15,10 @@
 ::lexical j' ::lcode fra ::tag DECONTRACTION-L ::comment je
 ::lexical jusqu' ::lcode fra ::tag DECONTRACTION-L ::comment jusque ::example jusqu'en; jusqu'ici
 ::lexical l' ::lcode fra ::tag DECONTRACTION-L ::comment le, la
+::lexical lorsqu' ::lcode fra ::tag DECONTRACTION-L ::comment lorsque ::example lorsqu'il s'en rend compte
 ::lexical m' ::lcode fra ::tag DECONTRACTION-L ::comment me
 ::lexical n' ::lcode fra ::tag DECONTRACTION-L ::comment ne
+::lexical puisqu' ::lcode fra ::tag DECONTRACTION-L ::comment puisque ::example puisqu'il est mon frère
 ::lexical qu'  ::lcode fra ::tag DECONTRACTION-L ::comment que
 ::lexical s' ::lcode fra ::tag DECONTRACTION-L ::comment se
 ::lexical t' ::lcode fra ::tag DECONTRACTION-L ::comment te
@@ -143,10 +147,10 @@
 ::abbrev S.A.R. ::lcode fra
 ::abbrev S.A.S. ::lcode fra
 ::abbrev S.E. ::lcode fra
-::abbrev sec. ::lcode fra
+::abbrev sec. ::lcode fra ::left-context \d\s* ::comment exclude sec = dry
 ::abbrev sect. ::lcode fra
 ::abbrev sep. ::lcode fra
-::abbrev sept. ::lcode fra
+::abbrev sept. ::lcode fra ::left-context \d\s* ::comment exclude sept = seven
 ::abbrev sing. ::lcode fra
 ::abbrev S.M. ::lcode fra
 ::abbrev S.M.I.R. ::lcode fra
@@ -166,15 +170,15 @@
 ::abbrev V. ::lcode fra
 ::abbrev v. ::lcode fra
 ::abbrev vb. ::lcode fra
-::abbrev vol. ::lcode fra
+::abbrev vol. ::lcode fra ::right-context \s*(?:\d+|[IiVvXxLlCc]+\b)
 ::abbrev vs. ::lcode fra
 ::abbrev W. ::lcode fra
 ::abbrev w. ::lcode fra
 ::abbrev X. ::lcode fra
 ::abbrev x. ::lcode fra
 ::abbrev X.O. ::lcode fra
-::abbrev Y. ::lcode fra
-::abbrev y. ::lcode fra
+::abbrev Y. ::lcode fra ::case-sensitive True
+# ::abbrev y. ::lcode fra ::comment exclude Vas-y.
 ::abbrev Z. ::lcode fra
 ::abbrev z. ::lcode fra
 ::abbrev Z.I. ::lcode fra

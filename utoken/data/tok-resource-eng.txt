@@ -43,3 +43,7 @@
 ::contraction y're ::target you 're ::lcode eng ::substandard True
 
 ::punct-split - ::side both ::lcode eng ::left-context \p{Ll} ::right-context [IAa]\s  # Yes-I agree to phase-I.
+
+::abbrev Sens. ::exp Senators ::lcode eng ::sem-class pre-name-title
+
+::lexical I ::lcode eng ::left-context \b(?:am)\s* ::right-context \. ::priority high ::example So am I. And ...

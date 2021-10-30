@@ -34,6 +34,7 @@
 ::abbrev gen. ::lcode nld
 ::abbrev genm. ::lcode nld
 ::abbrev i.p.v. ::exp in plaats van ::eng instead of ::lcode nld
+::abbrev Ir. ::exp Ingenieur ::lcode nld ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev i.s.m. ::lcode nld
 ::abbrev i.t.t. ::lcode nld
 ::abbrev i.v.m. ::lcode nld

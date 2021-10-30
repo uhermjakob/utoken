@@ -93,7 +93,8 @@
 ::punct-split ; ::side both ::left-context \pL\pM*\pL\pM* ::right-context [-\/]*\pL\pM*\pL ::left-context-not &(?:amp|apos|gt|lt|nbsp|quot|#\d+|#x[0-9A-F]+)  # xml tags
 ::punct-split / ::side both ::left-context -\d+ ::right-context \d+-
 ::punct-split \ ::side both ::left-context (?:\pL\pM*|/d) ::right-context (?:\pL|/d)
-::punct-split ~ ::side both ::left-context \pL\pM* ::right-context \pL
+::punct-split ~ ::side both ::group True ::left-context \pL\pM*(?:\d|\pP)*
+::punct-split ~ ::side both ::group True ::right-context \pL
 ::punct-split . ::side both ::left-context (?:\p{Ll}\p{Ll}|\d|[IVXL]+) ::right-context \p{Lu}\p{Ll}
 ::punct-split . ::side both ::left-context (?<!\pL|\d|[-_.])\d+ ::right-context \pL
 ::punct-split . ::side both ::left-context \p{Lo}\pM*\p{Lo}\pM* ::right-context [-\/]*\p{Lo}\pM*\p{Lo}
@@ -176,7 +177,7 @@
 ::punct-split ； ::side end
 ::punct-split : ::side end
 ::punct-split ： ::side end
-::punct-split ~ ::side end
+::punct-split ~ ::side end ::group True
 ::punct-split ～ ::side end ::comment full-width tilde
 ::punct-split * ::side end ::left-context (?:\pL\pM*|[’,.])
 ::punct-split _ ::side end ::group True

@@ -1,3 +1,5 @@
+::punct-split - ::side both ::left-context \b[Yy] ::right-context a-t- ::lcode fra ::example Y-a-t-il
+
 ::contraction ain't ::target ai n't ::lcode eng
 ::contraction aren't ::target are n't ::lcode eng
 ::contraction cannot ::target can not ::lcode eng
@@ -87,8 +89,10 @@
 ::abbrev PP. ::exp pope ::lcode eng ::case-sensitive True
 ::abbrev sect. ::exp section ::lcode eng ::sem-class corpus-component
 ::abbrev sects. ::exp sections ::lcode eng ::sem-class corpus-component
-::abbrev vol. ::exp volume ::lcode eng ::sem-class corpus-component
-::abbrev vols. ::exp volumes ::lcode eng ::sem-class corpus-component
+::abbrev vol. ::exp volume ::lcode eng ::left-context \d\s*%?\s*
+::abbrev vol. ::exp volume ::lcode eng ::sem-class corpus-component ::right-context \s*(?:\d+|[IiVvXxLlCc]+\b)
+::abbrev vols. ::exp volumes ::lcode eng ::left-context \d\s*
+::abbrev vols. ::exp volumes ::lcode eng ::sem-class corpus-component ::right-context \s*(?:\d+|[IiVvXxLlCc]+\b)
 
 ::abbrev AF ::exp Afghanistan ::lcode eng ::sem-class country-code ::case-sensitive True
 ::abbrev AL ::exp Albania ::lcode eng ::sem-class country-code ::case-sensitive True
@@ -236,7 +240,7 @@
 ::abbrev Nov. ::exp November ::lcode eng ::sem-class month-of-the-year
 ::abbrev Oct. ::exp October ::lcode eng ::sem-class month-of-the-year
 ::abbrev Sep. ::exp September ::lcode eng ::sem-class month-of-the-year
-::abbrev Sept. ::exp September ::lcode eng ::sem-class month-of-the-year
+::abbrev Sept. ::exp September ::lcode eng ::sem-class month-of-the-year ::lcode-not fra
 
 ::abbrev ISS ::exp International Space Station ::lcode eng ::sem-class object
 
@@ -265,7 +269,6 @@
 ::abbrev Hr. ::exp Herr; Mister ::lcode eng ::sem-class pre-name-title ::case-sensitive True
 ::abbrev Ing. ::exp Ingenieur; Ingeniero ::lcode eng ::sem-class pre-name-title
 ::abbrev Insp. ::exp Inspector ::lcode eng ::sem-class pre-name-title
-::abbrev Ir. ::exp Ingenieur ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev Jr. ::exp Junior ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev Messrs. ::exp Messieurs ::lcode eng ::sem-class pre-name-title
 ::abbrev Mlle. ::exp Mademoiselle; Miss ::lcode eng ::sem-class pre-name-title
@@ -283,7 +286,6 @@
 ::abbrev Rev. ::exp Reverend ::lcode eng ::sem-class pre-name-title ::case-sensitive True
 ::abbrev Rt Hon. ::exp Right Honorable ::lcode eng ::sem-class pre-name-title ::alt-spelling Rt. Hon.
 ::abbrev Sen. ::exp Senator ::lcode eng ::sem-class pre-name-title
-::abbrev Sens. ::exp Senators ::lcode eng ::sem-class pre-name-title
 ::abbrev Smt. ::exp Shrimati ::lcode eng ::sem-class pre-name-title ::comment Indian equivalent of Mrs.
 ::abbrev Spt. ::exp Superintendent ::lcode eng ::sem-class pre-name-title
 ::abbrev Sr. ::exp Senior ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
@@ -323,7 +325,7 @@
 ::abbrev N.M. ::exp New Mexico ::lcode eng ::sem-class state ::country United States
 ::abbrev N.Y. ::exp New York ::lcode eng ::sem-class state ::country United States
 ::abbrev Okla. ::exp Oklahoma ::lcode eng ::sem-class state ::country United States
-::abbrev Ore. ::exp Oregon ::lcode eng ::sem-class state ::country United States
+::abbrev Ore. ::exp Oregon ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev Pa. ::exp Pennsylvania ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev P.R. ::exp Puerto Rico ::lcode eng ::sem-class state ::country United States
 ::abbrev R.I. ::exp Rhode Island ::lcode eng ::sem-class state ::country United States
