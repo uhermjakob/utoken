@@ -191,7 +191,7 @@ class Tokenizer:
                                    self.tokenize_abbreviation_initials,
                                    self.tokenize_abbreviation_periods,
                                    self.tokenize_contractions,
-                                   self.tokenize_numbers,
+                                   self.tokenize_numbers_new,
                                    self.tokenize_lexical_according_to_resource_entries,
                                    self.tokenize_complex_names,
                                    self.tokenize_mt_punctuation,
@@ -1265,10 +1265,10 @@ class Tokenizer:
                                        r'([\u1369-\u137C]+)'              # Ethiopic numbers 1 .. 10,000
                                        r'(.*)')
 
-    def tokenize_numbers(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
-                         line_id: Optional[str] = None, offset: int = 0) -> str:
+    def tokenize_numbers_old(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
+                             line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off numbers such as 12,345,678.90"""
-        this_function = self.tokenize_numbers
+        this_function = self.tokenize_numbers_old
         self.current_recursion_depth_number += 1
         if self.current_recursion_depth_number > self.current_recursion_depth_number_warning_threshold:
             if not self.current_recursion_depth_number_warning_issued:
@@ -1276,7 +1276,7 @@ class Tokenizer:
                                  f'{self.current_recursion_depth_number_warning_threshold} '
                                  f'in line {line_id}. Will skip remaining number tokenization for this sentence.\n')
                 self.current_recursion_depth_number_warning_issued = True
-            # skip any other tokenize_numbers calls and move on to next tokenization step.
+            # skip any other tokenize_numbers_old calls and move on to next tokenization step.
         else:
             if self.current_recursion_depth_number > self.current_recursion_depth_number_alert_threshold:
                 # Just an alert, no action.
@@ -1306,6 +1306,77 @@ class Tokenizer:
                     self.current_recursion_depth_number -= 1
                     return res_rec_num
         self.current_recursion_depth_number -= 1
+        return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
+
+    re_num_dp_wst = regex.compile(r'(\d{1,3}(?:[,،]\d\d\d)+(?:\.\d+)?)(?![.,]?\d)')    # Western, e.g. 12,345,678.90
+    re_num_dc_wst = regex.compile(r'(\d{1,3}(?:\.\d\d\d)+(?:,\d+)?)(?![.,]?\d)')       # Western, e.g. 12.345.678,90
+    re_num_dp_ind = regex.compile(r'(\d{1,2}(?:,\d\d)*,\d\d\d(?:\.\d+)?)(?![.,]?\d)')  # Indian, e.g. 1,23,45,678.90
+    re_num_dp_flt = regex.compile(r'(\d+\.\d+)(?![.,]?\d)')                            # floating point, 12345678.90
+    re_num_dc_flt = regex.compile(r'(\d+\,\d+)(?![.,]?\d)')                            # floating comma, 12345678,90
+    re_num_integer = regex.compile(r'(\d+)(?![.,]?\d)')                                # integer, e.g. 12345678
+    re_complex_num_left_context_with_sign = regex.compile(r'.*(?<![-−–+,:]|\PL\.|\d[%\']?|\pL\pM*)([-−–+])$')
+    re_complex_num_left_context = regex.compile(r'.*(?<![,]|\PL\.|\d[%\']?|[כבהלשומ])$')
+    re_integer_left_context_with_sign = regex.compile(r'.*(?<![-−–+]|\PL\.|\d[,.%\']?|\pL\pM*\.?)([-−–+])$')
+    re_integer_left_context = regex.compile(r'.*(?<!\PL\.|\d[,.%\']?|\pL\pM*\d*(?:-\d*)*[-−–+]*)$')
+
+    def tokenize_numbers_new(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
+                             line_id: Optional[str] = None, offset: int = 0) -> str:
+        """This tokenization step splits off numbers such as 12,345,678.90"""
+        this_function = self.tokenize_numbers_new
+        if self.lv & (self.char_is_ethiopic_number | self.char_is_digit):
+            decimal_can_be_grouped_by_period = (lang_code not in ('asm', 'ben', 'guj', 'hin', 'kan', 'mal',
+                                                                  'mar', 'ori', 'pan', 'tam', 'tel'))
+            len_s = len(s)
+            tokens = []
+            start_positions = []
+            next_start_position = 0
+            while next_start_position < len_s:
+                start_position = next_start_position
+                next_start_position = start_position + 1  # can be increased later on
+                end_position = None
+                token = None
+                char_start = s[start_position]
+                # Ethiopic number
+                if self.char_type_vector_dict.get(char_start, 0) & self.char_is_ethiopic_number:
+                    end_position = start_position
+                    while (end_position+1 < len_s) \
+                            and (self.char_type_vector_dict.get(s[end_position+1], 0) & self.char_is_ethiopic_number):
+                        end_position += 1
+                    token = s[start_position:end_position+1]
+                    tokens.append(token)
+                    start_positions.append(start_position)
+                    next_start_position = end_position + 1
+                # Decimal system number
+                elif char_start.isdigit():
+                    left_context = s[:start_position]
+                    if self.re_ends_w_digit.match(left_context):
+                        continue
+                    remaining_s = s[start_position:]
+                    if m := self.re_num_dp_wst.match(remaining_s) \
+                            or (decimal_can_be_grouped_by_period and self.re_num_dc_wst.match(remaining_s)) \
+                            or self.re_num_dp_ind.match(remaining_s) \
+                            or self.re_num_dp_flt.match(remaining_s) \
+                            or (decimal_can_be_grouped_by_period and self.re_num_dc_flt.match(remaining_s)):
+                        end_position = start_position + len(m.group(1))
+                        if self.re_complex_num_left_context_with_sign.match(left_context):
+                            start_position -= 1
+                            token = s[start_position:end_position]
+                        elif self.re_complex_num_left_context.match(left_context):
+                            token = s[start_position:end_position]
+                    if token is None and (m := self.re_num_integer.match(remaining_s)):
+                        end_position = start_position + len(m.group(1))
+                        if self.re_integer_left_context_with_sign.match(left_context):
+                            start_position -= 1
+                            token = s[start_position:end_position]
+                        elif self.re_integer_left_context.match(left_context):
+                            token = s[start_position:end_position]
+                    if token:
+                        tokens.append(token)
+                        start_positions.append(start_position)
+                        next_start_position = end_position + 1
+            if tokens:
+                return self.rec_tok(tokens, start_positions, s, offset, 'NUMBER', line_id, chart,
+                                    lang_code, ht, this_function, tokens, all_done=True)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_ell_contraction = regex.compile(r"(?V1)(.*?)(?<!\pL|['‘’`‛])([\p{Greek}&&\p{Letter}]+[’'])(.*)")
@@ -1824,7 +1895,7 @@ class Tokenizer:
     re_abbrev_acronym_product = regex.compile(r'(.*?)'
                                               r'(?<!\pL\pM*|\d|[-−–]+)'
                                               r'(\p{Lu}+[-−–](?:\d|\p{Lu}\pM*){1,3}(?:s)?)'
-                                              r'(?!\pL|\d|[-−–])'
+                                              r'(?!\pL|[.,]?\d|[-−–])'
                                               r'(.*)')
 
     def tokenize_abbreviation_patterns(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
