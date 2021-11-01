@@ -670,7 +670,8 @@ class Tokenizer:
                 lc_token = token.lower()
                 shortened_token = lc_token
                 if token != '' and token == len(token) * token[0]:  # all chars in token are the same
-                    while len(token) >= 2 and not self.detok_resource.markup_attach.get(shortened_token, None):
+                    while len(shortened_token) >= 2 \
+                            and not self.detok_resource.markup_attach.get(shortened_token, None):
                         shortened_token = shortened_token[:-1]
                 for detokenization_entry in self.detok_resource.markup_attach.get(shortened_token, []):
                     group_necessary = lc_token != shortened_token
