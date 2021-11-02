@@ -182,7 +182,7 @@ class Tokenizer:
                                    self.tokenize_urls,
                                    self.tokenize_emails,
                                    self.tokenize_filenames,
-                                   self.tokenize_symbol_group,
+                                   self.tokenize_symbol_group_new,
                                    self.tokenize_hashtags_and_handles,
                                    self.tokenize_pronunciations,
                                    self.tokenize_complexes,
@@ -191,7 +191,7 @@ class Tokenizer:
                                    self.tokenize_abbreviation_initials,
                                    self.tokenize_abbreviation_periods,
                                    self.tokenize_contractions,
-                                   self.tokenize_numbers_new,
+                                   self.tokenize_numbers,
                                    self.tokenize_lexical_according_to_resource_entries,
                                    self.tokenize_complex_names,
                                    self.tokenize_mt_punctuation,
@@ -1240,75 +1240,6 @@ class Tokenizer:
         this_function = self.tokenize_complexes
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    re_number = regex.compile(r'(.*?)'                                    # excludes integers
-                              r'(?<![-−–+,]|\PL\.|\d[%\']?|[כבהלשומ])'    # negative lookbehind
-                              r'([-−–+]?'                                 # plus/minus sign
-                              r'(?:\d{1,3}(?:[,،]\d\d\d)+(?:\.\d+)?|'     # Western style, e.g. 12,345,678.90
-                              r'\d{1,2}(?:,\d\d)*,\d\d\d(?:\.\d+)?|'      # Indian style, e.g. 1,23,45,678.90
-                              r'\d+\.\d+))'                               # floating point, e.g. 12345678.90
-                              r'(?![.,]?\d)'                              # negative lookahead
-                              r'(.*)')
-    re_number2 = regex.compile(r'(.*?)'                                   # excludes integers
-                               r'(?<![-−–+,:]|\PL\.|\d[%\']?|[כבהלשומ])'  # negative lookbehind
-                               r'([-−–+]?'                                # plus/minus sign
-                               r'(?:\d{1,3}(?:\.\d\d\d)+(?:,\d+)?|'       # Western style, e.g. 12.345.678,90
-                               r'\d{1,2}(?:\.\d\d)*\.\d\d\d(?:,\d+)?|'    # Indian style, e.g. 1.23.45.678,90
-                               r'\d+,\d+))'                               # floating point, e.g. 12345678,90
-                               r'(?![.,]?\d)'                             # negative lookahead
-                               r'(.*)')
-    re_integer = regex.compile(r'(.*?)'
-                               r'(?<![-−–+]|\PL\.|\d[,.%\']?|\pL\pM*)'    # negative lookbehind (stricter: no letters)
-                               r'([-−–+]?'                                # plus/minus sign
-                               r'\d+)'                                    # plain integer, e.g. 12345678
-                               r'(?![-−–.,]?\d)'                          # negative lookahead
-                               r'(.*)')
-    re_ethiopic_number = regex.compile(r'(.*?)'
-                                       r'([\u1369-\u137C]+)'              # Ethiopic numbers 1 .. 10,000
-                                       r'(.*)')
-
-    def tokenize_numbers_old(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
-                             line_id: Optional[str] = None, offset: int = 0) -> str:
-        """This tokenization step splits off numbers such as 12,345,678.90"""
-        this_function = self.tokenize_numbers_old
-        self.current_recursion_depth_number += 1
-        if self.current_recursion_depth_number > self.current_recursion_depth_number_warning_threshold:
-            if not self.current_recursion_depth_number_warning_issued:
-                sys.stderr.write(f'Warning: Exceeded number tokenization recursion depth of '
-                                 f'{self.current_recursion_depth_number_warning_threshold} '
-                                 f'in line {line_id}. Will skip remaining number tokenization for this sentence.\n')
-                self.current_recursion_depth_number_warning_issued = True
-            # skip any other tokenize_numbers_old calls and move on to next tokenization step.
-        else:
-            if self.current_recursion_depth_number > self.current_recursion_depth_number_alert_threshold:
-                # Just an alert, no action.
-                if not self.current_recursion_depth_number_alert_issued:
-                    n_chars = len(self.current_orig_s)
-                    n_words = len(self.current_orig_s.split())
-                    n_digits = len(regex.findall(r'\d', self.current_orig_s))
-                    pl_s1 = '' if n_digits == 1 else 's'
-                    sys.stderr.write(f'Alert:   Exceeded number tokenization recursion depth of '
-                                     f'{self.current_recursion_depth_number_alert_threshold} in line {line_id} '
-                                     f'({n_chars} characters, {n_words} words, {n_digits} digit{pl_s1}).\n')
-                    self.current_recursion_depth_number_alert_issued = True
-            if self.lv & self.char_is_ethiopic_number:
-                if m3 := self.re_ethiopic_number.match(s):
-                    res_rec_num = self.rec_tok_m3(m3, s, offset, 'NUMBER-E', line_id, chart, lang_code, ht,
-                                                  this_function)
-                    self.current_recursion_depth_number -= 1
-                    return res_rec_num
-            if self.lv & self.char_is_digit:
-                if m3 := self.re_number.match(s) \
-                         or ((lang_code not in ('asm', 'ben', 'guj', 'hin', 'kan', 'mal', 'mar',
-                                                'ori', 'pan', 'tam', 'tel'))
-                             and self.re_number2.match(s)) \
-                         or self.re_integer.match(s):
-                    # log.info(f'A s: {s} n: {m3.group(2)} offset: {offset} chart: {chart}')
-                    res_rec_num = self.rec_tok_m3(m3, s, offset, 'NUMBER', line_id, chart, lang_code, ht, this_function)
-                    self.current_recursion_depth_number -= 1
-                    return res_rec_num
-        self.current_recursion_depth_number -= 1
-        return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
-
     re_num_dp_wst = regex.compile(r'(\d{1,3}(?:[,،]\d\d\d)+(?:\.\d+)?)(?![.,]?\d)')    # Western, e.g. 12,345,678.90
     re_num_dc_wst = regex.compile(r'(\d{1,3}(?:\.\d\d\d)+(?:,\d+)?)(?![.,]?\d)')       # Western, e.g. 12.345.678,90
     re_num_dp_ind = regex.compile(r'(\d{1,2}(?:,\d\d)*,\d\d\d(?:\.\d+)?)(?![.,]?\d)')  # Indian, e.g. 1,23,45,678.90
@@ -1320,10 +1251,10 @@ class Tokenizer:
     re_integer_left_context_with_sign = regex.compile(r'.*(?<![-−–+]|\PL\.|\d[,.%\']?|\pL\pM*\.?)([-−–+])$')
     re_integer_left_context = regex.compile(r'.*(?<!\PL\.|\d[,.%\']?|\pL\pM*\d*(?:-\d*)*[-−–+]*)$')
 
-    def tokenize_numbers_new(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
-                             line_id: Optional[str] = None, offset: int = 0) -> str:
+    def tokenize_numbers(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
+                         line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step splits off numbers such as 12,345,678.90"""
-        this_function = self.tokenize_numbers_new
+        this_function = self.tokenize_numbers
         if self.lv & (self.char_is_ethiopic_number | self.char_is_digit):
             decimal_can_be_grouped_by_period = (lang_code not in ('asm', 'ben', 'guj', 'hin', 'kan', 'mal',
                                                                   'mar', 'ori', 'pan', 'tam', 'tel'))
@@ -1959,10 +1890,10 @@ class Tokenizer:
                 return False
         return True
 
-    def tokenize_symbol_group(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
-                              line_id: Optional[str] = None, offset: int = 0) -> str:
+    def tokenize_symbol_group_old(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
+                                  line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step handles groups such as dingbats."""
-        this_function = self.tokenize_symbol_group
+        this_function = self.tokenize_symbol_group_old
         self.current_recursion_depth_symbol += 1
         # log.info(f'tok_symbol {self.current_recursion_depth_symbol} o: {offset} l.{line_id}')
         if self.current_recursion_depth_symbol > self.current_recursion_depth_symbol_warning_threshold:
@@ -1971,7 +1902,7 @@ class Tokenizer:
                                  f'{self.current_recursion_depth_symbol_warning_threshold} '
                                  f'in line {line_id}. Will skip remaining symbol tokenization for this sentence.\n')
                 self.current_recursion_depth_symbol_warning_issued = True
-            # skip any other tokenize_symbol_group calls and move on to next tokenization step.
+            # skip any other tokenize_symbol_group_old calls and move on to next tokenization step.
         else:
             if self.current_recursion_depth_symbol > self.current_recursion_depth_symbol_alert_threshold:
                 # Just an alert, no action.
@@ -2016,6 +1947,40 @@ class Tokenizer:
                         self.current_recursion_depth_symbol -= 1
                         return result_rec_symb
         self.current_recursion_depth_symbol -= 1
+        return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
+
+    def tokenize_symbol_group_new(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
+                                  line_id: Optional[str] = None, offset: int = 0) -> str:
+        """This tokenization step handles groups such as dingbats."""
+        this_function = self.tokenize_symbol_group_new
+        if self.lv & self.char_is_miscellaneous_symbol:
+            len_s = len(s)
+            tokens = []
+            start_positions = []
+            start_position = None
+            for i in range(0, len_s):
+                char_type_vector = self.char_type_vector_dict.get(s[i], 0)
+                if char_type_vector & self.char_is_miscellaneous_symbol:
+                    if start_position is None:
+                        start_position = i
+                elif char_type_vector & self.char_is_variation_selector:
+                    continue
+                elif start_position is not None:  # found end of symbol group
+                    end_position = i
+                    token = s[start_position:end_position]
+                    if self.token_candidate_is_valid_symbol(s, token, lang_code, offset, start_position,
+                                                            end_position):
+                        tokens.append(token)
+                        start_positions.append(start_position)
+                    start_position = None
+            if start_position is not None:
+                token = s[start_position:]
+                if self.token_candidate_is_valid_symbol(s, token, lang_code, offset, start_position, len_s):
+                    tokens.append(token)
+                    start_positions.append(start_position)
+            if tokens:
+                return self.rec_tok(tokens, start_positions, s, offset, 'SYMBOL', line_id, chart,
+                                    lang_code, ht, this_function, tokens, all_done=True)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_contains_letter = regex.compile(r'.*\pL')
