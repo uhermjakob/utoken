@@ -850,6 +850,7 @@
 ::lexical know-how ::lcode eng
 ::lexical large-scale ::lcode eng
 ::lexical last-ditch ::lcode eng
+::lexical laughing-stock ::lcode eng
 ::lexical line item ::lcode eng
 ::lexical little by little ::lcode eng
 ::lexical long-term ::lcode eng
