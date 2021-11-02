@@ -258,7 +258,7 @@
 ::abbrev Cllr. ::exp Councillor ::lcode eng ::sem-class pre-name-title
 ::abbrev Dr. ::exp Doctor ::lcode eng ::sem-class pre-name-title
 ::abbrev Drs. ::exp Doctors ::lcode eng ::sem-class pre-name-title
-::abbrev Eng. ::exp Engineer ::lcode eng ::sem-class pre-name-title
+::abbrev Eng. ::exp Engineer ::lcode eng ::sem-class pre-name-title ::case-sensitive True
 ::abbrev Fr. ::exp Father; Frau; Mrs. ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev Frl. ::exp Fräulein; Misses ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
 ::abbrev Gov. ::exp Governor ::lcode eng ::sem-class pre-name-title ::left-context-not [.]
@@ -311,7 +311,7 @@
 ::abbrev La. ::exp Louisiana ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev Mass. ::exp Massachusetts ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev Md. ::exp Maryland ::lcode eng ::sem-class state ::country United States ::case-sensitive True
-::abbrev Mich. ::exp Michigan ::lcode eng ::sem-class state ::country United States
+::abbrev Mich. ::exp Michigan ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev Minn. ::exp Minnesota ::lcode eng ::sem-class state ::country United States
 ::abbrev Miss. ::exp Mississippi ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev Mo. ::exp Missouri ::lcode eng ::sem-class state ::country United States ::case-sensitive True
@@ -404,7 +404,7 @@
 ::abbrev asap ::exp as soon as possible ::lcode eng
 ::abbrev ATM ::exp automated teller machine ::lcode eng
 ::abbrev Av. ::exp Avenue ::lcode eng
-::abbrev Ave. ::exp Avenue ::lcode eng
+::abbrev Ave. ::exp Avenue ::lcode eng ::case-sensitive True
 ::abbrev avg. ::exp average ::lcode eng
 ::abbrev B&B ::exp bed and breakfast ::lcode eng
 ::abbrev B.C. ::exp before Christ ::lcode eng
@@ -440,7 +440,7 @@
 ::abbrev DS ::exp dear son ::lcode eng
 ::abbrev D.Sc. ::exp Doctor of Science ::lcode eng
 ::abbrev DW ::exp dear wife ::lcode eng
-::abbrev ed. ::exp editor ::lcode eng
+::abbrev ed. ::exp editor ::lcode eng ::left-context-not [-]
 ::abbrev eds. ::exp editors ::lcode eng
 ::abbrev e'er ::exp ever ::lcode eng
 ::abbrev eff'd ::exp fucked ::lcode eng

@@ -12,6 +12,8 @@
 # ::contraction zum ::target zu dem ::lcode deu
 # ::contraction zur ::target zu der ::lcode deu
 
+::lexical 's ::lcode deu ::tag DECONTRACTION-R  ::example Gib mir's. ::alt-spelling ’s
+
 ::abbrev A. ::lcode deu
 ::abbrev a. ::lcode deu
 ::abbrev ä ::exp ähnlich ::lcode deu ::eng similar
@@ -125,8 +127,8 @@
 ::abbrev Dipl.-Chem. ::exp Diplomchemiker ::lcode deu ::eng graduate chemist
 ::abbrev Dipl.-Ing. ::exp Diplomingenieur ::lcode deu ::eng graduate engineer
 ::abbrev Dipl.-Kfm. ::exp Diplomkaufmann ::lcode deu ::eng person with commercial diploma
-::abbrev Dir. ::exp Direktor ::lcode deu ::eng director
-::abbrev Dir. ::exp Dirigent ::lcode deu ::eng conductor
+::abbrev Dir. ::exp Direktor ::lcode deu ::eng director ::case-sensitive True
+::abbrev Dir. ::exp Dirigent ::lcode deu ::eng conductor ::case-sensitive True
 ::abbrev d.J. ::exp dieses Jahres ::lcode deu ::eng of this year;  der Jüngere
 ::abbrev DJH ::exp Deutsche Jugendherbergswerk ::lcode deu ::eng German Youth Hostel Association
 ::abbrev d.M. ::exp dieses Monats ::lcode deu ::eng of this month
@@ -227,7 +229,7 @@
 ::abbrev h. ::lcode deu
 ::abbrev ha. ::exp Hektar ::lcode deu ::eng hectare
 ::abbrev habil. ::exp habilitiert ::lcode deu ::eng qualified university teacher
-::abbrev haupts. ::exp hauptsächlich ::lcode deu ::eng principally, mainly
+::abbrev haupts. ::exp hauptsächlich ::lcode deu ::eng principally, mainly ::case-sensitive True
 ::abbrev Hbf. ::exp Hauptbahnhof ::lcode deu ::eng main railway station
 ::abbrev Hdb. ::exp Handbuch ::lcode deu ::eng handbook, manual
 ::abbrev hdt. ::exp hundert ::lcode deu ::eng hundred
@@ -490,9 +492,9 @@
 ::abbrev röm. ::exp römisch ::lcode deu ::eng Roman
 ::abbrev russ. ::exp russisch ::lcode deu ::eng Russian
 ::abbrev Rzpt. ::exp Rezept ::lcode deu ::eng prescription
-::abbrev S ::exp Süd ::lcode deu ::eng south
-::abbrev S. ::exp Seite ::lcode deu ::eng page
-::abbrev s. ::exp siehe ::lcode deu ::eng see
+::abbrev S ::exp Süd ::lcode deu ::eng south ::left-context-not ['’]
+::abbrev S. ::exp Seite ::lcode deu ::eng page ::left-context-not ['’]
+::abbrev s. ::exp siehe ::lcode deu ::eng see ::left-context-not ['’]
 ::abbrev Sa ::exp Samstag ::lcode deu ::eng Saturday
 ::abbrev Sa. ::exp Sachsen ::lcode deu ::eng Saxony
 ::abbrev s.a. ::exp siehe auch ::lcode deu ::eng see also, v.
@@ -504,7 +506,7 @@
 ::abbrev Sek. ::exp Sekunde ::lcode deu ::eng second
 ::abbrev Sekr. ::exp Sekretär ::lcode deu ::eng secretary
 ::abbrev sel. ::exp selig ::lcode deu ::eng blessed
-::abbrev selbst. ::exp selbstständig ::lcode deu ::eng independent
+# ::abbrev selbst. ::exp selbstständig ::lcode deu ::eng independent ::comment indpendent word: selbst
 ::abbrev Sem. ::exp Semester ::lcode deu ::eng semester
 ::abbrev Sen. ::exp Senator ::lcode deu ::eng senator
 ::abbrev sen. ::exp senior ::lcode deu ::eng senior

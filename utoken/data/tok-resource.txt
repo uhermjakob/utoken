@@ -772,6 +772,7 @@
 ::lexical ¯\_(ツ)_/¯ ::token-category symbol ::comment shrug emoji
 
 ::lexical bisphenol A
+::lexical Galeed ::alt-spelling Gal'Ed; Gal`ed; Gal-Ed
 ::lexical Model T
 ::lexical Saturn V
 ::lexical w3af

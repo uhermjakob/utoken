@@ -55,7 +55,7 @@
 ::abbrev Col. ::exp Colonel ::lcode spa
 ::abbrev Cptn. ::exp Capitán ::lcode spa
 ::abbrev cta. ::lcode spa
-::abbrev Da. ::exp Doña ::lcode spa
+::abbrev Da. ::exp Doña ::lcode spa ::case-sensitive True
 ::abbrev d.C. ::exp después de Cristo ::lcode spa
 ::abbrev dcha. ::lcode spa
 ::abbrev Dep. ::lcode spa
@@ -110,7 +110,7 @@
 ::abbrev n. ::exp número ::lcode spa
 ::abbrev N.B. ::lcode spa
 ::abbrev NN.UU. ::exp Naciones Unidas ::lcode spa ::eng U.N.
-::abbrev no. ::exp número ::lcode spa
+::abbrev no. ::exp número ::lcode spa ::right-context \s*-?\d
 ::abbrev nov. ::exp noviembre ::lcode spa
 ::abbrev núm. ::exp número ::lcode spa
 ::abbrev Ob. ::exp Obispo ::lcode spa
