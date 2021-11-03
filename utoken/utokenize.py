@@ -1549,7 +1549,8 @@ class Tokenizer:
 
     def abbreviation_entry_fulfills_general_context_conditions(self, token_candidate: str,
                                                                left_context: str, right_context: str,
-                                                               abbreviation_entry: util.AbbreviationEntry) -> bool:
+                                                               abbreviation_entry: util.AbbreviationEntry,
+                                                               end_of_last_abbreviation: Optional[int] = None) -> bool:
         """Checks for general context requirements (not listed for a particular abbreviation entry)."""
         if abbreviation_entry.sem_class == 'currency-unit':
             return True
@@ -1576,7 +1577,8 @@ class Tokenizer:
         if left_context.endswith('.') \
                 and '.' in token_candidate \
                 and self.re_ends_w_letter_plus_period.match(left_context) \
-                and not self.re_has_three_letters.match(token_candidate):
+                and not self.re_has_three_letters.match(token_candidate) \
+                and not ((end_of_last_abbreviation is not None) and (len(left_context) == end_of_last_abbreviation)):
             # log.info(f'  ABBREV test3 {token_candidate} :lc {left_context} false')  # HHERE Malayalam challenge
             return False
         return True
@@ -1734,6 +1736,7 @@ class Tokenizer:
         start_positions = []
         next_start_position = 0
         found_applicable_resource_entry = False
+        end_of_last_abbreviation = None
         while next_start_position < len_s:
             start_position = next_start_position
             next_start_position = start_position + 1  # can be increased later on
@@ -1773,7 +1776,8 @@ class Tokenizer:
                                 clause += f'; sem: {sem_class}'
                             if (isinstance(resource_entry, util.AbbreviationEntry)
                                     and self.abbreviation_entry_fulfills_general_context_conditions(
-                                        token_candidate, left_context, right_context, resource_entry)):
+                                        token_candidate, left_context, right_context, resource_entry,
+                                        end_of_last_abbreviation=end_of_last_abbreviation)):
                                 tokens.append(token_candidate)
                                 orig_tokens.append(token_candidate)
                                 token_types.append('ABBREV')
@@ -1781,6 +1785,7 @@ class Tokenizer:
                                 start_positions.append(start_position)
                                 next_start_position = end_position
                                 found_applicable_resource_entry = True
+                                end_of_last_abbreviation = end_position
                             elif isinstance(resource_entry, util.LexicalPriorityEntry):
                                 if sem_class == 'url':
                                     token_type = 'URL-L'
