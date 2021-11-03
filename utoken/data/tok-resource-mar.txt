@@ -2,10 +2,10 @@
 ::punct-split ' ::side both ::group True ::lcode mar ::left-context \p{Lo}\pM*[,)]* ::right-context [-\/(]*\p{Lo}
 ::punct-split ’ ::side both ::group True ::lcode mar ::left-context \p{Lo}\pM*[,)]* ::right-context [-\/(]*\p{Lo}
 
+::abbrev डॉ. ::lcode mar ::eng Dr. ::sem-class pre-name-title
+::abbrev डा. ::lcode mar ::eng Dr. ::sem-class pre-name-title
+::abbrev श्री. ::lcode mar ::eng Mr. ::sem-class pre-name-title
 ::abbrev रु. ::lcode mar ::eng Rs.
-::abbrev डॉ. ::lcode mar ::eng Dr.
-::abbrev डा. ::lcode mar ::eng Dr.
-::abbrev श्री. ::lcode mar ::eng Mr.
 ::abbrev इ.स.पू. ::lcode mar ::eng BC ::comment year
 ::abbrev इ.स. ::lcode mar ::eng AD ::comment year
 ::abbrev कि.मी.  ::lcode mar ::eng km
