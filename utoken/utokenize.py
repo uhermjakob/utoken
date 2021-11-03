@@ -187,7 +187,7 @@ class Tokenizer:
                                    self.tokenize_pronunciations,
                                    self.tokenize_complexes,
                                    self.tokenize_abbreviation_patterns,
-                                   self.tokenize_according_to_resource_entries,
+                                   self.tokenize_according_to_resource_entries_new,
                                    self.tokenize_abbreviation_initials,
                                    self.tokenize_abbreviation_periods,
                                    self.tokenize_contractions,
@@ -702,7 +702,7 @@ class Tokenizer:
         return token
 
     def rec_tok(self, token_surfs: List[str], start_positions: List[int], s: str, offset: int,
-                token_type: str, line_id: str, chart: Optional[Chart], lang_code: Optional[str],
+                token_types: List[str], line_id: str, chart: Optional[Chart], lang_code: Optional[str],
                 ht: dict, calling_function, orig_token_surfs: Optional[List[str]] = None,
                 **kwargs) -> [str, Token]:
         """Recursive tokenization step (same method, applied to remaining string) using token-surf and start-position.
@@ -736,6 +736,7 @@ class Tokenizer:
                 self.current_recursion_depth_alert_issued = True
         for i in range(len(token_surfs)):
             token_surf = token_surfs[i]
+            token_type = token_types[i]
             orig_token_surf = orig_token_surfs[i] if orig_token_surfs else token_surf
             start_position = start_positions[i]
             end_position = start_position + len(orig_token_surf)
@@ -758,7 +759,13 @@ class Tokenizer:
                                   orig_surf=orig_token_surf)
                 for key, value in kwargs.items():
                     if hasattr(new_token, key):
-                        setattr(new_token, key, value)
+                        if type(value) is list:
+                            if i < len(value):
+                                setattr(new_token, key, value[i])
+                            else:
+                                log.warning(f'setattr {key} index {i} out of range ({len(value)})')
+                        else:
+                            setattr(new_token, key, value)
                 chart.register_token(new_token)
             position = end_position
         if post := s[position:]:
@@ -800,7 +807,7 @@ class Tokenizer:
         start_position = len(pre_token)
         end_position = start_position + len(token)
         token_surf = s[start_position:end_position]  # in case that the regex match operates on a mapped string
-        return self.rec_tok([token_surf], [start_position], s, offset, token_type, line_id, chart,
+        return self.rec_tok([token_surf], [start_position], s, offset, [token_type], line_id, chart,
                             lang_code, ht, calling_function, [token_surf], **token_kwargs)
 
     def rec_tok_m5(self, m5: Match[str], s: str, offset: int,
@@ -818,7 +825,7 @@ class Tokenizer:
         end_position2 = start_position2 + len(token2)
         token_surfs = [s[start_position1:end_position1], s[start_position2:end_position2]]
         start_positions = [start_position1, start_position2]
-        return self.rec_tok(token_surfs, start_positions, s, offset, token_type, line_id, chart,
+        return self.rec_tok(token_surfs, start_positions, s, offset, [token_type] * len(token_surfs), line_id, chart,
                             lang_code, ht, calling_function, token_surfs, **token_kwargs)
 
     def next_tok(self, current_tok_function:
@@ -1230,7 +1237,7 @@ class Tokenizer:
                                     #          f'{ipa_trigger_left} {n_ipa_letters}/{n_reg_letters}/{n_ipa_puncts}/'
                                     #          f'{n_reg_puncts}/{n_ipa_comb_marks}/{n_other}/{other_s}')
             if tokens:
-                return self.rec_tok(tokens, start_positions, s, offset, 'IPA', line_id, chart,
+                return self.rec_tok(tokens, start_positions, s, offset, ['IPA'] * len(tokens), line_id, chart,
                                     lang_code, ht, this_function, tokens, all_done=True)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
@@ -1307,7 +1314,7 @@ class Tokenizer:
                         start_positions.append(start_position)
                         next_start_position = end_position + 1
             if tokens:
-                return self.rec_tok(tokens, start_positions, s, offset, 'NUMBER', line_id, chart,
+                return self.rec_tok(tokens, start_positions, s, offset, ['NUMBER'] * len(tokens), line_id, chart,
                                     lang_code, ht, this_function, tokens, all_done=True)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
@@ -1486,6 +1493,7 @@ class Tokenizer:
     re_is_short_letter_token = regex.compile(r'(?:\pL\pM*){1,2}$')
     re_is_all_whitespaces = regex.compile(r'\s*$')
     re_starts_w_single_hebrew_letter = regex.compile(r'(?V1)[\p{Hebrew}&&\p{Letter}]\pM*(?!\'?\pL)')
+    re_has_three_letters = regex.compile(r'.*\pL\pM*.*\pL\pM*.*\pL')
 
     def resource_entry_fulfills_general_context_conditions(self, token_candidate: str,
                                                            left_context: str, right_context: str) -> bool:
@@ -1567,7 +1575,8 @@ class Tokenizer:
                 return False
         if left_context.endswith('.') \
                 and '.' in token_candidate \
-                and self.re_ends_w_letter_plus_period.match(left_context):
+                and self.re_ends_w_letter_plus_period.match(left_context) \
+                and not self.re_has_three_letters.match(token_candidate):
             # log.info(f'  ABBREV test3 {token_candidate} :lc {left_context} false')  # HHERE Malayalam challenge
             return False
         return True
@@ -1632,11 +1641,12 @@ class Tokenizer:
             s = self.re_capital_i_w_dot_above.sub('i', s)
         return s.lower()
 
-    def tokenize_according_to_resource_entries(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
-                                               line_id: Optional[str] = None, offset: int = 0) -> str:
+    def tokenize_according_to_resource_entries_old(self, s: str, chart: Chart, ht: dict,
+                                                   lang_code: Optional[str] = None,
+                                                   line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step handles abbreviations, contractions and repairs according to data files
         such as data/tok-resource-eng.txt."""
-        this_function = self.tokenize_according_to_resource_entries
+        this_function = self.tokenize_according_to_resource_entries_old
 
         last_primary_char_type_vector = 0  # 'primary': not counting modifying letters
         len_s = len(s)
@@ -1678,7 +1688,7 @@ class Tokenizer:
                             if (isinstance(resource_entry, util.AbbreviationEntry)
                                     and self.abbreviation_entry_fulfills_general_context_conditions(
                                         token_candidate, left_context, right_context, resource_entry)):
-                                return self.rec_tok([token_candidate], [start_position], s, offset, 'ABBREV',
+                                return self.rec_tok([token_candidate], [start_position], s, offset, ['ABBREV'],
                                                     line_id, chart, lang_code, ht, this_function, [token_candidate],
                                                     sem_class=resource_entry.sem_class, left_done=True)
                             if isinstance(resource_entry, util.LexicalPriorityEntry):
@@ -1686,26 +1696,140 @@ class Tokenizer:
                                     token_type = 'URL-L'
                                 else:
                                     token_type = 'LEXICAL-P'
-                                return self.rec_tok([token_candidate], [start_position], s, offset, token_type,
+                                return self.rec_tok([token_candidate], [start_position], s, offset, [token_type],
                                                     line_id, chart, lang_code, ht, this_function, [token_candidate],
                                                     sem_class=resource_entry.sem_class, left_done=True)
                             if isinstance(resource_entry, util.ContractionEntry):
                                 tokens, orig_tokens, start_positions = \
                                     self.map_contraction(token_candidate, resource_surf, resource_entry.target,
                                                          start_position, char_splits=resource_entry.char_splits)
-                                return self.rec_tok(tokens, start_positions, s, offset, 'DECONTRACTION',
+                                return self.rec_tok(tokens, start_positions, s, offset, ['DECONTRACTION'] * len(tokens),
                                                     line_id, chart, lang_code, ht, this_function, orig_tokens,
                                                     sem_class=resource_entry.sem_class, left_done=True)
                             if isinstance(resource_entry, util.RepairEntry):
                                 tokens, orig_tokens, start_positions = \
                                     self.map_contraction(token_candidate, resource_surf, resource_entry.target,
                                                          start_position)
-                                return self.rec_tok(tokens, start_positions, s, offset, 'REPAIR',
+                                return self.rec_tok(tokens, start_positions, s, offset, ['REPAIR'] * len(tokens),
                                                     line_id, chart, lang_code, ht, this_function, orig_tokens,
                                                     sem_class=resource_entry.sem_class, left_done=True)
                 end_position -= 1
             last_primary_char_type_vector = current_char_type_vector
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
+
+    def tokenize_according_to_resource_entries_new(self, s: str, chart: Chart, ht: dict,
+                                                   lang_code: Optional[str] = None,
+                                                   line_id: Optional[str] = None, offset: int = 0) -> str:
+        """This tokenization step handles abbreviations, contractions and repairs according to data files
+        such as data/tok-resource-eng.txt."""
+        this_function = self.tokenize_according_to_resource_entries_new
+
+        last_primary_char_type_vector = 0  # 'primary': not counting modifying letters
+        len_s = len(s)
+        s_lc = self.lower(s)
+        tokens = []
+        orig_tokens = []
+        token_types = []
+        sem_classes = []
+        start_positions = []
+        next_start_position = 0
+        found_applicable_resource_entry = False
+        while next_start_position < len_s:
+            start_position = next_start_position
+            next_start_position = start_position + 1  # can be increased later on
+            c = s[start_position]
+            current_char_type_vector = self.char_type_vector_dict.get(c, 0)
+            if current_char_type_vector & self.char_is_modifier:
+                continue
+            # general restriction: if token starts with a letter, it can't be preceded by a letter
+            if last_primary_char_type_vector & self.char_is_alpha \
+                    and current_char_type_vector & self.char_is_alpha:
+                continue
+            # same for digits: if token starts with a digit, it can't be preceded by a digit
+            if last_primary_char_type_vector & self.char_is_digit \
+                    and current_char_type_vector & self.char_is_digit:
+                continue
+            left_context = s[:start_position]
+            max_end_position = start_position
+            position = start_position+1
+            while position <= len_s and self.tok_dict.prefix_dict.get(s_lc[start_position:position], False):
+                max_end_position = position
+                position += 1
+            end_position = max_end_position
+            while end_position > start_position:
+                token_candidate = s[start_position:end_position]
+                token_candidate_lc = s_lc[start_position:end_position]
+                right_context = s[end_position:]
+                found_applicable_resource_entry = False
+                if self.resource_entry_fulfills_general_context_conditions(token_candidate,
+                                                                           left_context, right_context):
+                    for resource_entry in self.tok_dict.resource_dict.get(token_candidate_lc, []):
+                        if self.resource_entry_fulfills_conditions(resource_entry, util.ResourceEntry, token_candidate,
+                                                                   s, start_position, end_position, offset, lang_code):
+                            sem_class = resource_entry.sem_class
+                            resource_surf = resource_entry.s
+                            clause = ''
+                            if sem_class:
+                                clause += f'; sem: {sem_class}'
+                            if (isinstance(resource_entry, util.AbbreviationEntry)
+                                    and self.abbreviation_entry_fulfills_general_context_conditions(
+                                        token_candidate, left_context, right_context, resource_entry)):
+                                tokens.append(token_candidate)
+                                orig_tokens.append(token_candidate)
+                                token_types.append('ABBREV')
+                                sem_classes.append(resource_entry.sem_class)
+                                start_positions.append(start_position)
+                                next_start_position = end_position
+                                found_applicable_resource_entry = True
+                            elif isinstance(resource_entry, util.LexicalPriorityEntry):
+                                if sem_class == 'url':
+                                    token_type = 'URL-L'
+                                else:
+                                    token_type = 'LEXICAL-P'
+                                tokens.append(token_candidate)
+                                orig_tokens.append(token_candidate)
+                                token_types.append(token_type)
+                                sem_classes.append(resource_entry.sem_class)
+                                start_positions.append(start_position)
+                                next_start_position = end_position
+                                found_applicable_resource_entry = True
+                            elif isinstance(resource_entry, util.ContractionEntry):
+                                new_tokens, new_orig_tokens, new_start_positions = \
+                                    self.map_contraction(token_candidate, resource_surf, resource_entry.target,
+                                                         start_position, char_splits=resource_entry.char_splits)
+                                tokens.extend(new_tokens)
+                                orig_tokens.extend(new_orig_tokens)
+                                token_types.extend(['DECONTRACTION'] * len(new_tokens))
+                                sem_classes.extend([resource_entry.sem_class] * len(new_tokens))
+                                start_positions.extend(new_start_positions)
+                                next_start_position = end_position
+                                found_applicable_resource_entry = True
+                            elif isinstance(resource_entry, util.RepairEntry):
+                                new_tokens, new_orig_tokens, new_start_positions = \
+                                    self.map_contraction(token_candidate, resource_surf, resource_entry.target,
+                                                         start_position)
+                                tokens.extend(new_tokens)
+                                orig_tokens.extend(new_orig_tokens)
+                                token_types.extend(['REPAIR'] * len(new_tokens))
+                                sem_classes.extend([resource_entry.sem_class] * len(new_tokens))
+                                start_positions.extend(new_start_positions)
+                                next_start_position = end_position
+                                found_applicable_resource_entry = True
+                        if found_applicable_resource_entry:
+                            break  # move on to next start_position
+                if found_applicable_resource_entry:
+                    break
+                else:
+                    end_position -= 1
+            if found_applicable_resource_entry:
+                last_primary_char_type_vector = self.char_type_vector_dict.get(s[next_start_position-1], 0)
+            else:
+                last_primary_char_type_vector = current_char_type_vector
+        if tokens:
+            return self.rec_tok(tokens, start_positions, s, offset, token_types, line_id, chart, lang_code,
+                                ht, this_function, orig_tokens, sem_class=sem_classes, all_done=True)
+        else:
+            return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     def tokenize_lexical_according_to_resource_entries(self, s: str, chart: Chart, ht: dict,
                                                        lang_code: Optional[str] = None, line_id: Optional[str] = None,
@@ -1750,7 +1874,7 @@ class Tokenizer:
                             if self.lexical_entry_fulfills_general_context_conditions(token_candidate, left_context,
                                                                                       right_context, resource_entry):
                                 return self.rec_tok([token_candidate], [start_position], s, offset,
-                                                    resource_entry.tag or 'LEXICAL',
+                                                    [(resource_entry.tag or 'LEXICAL')],
                                                     line_id, chart, lang_code, ht, this_function, [token_candidate],
                                                     sem_class=resource_entry.sem_class, left_done=True)
                 end_position -= 1
@@ -1791,15 +1915,15 @@ class Tokenizer:
                                                                    start_position, end_position2, offset, lang_code):
                             side = resource_entry.side
                             if side == 'both':
-                                return self.rec_tok([token], [start_position], s, offset, 'PUNCT',
+                                return self.rec_tok([token], [start_position], s, offset, ['PUNCT'],
                                                     line_id, chart, lang_code, ht, this_function, [token],
                                                     sem_class=resource_entry.sem_class)
                             elif side == 'start' and ((start_position == 0) or s[start_position-1].isspace()):
-                                return self.rec_tok([token], [start_position], s, offset, 'PUNCT-S',
+                                return self.rec_tok([token], [start_position], s, offset, ['PUNCT-S'],
                                                     line_id, chart, lang_code, ht, this_function, [token],
                                                     sem_class=resource_entry.sem_class)
                             elif side == 'end' and ((end_position2 == len_s) or s[end_position2].isspace()):
-                                return self.rec_tok([token], [start_position], s, offset, 'PUNCT-E',
+                                return self.rec_tok([token], [start_position], s, offset, ['PUNCT-E'],
                                                     line_id, chart, lang_code, ht, this_function, [token],
                                                     sem_class=resource_entry.sem_class)
                 end_position -= 1
@@ -1820,7 +1944,7 @@ class Tokenizer:
                    and ((start_position == 0) or not s[start_position - 1].isalpha()):
                     if self.re_right_context_of_initial_letter.match(s[start_position+2:]):
                         token_surf = s[start_position:start_position+2]
-                        return self.rec_tok([token_surf], [start_position], s, offset, 'ABBREV-I',
+                        return self.rec_tok([token_surf], [start_position], s, offset, ['ABBREV-I'],
                                             line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
@@ -1930,7 +2054,7 @@ class Tokenizer:
                         token_candidate = s[start_position:end_position]
                         if self.token_candidate_is_valid_symbol(s, token_candidate, lang_code, offset, start_position,
                                                                 end_position):
-                            result_rec_symb = self.rec_tok([token_candidate], [start_position], s, offset, 'SYMBOL',
+                            result_rec_symb = self.rec_tok([token_candidate], [start_position], s, offset, ['SYMBOL'],
                                                            line_id, chart, lang_code, ht, this_function,
                                                            [token_candidate], left_done=True)
                             self.current_recursion_depth_symbol -= 1
@@ -1941,7 +2065,7 @@ class Tokenizer:
                     token_candidate = s[start_position:]
                     if self.token_candidate_is_valid_symbol(s, token_candidate, lang_code, offset, start_position,
                                                             len(s)):
-                        result_rec_symb = self.rec_tok([token_candidate], [start_position], s, offset, 'SYMBOL',
+                        result_rec_symb = self.rec_tok([token_candidate], [start_position], s, offset, ['SYMBOL'],
                                                        line_id, chart, lang_code, ht, this_function,
                                                        [token_candidate], left_done=True)
                         self.current_recursion_depth_symbol -= 1
@@ -1979,7 +2103,7 @@ class Tokenizer:
                     tokens.append(token)
                     start_positions.append(start_position)
             if tokens:
-                return self.rec_tok(tokens, start_positions, s, offset, 'SYMBOL', line_id, chart,
+                return self.rec_tok(tokens, start_positions, s, offset, ['SYMBOL'] * len(tokens), line_id, chart,
                                     lang_code, ht, this_function, tokens, all_done=True)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
