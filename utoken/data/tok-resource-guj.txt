@@ -4,10 +4,11 @@
 ::punct-split ’ ::side both ::group True ::lcode guj ::left-context \p{Lo}\pM*[,)]* ::right-context [-\/(]*\p{Lo}
 ::punct-split : ::side both ::group True ::lcode guj ::left-context \pL\pM* ::right-context \pL\pM*\pL\pM*\pL
 
+::abbrev ડો. ::lcode guj ::eng Dr. ::sem-class pre-name-title
+::abbrev ડૉ. ::lcode guj ::eng Dr. ::sem-class pre-name-title
+::abbrev શ્રી. ::lcode guj ::eng Mr. ::sem-class pre-name-title
+
 ::abbrev રૂ. ::lcode guj ::eng Rs.
-::abbrev ડો. ::lcode guj ::eng Dr.
-::abbrev ડૉ. ::lcode guj ::eng Dr.
-::abbrev શ્રી. ::lcode guj ::eng Mr.
 ::abbrev ઈ.સ. ::lcode guj ::eng AD ::comment year
 ::abbrev ઇ.સ. ::lcode guj ::eng AD ::comment year
 ::abbrev સે.મ ::lcode guj ::eng cm
