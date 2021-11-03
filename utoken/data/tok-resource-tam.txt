@@ -1,5 +1,6 @@
 ::abbrev ர. ::lcode tam ::eng Rs.
-::abbrev திரு. ::lcode tam ::eng Mr.
+::abbrev திரு. ::lcode tam ::eng Mr. ::sem-class pre-name-title
+
 ::abbrev யு.எஸ்.ஏ ::lcode tam ::eng USA
 ::abbrev ஏ. ::lcode tam ::token-category phonetics ::eng A.
 ::abbrev பீ. ::lcode tam ::token-category phonetics ::eng B.
