@@ -6,13 +6,14 @@
 
 ::punct-split , ::side both ::lcode kan ::left-context \d ::right-context \d\d\d\d
 
+::abbrev ಡಾ. ::lcode kan ::sem-class pre-name-title ::eng Dr. ::alt-spelling ಡಾ॥;ಡಾ||
+::abbrev ಶ್ರೀ. ::lcode kan ::sem-class pre-name-title ::eng Mr.
+::abbrev ಪಂ. ::lcode kan ::sem-class pre-name-title ::eng pundit
+
 ::abbrev ರೂ. ::lcode kan ::eng Rs.; rupee ::sem-class currency-unit
 ::abbrev ಕ್ರಿ.ಪೂ ::lcode kan ::eng B.C.
 ::abbrev ಪ್ರ.ಶ.ಪು. ::lcode kan ::eng B.C.
 ::abbrev ಕ್ರಿ.ಶ ::lcode kan ::eng A.D.
-::abbrev ಡಾ. ::lcode kan ::sem-class pre-name-title ::eng Dr. ::alt-spelling ಡಾ॥;ಡಾ||
-::abbrev ಶ್ರೀ. ::lcode kan ::sem-class pre-name-title ::eng Mr.
-::abbrev ಪಂ. ::lcode kan ::sem-class pre-name-title ::eng pundit
 ::abbrev ಪಿ‍ಎಚ್.ಡಿ. ::lcode kan ::eng Ph.D.
 ::abbrev ಚ.ಕಿಮಿ ::lcode kan ::eng sq. km ::sem-class unit-of-measurement
 ::abbrev ಚ.ಮೈ. ::lcode kan ::eng sq. mi. ::sem-class unit-of-measurement
