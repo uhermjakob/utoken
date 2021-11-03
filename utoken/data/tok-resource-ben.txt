@@ -8,7 +8,7 @@
 
 ::lexical বর্গ কিলোমিটার ::lcode ben ::sem-class unit-of-measurement ::eng square kilometer
 
-::abbrev ড. ::lcode ben ::eng Dr.
+::abbrev ড. ::lcode ben ::eng Dr. ::sem-class pre-name-title
 
 ::abbrev আ-ধ্ব-ব ::lcode ben ::eng IPA; International Phonetic Alphabet
 ::abbrev মিগ-২৯কে ::lcode ben ::eng MiG-29K
