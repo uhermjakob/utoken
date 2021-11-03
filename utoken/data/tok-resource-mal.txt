@@ -24,6 +24,7 @@
 ::abbrev ഡിസം. ::exp ഡിസംബർ ::lcode mal ::sem-class month-of-the-year ::eng December
 
 ::abbrev എ. ::token-category phonetics ::lcode mal ::eng A.
+::abbrev ഏ. ::token-category phonetics ::lcode mal ::eng A.
 ::abbrev ബി. ::token-category phonetics ::lcode mal ::eng B.
 ::abbrev സി. ::token-category phonetics ::lcode mal ::eng C.
 ::abbrev ഡി. ::token-category phonetics ::lcode mal ::eng D.

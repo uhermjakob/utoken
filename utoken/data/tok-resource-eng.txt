@@ -31,6 +31,8 @@
 ::contraction 'tisn't ::target it is n't ::lcode eng ::nonstandard True
 ::contraction 'twas ::target it was ::lcode eng ::nonstandard True
 ::contraction 'twasn't ::target it was n't ::lcode eng ::nonstandard True
+::contraction 'twere ::target it were ::lcode eng ::nonstandard True
+::contraction 'tweren't ::target it were n't ::lcode eng ::nonstandard True
 ::contraction wasnot ::target was not ::lcode eng ::substandard True
 ::contraction wasnt ::target was n't ::lcode eng ::substandard True
 ::contraction werenot ::target were not ::lcode eng ::substandard True

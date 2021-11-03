@@ -391,6 +391,7 @@
 ::abbrev CD ::exp compact disc ::case-sensitive True
 ::abbrev CD-ROM ::exp compact disc read-only memory
 ::abbrev COP21 ::exp United Nations Climate Change Conference ::comment conference of the parties, 21st century ::alt-spelling COP-21
+::abbrev COP26 ::exp United Nations Climate Change Conference ::comment 26th United Nations Climate Change conference ::alt-spelling COP-26
 ::abbrev CPU ::exp central processing unit
 ::abbrev DDoS ::exp distributed denial of service (attack)
 ::abbrev DVD ::exp digital versatile disc

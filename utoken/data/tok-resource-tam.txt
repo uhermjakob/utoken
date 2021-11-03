@@ -1,5 +1,6 @@
 ::abbrev ர. ::lcode tam ::eng Rs.
 ::abbrev திரு. ::lcode tam ::eng Mr.
+::abbrev யு.எஸ்.ஏ ::lcode tam ::eng USA
 ::abbrev ஏ. ::lcode tam ::token-category phonetics ::eng A.
 ::abbrev பீ. ::lcode tam ::token-category phonetics ::eng B.
 ::abbrev பி. ::lcode tam ::token-category phonetics ::eng B.
@@ -24,6 +25,7 @@
 ::abbrev எஸ். ::lcode tam ::token-category phonetics ::eng S.
 ::abbrev ட்டீ. ::lcode tam ::token-category phonetics ::eng T.
 ::abbrev யூ. ::lcode tam ::token-category phonetics ::eng U.
+::abbrev யு. ::lcode tam ::token-category phonetics ::eng U.
 ::abbrev வீ. ::lcode tam ::token-category phonetics ::eng V.
 ::abbrev டபிள்-யூ. ::lcode tam ::token-category phonetics ::eng W.
 ::abbrev எக்ஸ். ::lcode tam ::token-category phonetics ::eng X.
