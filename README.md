@@ -175,6 +175,23 @@ git clone https://github.com/uhermjakob/utoken.git
 ```
 </details>
 
+<details>
+<summary>parallel run for large files</summary>
+
+Use [GNU-parallel](https://www.gnu.org/software/parallel/) to run tokenization in parallel. 
+Example:
+```bash
+parallel --keep-order --pipe -N 100000 -j 24  'utokenize' < input.txt > output.txt
+```
+where 
+  * `--keep-order` preserves the order of input
+  * `--pipe -N 100000` splits input into parts of 100,000 lines each
+  * `-j 24` runs atmost 24 jobs in parallel. Best if adjusted to the number of CPU cores available on your machine.
+  * `'utokenize'`  is the command that is run in parallel. Similarly, detokenizer and other tools may also be run in parallel.
+  * `< input.txt` is how input is read and `> output.txt` is where output is written.
+  * Optionally, you may add `--progress` to view progress from gnu parallel.
+</details>
+  
 ### Design
 * A universal tokenizer/word segmenter, i.e. designed to work with a wide variety of scripts and languages.
 * Preserves special tokens such as URLs, XML tags, email addresses, hashtags, handles, filenames, pronunciations and more.
