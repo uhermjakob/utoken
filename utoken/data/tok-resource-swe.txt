@@ -1,4 +1,4 @@
-::punct-split ’ ::side left
+::punct-split ’ ::side start
 
 ::lexical :a ::lcode swe ::left-context \d ::eng th ::comment ordinal suffix ::syntax-checked True
 ::lexical :an ::lcode swe ::left-context \d ::eng th ::comment ordinal suffix ::syntax-checked True
