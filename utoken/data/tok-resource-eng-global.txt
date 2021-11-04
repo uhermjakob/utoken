@@ -302,7 +302,7 @@
 ::abbrev D.C. ::exp District of Columbia ::lcode eng ::sem-class state ::country United States
 ::abbrev Del. ::exp Delaware ::lcode eng ::sem-class state ::country United States
 ::abbrev Fla. ::exp Florida ::lcode eng ::sem-class state ::country United States
-::abbrev Ga. ::exp Georgia ::lcode eng ::sem-class state ::country United States
+::abbrev Ga. ::exp Georgia ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev Ill. ::exp Illinois ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev Ind. ::exp Indiana ::lcode eng ::sem-class state ::country United States
 ::abbrev Kans. ::exp Kansas ::lcode eng ::sem-class state ::country United States
