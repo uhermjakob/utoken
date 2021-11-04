@@ -1,3 +1,5 @@
+::punct-split ’ ::side left
+
 ::lexical :a ::lcode swe ::left-context \d ::eng th ::comment ordinal suffix ::syntax-checked True
 ::lexical :an ::lcode swe ::left-context \d ::eng th ::comment ordinal suffix ::syntax-checked True
 ::lexical :e ::lcode swe ::left-context \d ::eng th ::comment ordinal suffix ::syntax-checked True
@@ -11,7 +13,7 @@
 ::abbrev F. ::right-context \s*\S
 ::abbrev G. ::right-context \s*\S
 ::abbrev H. ::right-context \s*\S
-::abbrev I. ::right-context \s*\S
+::abbrev I. ::right-context \s*\S ::case-sensitive True
 ::abbrev J. ::right-context \s*\S
 ::abbrev K. ::right-context \s*\S
 ::abbrev L. ::right-context \s*\S

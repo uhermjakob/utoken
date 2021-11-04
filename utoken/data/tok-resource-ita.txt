@@ -1,13 +1,33 @@
 ::lexical all' ::lcode ita ::tag DECONTRACTION-L ::eng to
+::lexical anch' ::lcode ita ::tag DECONTRACTION-L ::eng also ::example anch'io
+::lexical bell' ::lcode ita ::tag DECONTRACTION-L ::eng good ::example bell’aspetto
+::lexical buon’ ::lcode ita ::tag DECONTRACTION-L ::eng good ::example buon’ora
+::lexical c' ::lcode ita ::tag DECONTRACTION-L ::eng there ::example c'era
+::lexical cos' ::lcode ita ::tag DECONTRACTION-L ::eng thing ::example cos'è
 ::lexical d' ::lcode ita ::tag DECONTRACTION-L ::eng of
 ::lexical dall' ::lcode ita ::tag DECONTRACTION-L ::eng of
 ::lexical dell' ::lcode ita ::tag DECONTRACTION-L ::eng of
+::lexical dev' ::lcode ita ::tag DECONTRACTION-L ::eng must
+::lexical dov' ::lcode ita ::tag DECONTRACTION-L ::eng where
 ::lexical nell' ::lcode ita ::tag DECONTRACTION-L ::eng in
 ::lexical l' ::lcode ita ::tag DECONTRACTION-L ::eng the ::left-context-not [-]
+::lexical quant' ::lcode ita ::tag DECONTRACTION-L ::eng how much
+::lexical quell' ::lcode ita ::tag DECONTRACTION-L ::eng that
 ::lexical quest' ::lcode ita ::tag DECONTRACTION-L ::eng this
 ::lexical s' ::lcode ita ::tag DECONTRACTION-L ::comment reflexive pronoun
+::lexical senz' ::lcode ita ::tag DECONTRACTION-L ::eng without
 ::lexical sull' ::lcode ita ::tag DECONTRACTION-L ::eng under
 ::lexical un' ::lcode ita ::tag DECONTRACTION-L ::eng a
+
+::lexical vent' ::lcode ita ::tag DECONTRACTION-L ::eng 20
+::lexical trent' ::lcode ita ::tag DECONTRACTION-L ::eng 30
+::lexical quarant' ::lcode ita ::tag DECONTRACTION-L ::eng 40
+::lexical cinquant' ::lcode ita ::tag DECONTRACTION-L ::eng 50
+::lexical sessant' ::lcode ita ::tag DECONTRACTION-L ::eng 60
+::lexical settant' ::lcode ita ::tag DECONTRACTION-L ::eng 70
+::lexical ottant' ::lcode ita ::tag DECONTRACTION-L ::eng 80
+::lexical novant' ::lcode ita ::tag DECONTRACTION-L ::eng 90
+::lexical cent' ::lcode ita ::tag DECONTRACTION-L ::eng 100
 
 ::abbrev Amn. ::lcode ita
 ::abbrev Arch. ::lcode ita

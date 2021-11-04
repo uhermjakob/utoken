@@ -293,14 +293,14 @@
 ::abbrev Sup. ::exp Superintendent ::lcode eng ::sem-class pre-name-title
 ::abbrev Supt. ::exp Superintendent ::lcode eng ::sem-class pre-name-title
 
-::abbrev Ala. ::exp Alabama ::lcode eng ::sem-class state ::country United States
+::abbrev Ala. ::exp Alabama ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev Ariz. ::exp Arizona ::lcode eng ::sem-class state ::country United States
 ::abbrev Ark. ::exp Arkansas ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev Calif. ::exp California ::lcode eng ::sem-class state ::country United States
 ::abbrev Colo. ::exp Colorado ::lcode eng ::sem-class state ::country United States
 ::abbrev Conn. ::exp Connecticut ::lcode eng ::sem-class state ::country United States
 ::abbrev D.C. ::exp District of Columbia ::lcode eng ::sem-class state ::country United States
-::abbrev Del. ::exp Delaware ::lcode eng ::sem-class state ::country United States
+::abbrev Del. ::exp Delaware ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev Fla. ::exp Florida ::lcode eng ::sem-class state ::country United States
 ::abbrev Ga. ::exp Georgia ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev Ill. ::exp Illinois ::lcode eng ::sem-class state ::country United States ::case-sensitive True
@@ -312,14 +312,14 @@
 ::abbrev Mass. ::exp Massachusetts ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev Md. ::exp Maryland ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev Mich. ::exp Michigan ::lcode eng ::sem-class state ::country United States ::case-sensitive True
-::abbrev Minn. ::exp Minnesota ::lcode eng ::sem-class state ::country United States
+::abbrev Minn. ::exp Minnesota ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev Miss. ::exp Mississippi ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev Mo. ::exp Missouri ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev Mont. ::exp Montana ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev N.C. ::exp North Carolina ::lcode eng ::sem-class state ::country United States
 ::abbrev N.D. ::exp North Dakota ::lcode eng ::sem-class state ::country United States
 ::abbrev Nebr. ::exp Nebraska ::lcode eng ::sem-class state ::country United States
-::abbrev Nev. ::exp Nevada ::lcode eng ::sem-class state ::country United States
+::abbrev Nev. ::exp Nevada ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev N.H. ::exp New Hampshire ::lcode eng ::sem-class state ::country United States
 ::abbrev N.J. ::exp New Jersey ::lcode eng ::sem-class state ::country United States
 ::abbrev N.M. ::exp New Mexico ::lcode eng ::sem-class state ::country United States
@@ -331,8 +331,8 @@
 ::abbrev R.I. ::exp Rhode Island ::lcode eng ::sem-class state ::country United States
 ::abbrev S.C. ::exp South Carolina ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev S.D. ::exp South Dakota ::lcode eng ::sem-class state ::country United States
-::abbrev Tenn. ::exp Tennessee ::lcode eng ::sem-class state ::country United States
-::abbrev Tex. ::exp Texas ::lcode eng ::sem-class state ::country United States
+::abbrev Tenn. ::exp Tennessee ::lcode eng ::sem-class state ::country United States ::case-sensitive True
+::abbrev Tex. ::exp Texas ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev Va. ::exp Virginia ::lcode eng ::sem-class state ::country United States ::case-sensitive True
 ::abbrev V.I. ::exp Virgin Islands ::lcode eng ::sem-class state ::country United States
 ::abbrev Vt. ::exp Vermont ::lcode eng ::sem-class state ::country United States ::case-sensitive True
@@ -403,7 +403,7 @@
 ::abbrev Apt. ::exp apartment ::lcode eng ::case-sensitive True
 ::abbrev asap ::exp as soon as possible ::lcode eng
 ::abbrev ATM ::exp automated teller machine ::lcode eng
-::abbrev Av. ::exp Avenue ::lcode eng
+::abbrev Av. ::exp Avenue ::lcode eng ::case-sensitive True
 ::abbrev Ave. ::exp Avenue ::lcode eng ::case-sensitive True
 ::abbrev avg. ::exp average ::lcode eng
 ::abbrev B&B ::exp bed and breakfast ::lcode eng
@@ -440,7 +440,7 @@
 ::abbrev DS ::exp dear son ::lcode eng
 ::abbrev D.Sc. ::exp Doctor of Science ::lcode eng
 ::abbrev DW ::exp dear wife ::lcode eng
-::abbrev ed. ::exp editor ::lcode eng ::left-context-not [-]
+::abbrev ed. ::exp editor ::lcode eng ::left-context-not [-] ::lcode-not swe
 ::abbrev eds. ::exp editors ::lcode eng
 ::abbrev e'er ::exp ever ::lcode eng
 ::abbrev eff'd ::exp fucked ::lcode eng
