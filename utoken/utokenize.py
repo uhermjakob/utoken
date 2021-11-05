@@ -187,7 +187,7 @@ class Tokenizer:
                                    self.tokenize_pronunciations,
                                    self.tokenize_complexes,
                                    self.tokenize_abbreviation_patterns,
-                                   self.tokenize_according_to_resource_entries_new,
+                                   self.tokenize_according_to_resource_entries,
                                    self.tokenize_abbreviation_initials,
                                    self.tokenize_abbreviation_periods,
                                    self.tokenize_contractions,
@@ -1643,88 +1643,12 @@ class Tokenizer:
             s = self.re_capital_i_w_dot_above.sub('i', s)
         return s.lower()
 
-    def tokenize_according_to_resource_entries_old(self, s: str, chart: Chart, ht: dict,
-                                                   lang_code: Optional[str] = None,
-                                                   line_id: Optional[str] = None, offset: int = 0) -> str:
+    def tokenize_according_to_resource_entries(self, s: str, chart: Chart, ht: dict,
+                                               lang_code: Optional[str] = None,
+                                               line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step handles abbreviations, contractions and repairs according to data files
         such as data/tok-resource-eng.txt."""
-        this_function = self.tokenize_according_to_resource_entries_old
-
-        last_primary_char_type_vector = 0  # 'primary': not counting modifying letters
-        len_s = len(s)
-        s_lc = self.lower(s)
-        for start_position in range(0, len_s):
-            c = s[start_position]
-            current_char_type_vector = self.char_type_vector_dict.get(c, 0)
-            if current_char_type_vector & self.char_is_modifier:
-                continue
-            # general restriction: if token starts with a letter, it can't be preceded by a letter
-            if last_primary_char_type_vector & self.char_is_alpha \
-                    and current_char_type_vector & self.char_is_alpha:
-                continue
-            # same for digits: if token starts with a digit, it can't be preceded by a digit
-            if last_primary_char_type_vector & self.char_is_digit \
-                    and current_char_type_vector & self.char_is_digit:
-                continue
-            left_context = s[:start_position]
-            max_end_position = start_position
-            position = start_position+1
-            while position <= len_s and self.tok_dict.prefix_dict.get(s_lc[start_position:position], False):
-                max_end_position = position
-                position += 1
-            end_position = max_end_position
-            while end_position > start_position:
-                token_candidate = s[start_position:end_position]
-                token_candidate_lc = s_lc[start_position:end_position]
-                right_context = s[end_position:]
-                if self.resource_entry_fulfills_general_context_conditions(token_candidate,
-                                                                           left_context, right_context):
-                    for resource_entry in self.tok_dict.resource_dict.get(token_candidate_lc, []):
-                        if self.resource_entry_fulfills_conditions(resource_entry, util.ResourceEntry, token_candidate,
-                                                                   s, start_position, end_position, offset, lang_code):
-                            sem_class = resource_entry.sem_class
-                            resource_surf = resource_entry.s
-                            clause = ''
-                            if sem_class:
-                                clause += f'; sem: {sem_class}'
-                            if (isinstance(resource_entry, util.AbbreviationEntry)
-                                    and self.abbreviation_entry_fulfills_general_context_conditions(
-                                        token_candidate, left_context, right_context, resource_entry)):
-                                return self.rec_tok([token_candidate], [start_position], s, offset, ['ABBREV'],
-                                                    line_id, chart, lang_code, ht, this_function, [token_candidate],
-                                                    sem_class=resource_entry.sem_class, left_done=True)
-                            if isinstance(resource_entry, util.LexicalPriorityEntry):
-                                if sem_class == 'url':
-                                    token_type = 'URL-L'
-                                else:
-                                    token_type = 'LEXICAL-P'
-                                return self.rec_tok([token_candidate], [start_position], s, offset, [token_type],
-                                                    line_id, chart, lang_code, ht, this_function, [token_candidate],
-                                                    sem_class=resource_entry.sem_class, left_done=True)
-                            if isinstance(resource_entry, util.ContractionEntry):
-                                tokens, orig_tokens, start_positions = \
-                                    self.map_contraction(token_candidate, resource_surf, resource_entry.target,
-                                                         start_position, char_splits=resource_entry.char_splits)
-                                return self.rec_tok(tokens, start_positions, s, offset, ['DECONTRACTION'] * len(tokens),
-                                                    line_id, chart, lang_code, ht, this_function, orig_tokens,
-                                                    sem_class=resource_entry.sem_class, left_done=True)
-                            if isinstance(resource_entry, util.RepairEntry):
-                                tokens, orig_tokens, start_positions = \
-                                    self.map_contraction(token_candidate, resource_surf, resource_entry.target,
-                                                         start_position)
-                                return self.rec_tok(tokens, start_positions, s, offset, ['REPAIR'] * len(tokens),
-                                                    line_id, chart, lang_code, ht, this_function, orig_tokens,
-                                                    sem_class=resource_entry.sem_class, left_done=True)
-                end_position -= 1
-            last_primary_char_type_vector = current_char_type_vector
-        return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
-
-    def tokenize_according_to_resource_entries_new(self, s: str, chart: Chart, ht: dict,
-                                                   lang_code: Optional[str] = None,
-                                                   line_id: Optional[str] = None, offset: int = 0) -> str:
-        """This tokenization step handles abbreviations, contractions and repairs according to data files
-        such as data/tok-resource-eng.txt."""
-        this_function = self.tokenize_according_to_resource_entries_new
+        this_function = self.tokenize_according_to_resource_entries
 
         last_primary_char_type_vector = 0  # 'primary': not counting modifying letters
         len_s = len(s)
@@ -2018,65 +1942,6 @@ class Tokenizer:
                                                        s, start_position, end_position, offset, lang_code):
                 return False
         return True
-
-    def tokenize_symbol_group_old(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
-                                  line_id: Optional[str] = None, offset: int = 0) -> str:
-        """This tokenization step handles groups such as dingbats."""
-        this_function = self.tokenize_symbol_group_old
-        self.current_recursion_depth_symbol += 1
-        # log.info(f'tok_symbol {self.current_recursion_depth_symbol} o: {offset} l.{line_id}')
-        if self.current_recursion_depth_symbol > self.current_recursion_depth_symbol_warning_threshold:
-            if not self.current_recursion_depth_symbol_warning_issued:
-                sys.stderr.write(f'Warning: Exceeded symbol tokenization recursion depth of '
-                                 f'{self.current_recursion_depth_symbol_warning_threshold} '
-                                 f'in line {line_id}. Will skip remaining symbol tokenization for this sentence.\n')
-                self.current_recursion_depth_symbol_warning_issued = True
-            # skip any other tokenize_symbol_group_old calls and move on to next tokenization step.
-        else:
-            if self.current_recursion_depth_symbol > self.current_recursion_depth_symbol_alert_threshold:
-                # Just an alert, no action.
-                if not self.current_recursion_depth_symbol_alert_issued:
-                    n_chars = len(self.current_orig_s)
-                    n_words = len(self.current_orig_s.split())
-                    n_symbols = len(regex.findall(r'\pS', self.current_orig_s))
-                    pl_s1 = '' if n_symbols == 1 else 's'
-                    sys.stderr.write(f'Alert:   Exceeded symbol tokenization recursion depth of '
-                                     f'{self.current_recursion_depth_symbol_alert_threshold} in line {line_id} '
-                                     f'({n_chars} characters, {n_words} words, {n_symbols} symbol{pl_s1}).\n')
-                    self.current_recursion_depth_symbol_alert_issued = True
-            if self.lv & self.char_is_miscellaneous_symbol:
-                len_s = len(s)
-                start_position = None
-                for i in range(0, len_s):
-                    char_type_vector = self.char_type_vector_dict.get(s[i], 0)
-                    if char_type_vector & self.char_is_miscellaneous_symbol:
-                        if start_position is None:
-                            start_position = i
-                    elif char_type_vector & self.char_is_variation_selector:
-                        continue
-                    elif start_position is not None:  # found end of symbol group
-                        end_position = i
-                        token_candidate = s[start_position:end_position]
-                        if self.token_candidate_is_valid_symbol(s, token_candidate, lang_code, offset, start_position,
-                                                                end_position):
-                            result_rec_symb = self.rec_tok([token_candidate], [start_position], s, offset, ['SYMBOL'],
-                                                           line_id, chart, lang_code, ht, this_function,
-                                                           [token_candidate], left_done=True)
-                            self.current_recursion_depth_symbol -= 1
-                            return result_rec_symb
-                        else:
-                            start_position = None
-                if start_position is not None:
-                    token_candidate = s[start_position:]
-                    if self.token_candidate_is_valid_symbol(s, token_candidate, lang_code, offset, start_position,
-                                                            len(s)):
-                        result_rec_symb = self.rec_tok([token_candidate], [start_position], s, offset, ['SYMBOL'],
-                                                       line_id, chart, lang_code, ht, this_function,
-                                                       [token_candidate], left_done=True)
-                        self.current_recursion_depth_symbol -= 1
-                        return result_rec_symb
-        self.current_recursion_depth_symbol -= 1
-        return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     def tokenize_symbol_group_new(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                                   line_id: Optional[str] = None, offset: int = 0) -> str:
