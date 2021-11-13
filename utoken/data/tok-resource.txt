@@ -37,6 +37,8 @@
 ::punct-split 〙 ::side both
 ::punct-split 〚 ::side both
 ::punct-split 〛 ::side both
+::punct-split ⸤ ::side both
+::punct-split ⸥ ::side both
 ::punct-split ‹ ::side both ::group True
 ::punct-split › ::side both ::group True
 ::punct-split 。 ::side both
@@ -108,6 +110,7 @@
 ::punct-split ۔ ::side both ::comment Arabic period
 ::punct-split § ::side both ::comment section sign
 ::punct-split ¶ ::side both ::comment pillcrow
+::punct-split ∆ ::side both ::comment increment symbol
 ::punct-split × ::side both ::comment multiplication sign
 ::punct-split ± ::side both ::comment plus-minus sign
 ::punct-split ° ::side both ::group True ::comment degree sign
@@ -116,6 +119,9 @@
 ::punct-split ¬ ::side both
 # ::punct-split - ::side both ::left-context (?<!\d)(?:19|20)\d\d ::right-context \d\d(?!\d)
 ::punct-split - ::side both ::left-context \d ::right-context \d
+::punct-split ༄ ::side both ::comment TIBETAN MARK INITIAL YIG MGO MDUN MA
+::punct-split ༅ ::side both ::comment TIBETAN MARK CLOSING YIG MGO SGAB MA
+::punct-split ⵰ ::side both ::comment TIFINAGH SEPARATOR MARK
 
 # split off punctuation from start of token
 ::punct-split &apos; ::side start ::group True
@@ -135,6 +141,7 @@
 ::punct-split * ::side start ::right-context (?:\pL|['‘])  # don't group, because of ****ing
 ::punct-split - ::side start ::group True ::right-context -*\pL\pM*\pL
 ::punct-split – ::side start ::group True ::right-context -*\pL\pM*\pL
+::punct-split ― ::side start ::group True ::right-context -*\pL\pM*\pL ::comment horizontal bar
 ::punct-split ; ::side start ::group True ::right-context [-\/]*\pL\pM*\pL
 ::punct-split = ::side start ::group True ::right-context [-\/]*\pL\pM*\pL
 ::punct-split : ::side start ::left-context \d ::right-context \d+[-,]\d  # Genesis 1:26-28
@@ -151,6 +158,8 @@
 ::punct-split \ ::side start ::right-context (?:\pL|/d)
 ::punct-split � ::side start
 ::punct-split † ::side start
+::punct-split ‡ ::side start
+::punct-split ‛ ::side start
 ::punct-split ″ ::side start ::comment double prime
 ::punct-split . ::side start ::left-context \s ::right-context (?:18|19|20)\d\d(?!\d)  # .year -- but not .45 caliber
 
@@ -161,6 +170,7 @@
 ::punct-split ‘ ::side end ::group True
 ::punct-split ` ::side end ::group True
 ::punct-split . ::side end
+::punct-split ． ::side end ::comment fullwidth period
 ::punct-split ׃ ::side end ::comment Hebrew sof pasuq (sentence period)
 ::punct-split ? ::side end ::group True
 ::punct-split ! ::side end ::group True
@@ -174,6 +184,8 @@
 ::punct-split ، ::side end
 ::punct-split , ::side end
 ::punct-split ՝ ::side end ::comment Armenian comma
+::punct-split ꓾ ::side end ::comment Lisu punctuation comma
+::punct-split ꓿ ::side end ::comment Lisu punctuation period
 ::punct-split ; ::side end ::left-context-not &(?:amp|apos|gt|lt|nbsp|quot|#\d+|#x[0-9A-F]+)  # XML tags, e.g. &#x234;
 ::punct-split ！ ::side end
 ::punct-split ; ::side end
@@ -199,8 +211,11 @@
 ::punct-split &gt; ::side end ::left-context (?:\d|\pL\pM*|[;])
 ::punct-split � ::side end
 ::punct-split † ::side end
+::punct-split ‡ ::side end
+::punct-split ‛ ::side end
 ::punct-split ′ ::side end ::comment prime
 ::punct-split ″ ::side end ::comment double prime
+::punct-split @ ::side end ::left-context \d
 
 ::repair & gt ; ::target &gt; ::lcode eng ::problem previous tokenizer
 ::repair & lt ; ::target &lt; ::lcode eng ::problem previous tokenizer
