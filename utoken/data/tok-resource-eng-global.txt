@@ -447,7 +447,7 @@
 ::abbrev e.g. ::exp exempli gratia; for example ::lcode eng
 ::abbrev e-mail ::exp electronic mail ::lcode eng ::plural +s
 ::abbrev EMT ::exp epithelial-mesenchymal transition ::lcode eng
-::abbrev etc. ::exp et cetera; and other things ::lcode eng ::misspelling etc .; e.t.c.; e.t.c; et c.
+::abbrev etc. ::exp et cetera; and other things ::lcode eng ::misspelling etc .; e.t.c.; e.t.c; et c.; &c.
 ::abbrev exec ::exp executive ::lcode eng ::inflections execs
 ::abbrev fl. ::lcode eng
 ::abbrev Flr. ::exp floor ::lcode eng
@@ -566,7 +566,8 @@
 ::lexical n't ::lcode eng ::tag DECONTRACTION-R  ::example He doesn't know.
 ::lexical 're ::lcode eng ::tag DECONTRACTION-R  ::example They're gone.
 ::lexical 's ::lcode eng ::tag DECONTRACTION-R  ::example It's John's dog.
-::lexical 've ::lcode eng ::tag DECONTRACTION-R  ::example They've never complained.
+::lexical 've ::lcode eng ::tag DECONTRACTION-R  ::example They've never complained. ::case-sensitive True
+::lexical 've ::lcode eng ::tag DECONTRACTION-R  ::example They've never complained. ::lcode-not swe
 
 ::lexical 'n' ::lcode eng ::tag DECONTRACTION-B  ::example Bush'n'Cheney
 
