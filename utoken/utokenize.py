@@ -2,7 +2,9 @@
 # -*- coding: utf-8 -*-
 """
 Written by Ulf Hermjakob, USC/ISI
-This script is a draft of a tokenizer.
+utoken is a multilingual tokenizer that divides text into words, punctuation and special tokens
+such as numbers, URLs, XML tags, email-addresses and hashtags.
+For more documentation see https://github.com/uhermjakob/utoken and https://pypi.org/project/utoken
 When using STDIN and/or STDOUT, if might be necessary, particularly for older versions of Python, to do
 'export PYTHONIOENCODING=UTF-8' before calling this Python script to ensure UTF-8 encoding.
 """
@@ -182,7 +184,7 @@ class Tokenizer:
                                    self.tokenize_urls,
                                    self.tokenize_emails,
                                    self.tokenize_filenames,
-                                   self.tokenize_symbol_group_new,
+                                   self.tokenize_symbol_group,
                                    self.tokenize_hashtags_and_handles,
                                    self.tokenize_pronunciations,
                                    self.tokenize_complexes,
@@ -540,7 +542,7 @@ class Tokenizer:
             self.char_type_vector_dict[char] \
                 = self.char_type_vector_dict.get(char, 0) | self.char_is_quote
         # Dash (incl. hyphen)
-        for char in "-−–":
+        for char in "-−–‐":
             self.char_type_vector_dict[char] \
                 = self.char_type_vector_dict.get(char, 0) | self.char_is_dash
         # Greek
@@ -777,7 +779,7 @@ class Tokenizer:
         self.current_recursion_depth -= 1
         return util.join_tokens(tokenizations)
 
-    re_starts_w_plus_minus = re.compile(r'[-−–+]')
+    re_starts_w_plus_minus = re.compile(r'[-−–‐+]')
     re_ends_w_letter_digit_plus = regex.compile(r'.*(?:\d[%\']?|\pL\pM*|[.])$')
 
     def m3_to_3s_w_adjustment(self, m3: Match[str], _s: str, offset: int, token_type: str, _line_id: str,
@@ -1094,19 +1096,19 @@ class Tokenizer:
                 return self.rec_tok_m3(m3, s, offset, token_type, line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    re_dash_letters_dash = regex.compile(r'.*[-−–](?:\pL\pM*)+[-−–]')
+    re_dash_letters_dash = regex.compile(r'.*[-−–‐](?:\pL\pM*)+[-−–‐]')
     re_multi_dash_word = regex.compile(r'(.*?)'
-                                       r"(?<!\pL\pM*|\d|[.-−–—+]|\pL\pM*['‘’`‛])"
-                                       r'((?:\pL\pM*)+(?:[-−–](?:\pL\pM*)+){2,})'
-                                       r"(?!\pL|\pM|\d|[.-−–—+]|['‘’`‛]\pL)"
+                                       r"(?<!\pL\pM*|\d|[.-−–‐—‒―+]|\pL\pM*['‘’`‛])"
+                                       r'((?:\pL\pM*)+(?:[-−–‐](?:\pL\pM*)+){2,})'
+                                       r"(?!\pL|\pM|\d|[.-−–‐—‒―+]|['‘’`‛]\pL)"
                                        r'(.*)$')
     cap_w = r'\p{Lu}\pM*(?:\p{Ll}\pM*)+'
-    cap_ws = cap_w + r'(?:[-−–]' + cap_w + ')*'
+    cap_ws = cap_w + r'(?:[-−–‐]' + cap_w + ')*'
     name_bridge = r'(?:de|du|e|en|et|i|la|le|upon|sur)'
     re_multi_dash_name = regex.compile(r'(.*?)'
-                                       r"(?<!\pL\pM*|\d|[-−–—+.]|\pL\pM*['‘’`‛])"
-                                       r'(' + cap_ws + '(?:[-−–]' + name_bridge + '[-−–]' + cap_ws + ')+)'
-                                       r"(?!(?:\pL|\pM|\d|[-−–—+.]|['‘’`‛]\pL))"  # negative lookahead
+                                       r"(?<!\pL\pM*|\d|[-−–‐—‒―+.]|\pL\pM*['‘’`‛])"
+                                       r'(' + cap_ws + '(?:[-−–‐]' + name_bridge + '[-−–‐]' + cap_ws + ')+)'
+                                       r"(?!(?:\pL|\pM|\d|[-−–‐—‒―+.]|['‘’`‛]\pL))"  # negative lookahead
                                        r'(.*)$')
 
     def tokenize_complex_names(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
@@ -1253,10 +1255,10 @@ class Tokenizer:
     re_num_dp_flt = regex.compile(r'(\d+\.\d+)(?![.,]?\d)')                            # floating point, 12345678.90
     re_num_dc_flt = regex.compile(r'(\d+\,\d+)(?![.,]?\d)')                            # floating comma, 12345678,90
     re_num_integer = regex.compile(r'(\d+)(?![.,]?\d)')                                # integer, e.g. 12345678
-    re_complex_num_left_context_with_sign = regex.compile(r'.*(?<![-−–+,:]|\PL\.|\d[%\']?|\pL\pM*)([-−–+])$')
+    re_complex_num_left_context_with_sign = regex.compile(r'.*(?<![-−–‐+,:]|\PL\.|\d[%\']?|\pL\pM*)([-−–‐+])$')
     re_complex_num_left_context = regex.compile(r'.*(?<![,]|\PL\.|\d[%\']?|[כבהלשומ])$')
-    re_integer_left_context_with_sign = regex.compile(r'.*(?<![-−–+]|\PL\.|\d[,.%\']?|\pL\pM*\.?)([-−–+])$')
-    re_integer_left_context = regex.compile(r'.*(?<!\PL\.|\d[,.%\']?|\pL\pM*\d*(?:-\d*)*[-−–+]*)$')
+    re_integer_left_context_with_sign = regex.compile(r'.*(?<![-−–‐+]|\PL\.|\d[,.%\']?|\pL\pM*\.?)([-−–‐+])$')
+    re_integer_left_context = regex.compile(r'.*(?<!\PL\.|\d[,.%\']?|\pL\pM*\d*(?:-\d*)*[-−–‐+]*)$')
 
     def tokenize_numbers(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                          line_id: Optional[str] = None, offset: int = 0) -> str:
@@ -1474,8 +1476,8 @@ class Tokenizer:
     re_starts_w_letter_or_digit = regex.compile(r'(\pL|\d)')
     re_starts_w_letter_or_digit_in_token = regex.compile(r'\S*(\pL|\d)')
     re_starts_w_single_letter = regex.compile(r'\pL\pM*(?!\pL|\pM)')
-    re_starts_w_dash = regex.compile(r'[-−–]')
-    re_starts_w_dashed_digit = regex.compile(r'[-−–]?\d')
+    re_starts_w_dash = regex.compile(r'[-−–‐]')
+    re_starts_w_dashed_digit = regex.compile(r'[-−–‐]?\d')
     re_starts_w_single_s = regex.compile(r's(?!\pL|\d)', flags=regex.IGNORECASE)
     re_starts_w_non_whitespace = regex.compile(r'\S')
     re_starts_w_apostrophe_plus = regex.compile(r"['‘’`]")
@@ -1487,7 +1489,7 @@ class Tokenizer:
     re_ends_w_letter_or_digit_in_token = regex.compile(r'.*(\pL\pM*|\d)\S*$')
     re_ends_w_letter_plus_period = regex.compile(r'.*\pL\pM*\.$')
     re_ends_w_non_whitespace = regex.compile(r'.*\S$')
-    re_ends_w_dash = regex.compile(r'.*[-−–]$')
+    re_ends_w_dash = regex.compile(r'.*[-−–‐]$')
     re_ends_w_punct = regex.compile(r'.*\pP$')
     re_is_lc_latin_letter = regex.compile(r'(?V1)[\p{Latin}&&\p{Ll}]$')
     re_is_short_letter_token = regex.compile(r'(?:\pL\pM*){1,2}$')
@@ -1878,9 +1880,9 @@ class Tokenizer:
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
     re_abbrev_acronym_product = regex.compile(r'(.*?)'
-                                              r'(?<!\pL\pM*|\d|[-−–]+)'
-                                              r'(\p{Lu}+[-−–](?:\d|\p{Lu}\pM*){1,3}(?:s)?)'
-                                              r'(?!\pL|[.,]?\d|[-−–])'
+                                              r'(?<!\pL\pM*|\d|[-−–‐]+)'
+                                              r'(\p{Lu}+[-−–‐](?:\d|\p{Lu}\pM*){1,3}(?:s)?)'
+                                              r'(?!\pL|[.,]?\d|[-−–‐])'
                                               r'(.*)')
 
     def tokenize_abbreviation_patterns(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
@@ -1898,7 +1900,7 @@ class Tokenizer:
 
     re_dot_pl = regex.compile(r'.*\pL')  # used to filter the following below
     re_abbrev_acronym_periods = regex.compile(r'(.*?)'
-                                              r'(?<!\pL\pM*|\d|[-−–.]+)'
+                                              r'(?<!\pL\pM*|\d|[-−–‐.]+)'
                                               r'((?:(?:\pL\pM*){1,2}\.){2,})'  # 2+ groups of (1-2 letters + .)
                                               r'(?!\pL|\d|[.])'
                                               r'(.*)')
@@ -1912,7 +1914,7 @@ class Tokenizer:
                 return self.rec_tok_m3(m3, s, offset, 'ABBREV-PP', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    re_mt_punct = regex.compile(r'(.*?(?:\pL\pM*\pL\pM*|\d|[!?’]))([-−–]+)(\pL\pM*\pL\pM*|\d)')
+    re_mt_punct = regex.compile(r'(.*?(?:\pL\pM*\pL\pM*|\d|[!?’]))([-−–‐]+)(\pL\pM*\pL\pM*|\d)')
 
     def tokenize_mt_punctuation(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                                 line_id: Optional[str] = None, offset: int = 0) -> str:
@@ -1925,7 +1927,7 @@ class Tokenizer:
             return self.rec_tok_m3(m3, s, offset, 'DASH', line_id, chart, lang_code, ht, this_function)
         return self.next_tok(this_function, s, chart, ht, lang_code, line_id, offset)
 
-    re_integer2 = regex.compile(r'(.*?)(?<!\pL\pM*|\d|[-−–+.])(\d+)((?:\pL|[/]).*)')
+    re_integer2 = regex.compile(r'(.*?)(?<!\pL\pM*|\d|[-−–‐+.])(\d+)((?:\pL|[/]).*)')
 
     def tokenize_post_punct(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
                             line_id: Optional[str] = None, offset: int = 0) -> str:
@@ -1943,10 +1945,10 @@ class Tokenizer:
                 return False
         return True
 
-    def tokenize_symbol_group_new(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
-                                  line_id: Optional[str] = None, offset: int = 0) -> str:
+    def tokenize_symbol_group(self, s: str, chart: Chart, ht: dict, lang_code: Optional[str] = None,
+                              line_id: Optional[str] = None, offset: int = 0) -> str:
         """This tokenization step handles groups such as dingbats."""
-        this_function = self.tokenize_symbol_group_new
+        this_function = self.tokenize_symbol_group
         if self.lv & self.char_is_miscellaneous_symbol:
             len_s = len(s)
             tokens = []
@@ -2152,7 +2154,7 @@ def main():
         args.total_bytes = inp_path.stat().st_size
         args.input = argparse.FileType('r', encoding='utf-8', errors='surrogateescape')(str(inp_path))
 
-    # Open any input or output files. Make sure utf-8 encoding is properly set (in older Python3 versions).
+    # Make sure utf-8 encoding is properly set (in older Python3 versions).
     if args.output is sys.stdout and not re.search('utf-8', sys.stdout.encoding, re.IGNORECASE):
         log.error(f"Error: Bad STDIN/STDOUT encoding '{sys.stdout.encoding}' as opposed to 'utf-8'. \
                     Suggestion: 'export PYTHONIOENCODING=UTF-8' or use use '--output FILENAME' option")
